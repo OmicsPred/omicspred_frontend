@@ -1,0 +1,96 @@
+// @tailwind base;
+// @tailwind components;
+// @tailwind utilities;
+
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+
+h2 {
+    background-color: rgb(241,245,249);
+}
+// main {
+//     width:100% !important;
+//     margin-left: auto;
+//     margin-right: auto;
+// }
+
+
+.container-extra {
+    position: relative;
+    top: 4rem;
+    margin-bottom: 5rem;
+}
+.container-fluid {
+    padding-left: 3rem;
+    padding-right:3rem;
+}
+.min-vh-100 {
+    min-height: 100vh!important;
+}
+.min-vw-100 {
+    min-width: 100vw !important;
+}
+
+.home_header {
+    position: relative;
+    .home_header_left {
+        padding-top:80px;
+        //display:inline-block;
+        // width:50%;
+        // z-index: 10;
+        // position:relative; 
+        // top:80px; 
+        // left:0px; 
+
+    }
+    .home_header_right {
+        z-index: 1;
+        //display:inline-block;
+        // background-image: url("../assets/landing.jpg");
+        // background-repeat: no-repeat;
+        // width:50%;
+        position:relative; 
+        top:80px; 
+        right:0px;
+        //left:50%;
+        width: 50%;
+    }
+}
+
+.even_section, .odd_section {
+    padding: 0rem 2rem 2rem;
+    margin: 4rem 0rem 0rem;
+    text-align:center;
+    .op_section_title {
+        font-size: 32px;//3rem;
+        margin-bottom: 2rem;
+    }
+}
+.even_section {
+    padding: 1rem 2rem 2rem;
+    background-color: rgb(241,245,249);
+}
+
+.relative {
+    position: relative;
+}
+.block {
+    display:block;
+}
+
+/* Images */
+.op_big_icons {
+    max-height: 70px !important;
+}
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
