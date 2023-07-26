@@ -7,26 +7,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import OpRouters from './components/Routers';
 import Header from './components/Header';
 import Footer from "./components/Footer";
-// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// import Scores from './pages/Scores';
+
 
 function App() {
-  // return (
-  //   <StrictMode>
-  //     <Header/>
-  //       <main>
-  //         <OpRouters/>
-  //       </main>
-  //     <Footer/>
-  //   </StrictMode>
-  // );
+
   return (
     <>
+    <div className="App">
       <Header/>
       <div className="container-fluid container-extra min-vh-100 min-vw-100">
         <OpRouters/>
       </div>
       <Footer/>
+    </div>
     </>
   );
 

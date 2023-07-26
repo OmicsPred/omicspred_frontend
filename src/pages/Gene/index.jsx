@@ -1,50 +1,43 @@
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import DataTableFromRestApi from "../../components/table/DataTableFromRestApi";
+import {commons_cols} from "../../components/table/columns/common";
+import restApiCall from '../../components/RestAPI';
+
 
 function Gene() {
     let { gene } = useParams();
+    const [elementData, setElementData] = useState([])
 
-    const url_suffix = "score/searchbygene/"+gene;
-
+    const element = 'gene';
+    const url_suffix = "score/searchby"+element+"/"+gene;
     const columns = [
-        { 
-          field: 'id', 
-          headerName: 'OmicsPred ID', 
-          width: 150,
-          renderCell: (params) => {
-            let op_id = params.row.id;
-            let op_url = "/Score/"+op_id;
-            return(
-              <a href={op_url}>{op_id}</a>
-            )
-          }
-        },
-        { 
-            field: 'platform_type', 
-            headerName: 'Omics',
-            width: 300,
-            valueGetter: (params) => {
-                return params.row.platform.type;
-            }
-        },
-        { 
-            field: 'platform_name', 
-            headerName: 'Platform',
-            width: 300,
-            valueGetter: (params) => {
-                return params.row.platform.name;
-            }
-        },
-        { field: 'variants_number', headerName: '#SNP' },
+        commons_cols['omicspred_id'],
+        commons_cols['platform_type'],
+        commons_cols['platform_name'],
+        commons_cols['variants_number'],
+        commons_cols['scoring_file']
     ]
 
-  return (
-    <div>
-      <h2 className='mb-3'>Gene {gene}</h2>
-      <DataTableFromRestApi url_suffix={url_suffix} columns={columns}/>
-    </div>
-  );
-}
+    const fetchSummaryData = async () => {
+      const data = await restApiCall(element+'/'+gene);
+      console.log(data);
+      setElementData(data);
+    }
 
+    useEffect(() => {
+      fetchSummaryData();
+    },[])
+
+    return (
+      <div>
+        <h2 className='page_title'>Gene <span>{elementData && elementData.name ? elementData.name : gene}</span></h2>
+        {
+          elementData && elementData.external_id_source=='Ensembl' && elementData.name ? <div className='mt-3 mb-3'>Ensembl ID: {elementData.external_id}</div> : ''
+        }
+        <DataTableFromRestApi url_suffix={url_suffix} columns={columns}/>
+      </div>
+    );
+}
 
 export default Gene

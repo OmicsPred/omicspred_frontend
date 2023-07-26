@@ -1,4 +1,6 @@
 import DataTableFromRestApi from "../../components/table/DataTableFromRestApi";
+import {omicspred_internal_link} from "../../components/table/columns/common";
+
 
 function Platforms() {
 
@@ -11,9 +13,9 @@ function Platforms() {
             field: 'name', 
             headerName: 'Name', 
             width: 150,
-            renderCell: (params) => (
-                <b>{params.row.name}</b>
-            )
+            renderCell: (params) => {
+                return omicspred_internal_link(params.row.name,'Platform');
+            }
         },
         { field: 'full_name', headerName: 'Full Name', width: 200 },
         { field: 'version', headerName: 'Version' },
@@ -24,7 +26,7 @@ function Platforms() {
     
     return (
         <div>
-            <h2 className='mb-3'>Platforms</h2>
+            <h2 className='page_title'>Platforms</h2>
             <DataTableFromRestApi url_suffix={url_suffix} columns={columns}/>
         </div>
     );

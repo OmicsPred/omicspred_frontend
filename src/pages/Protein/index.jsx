@@ -1,66 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import DataTableFromRestApi from "../../components/table/DataTableFromRestApi";
+import {commons_cols} from "../../components/table/columns/common";
 import restApiCall from '../../components/RestAPI';
+
 
 function Protein() {
     let { protein } = useParams();
+    const [elementData, setElementData] = useState([])
 
-    const [proteinData, setProteinData] = useState([])
-
-
-    const url_suffix = "score/searchbyprotein/"+protein;
-
+    const element = 'protein';
+    const url_suffix = "score/searchby"+element+"/"+protein;
     const columns = [
-      { 
-        field: 'id', 
-        headerName: 'OmicsPred ID', 
-        width: 150,
-        renderCell: (params) => {
-          let op_id = params.row.id;
-          let op_url = "/Score/"+op_id;
-          return(
-            <a href={op_url}>{op_id}</a>
-          )
-        }
-      },
-      { 
-          field: 'platform_type', 
-          headerName: 'Omics',
-          width: 300,
-          valueGetter: (params) => {
-              return params.row.platform.type;
-          }
-      },
-      { 
-          field: 'platform_name', 
-          headerName: 'Platform',
-          width: 300,
-          valueGetter: (params) => {
-              return params.row.platform.name;
-          }
-      },
-      { field: 'variants_number', headerName: '#SNP' },
+        commons_cols['omicspred_id'],
+        commons_cols['platform_type'],
+        commons_cols['platform_name'],
+        commons_cols['variants_number'],
+        commons_cols['scoring_file']
     ]
 
-  const fetchData = async () => {
-    const protein_data = await restApiCall('protein/'+protein);
-    setProteinData(protein_data);
-  }
+    const fetchSummaryData = async () => {
+      const data = await restApiCall(element+'/'+protein);
+      console.log(data);
+      setElementData(data);
+    }
 
-  useEffect(() => {
-    fetchData(); 
-  },[])
+    useEffect(() => {
+        fetchSummaryData();
+    },[])
 
-
-  return (
-    <div>
-      <h2 className='mb-3'>Protein {protein}</h2>
-      <div className='mt-3 mb-3'>Name: {proteinData.name}</div>
-      <DataTableFromRestApi url_suffix={url_suffix} columns={columns}/>
-    </div>
-  );
+    return (
+      <div>
+        <h2 className='page_title'>Protein <span>{protein}</span></h2>
+        <div className='mt-3 mb-3'>Name: {elementData.name}</div>
+        <DataTableFromRestApi url_suffix={url_suffix} columns={columns}/>
+      </div>
+    );
 }
-
 
 export default Protein

@@ -24,7 +24,7 @@ function Header() {
                         <Nav className="me-auto">
                             <Nav.Link href="/">Home</Nav.Link>
                             <Nav.Link href="/Scores">Scores</Nav.Link>
-                            <Nav.Link href="/">Applications</Nav.Link>
+                            <Nav.Link href="/Applications">Applications</Nav.Link>
                             <Nav.Link href="/">Submit Score</Nav.Link>
                             <Nav.Link href="/">FAQs</Nav.Link>
                             <Nav.Link href="/">Cohorts</Nav.Link>

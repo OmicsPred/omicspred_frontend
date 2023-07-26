@@ -52,7 +52,11 @@ const DataTableFromRestApi = (props) => {
     },[])
 
     return (
-        <DataTable data={tableData} columns={props.columns}/>
+        <>
+        {
+            tableData && tableData.length ? <DataTable data={tableData} columns={props.columns}/> : <div></div>
+        }
+        </>
     )
 }
 export default DataTableFromRestApi;

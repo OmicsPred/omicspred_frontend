@@ -11,7 +11,7 @@ function Platforms() {
       <div className="op_section_title">Platforms with Genetic Scores</div>
 
       {/* Proteomics */}
-      <h2 className="mt-4"><img className="me-3" src={protein_img} alt="Proteomics"/>Proteomics</h2>
+      <h2 className="mt-4 op_subsection_header"><img className="me-3" src={protein_img} alt="Proteomics"/>Proteomics</h2>
       <div className="card-deck d-lg-flex flex-lg-row justify-content-center d-md-flex flex-md-row d-sm-flex flex-sm-column">
         {/* Somalogic */}
         <div className="card ms-2 me-2" style={{padding:"0px",maxWidth:"580px"}}>
@@ -59,7 +59,7 @@ function Platforms() {
       </div>
 
       {/* Metabolomics */}
-      <h2 className="mt-4"><img className="me-3" src={metabolite_img} alt="Metabolomics"/>Metabolomics</h2>
+      <h2 className="mt-4 op_subsection_header"><img className="me-3" src={metabolite_img} alt="Metabolomics"/>Metabolomics</h2>
       <div className="card-deck d-lg-flex flex-lg-row justify-content-center d-md-flex flex-md-row d-sm-flex flex-sm-column">
         {/* Metabolon */}
         <div className="card ms-2 me-2" style={{padding:"0px",maxWidth:"580px"}}>
@@ -103,7 +103,7 @@ function Platforms() {
       </div>
 
       {/* Transcriptomics */}
-      <h2 className="mt-4"><img className="me-3" src={rna_img} alt="Transcriptomics"/>Transcriptomics</h2>
+      <h2 className="mt-4 op_subsection_header"><img className="me-3" src={rna_img} alt="Transcriptomics"/>Transcriptomics</h2>
       <div className="card-deck d-lg-flex flex-lg-row justify-content-center d-md-flex flex-md-row d-sm-flex flex-sm-column">
         {/* Illumina_RNAseq */}
         <div className="card ms-2 me-2" style={{padding:"0px",maxWidth:"580px"}}>

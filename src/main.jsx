@@ -7,5 +7,5 @@ import './css/omicspred.scss'
 ReactDOM.createRoot(document.getElementById('content')).render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
+  </React.StrictMode>
 )
