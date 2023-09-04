@@ -1,7 +1,7 @@
 import {cohort_valueGetter, commons_cols} from "./common";
 
 export const transcriptomics_columns = {
-    'Illumina_RNAseq': [
+    'Illumina RNAseq': [
         commons_cols['omicspred_id'],
         { 
             field: 'ensg_name', 

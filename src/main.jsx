@@ -4,8 +4,11 @@ import App from './App.jsx'
 import './index.css'
 import './css/omicspred.scss'
 
+// ReactDOM.createRoot(document.getElementById('content')).render(
+//   <React.StrictMode>
+//     <App />
+//   </React.StrictMode>
+// )
 ReactDOM.createRoot(document.getElementById('content')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <App />
 )

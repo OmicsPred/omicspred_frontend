@@ -13,6 +13,9 @@ import Protein from "../pages/Protein";
 import Metabolite from "../pages/Metabolite";
 import Phecode from "../pages/Applications/Phecode";
 import Applications from "../pages/Applications";
+// Tests
+import Plot from "../pages/Tests/Plot";
+import PlatformFile from "../pages/Tests/Platform"
 
 function OpRouters() {
     return (
@@ -36,6 +39,11 @@ function OpRouters() {
                 <Route path="/protein/:protein" element={<Protein />} />
                 <Route path="/metabolite/:metabolite" element={<Metabolite />} />
                 <Route path="/phecode/:phecode" element={<Phecode />} />
+                
+                {/* Test pages */}
+                <Route path="/plot/:platform" element={<Plot />} />
+                <Route path="/platform_file/:platform" element={<PlatformFile />} />
+
             </Routes>
         </Router>
     )

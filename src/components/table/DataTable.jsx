@@ -3,8 +3,6 @@ import { DataGrid } from '@mui/x-data-grid'
 
 const DataTable = (props) => {
 
-    const [tableData, setTableData] = useState([])
-
     const default_page_size = 25;
 
     return (

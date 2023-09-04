@@ -10,17 +10,15 @@ import restApiCall from '../../components/RestAPI';
 function Platform() {
     let { platform } = useParams();
     const [platformData, setPlatformData] = useState([])
-    const [urlSuffix, setUrlSuffix] = useState([])
-    const [tableColumns, setTableColumns] = useState([])
 
     const get_url_endpoint = (type) => {
         switch(type) {
             case 'Metabolomics':
-                return "test/metabolite/search?platform="+platform;
+                return "metabolomics/"+platform;
             case 'Proteomics':
-                return "test/protein/search?platform="+platform;
+                return "proteomics/"+platform;
             case 'Transcriptomics':
-                return "test/transcript/search?platform="+platform;
+                return "transcriptomics/"+platform;
         }
     }
 
@@ -46,26 +44,15 @@ function Platform() {
         return columns
     }
 
-    const fetchSummaryData = async () => {
-        let rest_url = "http://127.0.0.1:7000/rest/platform/"+platform;
-        try {
-            const res = await fetch(rest_url)
-                .then((response)=> response.json())
-                .then((data) => {
-                    console.log(data);
-                    setPlatformData(data);
-                });
-            console.log(res);
-            return res
-        } catch(err) {
-            console.log(err)
-            return(err)
-        }
+
+    const fetchPlatformData = async () => {
+        const platform_data = await restApiCall('platform/'+platform);
+        setPlatformData(platform_data);
     }
 
 
     useEffect(() => {
-        const data = fetchSummaryData();
+        const data = fetchPlatformData();
     },[])
 
     return (
@@ -79,6 +66,9 @@ function Platform() {
                 <li>Technic: {platformData.technic}</li>
                 <li>#Scores: {platformData.scores_count}</li>
             </ul>
+            <div className="mt-3 me-4 sm:mt-0 sm:ml-3">
+                <a className="btn btn-primary shadow" href={"/plot/"+platformData.name} role="button">Go to Plots</a>
+            </div>
             {platformData && platformData.type ? 
                 <div className="mt-4">
                     <DataTableFromRestApi url_suffix={get_url_endpoint(platformData.type)} columns={get_table_columns(platformData.type)}/>
