@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import DataTableFromRestApi from "../../components/table/DataTableFromRestApi";
+import DataTable from "../../components/table/DataTable";
 import { metabolomics_columns } from '../../components/table/columns/metabolomics'
 import { proteomics_columns } from '../../components/table/columns/proteomics'
 import { transcriptomics_columns } from '../../components/table/columns/transcriptomics'
@@ -9,18 +9,14 @@ import restApiCall from '../../components/RestAPI';
 
 function Platform() {
     let { platform } = useParams();
-    const [platformData, setPlatformData] = useState([])
+    const [platformSumData, setPlatformSumData] = useState([])
+    const [platformTableData, setPlatformTableData] = useState([])
 
-    const get_url_endpoint = (type) => {
-        switch(type) {
-            case 'Metabolomics':
-                return "metabolomics/"+platform;
-            case 'Proteomics':
-                return "proteomics/"+platform;
-            case 'Transcriptomics':
-                return "transcriptomics/"+platform;
-        }
-    }
+    const platform_file_name = platform.replace(" ", "_");
+
+    const data_file = '/src/data/'+platform_file_name+'_table.json';
+
+    console.log(data_file);
 
     const get_table_columns = (type) => {
         console.log('get_table_columns: |'+type+'|')
@@ -45,33 +41,41 @@ function Platform() {
     }
 
 
-    const fetchPlatformData = async () => {
-        const platform_data = await restApiCall('platform/'+platform);
-        setPlatformData(platform_data);
+    const fetchPlatformSumData = async () => {
+        const platform_sum_data = await restApiCall('platform/'+platform);
+        setPlatformSumData(platform_sum_data);
     }
 
+    const fetchPlatformTableData = async () => {
+        const platform_table_data = await fetch(data_file)
+            .then(response => {
+                return response.json()
+            })
+        setPlatformTableData(platform_table_data);
+    }
 
     useEffect(() => {
-        const data = fetchPlatformData();
+        fetchPlatformSumData();
+        fetchPlatformTableData();
     },[])
 
     return (
         <>
-            <h2 className='page_title'>Platform <span>{platformData.name}</span> <small style={{fontWeight:200}}>({platformData.type})</small></h2>
+            <h2 className='page_title'>Platform <span>{platformSumData.name}</span> <small style={{fontWeight:200}}>({platformSumData.type})</small></h2>
             <ul>
-                <li>Long Name: {platformData.full_name}</li>
+                <li>Long Name: {platformSumData.full_name}</li>
                 <li>Version: {
-                    platformData.version != '' ? platformData.version : '-'
+                    platformSumData.version != '' ? platformSumData.version : '-'
                 }</li>
-                <li>Technic: {platformData.technic}</li>
-                <li>#Scores: {platformData.scores_count}</li>
+                <li>Technic: {platformSumData.technic}</li>
+                <li>#Scores: {platformSumData.scores_count}</li>
             </ul>
             <div className="mt-3 me-4 sm:mt-0 sm:ml-3">
-                <a className="btn btn-primary shadow" href={"/plot/"+platformData.name} role="button">Go to Plots</a>
+                <a className="btn btn-primary shadow" href={"/plot/"+platformSumData.name} role="button">Go to Plots</a>
             </div>
-            {platformData && platformData.type ? 
+            {platformSumData && platformSumData.type && platformTableData ? 
                 <div className="mt-4">
-                    <DataTableFromRestApi url_suffix={get_url_endpoint(platformData.type)} columns={get_table_columns(platformData.type)}/>
+                    <DataTable data={platformTableData} columns={get_table_columns(platformSumData.type)}/>
                 </div>
                 :
                 <div>Loading ...</div>

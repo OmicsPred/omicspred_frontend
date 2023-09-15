@@ -14,8 +14,10 @@ import Metabolite from "../pages/Metabolite";
 import Phecode from "../pages/Applications/Phecode";
 import Applications from "../pages/Applications";
 // Tests
+import Search from "../pages/Tests/Search";
 import Plot from "../pages/Tests/Plot";
-import PlatformFile from "../pages/Tests/Platform"
+import PlatformRest from "../pages/Tests/Platform"
+
 
 function OpRouters() {
     return (
@@ -41,8 +43,9 @@ function OpRouters() {
                 <Route path="/phecode/:phecode" element={<Phecode />} />
                 
                 {/* Test pages */}
+                <Route path="/search" element={<Search />} />
                 <Route path="/plot/:platform" element={<Plot />} />
-                <Route path="/platform_file/:platform" element={<PlatformFile />} />
+                <Route path="/platform_rest/:platform" element={<PlatformRest />} />
 
             </Routes>
         </Router>

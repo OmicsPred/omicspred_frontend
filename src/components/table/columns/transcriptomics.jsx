@@ -19,22 +19,7 @@ export const transcriptomics_columns = {
                 return result;
             }
         },
-        { 
-            field: 'gene_name', 
-            headerName: 'Gene',
-            width: 150,
-            valueGetter: (params) => {
-                let result = '';
-                if (params.row.genes) {
-                    let gene_names = [];
-                    for (let i=0; i<params.row.genes.length; i++) {
-                        gene_names.push(params.row.genes[i].name);
-                    }
-                    result = gene_names.join(';');
-                }
-                return result;
-            }
-        },
+        commons_cols['gene_name'],
         commons_cols['variants_number'],
         commons_cols['interval_r2'],
         commons_cols['interval_rho'],

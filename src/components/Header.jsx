@@ -4,6 +4,11 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { config } from "../pages/Tests/Search/config";
+
+import { SearchProvider, SearchBox } from "@elastic/react-search-ui";
+import "@elastic/react-search-ui-views/lib/styles/styles.css";
+
 
 function Header() {
     return (
@@ -30,7 +35,31 @@ function Header() {
                             <Nav.Link href="/">Cohorts</Nav.Link>
                             <Nav.Link href="#about">About</Nav.Link>
                         </Nav>
-                        <Form className="d-flex">
+                        <SearchProvider
+                            config={{
+                                ...config,
+                                trackUrlState: false
+                            }}
+                            >
+                            <SearchBox
+                                className="d-flex search_btn" 
+                                onSubmit={(searchTerm) => {
+                                    window.location.href = `/search?q=${searchTerm}`;
+                                }}
+                                autocompleteMinimumCharacters={3}
+                                autocompleteResults={{
+                                    linkTarget: "",//"_blank",
+                                    sectionTitle: "Suggestions",
+                                    titleField: "label",
+                                    //urlField: "label",
+                                    shouldTrackClickThrough: true,
+                                    clickThroughTags: ["search"]
+                                }}
+                                autocompleteSuggestions={true}
+                                debounceLength={0}
+                            />
+                        </SearchProvider>
+                        {/* <Form className="d-flex">
                             <Form.Control
                                 type="search"
                                 placeholder="Search"
@@ -38,7 +67,7 @@ function Header() {
                                 aria-label="Search"
                             />
                             <Button variant="outline-primary">Search</Button>
-                        </Form>
+                        </Form> */}
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

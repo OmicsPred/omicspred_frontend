@@ -18,52 +18,9 @@ export const metabolomics_columns = {
                 return metabolite_ids.map((metabolite_id) => omicspred_internal_link(metabolite_id,'Metabolite'));
                 }
         },
-        {
-            field: 'metabolite_name', 
-            headerName: 'Biochemical Name',
-            width: 200,
-            renderCell: (params) => {
-                let metabolite_names = [];
-                if (params.row.metabolites) {
-                    for (let i=0; i<params.row.metabolites.length; i++) {
-                        metabolite_names.push(params.row.metabolites[i].name);
-                    }
-                }
-                return metabolite_names.map((metabolite_name) => omicspred_internal_link(metabolite_name,'Metabolite'));
-            }
-        },
-        {
-            field: 'pathway_group', 
-            headerName: 'Pathway',
-            width: 300,
-            valueGetter: (params) => {
-                let result = '';
-                if (params.row.metabolites) {
-                    if (params.row.metabolites[0]) {
-                        if (params.row.metabolites[0].pathway_group) {
-                            result = params.row.metabolites[0].pathway_group;
-                        }
-                    }
-                }  
-                return result;
-            }
-        },
-        { 
-            field: 'pathway_subgroup', 
-            headerName: 'Sub Pathway',
-            width: 300,
-            valueGetter: (params) => {
-                let result = '';
-                if (params.row.metabolites) {
-                    if (params.row.metabolites[0]) {
-                        if (params.row.metabolites[0].pathway_subgroup) {
-                            result = params.row.metabolites[0].pathway_subgroup;
-                        }
-                    }
-                }  
-                return result;
-            }
-        },
+        commons_cols['metabolite_name'],
+        commons_cols['pathway_group'],
+        commons_cols['pathway_subgroup'],
         commons_cols['variants_number'],
         commons_cols['interval_r2'],
         commons_cols['interval_rho'],
@@ -107,52 +64,9 @@ export const metabolomics_columns = {
     ],
     'Nightingale': [
         commons_cols['omicspred_id'],
-        { 
-            field: 'metabolite_name', 
-            headerName: 'Biochemical Name',
-            width: 200,
-            renderCell: (params) => {
-                let metabolite_names = [];
-                if (params.row.metabolites) {
-                    for (let i=0; i<params.row.metabolites.length; i++) {
-                        metabolite_names.push(params.row.metabolites[i].name);
-                    }
-                }
-                return metabolite_names.map((metabolite_name) => omicspred_internal_link(metabolite_name,'Metabolite'));
-            }
-        },
-        { 
-            field: 'pathway_group', 
-            headerName: 'Pathway',
-            width: 300,
-            valueGetter: (params) => {
-            let result = '';
-            if (params.row.metabolites) {
-                if (params.row.metabolites[0]) {
-                if (params.row.metabolites[0].pathway_group) {
-                    result = params.row.metabolites[0].pathway_group;
-                }
-                }
-            }  
-            return result;
-            }
-        },
-        { 
-            field: 'pathway_subgroup', 
-            headerName: 'Sub Pathway',
-            width: 300,
-            valueGetter: (params) => {
-                let result = '';
-                if (params.row.metabolites) {
-                    if (params.row.metabolites[0]) {
-                    if (params.row.metabolites[0].pathway_subgroup) {
-                        result = params.row.metabolites[0].pathway_subgroup;
-                    }
-                    }
-                }  
-                return result;
-            }
-        },
+        commons_cols['metabolite_name'],
+        commons_cols['pathway_group'],
+        commons_cols['pathway_subgroup'],
         commons_cols['variants_number'],
         commons_cols['interval_r2'],
         commons_cols['interval_rho'],

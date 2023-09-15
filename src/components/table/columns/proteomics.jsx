@@ -1,53 +1,12 @@
-import {cohort_valueGetter, commons_cols, omicspred_internal_link} from "./common";
+import {cohort_valueGetter, commons_cols} from "./common";
 
 // Export Proteomics columns
 export const proteomics_columns = {
     'Olink': [
         commons_cols['omicspred_id'],
-        { 
-            field: 'uniprot_id', 
-            headerName: 'UniProt ID',
-            width: 150,
-            renderCell: (params) => {
-                let pr_ids = [];
-                if (params.row.proteins) {
-                    for (let i=0; i<params.row.proteins.length; i++) {
-                        pr_ids.push(params.row.proteins[i].external_id);
-                    }
-                }
-                return pr_ids.map((pr_id) => omicspred_internal_link(pr_id,'Protein'));
-            }
-        },
-        { 
-            field: 'gene_name', 
-            headerName: 'Gene',
-            width: 150,
-            renderCell: (params) => {
-                let gene_names = [];
-                if (params.row.genes) {
-                    for (let i=0; i<params.row.genes.length; i++) {
-                        gene_names.push(params.row.genes[i].name);
-                    }
-                }
-                return gene_names.map((gene_name) => omicspred_internal_link(gene_name,'Gene'));
-            }
-        },
-        { 
-            field: 'protein_name', 
-            headerName: 'Protein',
-            width: 300,
-            valueGetter: (params) => {
-                let result = '';
-                if (params.row.proteins) {
-                    let pr_names = [];
-                    for (let i=0; i<params.row.proteins.length; i++) {
-                        pr_names.push(params.row.proteins[i].name);
-                    }
-                    result = pr_names.join(';');
-                }
-                return result;
-            }
-        },
+        commons_cols['protein_id'],
+        commons_cols['gene_name'],
+        commons_cols['protein_name'],
         commons_cols['variants_number'],
         commons_cols['interval_r2'],
         commons_cols['interval_rho'],
@@ -98,54 +57,9 @@ export const proteomics_columns = {
     ],
     'Somalogic': [
         commons_cols['omicspred_id'],
-        { 
-            field: 'uniprot_id', 
-            headerName: 'UniProt ID',
-            width: 300,
-            valueGetter: (params) => {
-                let result = '';
-                if (params.row.proteins) {
-                    let pr_ids = [];
-                    for (let i=0; i<params.row.proteins.length; i++) {
-                        pr_ids.push(params.row.proteins[i].external_id);
-                    }
-                    result = pr_ids.join(';');
-                }
-                return result;
-            }
-        },
-        { 
-            field: 'gene_name', 
-            headerName: 'Gene',
-            width: 300,
-            valueGetter: (params) => {
-                let result = '';
-                if (params.row.genes) {
-                    let gene_names = [];
-                    for (let i=0; i<params.row.genes.length; i++) {
-                        gene_names.push(params.row.genes[i].name);
-                    }
-                    result = gene_names.join(';');
-                }
-                return result;
-            }
-        },
-        { 
-            field: 'protein_name', 
-            headerName: 'Protein',
-            width: 300,
-            valueGetter: (params) => {
-                let result = '';
-                if (params.row.proteins) {
-                    let pr_names = [];
-                    for (let i=0; i<params.row.proteins.length; i++) {
-                        pr_names.push(params.row.proteins[i].name);
-                    }
-                    result = pr_names.join(';');
-                }
-                return result;
-            }
-        },
+        commons_cols['protein_id'],
+        commons_cols['gene_name'],
+        commons_cols['protein_name'],
         commons_cols['variants_number'],
         commons_cols['interval_r2'],
         commons_cols['interval_rho'],

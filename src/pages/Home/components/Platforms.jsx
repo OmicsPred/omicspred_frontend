@@ -34,7 +34,7 @@ function Platforms() {
                   href="https://www.jacksonheartstudy.org/"
                 ></Href>{" cohorts"}
             </p>
-            <a href="#" className="btn btn-primary">Learn more</a>
+            <a href="/platform/Somalogic" className="btn btn-primary">Learn more</a>
           </div>
         </div>
         {/* Olink */}
@@ -53,7 +53,7 @@ function Platforms() {
                   href="https://www.ed.ac.uk/viking/about-us/what-we-do/our-studies"
                 ></Href>{" cohorts"}
             </p>
-            <a href="#" className="btn btn-primary">Learn more</a>
+            <a href="/platform/Olink" className="btn btn-primary">Learn more</a>
           </div>
         </div>
       </div>
@@ -73,7 +73,7 @@ function Platforms() {
                 href="https://www.ed.ac.uk/viking/about-us/what-we-do/our-studies"
               ></Href>{" cohorts"}
             </p>
-            <a href="#" className="btn btn-primary">Learn more</a>
+            <a href="/platform/Metabolon" className="btn btn-primary">Learn more</a>
           </div>
         </div>
         {/* Nightingale */}
@@ -97,7 +97,7 @@ function Platforms() {
                 href="https://www.ed.ac.uk/viking/about-us/what-we-do/our-studies"
               ></Href>{" cohorts"}
             </p>
-            <a href="#" className="btn btn-primary">Learn more</a>
+            <a href="/platform/Nightingale" className="btn btn-primary">Learn more</a>
           </div>
         </div>
       </div>
@@ -112,7 +112,7 @@ function Platforms() {
             <p className="card-text">
               13,668 gene expression genetic scores, validated on a withheld subset of INTERVAL.
             </p>
-            <a href="#" className="btn btn-primary">Learn more</a>
+            <a href="/platform/Illumina RNAseq" className="btn btn-primary">Learn more</a>
           </div>
         </div>
       </div>
