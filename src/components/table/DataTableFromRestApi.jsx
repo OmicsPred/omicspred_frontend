@@ -3,23 +3,26 @@ import DataTable from './DataTable';
 import restApiCallPaginated from '../RestAPIPaginated';
 
 const DataTableFromRestApi = (props) => {
-
     const [tableData, setTableData] = useState([])
-
-    let rest_url = "http://127.0.0.1:7000/rest/"+props.url_suffix;
+    const [restApiDone, setRestApiDone] = useState(false)
 
     useEffect(() => {
         (async ()=>{
-          const dataset = await restApiCallPaginated(rest_url);
+          const dataset = await restApiCallPaginated(props.url_suffix);
           console.log(dataset);
           setTableData(dataset);
+          // Check when the Rest API call is done
+          if (dataset != undefined) {
+            setRestApiDone(true);
+          }
         })();
     },[])
 
     return (
         <>
         {
-            tableData && tableData.length ? <DataTable data={tableData} columns={props.columns}/> : <div>Loading table ...</div>
+            restApiDone == true ? 
+            (tableData && tableData.length ? <DataTable data={tableData} columns={props.columns} groups={props.groups}/> : "No data found" ) : <div>Loading table ...</div>
         }
         </>
     )

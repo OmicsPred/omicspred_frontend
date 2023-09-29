@@ -1,3 +1,4 @@
+const rest_url = 'http://127.0.0.1:7000/rest/';
 
 const getData = async (url) => {
     var data = [];
@@ -18,6 +19,9 @@ const getData = async (url) => {
 }
 
 export default async function restApiCallPaginated(url) {
+    if (!url.startsWith('http')) {
+        url = rest_url+url;
+    }
     if (!url.includes('format=json')) {
         if (url.includes('?')) {
             url += '&';

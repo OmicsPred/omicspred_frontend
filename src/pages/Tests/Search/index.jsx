@@ -21,7 +21,8 @@ import {
   BooleanFacet,
   Layout,
   SingleLinksFacet,
-  SingleSelectFacet
+  SingleSelectFacet,
+  MultiCheckboxFacet
 } from "@elastic/react-search-ui-views";
 import "@elastic/react-search-ui-views/lib/styles/styles.css";
 
@@ -30,48 +31,49 @@ import { config } from "./config";
 
 const SORT_OPTIONS = [
   {
-    name: "Relevance",
-    value: []
-  },
-  {
-    name: "Label",
+    name: "ID",
     value: [
       {
-        field: "label.keyword",
+        field: "id",
         direction: "asc"
       }
     ]
   },
   {
-    name: "State -> Title",
+    name: "Name",
     value: [
       {
-        field: "states.keyword",
-        direction: "asc"
-      },
-      {
-        field: "title.keyword",
+        field: "name",
         direction: "asc"
       }
     ]
   },
   {
-    name: "Heritage Site -> State -> Title",
+    name: "Scores count",
     value: [
       {
-        field: "world_heritage_site.keyword",
-        direction: "asc"
-      },
-      {
-        field: "states.keyword",
-        direction: "asc"
-      },
-      {
-        field: "title.keyword",
+        field: "scores_count",
         direction: "asc"
       }
     ]
-  }
+  },
+  // {
+  //   name: "Heritage Site -> State -> Title",
+  //   value: [
+  //     {
+  //       field: "world_heritage_site.keyword",
+  //       direction: "asc"
+  //     },
+  //     {
+  //       field: "states.keyword",
+  //       direction: "asc"
+  //     },
+  //     {
+  //       field: "title.keyword",
+  //       direction: "asc"
+  //     }
+  //   ]
+  // }
 ];
 
 export default function Search() {
@@ -120,17 +122,37 @@ export default function Search() {
                         <Sorting label={"Sort by"} sortOptions={SORT_OPTIONS} />
                       )}
                       <Facet
-                        field="omics"
-                        label="Omics"
+                        field="name.keyword"
+                        label="Test"
                         filterType="any"
+                        isFilterable={true}
                       />
                       <Facet
+                        field="platform_name.keyword"
+                        label="Platform"
+                        filterType="any"
+                        view={SingleLinksFacet}
+                        // view={MultiCheckboxFacet}
+                      />
+                      <Facet
+                        field="omics_type.keyword"
+                        label="Type of Omics"
+                        filterType="any"
+                        isFilterable={true}
+                        // view={MultiCheckboxFacet}
+                      />
+                      <Facet
+                        field="scores_count"
+                        label="Number of Associated Scores"
+                        filterType="any"
+                      />
+                       <Facet
                         field="states.keyword"
                         label="States"
                         filterType="any"
                         isFilterable={true}
                       />
-                      <Facet
+                      {/*<Facet
                         field="world_heritage_site.keyword"
                         label="World Heritage Site"
                         view={BooleanFacet}
@@ -156,13 +178,13 @@ export default function Search() {
                         field="acres"
                         label="Acres"
                         view={SingleSelectFacet}
-                      />
+                      /> */}
                     </div>
                   }
                   bodyContent={
                     <Results
-                      titleField="label"
-                    //   urlField="nps_link"
+                      titleField="id"
+                      urlField="http://localhost:3000/"
                     //   thumbnailField="image_url"
                       shouldTrackClickThrough={true}
                     />

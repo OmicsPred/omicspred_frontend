@@ -19,7 +19,7 @@ const Plot = (props) => {
     }
 
     const fetchScoreData = async () => {
-        const score_data = await restApiCallPaginated('http://127.0.0.1:7000/rest/plot/score/search?platform='+platform);
+        const score_data = await restApiCallPaginated('plot/score/search?platform='+platform);
         setScoreData(score_data);
         // console.log(score_data);
         // const score_data = await restApiCall('plot/score/search?platform='+platform);

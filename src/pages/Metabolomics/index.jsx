@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import DataTableFromRestApi from "../../components/table/DataTableFromRestApi";
-import { metabolomics_columns } from '../../components/table/columns/metabolomics'
+import { metabolomics_columns, metabolomics_column_groups } from '../../components/table/columns/metabolomics'
 import restApiCall from '../../components/RestAPI';
 
 function Metabolomics() {
@@ -31,7 +31,7 @@ function Metabolomics() {
                 <li>#Scores: {platformData.scores_count}</li>
             </ul>
             <div className="mt-4">
-                <DataTableFromRestApi url_suffix={url_suffix} columns={metabolomics_columns[platform]}/>
+                <DataTableFromRestApi url_suffix={url_suffix} columns={metabolomics_columns[platform]} groups={metabolomics_column_groups[platform]}/>
             </div>
         </>
     );

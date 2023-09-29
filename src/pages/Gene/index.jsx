@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import Href from "../../components/Href";
 import DataTableFromRestApi from "../../components/table/DataTableFromRestApi";
 import DataTable from "../../components/table/DataTable";
-import {commons_cols, omicspred_internal_link} from "../../components/table/columns/common";
+import {common_cols, omicspred_internal_link} from "../../components/table/columns/common";
 import restApiCall from '../../components/RestAPI';
 import restApiCallPaginated from '../../components/RestAPIPaginated';
 
@@ -16,38 +16,16 @@ function Gene() {
     const element = 'gene';
     const url_suffix = "score/searchby"+element+"/"+gene;
     const columns = [
-        commons_cols['omicspred_id'],
-        commons_cols['platform_type'],
-        commons_cols['platform_name'],
-        commons_cols['variants_number'],
-        commons_cols['scoring_file']
+        common_cols['omicspred_id'],
+        common_cols['platform_type'],
+        common_cols['platform_name'],
+        common_cols['variants_number'],
+        common_cols['scoring_file']
     ]
 
     const protein_columns = [
-      { 
-        field: 'uniprot_id', 
-        headerName: 'UniProt ID',
-        width: 300,
-        renderCell: (params) => {
-          let result = '';
-          if (params.row.external_id) {
-            result = omicspred_internal_link(params.row.external_id,'protein')
-          }
-          return result;
-        }
-      },
-      { 
-        field: 'protein_name', 
-        headerName: 'Protein',
-        width: 300,
-        renderCell: (params) => {
-          let result = '';
-          if (params.row.name) {
-            result = params.row.name;
-          }
-          return result;
-        }
-      }
+      common_cols['protein_id'],
+      common_cols['protein_name']
     ]
 
     const fetchSummaryData = async () => {
@@ -57,7 +35,7 @@ function Gene() {
     }
 
     const fetchProteinData = async () => {
-      const data = await restApiCallPaginated('http://127.0.0.1:7000/rest/protein/search?gene_id='+gene);
+      const data = await restApiCallPaginated('protein/search?gene_id='+gene);
       console.log(data);
       for (let i=0; i < data.length; i++) {
         data[i]['id'] = i+1;
@@ -74,7 +52,10 @@ function Gene() {
       <div>
         <h2 className='page_title'>Gene <span>{elementData && elementData.name ? elementData.name : gene}</span></h2>
         {
-          elementData && elementData.external_id_source=='Ensembl' && elementData.name ? <div className='mt-3 mb-3'>Ensembl ID: <Href href={'https://www.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g='+elementData.external_id} text={elementData.external_id}/></div> : ''
+          elementData && elementData.external_id_source=='Ensembl' && elementData.name ? <div className='key_val_line mt-3'><span className='line_key'>Ensembl ID</span><Href href={'https://www.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g='+elementData.external_id} text={elementData.external_id}/></div> : ''
+        }
+        {
+          elementData && elementData.biotype ? <div className='key_val_line mt-2 mb-3'><span className='line_key'>Gene type</span>{elementData.biotype.replace('_', ' ')}</div> : ''
         }
         <DataTableFromRestApi url_suffix={url_suffix} columns={columns}/>
         { 

@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import DataTable from "../../components/table/DataTable";
-import { metabolomics_columns } from '../../components/table/columns/metabolomics'
-import { proteomics_columns } from '../../components/table/columns/proteomics'
-import { transcriptomics_columns } from '../../components/table/columns/transcriptomics'
+import { metabolomics_columns,metabolomics_column_groups } from '../../components/table/columns/metabolomics'
+import { proteomics_columns, proteomics_column_groups } from '../../components/table/columns/proteomics'
+import { transcriptomics_columns, transcriptomics_column_groups } from '../../components/table/columns/transcriptomics'
 import restApiCall from '../../components/RestAPI';
-
+import PlatformCohort from '../Home/components/PlatformCohort';
 
 function Platform() {
     let { platform } = useParams();
     const [platformSumData, setPlatformSumData] = useState([])
+    const [platformAddData, setPlatformAddData] = useState([])
     const [platformTableData, setPlatformTableData] = useState([])
 
     const platform_file_name = platform.replace(" ", "_");
@@ -40,10 +41,32 @@ function Platform() {
         return columns
     }
 
+    const get_table_column_groups = (type) => {
+        console.log('get_table_column_groups: |'+type+'|')
+        let col_groups = [];
+        switch(type) {
+            case 'Metabolomics':
+                if (platform in metabolomics_column_groups) {
+                    return metabolomics_column_groups[platform];
+                }
+            case 'Proteomics':
+                if (platform in proteomics_column_groups) {
+                    return proteomics_column_groups[platform];
+                }
+            case 'Transcriptomics':
+                if (platform in transcriptomics_column_groups) {
+                    return transcriptomics_column_groups[platform];
+                }
+            default:
+                col_groups = [];
+        }
+        return col_groups;
+    }
 
     const fetchPlatformSumData = async () => {
-        const platform_sum_data = await restApiCall('platform/'+platform);
-        setPlatformSumData(platform_sum_data);
+        const platform_sum_data = await restApiCall('platform/additional/'+platform);
+        setPlatformSumData(platform_sum_data.platform);
+        setPlatformAddData(platform_sum_data);
     }
 
     const fetchPlatformTableData = async () => {
@@ -62,20 +85,26 @@ function Platform() {
     return (
         <>
             <h2 className='page_title'>Platform <span>{platformSumData.name}</span> <small style={{fontWeight:200}}>({platformSumData.type})</small></h2>
-            <ul>
-                <li>Long Name: {platformSumData.full_name}</li>
-                <li>Version: {
+            <ul className='key_val_line'>
+                <li><span className='line_key'>Long Name</span>{platformSumData.full_name}</li>
+                <li><span className='line_key'>Version</span>{
                     platformSumData.version != '' ? platformSumData.version : '-'
                 }</li>
-                <li>Technic: {platformSumData.technic}</li>
-                <li>#Scores: {platformSumData.scores_count}</li>
+                <li><span className='line_key'>Technic</span>{platformSumData.technic}</li>
+                <li><span className='line_key'>Number of scores</span>{platformSumData.scores_count}</li>
+                { platformSumData.scores_count != platformAddData.omics_count ?
+                    <li><span className='line_key'>Number of {platformAddData.omics_type}</span>{platformAddData.omics_count}</li>:''
+                }
+                { platformAddData.cohorts ?
+                    <li><span className='line_key'>Cohort{platformAddData.cohorts.length > 1 && 's'}</span><PlatformCohort cohorts={platformAddData.cohorts}/></li>:''
+                }
             </ul>
             <div className="mt-3 me-4 sm:mt-0 sm:ml-3">
                 <a className="btn btn-primary shadow" href={"/plot/"+platformSumData.name} role="button">Go to Plots</a>
             </div>
             {platformSumData && platformSumData.type && platformTableData ? 
                 <div className="mt-4">
-                    <DataTable data={platformTableData} columns={get_table_columns(platformSumData.type)}/>
+                    <DataTable data={platformTableData} columns={get_table_columns(platformSumData.type)} groups={get_table_column_groups(platformSumData.type)}/>
                 </div>
                 :
                 <div>Loading ...</div>

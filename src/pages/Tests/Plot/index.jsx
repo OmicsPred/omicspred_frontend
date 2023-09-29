@@ -1,10 +1,6 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useParams } from 'react-router-dom';
 import Charts from "./components/Chart";
-import restApiCall from '../../../components/RestAPI';
-import restApiCallPaginated from '../../../components/RestAPIPaginated';
-
-
 
 const Plot = (props) => {
     let { platform } = useParams();
@@ -17,16 +13,6 @@ const Plot = (props) => {
 
     const plot_file = '/src/data/'+platform_file_name+'_plot.json';
     const plot_score_file = '/src/data/'+platform_file_name+'_plot_score.json';
-
-    // const fetchPlotData = async () => {
-    //     const platform_data = await restApiCall('plot/search?platform='+platform);
-    //     setPlotData(platform_data);
-    // }
-
-    // const fetchScoreData = async () => {
-    //     const score_data = await restApiCallPaginated('http://127.0.0.1:7000/rest/plot/score/search?platform='+platform);
-    //     setScoreData(score_data);
-    // }
 
     const fetchPlotData = async () => {
         const platform_plot_data = await fetch(plot_file)

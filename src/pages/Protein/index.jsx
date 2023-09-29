@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import DataTableFromRestApi from "../../components/table/DataTableFromRestApi";
-import {commons_cols} from "../../components/table/columns/common";
+import {common_cols} from "../../components/table/columns/common";
 import restApiCall from '../../components/RestAPI';
 
 
@@ -12,11 +12,11 @@ function Protein() {
     const element = 'protein';
     const url_suffix = "score/searchby"+element+"/"+protein;
     const columns = [
-        commons_cols['omicspred_id'],
-        commons_cols['platform_type'],
-        commons_cols['platform_name'],
-        commons_cols['variants_number'],
-        commons_cols['scoring_file']
+        common_cols['omicspred_id'],
+        common_cols['platform_type'],
+        common_cols['platform_name'],
+        common_cols['variants_number'],
+        common_cols['scoring_file']
     ]
 
     const fetchSummaryData = async () => {

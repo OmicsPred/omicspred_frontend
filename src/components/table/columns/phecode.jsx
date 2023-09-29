@@ -1,12 +1,12 @@
-import {cohort_valueGetter, commons_cols, omicspred_internal_link} from "./common";
+import {common_cols} from "./common";
 
 
 let base_phecode_columns = {
     'Full': [
-        commons_cols['phecode_id'],
-        commons_cols['phecode_name'],
-        commons_cols['phecode_category'],
-        commons_cols['omicspred_id'],
+        common_cols['phecode_id'],
+        common_cols['phecode_name'],
+        common_cols['phecode_category'],
+        common_cols['omicspred_id'],
         { 
             field: 'r2', 
             headerName: 'R2',
@@ -19,7 +19,7 @@ let base_phecode_columns = {
                 }   
             }
         },
-        commons_cols['platform_name'],
+        common_cols['platform_name'],
         { 
             field: 'omics_name', 
             headerName: 'Description',
@@ -55,9 +55,9 @@ let base_phecode_columns = {
         }
     ],
     'Sum': [
-        commons_cols['phecode_id'],
-        commons_cols['phecode_name'],
-        commons_cols['phecode_category'],
+        common_cols['phecode_id'],
+        common_cols['phecode_name'],
+        common_cols['phecode_category'],
         { 
             field: 'mean_age', 
             headerName: 'Mean Age',
@@ -130,10 +130,10 @@ const build_columns = () => {
 export const phecode_columns = build_columns();
 // export const phecode_columns = {
 //     'Full': [
-//         commons_cols['phecode_id'],
-//         commons_cols['phecode_name'],
-//         commons_cols['phecode_category'],
-//         commons_cols['omicspred_id'],
+//         common_cols['phecode_id'],
+//         common_cols['phecode_name'],
+//         common_cols['phecode_category'],
+//         common_cols['omicspred_id'],
 //         { 
 //             field: 'r2', 
 //             headerName: 'R2',
@@ -146,7 +146,7 @@ export const phecode_columns = build_columns();
 //                 }   
 //             }
 //         },
-//         commons_cols['platform_name'],
+//         common_cols['platform_name'],
 //         { 
 //             field: 'omics_name', 
 //             headerName: 'Description',
@@ -182,9 +182,9 @@ export const phecode_columns = build_columns();
 //         }
 //     ],
 //     'Sum': [
-//         commons_cols['phecode_id'],
-//         commons_cols['phecode_name'],
-//         commons_cols['phecode_category'],
+//         common_cols['phecode_id'],
+//         common_cols['phecode_name'],
+//         common_cols['phecode_category'],
 //         { 
 //             field: 'mean_age', 
 //             headerName: 'Mean Age',

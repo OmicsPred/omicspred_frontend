@@ -3,10 +3,11 @@ import ElasticSearchAPIConnector from "@elastic/search-ui-elasticsearch-connecto
 const connector = new ElasticSearchAPIConnector({
     host:
       // process.env.REACT_ELASTICSEARCH_HOST ||
-      "http://localhost:9200",
+      "http://localhost:9400",
     index: 
+      'gene,protein,score',
       // process.env.REACT_ELASTICSEARCH_INDEX || 
-      "efo_trait,publication",
+      // "gene,platform,protein,score",
     // apiKey:
     //   // process.env.REACT_ELASTICSEARCH_API_KEY ||
     //   "SlUzdWE0QUJmN3VmYVF2Q0F6c0I6TklyWHFIZ3lTbHF6Yzc2eEtyeWFNdw=="
@@ -24,22 +25,15 @@ export const config = {
         id: {
           weight: 4
         },
-        id_colon: {
-          weight: 4
-        },
-        label: {
+        name: {
           weight: 3
         },
-        synonyms: {
-          weight: 2
-        },
-        mapped_terms: {
-          weight: 2
-        },
-        description: {
-          weight: 2
-        },
-        title: {}
+        // platform_name: {
+        //   weight: 1
+        // },
+        // omics_type: {
+        //   weight: 1
+        // }
       },
       result_fields: {
         id: { 
@@ -48,7 +42,14 @@ export const config = {
             fallback: true
           }
         },
-        label: { raw: { } },
+        name: { snippet: {
+            size: 100,
+            fallback: true
+          }
+        },
+        scores_count: { raw: { } },
+        platform_name: { raw: { } },
+        omics_type: { raw: { label: "label"} }
         // label: {
         //   snippet: {
         //     size: 100,
@@ -56,60 +57,95 @@ export const config = {
         //   }
         // },
         // "traitcategory.label" : { raw: { value: "label"} },
-        description: {
-          snippet: {
-            size: 100,
-            fallback: true
-          }
-        },
-        title:  {
-            snippet: {
-              size: 100,
-              fallback: true
-            }
-        }
       },
       disjunctiveFacets: [
-        "acres",
-        "states.keyword",
-        "date_established",
-        "location"
+        "name.keyword",
+        "omics_type.keyword",
+        "platform_name.keyword",
+        "scores_count",
+        "states.keyword"
       ],
       facets: {
-        "world_heritage_site.keyword": { type: "value" },
+        "name.keyword": {
+          "type": "value",
+          "name": "top-five-states",
+          "sort": { "count": "desc" },
+          "data": [
+            {
+              "value": "California",
+              "count": 8
+            },
+            {
+              "value": "Alaska",
+              "count": 5
+            },
+            {
+              "value": "Utah",
+              "count": 4
+            },
+            {
+              "value": "Colorado",
+              "count": 3
+            }
+          ]
+        },
+        "omics_type.keyword": { 
+          type: "value",
+          data: [
+            {
+              "value": "Metabolomics",
+            },
+            {
+              "value": "Proteomics",
+            },
+            {
+              "value": "Transcriptomics",
+            },
+          ]
+        },
+        "platform_name.keyword": { type: "value" },
+        "scores_count": {
+          type: "range",
+          ranges: [
+            { from: 0, to: 100, name: "Small" },
+            { from: 100, to: 500, name: "Medium" },
+            { from: 500, name: "Large" }
+          ]
+        },
+        // location: {
+        //   // San Francisco. In the future, make this the user's current position
+        //   // center: "37.7749, -122.4194",
+        //   type: "range",
+        //   unit: "mi",
+        //   ranges: [
+        //     { from: 0, to: 100, name: "Nearby" },
+        //     { from: 100, to: 500, name: "A longer drive" },
+        //     { from: 500, name: "Perhaps fly?" }
+        //   ]
+        // },
+        // "world_heritage_site.keyword": { type: "value" },
         "states.keyword": { type: "value", size: 30, sort: "count" },
-        omics: {
-          label: 'Omics',
-          type: "range",
-          ranges: [
-            { from: 0, to: 100, name: "Metabolomics" },
-            { from: 100, to: 500, name: "Proteomics" },
-            { from: 500, name: "Transcriptomics" }
-          ]
-        },
-        location: {
-          // San Francisco. In the future, make this the user's current position
-          center: "37.7749, -122.4194",
-          type: "range",
-          unit: "mi",
-          ranges: [
-            { from: 0, to: 100, name: "Nearby" },
-            { from: 100, to: 500, name: "A longer drive" },
-            { from: 500, name: "Perhaps fly?" }
-          ]
-        },
-        visitors: {
-          type: "range",
-          ranges: [
-            { from: 0, to: 10000, name: "0 - 10000" },
-            { from: 10001, to: 100000, name: "10001 - 100000" },
-            { from: 100001, to: 500000, name: "100001 - 500000" },
-            { from: 500001, to: 1000000, name: "500001 - 1000000" },
-            { from: 1000001, to: 5000000, name: "1000001 - 5000000" },
-            { from: 5000001, to: 10000000, name: "5000001 - 10000000" },
-            { from: 10000001, name: "10000001+" }
-          ]
-        }
+        // omics: {
+        //   label: 'Omics',
+        //   type: "range",
+        //   ranges: [
+        //     { from: 0, to: 100, name: "Metabolomics" },
+        //     { from: 100, to: 500, name: "Proteomics" },
+        //     { from: 500, name: "Transcriptomics" }
+        //   ]
+        // },
+        // visitors: {
+        //   type: "range",
+        //   ranges: [
+        //     { from: 0, to: 10000, name: "0 - 10000" },
+        //     { from: 10001, to: 100000, name: "10001 - 100000" },
+        //     { from: 100001, to: 500000, name: "100001 - 500000" },
+        //     { from: 500001, to: 1000000, name: "500001 - 1000000" },
+        //     { from: 1000001, to: 5000000, name: "1000001 - 5000000" },
+        //     { from: 5000001, to: 10000000, name: "5000001 - 10000000" },
+        //     { from: 10000001, name: "10000001+" }
+        //   ]
+        // }
       }
     },
     autocompleteQuery: {

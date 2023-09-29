@@ -99,3 +99,39 @@ footer {
 .MuiDataGrid-columnHeaderTitle {
     font-weight: bold !important;
 }
+
+
+.training_col {
+    color:#0d6efd;
+}
+.cols_group {
+    border-left: 1px solid;
+}
+.col_border_left {
+    border-left: 1px solid;
+}
+
+
+.key_val_line {
+    .line_key {
+        font-weight: bold;
+        &:after {
+            content: ':';
+            margin-right: 0.5rem;
+        }
+    }
+}
+
+
+.ge_color_bg {
+    background-color: #0A0;
+}
+.tr_color_bg {
+    background-color: purple; // #975ebe
+}
+.pr_color_bg {
+    background-color: #D00;
+}
+.me_color_bg {
+    background-color: orange; //#ff974e
+}

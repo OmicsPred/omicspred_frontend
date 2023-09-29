@@ -1,8 +1,8 @@
-import {cohort_valueGetter, commons_cols} from "./common";
+import {common_cols, cohort_cols, common_column_groups} from "./common";
 
 export const transcriptomics_columns = {
     'Illumina RNAseq': [
-        commons_cols['omicspred_id'],
+        common_cols['omicspred_id'],
         { 
             field: 'ensg_name', 
             headerName: 'Ensembl ID',
@@ -19,24 +19,19 @@ export const transcriptomics_columns = {
                 return result;
             }
         },
-        commons_cols['gene_name'],
-        commons_cols['variants_number'],
-        commons_cols['interval_r2'],
-        commons_cols['interval_rho'],
-        { 
-            field: 'INTERVAL withheld subset_R2', 
-            headerName: 'INTERVAL withheld subset R2',
-            // width: 300,
-            valueGetter: (params) => {
-                return cohort_valueGetter(params.row,'INTERVAL withheld subset','R2');
-            }
-        },
-        { 
-            field: 'INTERVAL withheld subset_Rho', 
-            headerName: 'INTERVAL withheld subset Rho',
-            valueGetter: (params) => {
-                return cohort_valueGetter(params.row,'INTERVAL withheld subset','Rho');
-            }
-        },
+        common_cols['gene_name'],
+        common_cols['variants_number'],
+        cohort_cols['INTERVAL']['R2'],
+        cohort_cols['INTERVAL']['Rho'],
+        cohort_cols['INTERVAL_withheld_subset']['R2'],
+        cohort_cols['INTERVAL_withheld_subset']['Rho']
     ]
-}
+};
+
+
+export const transcriptomics_column_groups = {
+    'Illumina RNAseq': [
+        common_column_groups['INTERVAL'],
+        common_column_groups['INTERVAL_withheld_subset']
+    ]
+};

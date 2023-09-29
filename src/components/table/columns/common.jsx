@@ -24,11 +24,13 @@ export const omicspred_internal_links = function(op_ids,type) {
     )
 }
 
-export const commons_cols = {
+export const common_cols = {
     'omicspred_id': {
         field: 'id', 
         headerName: 'OmicsPred ID', 
-        width: 150,
+        minWidth: 150,
+        flex: 0.5,
+        resizable: false,
         renderCell: (params) => {
             let op_id = params.row.id;
             if (params.row.score_id) {
@@ -37,27 +39,12 @@ export const commons_cols = {
             return omicspred_internal_link(op_id,'Score')
         }
     },
-    'variants_number': { field: 'variants_number', headerName: '#SNP', width: 100 },
-    'interval_r2' : { 
-        field: 'INTERVAL_R2', 
-        headerName: 'INTERVAL R2',
-        // width: 300,
-        valueGetter: (params) => {
-            return cohort_valueGetter(params.row,'INTERVAL','R2');
-        }
-    },
-    'interval_rho': { 
-        field: 'INTERVAL_Rho', 
-        headerName: 'INTERVAL Rho',
-        // width: 300,
-        valueGetter: (params) => {
-            return cohort_valueGetter(params.row,'INTERVAL','Rho');
-        }
-    },
+    'variants_number': { field: 'variants_number', headerName: '#SNP', flex: 0.5},
     'platform_type': { 
         field: 'platform_type', 
         headerName: 'Omics',
-        width: 150,
+        minWidth: 150,
+        flex: 1,
         valueGetter: (params) => {
             return params.row.platform.type;
         }
@@ -65,7 +52,8 @@ export const commons_cols = {
     'platform_name': { 
         field: 'platform_name', 
         headerName: 'Platform',
-        width: 150,
+        minWidth: 150,
+        flex: 1,
         renderCell: (params) => {
             return omicspred_internal_link(params.row.platform.name,'Platform');
         }
@@ -73,7 +61,7 @@ export const commons_cols = {
     'scoring_file': { 
         field: 'scoring_file', 
         headerName: 'Scoring File',
-        width: 150,
+        flex: 1,
         renderCell: (params) => {
             return <FileEarmarkText color="blue" size={24}/>;
         }
@@ -81,11 +69,15 @@ export const commons_cols = {
     'protein_id': { 
         field: 'uniprot_id', 
         headerName: 'UniProt ID',
-        width: 150,
+        minWidth: 120,
+        flex: 0.5,
         renderCell: (params) => {
             let pr_ids = [];
             if (params.row.proteins) {
                 pr_ids = params.row.proteins.map((protein) => protein.external_id)  
+            }
+            else if (params.row.external_id) {
+                pr_ids.push(params.row.external_id);
             }
             return omicspred_internal_links(pr_ids, 'Protein');
         }
@@ -93,11 +85,15 @@ export const commons_cols = {
     'protein_name': { 
         field: 'protein_name', 
         headerName: 'Protein',
-        width: 300,
+        minWidth: 150,
+        flex: 1,
         valueGetter: (params) => {
             let pr_names = [];
             if (params.row.proteins) {
                 pr_names = params.row.proteins.map((protein) => protein.name)  
+            }
+            else if (params.row.name) {
+                pr_names.push(params.row.name);
             }
             return pr_names.join(';');
         }
@@ -105,7 +101,8 @@ export const commons_cols = {
     'gene_name': { 
         field: 'gene_name', 
         headerName: 'Gene',
-        width: 150,
+        minWidth: 120,
+        flex: 0.5,
         renderCell: (params) => {
             let gene_names = [];
             if (params.row.genes) {
@@ -117,7 +114,8 @@ export const commons_cols = {
     'metabolite_name': {
         field: 'metabolite_name', 
         headerName: 'Biochemical Name',
-        width: 200,
+        minWidth: 200,
+        flex: 1,
         renderCell: (params) => {
             let metabolite_names = [];
             if (params.row.metabolites) {
@@ -129,7 +127,8 @@ export const commons_cols = {
     'phecode_id': {
         field: 'phecode_id', 
         headerName: 'PheCode', 
-        width: 100,
+        minWidth: 100,
+        flex: 1,
         renderCell: (params) => {
             let phe_id = params.row.id;
             if (params.row.phecode) {
@@ -141,7 +140,8 @@ export const commons_cols = {
     'phecode_name': {
         field: 'phecode_name', 
         headerName: 'Phenotype', 
-        width: 300,
+        // width: 300,
+        flex: 1,
         renderCell: (params) => {
             let phe_name = params.row.name;
             if (params.row.phecode) {
@@ -153,7 +153,8 @@ export const commons_cols = {
     'phecode_category': {
         field: 'phecode_category', 
         headerName: 'Category', 
-        width: 200,
+        //width: 200,
+        flex: 1,
         renderCell: (params) => {
             let phe_cat = params.row.phecode.category;   
             return phe_cat
@@ -162,7 +163,8 @@ export const commons_cols = {
     'pathway_group': { 
         field: 'pathway_group', 
         headerName: 'Pathway',
-        width: 300,
+        minWidth: 200,
+        flex: 1,
         valueGetter: (params) => {
         let result = '';
         if (params.row.metabolites) {
@@ -178,7 +180,8 @@ export const commons_cols = {
     'pathway_subgroup': { 
         field: 'pathway_subgroup', 
         headerName: 'Sub Pathway',
-        width: 300,
+        minWidth: 200,
+        flex: 1,
         valueGetter: (params) => {
             let result = '';
             if (params.row.metabolites) {
@@ -190,5 +193,377 @@ export const commons_cols = {
             }  
             return result;
         }
+    },
+}
+
+
+export const cohort_cols = {
+    'INTERVAL': {
+        'R2' : { 
+            field: 'INTERVAL_R2',
+            headerClassName: ['training_col','col_border_left'],
+            headerName: 'R2',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'INTERVAL','R2');
+            }
+        },
+        'Rho': { 
+            field: 'INTERVAL_Rho', 
+            headerName: 'Rho',
+            headerClassName: 'training_col',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'INTERVAL','Rho');
+            }
+        }
+    },
+    'UKB': {
+        'R2': { 
+            field: 'UKB_R2', 
+            headerName: 'R2',
+            headerClassName: 'col_border_left',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'UKB','R2');
+            }
+        },
+        'Rho': { 
+            field: 'UKB_Rho', 
+            headerName: 'Rho',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'UKB','Rho');
+            }
+        }
+    },
+    'ORCADES': {
+        'R2': { 
+            field: 'ORCADES_R2', 
+            headerName: 'R2',
+            headerClassName: 'col_border_left',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'ORCADES','R2');
+            }
+        },
+        'Rho': { 
+            field: 'ORCADES_Rho', 
+            headerName: 'Rho',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'ORCADES','Rho');
+            }
+        },
+        'Missing Rate': { 
+            field: 'ORCADES_Missing Rate', 
+            headerName: 'Missing Rate',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'ORCADES','Missing Rate');
+            }
+        }
+    },
+    'VIKING': {
+        'R2': { 
+            field: 'VIKING_R2', 
+            headerName: 'R2',
+            headerClassName: 'col_border_left',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'VIKING','R2');
+            }
+        },
+        'Rho': { 
+            field: 'VIKING_Rho', 
+            headerName: 'Rho',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'VIKING','Rho');
+            }
+        },
+        'Missing Rate': { 
+            field: 'VIKING_Missing Rate', 
+            headerName: 'Missing Rate',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'VIKING','Missing Rate');
+            }
+        }
+    },
+    'MEC-CN': {
+        'R2': { 
+            field: 'MEC-CN_R2', 
+            headerName: 'R2',
+            headerClassName: 'col_border_left',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'MEC-CN','R2');
+            }
+        },
+        'Rho': { 
+            field: 'MEC-CN_Rho', 
+            headerName: 'Rho',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'MEC-CN','Rho');
+            }
+        },
+        'Missing Rate': { 
+            field: 'MEC-CN_Missing Rate', 
+            headerName: 'Missing Rate',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'MEC-CN','Missing Rate');
+            }
+        }
+    },
+    'MEC-IN': {
+        'R2': {
+            field: 'MEC-IN_R2', 
+            headerName: 'R2',
+            headerClassName: 'col_border_left',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'MEC-IN','R2');
+            }
+        },
+        'Rho': {
+            field: 'MEC-IN_Rho', 
+            headerName: 'Rho',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'MEC-IN','Rho');
+            }
+        },
+        'Missing Rate': {
+            field: 'MEC-IN_Missing Rate', 
+            headerName: 'Missing Rate',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'MEC-IN','Missing Rate');
+            }
+        }
+    },
+    'MEC-MA': {
+        'R2': { 
+            field: 'MEC-MA_R2', 
+            headerName: 'R2',
+            headerClassName: 'col_border_left',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'MEC-MA','R2');
+            }
+        },
+        'Rho': { 
+            field: 'MEC-MA_Rho', 
+            headerName: 'Rho',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'MEC-MA','Rho');
+            }
+        },
+        'Missing Rate': { 
+            field: 'MEC-MA_Missing Rate', 
+            headerName: 'Missing Rate',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'MEC-MA','Missing Rate');
+            }
+        }
+    },
+    'INTERVAL_withheld_subset': {
+        'R2': { 
+            field: 'INTERVAL_withheld_subset_R2', 
+            headerName: 'R2',
+            headerClassName: 'col_border_left',
+            // width: 300,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'INTERVAL withheld subset','R2');
+            }
+        },
+        'Rho': { 
+            field: 'INTERVAL_withheld_subset_Rho', 
+            headerName: 'Rho',
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'INTERVAL withheld subset','Rho');
+            }
+        }
+    },
+    'UKB': {
+        'R2': { 
+            field: 'UKB_R2', 
+            headerName: 'R2',
+            headerClassName: 'col_border_left',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'UKB','R2');
+            }
+        },
+        'Rho': { 
+            field: 'UKB_Rho', 
+            headerName: 'Rho',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'UKB','Rho');
+            }
+        }
+    },
+    'NSPHS': {
+        'R2': { 
+            field: 'NSPHS_R2', 
+            headerName: 'R2',
+            headerClassName: 'col_border_left',
+            // width: 300,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'NSPHS','R2');
+            }
+        },
+        'Rho': { 
+            field: 'NSPHS_Rho', 
+            headerName: 'Rho',
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'NSPHS','Rho');
+            }
+        },
+        'Missing Rate': { 
+            field: 'NSPHS_Missing Rate', 
+            headerName: 'Missing Rate',
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'NSPHS','Missing Rate');
+            }
+        }
+    },
+    'FENLAND': {
+        'R2': {
+            field: 'FENLAND_R2', 
+            headerName: 'R2',
+            headerClassName: 'col_border_left',
+            // width: 300,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'FENLAND','R2');
+            }
+        },
+        'Rho': {
+            field: 'FENLAND_Rho', 
+            headerName: 'Rho',
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'FENLAND','Rho');
+            }
+        },
+        'Missing Rate': {
+            field: 'FENLAND_Missing Rate', 
+            headerName: 'Missing Rate',
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'FENLAND','Missing Rate');
+            }
+        }
+    },
+    'JHS': {
+        'R2': {
+            field: 'JHS_R2', 
+            headerName: 'R2',
+            headerClassName: 'col_border_left',
+            // width: 300,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'JHS','R2');
+            }
+        },
+        'Rho': {
+            field: 'JHS_Rho', 
+            headerName: 'Rho',
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'JHS','Rho');
+            }
+        },
+        'Missing Rate': {
+            field: 'JHS_Missing Rate', 
+            headerName: 'Missing Rate',
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'JHS','Missing Rate');
+            }
+        }
+    }
+}
+
+
+export const common_column_groups = {
+    'INTERVAL': {
+        groupId: 'INTERVAL',
+        children: [{ field: 'INTERVAL_R2' }, { field: 'INTERVAL_Rho' }],
+        headerClassName: ['training_col','cols_group']
+    },
+    'FENLAND': {
+        groupId: 'FENLAND',
+        children: [{ field: 'FENLAND_R2' }, { field: 'FENLAND_Rho' }, { field: 'FENLAND_Missing Rate' }],
+        headerClassName: 'cols_group'
+    
+    },
+    'MEC CN': {
+        groupId: 'MEC CN',
+        children: [{ field: 'MEC-CN_R2' }, { field: 'MEC-CN_Rho' }, { field: 'MEC-CN_Missing Rate' }],
+        headerClassName: 'cols_group'
+    },
+    'MEC IN': {
+        groupId: 'MEC IN',
+        children: [{ field: 'MEC-IN_R2' }, { field: 'MEC-IN_Rho' }, { field: 'MEC-IN_Missing Rate' }],
+        headerClassName: 'cols_group'
+    },
+    'MEC MA': {
+        groupId: 'MEC MA',
+        children: [{ field: 'MEC-MA_R2' }, { field: 'MEC-MA_Rho' }, { field: 'MEC-MA_Missing Rate' }],
+        headerClassName: 'cols_group'
+    },
+    'JHS': {
+        groupId: 'JHS',
+        children: [{ field: 'JHS_R2' }, { field: 'JHS_Rho' }, { field: 'JHS_Missing Rate' }],
+        headerClassName: 'cols_group'
+    },
+    'NSPHS': {
+        groupId: 'NSPHS',
+        children: [{ field: 'NSPHS_R2' }, { field: 'NSPHS_Rho' }, { field: 'NSPHS_Missing Rate' }],
+        headerClassName: 'cols_group'
+    },
+    'ORCADES': {
+        groupId: 'ORCADES',
+        children: [{ field: 'ORCADES_R2' }, { field: 'ORCADES_Rho' }, { field: 'ORCADES_Missing Rate' }],
+        headerClassName: 'cols_group'
+    },
+    'INTERVAL_withheld_subset': {
+        groupId: 'INTERVAL_withheld_subset',
+        children: [{ field: 'INTERVAL_withheld_subset_R2' }, { field: 'INTERVAL_withheld_subset_Rho' }],
+        headerClassName: 'cols_group',
+        headerName: 'INTERVAL withheld subset'
+    },
+    'UKB': {
+        groupId: 'UKB',
+        children: [{ field: 'UKB_R2' }, { field: 'UKB_Rho' }],
+        headerClassName: 'cols_group'
+    },
+    'VIKING': {
+        groupId: 'VIKING',
+        children: [{ field: 'VIKING_R2' }, { field: 'VIKING_Rho' }, { field: 'VIKING_Missing Rate' }],
+        headerClassName: 'cols_group'
     },
 }
