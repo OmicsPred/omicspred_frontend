@@ -2,6 +2,35 @@
 // @tailwind components;
 // @tailwind utilities;
 
+/* Variables */
+$ge_color: #0A0;
+$tr_color: purple; // #975ebe
+$pr_color: #D00;
+$me_color: orange; //#ff974e
+$ph_color: #00CED1; // DarkTurquoise
+$hl_color: blue;
+$op_light_grey: #F8F8F8;
+
+/* Omics colours */
+$omics_colors: (
+  "Metabolomics": $me_color,
+  "Proteomics": $pr_color,
+  "Transcriptomics": $tr_color
+);
+
+/* Type colours */
+$type_colors: (
+    'gene': $ge_color,
+    'transcript': $tr_color,
+    'protein': $pr_color,
+    'metabolite': $me_color,
+    'phecode': $ph_color
+);
+
+
+body {
+    font-family: "Helvetica","Helvetica Neue","Arial","sans-serif";
+}
 
 header {
     position: fixed;
@@ -39,22 +68,38 @@ footer {
 
 .home_header {
     position: relative;
+    z-index: 1;
+    // background-color: #ebf5fb;
+    background-color: rgb(248, 249, 250);
+    max-height: 765px;
     .home_header_left {
-        padding-top:80px;
+        margin-top:50px;
+        padding:1rem;
+        background-color: white;
+        z-index: 3;
+
     }
     .home_header_right {
-        z-index: 1;
-        position:relative; 
-        top:80px; 
-        right:0px;
-        width: 50%;
+        z-index: 2;
+        display: block;
+        margin-left: auto;
+        margin-right:0px;
+        max-height: 765px;
     }
+}
+
+.hl_color {
+    color: $hl_color;
+}
+
+.hl_grey_box {
+    background-color: $op_light_grey;
 }
 
 .page_title {
     margin: 1rem 0rem 2rem;
     > span {
-        color: blue;
+        color: $hl_color;
     }
 }
 
@@ -111,7 +156,9 @@ footer {
     border-left: 1px solid;
 }
 
-
+ul.key_val_line {
+    margin-bottom: 2rem;
+}
 .key_val_line {
     .line_key {
         font-weight: bold;
@@ -123,15 +170,71 @@ footer {
 }
 
 
+.omics_header {
+    border-radius: 4px;
+}
+
+.ge_color {
+    color: $ge_color;
+}
+.tr_color {
+    color: $tr_color;
+}
+.pr_color {
+    color: $pr_color;
+}
+.me_color {
+    color: $me_color;
+}
+
 .ge_color_bg {
-    background-color: #0A0;
+    background-color: $ge_color;
 }
 .tr_color_bg {
-    background-color: purple; // #975ebe
+    background-color: $tr_color;
 }
 .pr_color_bg {
-    background-color: #D00;
+    background-color: $pr_color;
 }
 .me_color_bg {
-    background-color: orange; //#ff974e
+    background-color: $me_color;
+}
+
+@each $omics_key, $omics_color in $omics_colors {
+    .color_#{$omics_key} {
+        color: $omics_color;
+    }
+
+    .border_color_#{$omics_key} {
+        border-color: $omics_color !important;
+    }
+
+    .border_#{$omics_key} {
+        border: 1px solid $omics_color;
+    }
+
+    .hl_#{$omics_key} {
+      border-bottom: 1px solid $omics_color;
+    }
+
+    .badge_#{$omics_key} {
+        background-color: $omics_color;
+        font-weight: normal !important;
+    }
+
+    .bg_#{$omics_key} {
+        background-color: $omics_color;
+        font-weight: normal !important;
+        color: $omics_color;
+    }
+}
+
+@each $type_key, $type_color in $type_colors {
+    .color_#{$type_key} {
+        color: $type_color;
+    }
+
+    .bg_#{$type_key} {
+        background-color: $type_color;
+    }
 }

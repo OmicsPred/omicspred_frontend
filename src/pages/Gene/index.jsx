@@ -51,12 +51,14 @@ function Gene() {
     return (
       <div>
         <h2 className='page_title'>Gene <span>{elementData && elementData.name ? elementData.name : gene}</span></h2>
+        <ul className='key_val_line'>
         {
-          elementData && elementData.external_id_source=='Ensembl' && elementData.name ? <div className='key_val_line mt-3'><span className='line_key'>Ensembl ID</span><Href href={'https://www.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g='+elementData.external_id} text={elementData.external_id}/></div> : ''
+          elementData && elementData.external_id_source=='Ensembl' && elementData.name ? <li><span className='line_key'>Ensembl ID</span><Href href={'https://www.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g='+elementData.external_id} text={elementData.external_id}/></li> : ''
         }
         {
-          elementData && elementData.biotype ? <div className='key_val_line mt-2 mb-3'><span className='line_key'>Gene type</span>{elementData.biotype.replace('_', ' ')}</div> : ''
+          elementData && elementData.biotype ? <li><span className='line_key'>Gene type</span>{elementData.biotype.replace('_', ' ')}</li> : ''
         }
+        </ul>
         <DataTableFromRestApi url_suffix={url_suffix} columns={columns}/>
         { 
           proteinData ? <div className="mt-4"><h5>Associated protein(s)</h5><DataTable data={proteinData} columns={protein_columns}/></div> : ''

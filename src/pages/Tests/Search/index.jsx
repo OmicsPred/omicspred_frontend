@@ -1,82 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-// import "@elastic/eui/dist/eui_theme_light.css";
+import restApiCallWithData from '../../../components/RestAPIWithData';
+import ResultCard from './components/ResultCard';
+import SidePanelFilter from './components/SidePanelFilter';
 
-// import ElasticSearchAPIConnector from "@elastic/search-ui-elasticsearch-connector";
-// import moment from "moment";
-
-import {
-  ErrorBoundary,
-  Facet,
-  SearchProvider,
-//   SearchBox,
-  Results,
-  PagingInfo,
-  ResultsPerPage,
-  Paging,
-  Sorting,
-  WithSearch
-} from "@elastic/react-search-ui";
-import {
-  BooleanFacet,
-  Layout,
-  SingleLinksFacet,
-  SingleSelectFacet,
-  MultiCheckboxFacet
-} from "@elastic/react-search-ui-views";
-import "@elastic/react-search-ui-views/lib/styles/styles.css";
-
-import { config } from "./config";
-
-
-const SORT_OPTIONS = [
-  {
-    name: "ID",
-    value: [
-      {
-        field: "id",
-        direction: "asc"
-      }
-    ]
-  },
-  {
-    name: "Name",
-    value: [
-      {
-        field: "name",
-        direction: "asc"
-      }
-    ]
-  },
-  {
-    name: "Scores count",
-    value: [
-      {
-        field: "scores_count",
-        direction: "asc"
-      }
-    ]
-  },
-  // {
-  //   name: "Heritage Site -> State -> Title",
-  //   value: [
-  //     {
-  //       field: "world_heritage_site.keyword",
-  //       direction: "asc"
-  //     },
-  //     {
-  //       field: "states.keyword",
-  //       direction: "asc"
-  //     },
-  //     {
-  //       field: "title.keyword",
-  //       direction: "asc"
-  //     }
-  //   ]
-  // }
-];
-
-export default function Search() {
+function Search() {
     // Get search query
     const [searchParams, setSearchParams] = useSearchParams();
     let query = '';
@@ -86,122 +14,154 @@ export default function Search() {
         }
     }
 
-  return (
-    <SearchProvider config={config}>
-      <WithSearch
-        mapContextToProps={({ wasSearched }) => ({
-          wasSearched
-        })}
-      >
-        {({ wasSearched }) => {
-          return (
-            <div>
-              <ErrorBoundary>
-                <Layout
-                  header={
-                    <h2 className='page_title'>Searched term: <span>{query}</span></h2>
-                  }
-                //   header={
-                //     <SearchBox
-                //       autocompleteMinimumCharacters={3}
-                //       autocompleteResults={{
-                //         linkTarget: "_blank",
-                //         sectionTitle: "Results",
-                //         titleField: "label",
-                //         urlField: "",
-                //         shouldTrackClickThrough: true,
-                //         clickThroughTags: ["test"]
-                //       }}
-                //       autocompleteSuggestions={true}
-                //       debounceLength={0}
-                //     />
-                //   }
-                  sideContent={
-                    <div>
-                      {wasSearched && (
-                        <Sorting label={"Sort by"} sortOptions={SORT_OPTIONS} />
-                      )}
-                      <Facet
-                        field="name.keyword"
-                        label="Test"
-                        filterType="any"
-                        isFilterable={true}
-                      />
-                      <Facet
-                        field="platform_name.keyword"
-                        label="Platform"
-                        filterType="any"
-                        view={SingleLinksFacet}
-                        // view={MultiCheckboxFacet}
-                      />
-                      <Facet
-                        field="omics_type.keyword"
-                        label="Type of Omics"
-                        filterType="any"
-                        isFilterable={true}
-                        // view={MultiCheckboxFacet}
-                      />
-                      <Facet
-                        field="scores_count"
-                        label="Number of Associated Scores"
-                        filterType="any"
-                      />
-                       <Facet
-                        field="states.keyword"
-                        label="States"
-                        filterType="any"
-                        isFilterable={true}
-                      />
-                      {/*<Facet
-                        field="world_heritage_site.keyword"
-                        label="World Heritage Site"
-                        view={BooleanFacet}
-                      />
-                      <Facet
-                        field="visitors"
-                        label="Visitors"
-                        view={SingleLinksFacet}
-                      />
-                      <Facet
-                        field="date_established"
-                        label="Date Established"
-                        isFilterable={true}
-                        filterType="any"
-                      />
-                      <Facet
-                        field="location"
-                        label="Distance"
-                        filterType="any"
-                      />
-                      <Facet field="visitors" label="visitors" />
-                      <Facet
-                        field="acres"
-                        label="Acres"
-                        view={SingleSelectFacet}
-                      /> */}
-                    </div>
-                  }
-                  bodyContent={
-                    <Results
-                      titleField="id"
-                      urlField="http://localhost:3000/"
-                    //   thumbnailField="image_url"
-                      shouldTrackClickThrough={true}
-                    />
-                  }
-                  bodyHeader={
-                    <React.Fragment>
-                      {wasSearched && <PagingInfo />}
-                      {wasSearched && <ResultsPerPage />}
-                    </React.Fragment>
-                  }
-                  bodyFooter={<Paging />}
-                />
-              </ErrorBoundary>
+    const [esResults, setEsResults] = useState([])
+    // const [esPlatforms, setEsPlatforms] = useState([])
+    // const [esOmics, setEsOmics] = useState([])
+    const [esOptions, setEsOptions] = useState([])
+
+    const indexes = ['gene','metabolite','phecode','protein','score'];
+
+    const es_url = process.env.OMICSPRED_ES_URL+indexes.join(',')+'/_search?pretty=true';
+
+    const query_content = { 
+        "size": 20,
+        "query": { "query_string": {"query": query} } 
+    };
+
+    const fetchESResults = async () => {
+        const results = await restApiCallWithData(es_url,query_content);
+        console.log(">>> results:");
+        const results_list = results.hits.hits;
+        console.log(results_list);
+        let omics_counts = {};
+        let platform_counts = {};
+        // let platforms = [];
+        let options = [];
+        for (let i=0; i < results_list.length; i++) {
+            // Omics types
+            if (results_list[i]['_source']['omics_type']) { 
+                const res_omics = results_list[i]['_source']['omics_type'];
+                for (let j=0; j < res_omics.length; j++) {
+                    const omic_label = res_omics[j];
+                    if (omics_counts[omic_label]) {
+                        omics_counts[omic_label] += 1;
+                    }
+                    else {
+                        omics_counts[omic_label] = 1;
+                    }
+                }
+            }
+            // Platforms
+            if (results_list[i]['_source']['platform_name']) {
+                const res_platforms = results_list[i]['_source']['platform_name'];
+                for (let j=0; j < res_platforms.length; j++) {
+                    const platform_label = res_platforms[j];
+                    if (platform_counts[platform_label]) {
+                        platform_counts[platform_label] += 1;
+                    }
+                    else {
+                        platform_counts[platform_label] = 1;
+                    }
+                }
+            }
+        }
+        const omics = Object.keys(omics_counts).sort();
+        const platforms = Object.keys(platform_counts).sort();
+
+        setEsResults(results.hits.hits);
+        options.push({header:'Omics', type:'omics', list: omics.sort(), counts: omics_counts})
+        options.push({header:'Platform', type:'platform', list: platforms.sort(), counts: platform_counts})
+        setEsOptions(options);
+        console.log(">>> options");
+        console.log(options);
+
+    }
+
+    const [omicsChecked, setOmicsChecked] = useState([]);
+    const [platformChecked, setPlatformChecked] = useState([]);
+
+    function handleChange(e) {
+        if (e.target.name == 'omics') {
+            if (e.target.checked) {
+                setOmicsChecked([...omicsChecked, e.target.value]);
+            } else {
+                setOmicsChecked(omicsChecked.filter((item) => item !== e.target.value));
+            }
+        }
+        else if (e.target.name == 'platform') {
+            if (e.target.checked) {
+                setPlatformChecked([...platformChecked, e.target.value]);
+            } else {
+                setPlatformChecked(platformChecked.filter((item) => item !== e.target.value));
+            }
+        }
+        console.log("Omics: "+omicsChecked);
+        console.log("Platform: "+platformChecked);
+        console.log("--------------------");
+    }
+
+    function isFiltered(result) {
+        let filter_count = 0;
+        // Omics filter
+        const omics = result.omics_type;
+        if (omicsChecked && omicsChecked.length > 0) {
+            for (let i=0; i < omics.length; i++) {
+                if (omicsChecked.includes(omics[i])) {
+                    filter_count += 1;
+                    break;
+                }
+            }
+        }
+        else {
+            filter_count += 1;
+        }
+
+        // Platforms filter
+        const platforms = result.platform_name;
+        if (platformChecked && platformChecked.length > 0) {
+            for (let i=0; i < platforms.length; i++) {
+                if (platformChecked.includes(platforms[i])) {
+                    filter_count += 1;
+                    break;
+                }
+            }
+        }
+        else {
+            filter_count += 1;
+        }
+        if (filter_count > 1) {
+            return true;
+        }
+        else {
+            return false
+        }
+    }
+
+
+    useEffect(() => {
+        fetchESResults();
+    },[])
+
+    return (
+        <>
+            <h2 className='page_title'>Search results for <span>{query}</span></h2>
+            {/* <div>Sel. Omics: {omicsChecked.join(', ') }</div>
+            <div>Sel. Platform: {platformChecked.join(', ') }</div> */}
+            <div className='d-flex'>
+                <div className='hl_grey_box me-5 py-2 px-4' style={{minWidth:"150px"}}>
+                { 
+                    esOptions && esOptions.length > 0 ? esOptions.map((data) => <SidePanelFilter handleChange={handleChange} filter={data} key={data.type+'_side'}/>) : <div>No data</div>
+                }
+                </div>
+                <div>
+                { 
+                    esResults && esResults.length > 0 ? esResults.map((data) =>
+                        isFiltered(data._source) && <ResultCard data={data._source} type={data._index} key={data._index+'_'+data._id}/>) : <div>No data</div>
+                }
+                </div>
             </div>
-          );
-        }}
-      </WithSearch>
-    </SearchProvider>
-  );
+        </>
+    );
 }
+
+export default Search;

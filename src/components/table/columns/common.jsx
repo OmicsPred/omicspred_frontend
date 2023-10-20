@@ -24,6 +24,12 @@ export const omicspred_internal_links = function(op_ids,type) {
     )
 }
 
+export const omicspred_omics_type = function(type) {
+    return ( 
+        <span style={{borderLeft:"6px solid"}} className={"ps-2 border_color_"+type}>{type}</span>
+    )
+}
+
 export const common_cols = {
     'omicspred_id': {
         field: 'id', 
@@ -45,8 +51,8 @@ export const common_cols = {
         headerName: 'Omics',
         minWidth: 150,
         flex: 1,
-        valueGetter: (params) => {
-            return params.row.platform.type;
+        renderCell: (params) => {
+            return omicspred_omics_type(params.row.platform.type);
         }
     },
     'platform_name': { 

@@ -47,7 +47,7 @@ footer a > svg {
   font-size: 22px;
 }
 
-.external-link > svg {
+.external-link > svg:last-child {
   display: inline-block;
   font-size: 1rem;
   vertical-align: top !important;
@@ -132,4 +132,8 @@ footer a > svg {
   border-color: var(--bs-btn-border-color);
   background-color: var(--bs-btn-bg);
   color: var(--bs-btn-color);
+}
+
+.btn-primary:hover {
+  color: #FFF !important;
 }

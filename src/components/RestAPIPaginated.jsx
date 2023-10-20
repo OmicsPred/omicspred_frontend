@@ -1,4 +1,4 @@
-const rest_url = 'http://127.0.0.1:7000/rest/';
+const rest_url = process.env.OMICSPRED_REST_API_URL;
 
 const getData = async (url) => {
     var data = [];

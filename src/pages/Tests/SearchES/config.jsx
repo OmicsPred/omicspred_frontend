@@ -3,7 +3,7 @@ import ElasticSearchAPIConnector from "@elastic/search-ui-elasticsearch-connecto
 const connector = new ElasticSearchAPIConnector({
     host:
       // process.env.REACT_ELASTICSEARCH_HOST ||
-      "http://localhost:9400",
+      process.env.OMICSPRED_ES_URL,
     index: 
       'gene,protein,score',
       // process.env.REACT_ELASTICSEARCH_INDEX || 

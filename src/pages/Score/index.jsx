@@ -5,6 +5,8 @@ import { FileEarmarkText } from 'react-bootstrap-icons';
 import DataTable from "../../components/table/DataTable";
 import { score_columns } from '../../components/table/columns/score'
 import restApiCall from '../../components/RestAPI';
+import { numberBadge } from '../../components/Generic';
+
 
 function Score() {
     const { score } = useParams();
@@ -53,7 +55,7 @@ function Score() {
         let year = publication.date_publication.split('-')[0];
 
         return(
-            <Href href={"https://doi.org/"+doi} text={firstauthor+' et al. '+journal+' ('+year+')'}/>
+            <Href href={process.env.URL_ROOT_DOI+doi} text={firstauthor+' et al. '+journal+' ('+year+')'}/>
         )
     }
 
@@ -69,34 +71,34 @@ function Score() {
             <div className='d-flex'>
                 <div className='me-4'>
                     <ul className='key_val_line'>
-                        { scoreData.name ? <li>Score Name<span>:</span>{scoreData.name}</li> : '' }
+                        { scoreData.name ? <li><span className='line_key'>Score Name</span>{scoreData.name}</li> : '' }
                         {
                             scoreData.publication ? <li><span className='line_key'>Publication</span>{publication_link(scoreData.publication)}</li> : ''
                         }
-                        <li><span className='line_key'>Platform</span><a href={'/Platform/'+platformData.name}>{platformData.name}</a> <small>({platformData.type}</small>)</li>
+                        <li><span className='line_key'>Platform</span><a href={'/Platform/'+platformData.name}>{platformData.name}</a> <span className={'badge badge_'+platformData.type}>{platformData.type}</span></li>
                         <li><span className='line_key'>Method Name</span>{scoreData.method_name}</li>
-                        <li><span className='line_key'>Number of Variants</span>{scoreData.variants_number}</li>
+                        <li><span className='line_key'>Number of Variants</span>{numberBadge(scoreData.variants_number)}</li>
                         <li><span className='line_key'>Genome Build</span>{scoreData.variants_genomebuild}</li>
                     </ul>
                     <h5 className='mt-4'>Associated data:</h5>
-                    <ul className='key_val_line'>
+                    {/* <ul className='key_val_line'> */}
                         
                         {
-                            genesData.length > 0 ? <li><span className='line_key'>Genes</span>{ genesData.map((data) => <a href={'/Gene/'+data.name} key={data.name}>{data.name}</a>)}</li> : ''
+                            genesData.length > 0 ? <div className='key_val_line mb-1 ms-3'><span className='bg_gene px-1 py-1 me-2'></span><span className='line_key'>Gene{genesData.length > 1 && 's'}</span>{ genesData.map((data) => <a href={'/Gene/'+data.name} key={data.name}>{data.name}</a>)}</div> : ''
                         }
                         {
-                            transcriptsData.length > 0 ? <li><span className='line_key'>Transcripts</span>{transcriptsData.map((data) => <span key={data.name}>{data.name}</span>)}</li> : ''
+                            transcriptsData.length > 0 ? <div className='key_val_line mb-1 ms-3'><span className='bg_transcript px-1 py-1 me-2'></span><span className='line_key'>Transcript{transcriptsData.length > 1 && 's'}</span>{transcriptsData.map((data) => <span key={data.name}>{data.name}</span>)}</div> : ''
                         }
                         {
-                            proteinsData.length > 0 ? <li><span className='line_key'>Proteins</span>{proteinsData.map((data) => <span key={data.name}>{data.name} (<Href href={"/protein/"+data.external_id} text={data.external_id}/>)</span>)}</li> : ''
+                            proteinsData.length > 0 ? <div className='key_val_line mb-1 ms-3'><span className='bg_protein px-1 py-1 me-2'></span><span className='line_key'>Protein{proteinsData.length > 1 && 's'}</span>{proteinsData.map((data) => <span key={data.name}>{data.name} (<Href href={"/protein/"+data.external_id} text={data.external_id}/>)</span>)}</div> : ''
                         }
                         {
-                            metabolitesData.length > 0 ? <li><span className='line_key'>Metabolites</span>{metabolitesData.map((data) => <span key={data.name}>{data.name}</span>)}</li> : ''
+                            metabolitesData.length > 0 ? <div className='key_val_line mb-1 ms-3'><span className='bg_metabolite px-1 py-1 me-2'></span><span className='line_key'>Metabolite{metabolitesData.length > 1 && 's'}</span>{metabolitesData.map((data) => <span key={data.name}>{data.name}</span>)}</div> : ''
                         }
                         { 
-                            phecodeData && phecodeData.name ? <li><span className='line_key'>Phecode</span>{phecodeData.name} (<Href href={'/Phecode/'+phecodeData.id} text={phecodeData.id}/>)</li> : ''
+                            phecodeData && phecodeData.name ? <div className='key_val_line mb-1 ms-3'><span className='bg_phecode px-1 py-1 me-2'></span><span className='line_key'>Phecode</span>{phecodeData.name} (<Href href={'/Phecode/'+phecodeData.id} text={phecodeData.id}/>)</div> : ''
                         }
-                    </ul>
+                    {/* </ul> */}
                     <h5 className='mt-4'>Evaluations:</h5>
                     <DataTable data={metricData} columns={score_columns}/>
                 </div>

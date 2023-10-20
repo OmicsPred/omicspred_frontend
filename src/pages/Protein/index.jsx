@@ -32,7 +32,9 @@ function Protein() {
     return (
       <div>
         <h2 className='page_title'>Protein <span>{protein}</span></h2>
-        <div className='mt-3 mb-3'>Name: {elementData.name}</div>
+        <ul className='key_val_line'>
+          <li><span className='line_key'>Name</span>{elementData.name}</li>
+        </ul>
         <DataTableFromRestApi url_suffix={url_suffix} columns={columns}/>
       </div>
     );

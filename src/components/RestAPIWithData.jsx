@@ -1,6 +1,5 @@
 
 export default async function restApiCallWithData(rest_url,data) {
-    // let rest_url = "http://127.0.0.1:7000/rest/"+url_suffix;
     const options = {
         method: 'POST',
         headers: {

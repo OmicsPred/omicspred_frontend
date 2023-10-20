@@ -15,8 +15,8 @@ function Applications() {
         <div className="card ms-2 me-2" style={{padding:"0px",maxWidth:"580px"}}>
           <div className="card-body">
             <h4 className="card-title">A Phenome-wide association analysis in UK biobank</h4>
-            <p className="card-text">Genetic scores in OMICSPRED have been applied to{""}
-              <Href text="UK biobank" href="https://www.ukbiobank.ac.uk/"></Href>{" "}
+            <p className="card-text">Genetic scores in OmicsPred have been applied to{" "}
+              <Href text="UK biobank" href={process.env.URL_UKB}/>{" "}
               to test for associations with complex phenotypes.
             </p>
             <a href="/Applications" className="btn btn-primary">Learn more</a>
@@ -30,8 +30,8 @@ function Applications() {
         <div className="card ms-2 me-2" style={{padding:"0px",maxWidth:"580px"}}>
           <div className="card-body">
             <h4 className="card-title">Quantifying genetic control of pathways</h4>
-            <p className="card-text">Genetic scores for proteomics were applied to assess the extent to which biological pathways are genetically controlled using data at{""}
-              <Href text="Reactome" href="https://reactome.org/"></Href>{"."}
+            <p className="card-text">Genetic scores for proteomics were applied to assess the extent to which biological pathways are genetically controlled using data at{" "}
+              <Href text="Reactome" href={process.env.URL_REACTOME}/>{"."}
             </p>
             <a href="/Applications" className="btn btn-primary">Learn more</a>
           </div>

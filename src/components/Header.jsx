@@ -2,12 +2,7 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import { config } from "../pages/Tests/Search/config";
-
-import { SearchProvider, SearchBox } from "@elastic/react-search-ui";
-import "@elastic/react-search-ui-views/lib/styles/styles.css";
+import SearchBar from './SearchBar';
 
 
 function Header() {
@@ -28,14 +23,14 @@ function Header() {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Link href="/">Home</Nav.Link>
-                            <Nav.Link href="/Scores">Scores</Nav.Link>
-                            <Nav.Link href="/Applications">Applications</Nav.Link>
-                            <Nav.Link href="/">Submit Score</Nav.Link>
-                            <Nav.Link href="/">FAQs</Nav.Link>
-                            <Nav.Link href="/">Cohorts</Nav.Link>
-                            <Nav.Link href="#about">About</Nav.Link>
+                            <Nav.Link href="/scores">Scores</Nav.Link>
+                            <Nav.Link href="/applications">Applications</Nav.Link>
+                            <Nav.Link href={process.env.OMICSPRED_SUBMIT_SCORES_URL} target="_blank">Submit Score</Nav.Link>
+                            <Nav.Link href="/faqs">FAQs</Nav.Link>
+                            <Nav.Link href="/cohorts">Cohorts</Nav.Link>
+                            <Nav.Link href="/about">About</Nav.Link>
                         </Nav>
-                        <SearchProvider
+                        {/* <SearchProvider
                             config={{
                                 ...config,
                                 trackUrlState: false
@@ -58,7 +53,7 @@ function Header() {
                                 autocompleteSuggestions={true}
                                 debounceLength={0}
                             />
-                        </SearchProvider>
+                        </SearchProvider> */}
                         {/* <Form className="d-flex">
                             <Form.Control
                                 type="search"
@@ -68,6 +63,7 @@ function Header() {
                             />
                             <Button variant="outline-primary">Search</Button>
                         </Form> */}
+                        <SearchBar/>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

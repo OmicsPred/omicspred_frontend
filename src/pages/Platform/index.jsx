@@ -5,6 +5,8 @@ import { metabolomics_columns,metabolomics_column_groups } from '../../component
 import { proteomics_columns, proteomics_column_groups } from '../../components/table/columns/proteomics'
 import { transcriptomics_columns, transcriptomics_column_groups } from '../../components/table/columns/transcriptomics'
 import restApiCall from '../../components/RestAPI';
+import { numberBadge } from "../../components/Generic";
+
 import PlatformCohort from '../Home/components/PlatformCohort';
 
 function Platform() {
@@ -84,16 +86,17 @@ function Platform() {
 
     return (
         <>
-            <h2 className='page_title'>Platform <span>{platformSumData.name}</span> <small style={{fontWeight:200}}>({platformSumData.type})</small></h2>
+            <h2 className='page_title'>Platform <span>{platformSumData.name}</span></h2>
             <ul className='key_val_line'>
+                <li><span className='line_key'>Omics type</span><span className={'badge badge_'+platformSumData.type}>{platformSumData.type}</span></li>
                 <li><span className='line_key'>Long Name</span>{platformSumData.full_name}</li>
                 <li><span className='line_key'>Version</span>{
                     platformSumData.version != '' ? platformSumData.version : '-'
                 }</li>
                 <li><span className='line_key'>Technic</span>{platformSumData.technic}</li>
-                <li><span className='line_key'>Number of scores</span>{platformSumData.scores_count}</li>
+                <li><span className='line_key'>Number of scores</span>{numberBadge(platformSumData.scores_count)}</li>
                 { platformSumData.scores_count != platformAddData.omics_count ?
-                    <li><span className='line_key'>Number of {platformAddData.omics_type}</span>{platformAddData.omics_count}</li>:''
+                    <li><span className='line_key'>Number of {platformAddData.omics_type}</span>{numberBadge(platformAddData.omics_count.toString)}</li>:''
                 }
                 { platformAddData.cohorts ?
                     <li><span className='line_key'>Cohort{platformAddData.cohorts.length > 1 && 's'}</span><PlatformCohort cohorts={platformAddData.cohorts}/></li>:''

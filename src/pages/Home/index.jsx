@@ -5,10 +5,6 @@ import Citation from "./components/Citation"
 import Feedback from "./components/Feedback"
 import Supports from "./components/Supports"
 
-// import Href from "../../components/Href"
-
-// import {Link} from "react-router-dom"
-
 
 function Home() {
   return (

@@ -4,7 +4,8 @@ import protein_img from "../../../assets/protein.png";
 import metabolite_img from "../../../assets/metabolite.png";
 import rna_img from "../../../assets/rna.png";
 import restApiCallPaginated from '../../../components/RestAPIPaginated';
-
+import {ChevronDoubleRight, DashLg} from 'react-bootstrap-icons';
+import { thousandifyNumber } from "../../../components/Generic";
 import PlatformCohort from './PlatformCohort';
 
 function Platforms() {
@@ -56,16 +57,25 @@ function Platforms() {
         {
           Object.keys(categorizedPlatform).sort().map((key) => {
             return(
-              <div key={key+"_main"}>
-                <h2 className="mt-4 op_subsection_header" key={key}><img className="me-3" src={type2img[key]} alt={key}/>{key}</h2>
+              <div key={key+"_main"} className="mt-5">
+                <h2 className="py-2" key={key}><DashLg className={"color_"+key+" me-3"} size={50}/>{key}<DashLg className={"color_"+key+" ms-3"} size={50}/></h2>
+                {/* <h2 className="mt-4 op_subsection_header" key={key}><img className="me-3" src={type2img[key]} alt={key}/>{key}</h2> */}
                 <div className="card-deck d-lg-flex flex-lg-row justify-content-center d-md-flex flex-md-row d-sm-flex flex-sm-column" key={key+"_sub"}>
                   {categorizedPlatform[key].map((item, index) => 
                     <div className="card ms-2 me-2" key={item.name} style={{padding:"0px",maxWidth:"580px"}}>
                       <div className="card-body">
-                        <h4 className="card-title">{item.name} ({item.tissue})</h4>
-                        <p className="card-text">
-                          {item.o_count} {item.o_type} genetic scores, validated on the <PlatformCohort cohorts={item.cohorts}/> cohort{item.cohorts.length > 1 && 's'}
-                        </p>
+                        <h4 className={"card-title hl_"+key+" mb-2 pb-2"}>{item.name}</h4>
+                        <div className="card-text">
+                          <div style={{textAlign:"left"}}>
+                            Number of genetic scores: <b>{thousandifyNumber(item.o_count)}</b>
+                          </div>
+                          <div style={{textAlign:"left"}}>
+                            Validation cohort{item.cohorts.length > 1 && 's'}: <PlatformCohort cohorts={item.cohorts}/>
+                          </div>
+                          <div className='mt-2 mb-3'>
+                            <span className='badge bg-secondary me-2'>{item.o_type}</span><span className='badge bg-secondary'>{item.tissue}</span>
+                          </div>
+                        </div>
                         <a href={"/platform/"+item.name} className="btn btn-primary">Learn more</a>
                       </div>
                     </div>

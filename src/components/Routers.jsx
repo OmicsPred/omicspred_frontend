@@ -1,5 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "../pages/Home";
+import FAQs from "../pages/FAQs";
+import Cohorts from "../pages/Cohorts";
+import About from "../pages/About";
 import Platforms from "../pages/Platforms";
 import Scores from "../pages/Scores";
 import PhecodesFull from "../pages/Applications/PhecodesFull";
@@ -15,7 +18,7 @@ import Phecode from "../pages/Applications/Phecode";
 import Applications from "../pages/Applications";
 // Tests
 import Search from "../pages/Tests/Search";
-import Search2 from "../pages/Tests/Search2";
+import SearchES from "../pages/Tests/SearchES";
 import Plot from "../pages/Tests/Plot";
 import PlatformRest from "../pages/Tests/Platform"
 
@@ -25,6 +28,9 @@ function OpRouters() {
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/faqs" element={<FAQs />} />
+                <Route path="/cohorts" element={<Cohorts />} />
+                <Route path="/about" element={<About />} />
 
                 {/* Group pages */}
                 <Route path="/platforms" element={<Platforms />} />
@@ -45,7 +51,7 @@ function OpRouters() {
                 
                 {/* Test pages */}
                 <Route path="/search" element={<Search />} />
-                <Route path="/search2/:query" element={<Search2 />} />
+                <Route path="/search_es" element={<SearchES />} />
                 <Route path="/plot/:platform" element={<Plot />} />
                 <Route path="/platform_rest/:platform" element={<PlatformRest />} />
 

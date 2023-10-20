@@ -9,13 +9,13 @@ function Supports() {
 
       <div className="row justify-content-center mb-5">
         <div className="col pgs_centered">
-          <a className="pgs_no_icon_link" href="https://www.phpc.cam.ac.uk/"><img className="img-fluid op_big_icons" src={DPHPC} alt="University of Cambridge"/></a>
+          <a className="pgs_no_icon_link" href={process.env.URL_CAM_PHPC}><img className="img-fluid op_big_icons" src={DPHPC} alt="University of Cambridge"/></a>
         </div>
         <div className="col pgs_centered">
-          <a className="pgs_no_icon_link" href="https://www.hdruk.ac.uk/"><img className="img-fluid op_big_icons" src={HDRuk} alt="University of Cambridge"/></a>
+          <a className="pgs_no_icon_link" href={process.env.URL_HDR_UK}><img className="img-fluid op_big_icons" src={HDRuk} alt="HDR-UK"/></a>
         </div>
         <div className="col pgs_centered">
-          <a className="pgs_no_icon_link" href="https://baker.edu.au/"><img className="img-fluid op_big_icons" src={Baker} alt="University of Cambridge"/></a>
+          <a className="pgs_no_icon_link" href={process.env.URL_BAKER}><img className="img-fluid op_big_icons" src={Baker} alt="Baker Institute"/></a>
         </div>
       </div>
     </div>

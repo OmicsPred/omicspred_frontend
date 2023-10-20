@@ -32,9 +32,11 @@ function Metabolite() {
   return (
     <div>
       <h2 className='page_title'>Metabolite <span>{metabolite}</span></h2>
+      <ul className='key_val_line'>
       {
-        elementData && elementData.name != metabolite ? <div className='mt-3 mb-3'>Biomarker Name: {elementData.name}</div> : ''
+        elementData && elementData.name != metabolite ? <li><span className='line_key'>Biomarker Name</span>{elementData.name}</li> : ''
       }
+      </ul>
       <DataTableFromRestApi url_suffix={url_suffix} columns={columns}/>
     </div>
   );
