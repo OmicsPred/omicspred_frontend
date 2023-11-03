@@ -17,7 +17,7 @@ function Platform() {
 
     const platform_file_name = platform.replace(" ", "_");
 
-    const data_file = '/src/data/'+platform_file_name+'_table.json';
+    const data_file = process.env.OMICSPRED_DATA_DIR+platform_file_name+'_table.json';
 
     console.log(data_file);
 
@@ -107,7 +107,7 @@ function Platform() {
             </div>
             {platformSumData && platformSumData.type && platformTableData ? 
                 <div className="mt-4">
-                    <DataTable data={platformTableData} columns={get_table_columns(platformSumData.type)} groups={get_table_column_groups(platformSumData.type)}/>
+                    <DataTable table_key={platform} data={platformTableData} columns={get_table_columns(platformSumData.type)} groups={get_table_column_groups(platformSumData.type)}/>
                 </div>
                 :
                 <div>Loading ...</div>

@@ -1,4 +1,3 @@
-import Href from "../../../components/Href"
 import CitationCard from "../../../components/CitationCard"
 
 function Citation() {

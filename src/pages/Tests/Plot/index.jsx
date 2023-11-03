@@ -11,8 +11,9 @@ const Plot = (props) => {
 
     const platform_file_name = platform.replace(" ", "_");
 
-    const plot_file = '/src/data/'+platform_file_name+'_plot.json';
-    const plot_score_file = '/src/data/'+platform_file_name+'_plot_score.json';
+    const data_dir = process.env.OMICSPRED_DATA_DIR;
+    const plot_file = data_dir+platform_file_name+'_plot.json';
+    const plot_score_file = data_dir+platform_file_name+'_plot_score.json';
 
     const fetchPlotData = async () => {
         const platform_plot_data = await fetch(plot_file)

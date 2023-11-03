@@ -18,7 +18,7 @@ import Phecode from "../pages/Applications/Phecode";
 import Applications from "../pages/Applications";
 // Tests
 import Search from "../pages/Tests/Search";
-import SearchES from "../pages/Tests/SearchES";
+// import SearchES from "../pages/Tests/SearchES";
 import Plot from "../pages/Tests/Plot";
 import PlatformRest from "../pages/Tests/Platform"
 
@@ -51,7 +51,7 @@ function OpRouters() {
                 
                 {/* Test pages */}
                 <Route path="/search" element={<Search />} />
-                <Route path="/search_es" element={<SearchES />} />
+                {/* <Route path="/search_es" element={<SearchES />} /> */}
                 <Route path="/plot/:platform" element={<Plot />} />
                 <Route path="/platform_rest/:platform" element={<PlatformRest />} />
 

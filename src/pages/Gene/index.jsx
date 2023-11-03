@@ -59,9 +59,9 @@ function Gene() {
           elementData && elementData.biotype ? <li><span className='line_key'>Gene type</span>{elementData.biotype.replace('_', ' ')}</li> : ''
         }
         </ul>
-        <DataTableFromRestApi url_suffix={url_suffix} columns={columns}/>
+        <DataTableFromRestApi table_key="gene" url_suffix={url_suffix} columns={columns}/>
         { 
-          proteinData ? <div className="mt-4"><h5>Associated protein(s)</h5><DataTable data={proteinData} columns={protein_columns}/></div> : ''
+          proteinData ? <div className="mt-4"><h5>Associated protein(s)</h5><DataTable key="protein" data={proteinData} columns={protein_columns}/></div> : ''
         }
       </div>
     );

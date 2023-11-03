@@ -10,7 +10,7 @@ function PhecodesFull() {
         <>
             <h2 className='page_title'>Identified associations by Phecode</h2>
             <div className="mt-4">
-                <DataTableFromRestApi url_suffix={url_suffix} columns={phecode_columns['Sum']}/>
+                <DataTableFromRestApi table_key="phecode_sum" url_suffix={url_suffix} columns={phecode_columns['Sum']}/>
             </div>
         </>
     );

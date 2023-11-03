@@ -31,7 +31,7 @@ function Metabolomics() {
                 <li>#Scores: {platformData.scores_count}</li>
             </ul>
             <div className="mt-4">
-                <DataTableFromRestApi url_suffix={url_suffix} columns={metabolomics_columns[platform]} groups={metabolomics_column_groups[platform]}/>
+                <DataTableFromRestApi table_key={platformData.type} url_suffix={url_suffix} columns={metabolomics_columns[platform]} groups={metabolomics_column_groups[platform]}/>
             </div>
         </>
     );

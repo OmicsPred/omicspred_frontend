@@ -27,19 +27,6 @@ export default function ChartDoughnut(props) {
     scales: {
       y: {
         type: "linear",
-        display: true,
-        position: "right",
-        grid: {
-          drawOnChartArea: false,
-        },
-        title: {
-          display: true,
-          text: props.name_1,
-          align: "center",
-        },
-      },
-      y: {
-        type: "linear",
         display: false,
         position: "right",
         grid: {

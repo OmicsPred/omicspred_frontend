@@ -63,7 +63,7 @@ function Header() {
                             />
                             <Button variant="outline-primary">Search</Button>
                         </Form> */}
-                        <SearchBar/>
+                        { window.location.pathname == '/' ? '':<SearchBar/> }
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import restApiCallWithData from '../../../components/RestAPIWithData';
 import ResultCard from './components/ResultCard';
@@ -148,17 +148,21 @@ function Search() {
             {/* <div>Sel. Omics: {omicsChecked.join(', ') }</div>
             <div>Sel. Platform: {platformChecked.join(', ') }</div> */}
             <div className='d-flex'>
-                <div className='hl_grey_box me-5 py-2 px-4' style={{minWidth:"150px"}}>
+                <Suspense fallback={<div>Loading results ...</div>}>
                 { 
-                    esOptions && esOptions.length > 0 ? esOptions.map((data) => <SidePanelFilter handleChange={handleChange} filter={data} key={data.type+'_side'}/>) : <div>No data</div>
+                    esResults && esResults.length > 0 ?
+                    <>
+                        {/* Options Panel */}
+                        <div className='hl_grey_box me-5 py-2 px-4' style={{minWidth:"250px"}}>
+                            { esOptions && esOptions.length > 0 ? esOptions.map((data) => <SidePanelFilter handleChange={handleChange} filter={data} key={data.type+'_side'}/>) : <div>No data</div>}
+                        </div>
+                        {/* Result panel */}
+                        <div>
+                            { esResults.map((data) => isFiltered(data._source) && <ResultCard data={data._source} type={data._index} key={data._index+'_'+data._id}/>)}
+                        </div>
+                    </>: <div>No data</div>
                 }
-                </div>
-                <div>
-                { 
-                    esResults && esResults.length > 0 ? esResults.map((data) =>
-                        isFiltered(data._source) && <ResultCard data={data._source} type={data._index} key={data._index+'_'+data._id}/>) : <div>No data</div>
-                }
-                </div>
+                </Suspense>
             </div>
         </>
     );

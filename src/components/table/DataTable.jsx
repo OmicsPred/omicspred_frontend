@@ -12,31 +12,61 @@ const DataTable = (props) => {
     if (props.groups) {
       display_groups = true;
     }
+
+    // const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_';
+    const characters ='0123456789';
+
+    function generateString(length) {
+        let result = ' ';
+        const charactersLength = characters.length;
+        for ( let i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+    }
+
+    function getRowId(row) {
+      // if (row.id) {
+      //   return row.id
+      // }
+      // else if (row.name) {
+      //   return row.name;
+      // }
+      // else {
+        return generateString(20);
+      // }
+    }
     
     // useEffect(() => {
     //   setRowCountState((prevRowCountState) =>
     //     rowCount !== undefined ? rowCount : prevRowCountState,
     //   );
     // }, [rowCount, setRowCountState])
-  
+
     return (
         <div className="table-responsive">
           <DataGrid
             autoHeight
-            slots={{
-              toolbar: GridToolbar,
-            }}
             experimentalFeatures={{ columnGrouping: display_groups }}
             columnGroupingModel={props.groups}
             columns={props.columns}
             rows={props.data}
+            // getRowId={(row) => getRowId(row)}
             getRowId={(row) => row.id}
             // rowCount={rowCountState}
             // paginationMode="server"
+            sx={{ '--DataGrid-overlayHeight': '200px' }}
             initialState={{
               pagination: { paginationModel: { pageSize: default_page_size } }
             }}
-            sx={{ '--DataGrid-overlayHeight': '200px' }}
+            slots={{ 
+              toolbar: GridToolbar
+            }}
+            slotProps={{
+              toolbar: {
+                showQuickFilter: true
+              }
+            }}
           />
         </div>
     )

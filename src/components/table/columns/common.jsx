@@ -11,22 +11,24 @@ export const cohort_valueGetter = function(row,cohort,method) {
     return result;
 }
 
-export const omicspred_internal_link = function(op_id,type) {
+export const omicspred_internal_link = function(op_id,type,index) {
     let op_url = "/"+type+"/"+op_id;
     return (
-        <a key={op_id} href={op_url}>{op_id}</a>
+        <>
+            {index ? ', ': ''}<a key={op_id} href={op_url}>{op_id}</a>
+        </>
     )
 }
 
 export const omicspred_internal_links = function(op_ids,type) {
     return ( 
-        op_ids.map((op_id) => omicspred_internal_link(op_id, type))
+        op_ids.map((op_id, index) => omicspred_internal_link(op_id, type, index))
     )
 }
 
 export const omicspred_omics_type = function(type) {
     return ( 
-        <span style={{borderLeft:"6px solid"}} className={"ps-2 border_color_"+type}>{type}</span>
+        <span className={"border_left_mark border_color_"+type}>{type}</span>
     )
 }
 
@@ -43,6 +45,13 @@ export const common_cols = {
                 op_id = params.row.score_id;
             }   
             return omicspred_internal_link(op_id,'Score')
+        },
+        valueGetter: (params) => {
+            let op_id = params.row.id;
+            if (params.row.score_id) {
+                op_id = params.row.score_id;
+            }
+            return op_id 
         }
     },
     'variants_number': { field: 'variants_number', headerName: '#SNP', flex: 0.5},
@@ -53,7 +62,8 @@ export const common_cols = {
         flex: 1,
         renderCell: (params) => {
             return omicspred_omics_type(params.row.platform.type);
-        }
+        },
+        valueGetter: (params) => { return params.row.platform.type }
     },
     'platform_name': { 
         field: 'platform_name', 
@@ -62,7 +72,8 @@ export const common_cols = {
         flex: 1,
         renderCell: (params) => {
             return omicspred_internal_link(params.row.platform.name,'Platform');
-        }
+        },
+        valueGetter: (params) => { return params.row.platform.name }
     },
     'scoring_file': { 
         field: 'scoring_file', 
@@ -85,7 +96,17 @@ export const common_cols = {
             else if (params.row.external_id) {
                 pr_ids.push(params.row.external_id);
             }
-            return omicspred_internal_links(pr_ids, 'Protein');
+            return omicspred_internal_links(pr_ids, 'protein');
+        },
+        valueGetter: (params) => {
+            let pr_ids = [];
+            if (params.row.proteins) {
+                pr_ids = params.row.proteins.map((protein) => protein.external_id)  
+            }
+            else if (params.row.external_id) {
+                pr_ids.push(params.row.external_id);
+            }
+            return pr_ids.join(',');
         }
     },
     'protein_name': { 
@@ -115,6 +136,13 @@ export const common_cols = {
                 gene_names = params.row.genes.map((gene) => gene.name)  
             }
            return omicspred_internal_links(gene_names, 'Gene');
+        },
+        valueGetter: (params) => {
+            let gene_names = [];
+            if (params.row.genes) {
+                gene_names = params.row.genes.map((gene) => gene.name)  
+            }
+            return gene_names.join(',');
         }
     },
     'metabolite_name': {
@@ -127,7 +155,14 @@ export const common_cols = {
             if (params.row.metabolites) {
                 metabolite_names = params.row.metabolites.map((metabolite) => metabolite.name) 
             }
-            return omicspred_internal_links(metabolite_names, 'Metabolite');
+            return omicspred_internal_links(metabolite_names, 'metabolite');
+        },
+        valueGetter: (params) => {
+            let metabolite_names = [];
+            if (params.row.metabolites) {
+                metabolite_names = params.row.metabolites.map((metabolite) => metabolite.name) 
+            }
+            return metabolite_names.join(',');
         }
     },
     'phecode_id': {
@@ -140,7 +175,14 @@ export const common_cols = {
             if (params.row.phecode) {
                 phe_id = params.row.phecode.id;
             }   
-            return omicspred_internal_link(phe_id,'Phecode')
+            return omicspred_internal_link(phe_id,'phecode')
+        },
+        valueGetter: (params) => {
+            let phe_id = params.row.id;
+            if (params.row.phecode) {
+                phe_id = params.row.phecode.id;
+            }   
+            return phe_id
         }
     },
     'phecode_name': {
@@ -154,6 +196,13 @@ export const common_cols = {
                 phe_name = params.row.phecode.name;
             }   
             return phe_name
+        },
+        valueGetter: (params) => {
+            let phe_name = params.row.name;
+            if (params.row.phecode) {
+                phe_name = params.row.phecode.name;
+            }   
+            return phe_name
         }
     },
     'phecode_category': {
@@ -162,8 +211,10 @@ export const common_cols = {
         //width: 200,
         flex: 1,
         renderCell: (params) => {
-            let phe_cat = params.row.phecode.category;   
-            return phe_cat
+            return params.row.phecode.category;
+        },
+        valueGetter: (params) => {  
+            return params.row.phecode.category;
         }
     },
     'pathway_group': { 
@@ -172,15 +223,15 @@ export const common_cols = {
         minWidth: 200,
         flex: 1,
         valueGetter: (params) => {
-        let result = '';
-        if (params.row.metabolites) {
-            if (params.row.metabolites[0]) {
-                if (params.row.metabolites[0].pathway_group) {
-                    result = params.row.metabolites[0].pathway_group;
+            let result = '';
+            if (params.row.metabolites) {
+                if (params.row.metabolites[0]) {
+                    if (params.row.metabolites[0].pathway_group) {
+                        result = params.row.metabolites[0].pathway_group;
+                    }
                 }
-            }
-        }  
-        return result;
+            }  
+            return result;
         }
     },
     'pathway_subgroup': { 
@@ -199,7 +250,51 @@ export const common_cols = {
             }  
             return result;
         }
+    }
+}
+
+
+export const common_data_cols = {
+   'r2': { 
+        field: 'r2', 
+        headerName: 'R2',
+        width: 100,
+        valueGetter: (params) => {
+            if (params.row.data_values) {
+                if (params.row.data_values.R2) {
+                    return params.row.data_values.R2;
+                }
+            }   
+        }
     },
+    'hazard_ratio': { 
+        field: 'hr', 
+        headerName: 'Hazard Ratio',
+        width: 150,
+        valueGetter: (params) => {
+            if (params.row.data_values) {
+                if (params.row.data_values.HR) {
+                    let hr = params.row.data_values.HR;
+                    if (params.row.data_values.HR_lower) {
+                        hr += ' ['+params.row.data_values.HR_lower+' - '+params.row.data_values.HR_upper+']';
+                    }
+                    return hr;
+                }
+            }   
+        }
+    },
+    'fdr': { 
+        field: 'fdr', 
+        headerName: 'FDR',
+        width: 100,
+        valueGetter: (params) => {
+            if (params.row.data_values) {
+                if (params.row.data_values.FDR) {
+                    return params.row.data_values.FDR;
+                }
+            }   
+        }
+    }
 }
 
 
@@ -412,27 +507,6 @@ export const cohort_cols = {
             headerName: 'Rho',
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'INTERVAL withheld subset','Rho');
-            }
-        }
-    },
-    'UKB': {
-        'R2': { 
-            field: 'UKB_R2', 
-            headerName: 'R2',
-            headerClassName: 'col_border_left',
-            minWidth: 100,
-            flex: 0.5,
-            valueGetter: (params) => {
-                return cohort_valueGetter(params.row,'UKB','R2');
-            }
-        },
-        'Rho': { 
-            field: 'UKB_Rho', 
-            headerName: 'Rho',
-            minWidth: 100,
-            flex: 0.5,
-            valueGetter: (params) => {
-                return cohort_valueGetter(params.row,'UKB','Rho');
             }
         }
     },

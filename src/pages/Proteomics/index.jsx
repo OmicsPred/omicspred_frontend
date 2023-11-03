@@ -32,7 +32,7 @@ function Proteomics() {
                 <li>#Scores: {platformData.scores_count}</li>
             </ul>
             <div className="mt-4">
-                <DataTableFromRestApi url_suffix={url_suffix} columns={proteomics_columns[platform]}/>
+                <DataTableFromRestApi table_key={platformData.type} url_suffix={url_suffix} columns={proteomics_columns[platform]}/>
             </div>
         </>
     );

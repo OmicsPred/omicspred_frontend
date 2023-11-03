@@ -37,7 +37,7 @@ function Metabolite() {
         elementData && elementData.name != metabolite ? <li><span className='line_key'>Biomarker Name</span>{elementData.name}</li> : ''
       }
       </ul>
-      <DataTableFromRestApi url_suffix={url_suffix} columns={columns}/>
+      <DataTableFromRestApi table_key="metabolite" url_suffix={url_suffix} columns={columns}/>
     </div>
   );
 }

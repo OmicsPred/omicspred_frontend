@@ -1,4 +1,4 @@
-import {common_cols} from "./common";
+import {common_cols,common_data_cols} from "./common";
 
 
 let base_phecode_columns = {
@@ -7,52 +7,15 @@ let base_phecode_columns = {
         common_cols['phecode_name'],
         common_cols['phecode_category'],
         common_cols['omicspred_id'],
-        { 
-            field: 'r2', 
-            headerName: 'R2',
-            width: 100,
-            renderCell: (params) => {
-                if (params.row.data_values) {
-                    if (params.row.data_values.R2) {
-                        return params.row.data_values.R2;
-                    }
-                }   
-            }
-        },
+        common_data_cols['r2'],
         common_cols['platform_name'],
         { 
             field: 'omics_name', 
             headerName: 'Description',
             width: 300
         },
-        { 
-            field: 'hr', 
-            headerName: 'Hazard Ratio',
-            width: 150,
-            renderCell: (params) => {
-                if (params.row.data_values) {
-                    if (params.row.data_values.HR) {
-                        let hr = params.row.data_values.HR;
-                        if (params.row.data_values.HR_lower) {
-                            hr += ' ['+params.row.data_values.HR_lower+' - '+params.row.data_values.HR_upper+']';
-                        }
-                        return hr;
-                    }
-                }   
-            }
-        },
-        { 
-            field: 'fdr', 
-            headerName: 'FDR',
-            width: 100,
-            renderCell: (params) => {
-                if (params.row.data_values) {
-                    if (params.row.data_values.FDR) {
-                        return params.row.data_values.FDR;
-                    }
-                }   
-            }
-        }
+        common_data_cols['hazard_ratio'],
+        common_data_cols['fdr']
     ],
     'Sum': [
         common_cols['phecode_id'],
@@ -126,102 +89,4 @@ const build_columns = () => {
 }
 
 
-
 export const phecode_columns = build_columns();
-// export const phecode_columns = {
-//     'Full': [
-//         common_cols['phecode_id'],
-//         common_cols['phecode_name'],
-//         common_cols['phecode_category'],
-//         common_cols['omicspred_id'],
-//         { 
-//             field: 'r2', 
-//             headerName: 'R2',
-//             width: 100,
-//             renderCell: (params) => {
-//                 if (params.row.data_values) {
-//                     if (params.row.data_values.R2) {
-//                         return params.row.data_values.R2;
-//                     }
-//                 }   
-//             }
-//         },
-//         common_cols['platform_name'],
-//         { 
-//             field: 'omics_name', 
-//             headerName: 'Description',
-//             width: 300
-//         },
-//         { 
-//             field: 'hr', 
-//             headerName: 'Hazard Ratio',
-//             width: 150,
-//             renderCell: (params) => {
-//                 if (params.row.data_values) {
-//                     if (params.row.data_values.HR) {
-//                         let hr = params.row.data_values.HR;
-//                         if (params.row.data_values.HR_lower) {
-//                             hr += ' ['+params.row.data_values.HR_lower+' - '+params.row.data_values.HR_upper+']';
-//                         }
-//                         return hr;
-//                     }
-//                 }   
-//             }
-//         },
-//         { 
-//             field: 'fdr', 
-//             headerName: 'FDR',
-//             width: 100,
-//             renderCell: (params) => {
-//                 if (params.row.data_values) {
-//                     if (params.row.data_values.FDR) {
-//                         return params.row.data_values.FDR;
-//                     }
-//                 }   
-//             }
-//         }
-//     ],
-//     'Sum': [
-//         common_cols['phecode_id'],
-//         common_cols['phecode_name'],
-//         common_cols['phecode_category'],
-//         { 
-//             field: 'mean_age', 
-//             headerName: 'Mean Age',
-//             width: 150,
-//             renderCell: (params) => {
-//                 if (params.row.sample_age) {
-//                     let value = params.row.sample_age;
-//                     if (params.row.sample_age_sd) {
-//                         value += ' ± '+params.row.sample_age_sd;
-//                     }
-//                     return value;
-//                 }
-//             }
-//         },
-//         { 
-//             field: 'cases_samples', 
-//             headerName: '#Cases/#Samples',
-//             width: 150,
-//             renderCell: (params) => {
-//                 if (params.row.sample_cases) {
-//                     let value = params.row.sample_cases;
-//                     if (params.row.sample_number) {
-//                         value += '/'+params.row.sample_number;
-//                     }
-//                     return value;
-//                 }
-//             }
-//         },
-//         { 
-//             field: 'percent+female', 
-//             headerName: '%Female',
-//             width: 150,
-//             renderCell: (params) => {
-//                 if (params.row.sample_percent_female) {
-//                     return params.row.sample_percent_female+'%';
-//                 }
-//             }
-//         },
-//     ]
-// }
