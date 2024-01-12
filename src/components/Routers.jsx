@@ -49,8 +49,10 @@ function OpRouters() {
                 <Route path="/metabolite/:metabolite" element={<Metabolite />} />
                 <Route path="/phecode/:phecode" element={<Phecode />} />
                 
-                {/* Test pages */}
+                {/* Search page */}
                 <Route path="/search" element={<Search />} />
+
+                {/* Test pages */}
                 {/* <Route path="/search_es" element={<SearchES />} /> */}
                 <Route path="/plot/:platform" element={<Plot />} />
                 <Route path="/platform_rest/:platform" element={<PlatformRest />} />
