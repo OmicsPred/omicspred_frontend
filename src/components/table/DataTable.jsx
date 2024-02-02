@@ -13,6 +13,8 @@ const DataTable = (props) => {
       display_groups = true;
     }
 
+    const row_height_settings = 'auto';
+
     // const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_';
     const characters ='0123456789';
 
@@ -26,15 +28,15 @@ const DataTable = (props) => {
     }
 
     function getRowId(row) {
-      // if (row.id) {
-      //   return row.id
-      // }
-      // else if (row.name) {
-      //   return row.name;
-      // }
-      // else {
+      if (row.id) {
+        return row.id
+      }
+      else if (row.name) {
+        return row.name;
+      }
+      else {
         return generateString(20);
-      // }
+      }
     }
     
     // useEffect(() => {
@@ -51,8 +53,9 @@ const DataTable = (props) => {
             columnGroupingModel={props.groups}
             columns={props.columns}
             rows={props.data}
-            // getRowId={(row) => getRowId(row)}
-            getRowId={(row) => row.id}
+            getRowId={(row) => getRowId(row)}
+            getRowHeight={() => row_height_settings}
+            // getRowId={(row) => row.id}
             // rowCount={rowCountState}
             // paginationMode="server"
             sx={{ '--DataGrid-overlayHeight': '200px' }}

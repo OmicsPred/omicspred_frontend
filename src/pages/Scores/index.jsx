@@ -53,7 +53,7 @@ function Scores() {
     return (
         <>
             <h2 className='page_title'>Scores by Omics & Platform</h2>
-            <div style={{ flex: "1 1 auto" }} className="flex-col w-screen ">
+            <div style={{ flex: "1 1 auto" }} className="flex-column w-screen ">
                 {
                     Object.keys(categorizedPlatform).sort().map((key, index) => {
                         return(

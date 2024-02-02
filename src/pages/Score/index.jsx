@@ -71,7 +71,7 @@ function Score() {
             <div>
                 <div className='d-flex'>
                     <div className="card-deck d-lg-flex flex-lg-row justify-content-center d-md-flex flex-md-row d-sm-flex flex-sm-column me-4">
-                        <div className="card mb-3 me-5" style={{padding:"0px",maxWidth:"580px"}}>
+                        <div className="card mb-3 me-5" style={{padding:"0px",maxWidth:"800px"}}>
                             <div class="card-header"><h5 className="mb-0">Score information</h5></div>
                             <div className="card-body">
                                 {/* <h4 className="card-title mb-2 pb-2">Score information</h4> */}
@@ -107,7 +107,7 @@ function Score() {
                                     <table className='table_card'>
                                         <tbody>
                                             {
-                                                genesData.length > 0 ? <tr><td><span className="bg_gene left_mark"></span>Gene{genesData.length > 1 && 's'}</td><td>{genesData.map((data,index) => <>{index ? ', ': ''}<Href href={'/gene/'+data.name} key={data.name} text={data.name}/></>)}</td></tr> : ''
+                                                genesData.length > 0 ? <tr><td><span className="bg_gene left_mark"></span>Gene{genesData.length > 1 && 's'}</td><td>{genesData.map((data,index) => <>{index ? ', ': ''}<Href href={data.name ? '/gene/'+data.name : '/gene/'+data.external_id} key={data.name ? data.name : data.external_id} text={data.name ? data.name : data.external_id}/></>)}</td></tr> : ''
                                             }
                                             {
                                                 transcriptsData.length > 0 ? <tr><td><span className="bg_transcript left_mark"></span>Transcript{transcriptsData.length > 1 && 's'}</td><td>{transcriptsData.map((data, index) => <>{index ? ', ': ''}<span key={data.name}>{data.name}</span></>)}</td></tr> : ''

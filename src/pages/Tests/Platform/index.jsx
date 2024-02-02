@@ -1,26 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import DataTable from "../../../components/table/DataTable";
 import { metabolomics_columns,metabolomics_column_groups } from '../../../components/table/columns/metabolomics'
 import { proteomics_columns, proteomics_column_groups } from '../../../components/table/columns/proteomics'
 import { transcriptomics_columns, transcriptomics_column_groups } from '../../../components/table/columns/transcriptomics'
 import restApiCall from '../../../components/RestAPI';
+import { numberBadge } from "../../../components/Generic";
 
-import DataTableServer from '../../../components/table/DataTableServer';
+import PlatformCohort from '../../Home/components/PlatformCohort';
 
-function PlatformRest() {
+function PlatformFile() {
     let { platform } = useParams();
-    const [platformData, setPlatformData] = useState([])
+    const [platformSumData, setPlatformSumData] = useState([])
+    const [platformAddData, setPlatformAddData] = useState([])
+    const [platformTableData, setPlatformTableData] = useState([])
 
-    const get_url_endpoint = (type) => {
-        switch(type) {
-            case 'Metabolomics':
-                return "metabolomics/"+platform;
-            case 'Proteomics':
-                return "proteomics/"+platform;
-            case 'Transcriptomics':
-                return "transcriptomics/"+platform;
-        }
-    }
+    const platform_file_name = platform.replace(" ", "_");
+
+    const data_file = process.env.OMICSPRED_DATA_DIR+platform_file_name+'_table.json';
+
+    console.log(data_file);
 
     const get_table_columns = (type) => {
         console.log('get_table_columns: |'+type+'|')
@@ -66,33 +65,49 @@ function PlatformRest() {
         return col_groups;
     }
 
-    const fetchPlatformData = async () => {
-        const platform_data = await restApiCall('platform/'+platform);
-        setPlatformData(platform_data);
+    const fetchPlatformSumData = async () => {
+        const platform_sum_data = await restApiCall('platform/additional/'+platform);
+        setPlatformSumData(platform_sum_data.platform);
+        setPlatformAddData(platform_sum_data);
     }
 
+    const fetchPlatformTableData = async () => {
+        const platform_table_data = await fetch(data_file)
+            .then(response => {
+                return response.json()
+            })
+        setPlatformTableData(platform_table_data);
+    }
 
     useEffect(() => {
-        const data = fetchPlatformData();
+        fetchPlatformSumData();
+        fetchPlatformTableData();
     },[])
 
     return (
         <>
-            <h2 className='page_title'>Platform <span>{platformData.name}</span> <small style={{fontWeight:200}}>({platformData.type})</small></h2>
-            <ul>
-                <li key="name">Long Name: {platformData.full_name}</li>
-                <li key="version">Version: {
-                    platformData.version != '' ? platformData.version : '-'
+            <h2 className='page_title'>Platform <span>{platformSumData.name}</span></h2>
+            <ul className='key_val_line'>
+                <li key="platform_type"><span className='line_key'>Omics type</span><span className={'badge badge_'+platformSumData.type}>{platformSumData.type}</span></li>
+                <li key="platform_name"><span className='line_key'>Long Name</span>{platformSumData.full_name}</li>
+                <li key="platform_version"><span className='line_key'>Version</span>{
+                    platformSumData.version != '' ? platformSumData.version : '-'
                 }</li>
-                <li key="technic">Technic: {platformData.technic}</li>
-                <li key="nb_scores">#Scores: {platformData.scores_count}</li>
+                <li key="platform_technic"><span className='line_key'>Technic</span>{platformSumData.technic}</li>
+                <li key="platform_nb_scores"><span className='line_key'>Number of scores</span>{numberBadge(platformSumData.scores_count)}</li>
+                { platformSumData.scores_count != platformAddData.omics_count ?
+                    <li key="platform_nb_entries"><span className='line_key'>Number of {platformAddData.omics_type}</span>{numberBadge(platformAddData.omics_count.toString)}</li>:''
+                }
+                { platformAddData.cohorts ?
+                    <li key="platform_cohorts"><span className='line_key'>Cohort{platformAddData.cohorts.length > 1 && 's'}</span><PlatformCohort cohorts={platformAddData.cohorts}/></li>:''
+                }
             </ul>
             <div className="mt-3 me-4 sm:mt-0 sm:ml-3">
-                <a className="btn btn-primary shadow" href={"/plot/"+platformData.name} role="button">Go to Plots</a>
+                <a className="btn btn-primary shadow" href={"/plot/"+platformSumData.name} role="button">Go to Plots</a>
             </div>
-            {platformData && platformData.type ? 
+            {platformSumData && platformSumData.type && platformTableData ? 
                 <div className="mt-4">
-                    <DataTableServer url_suffix={get_url_endpoint(platformData.type)} columns={get_table_columns(platformData.type)} groups={get_table_column_groups(platformData.type)}/>
+                    <DataTable table_key={platform} data={platformTableData} columns={get_table_columns(platformSumData.type)} groups={get_table_column_groups(platformSumData.type)}/>
                 </div>
                 :
                 <div>Loading ...</div>
@@ -102,4 +117,4 @@ function PlatformRest() {
 }
 
 
-export default PlatformRest
+export default PlatformFile

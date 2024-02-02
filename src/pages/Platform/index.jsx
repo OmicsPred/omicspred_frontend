@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import DataTable from "../../components/table/DataTable";
 import { metabolomics_columns,metabolomics_column_groups } from '../../components/table/columns/metabolomics'
 import { proteomics_columns, proteomics_column_groups } from '../../components/table/columns/proteomics'
 import { transcriptomics_columns, transcriptomics_column_groups } from '../../components/table/columns/transcriptomics'
 import restApiCall from '../../components/RestAPI';
+import DataTableServer from '../../components/table/DataTableServer';
 import { numberBadge } from "../../components/Generic";
+import PlatformAdditonal from './components/PlatformAdditonal';
 
-import PlatformCohort from '../Home/components/PlatformCohort';
 
 function Platform() {
     let { platform } = useParams();
@@ -15,11 +15,16 @@ function Platform() {
     const [platformAddData, setPlatformAddData] = useState([])
     const [platformTableData, setPlatformTableData] = useState([])
 
-    const platform_file_name = platform.replace(" ", "_");
-
-    const data_file = process.env.OMICSPRED_DATA_DIR+platform_file_name+'_table.json';
-
-    console.log(data_file);
+    const get_url_endpoint = (type) => {
+        switch(type) {
+            case 'Metabolomics':
+                return "metabolomics/"+platform;
+            case 'Proteomics':
+                return "proteomics/"+platform;
+            case 'Transcriptomics':
+                return "transcriptomics/"+platform;
+        }
+    }
 
     const get_table_columns = (type) => {
         console.log('get_table_columns: |'+type+'|')
@@ -67,17 +72,16 @@ function Platform() {
 
     const fetchPlatformSumData = async () => {
         const platform_sum_data = await restApiCall('platform/additional/'+platform);
-        setPlatformSumData(platform_sum_data.platform);
-        setPlatformAddData(platform_sum_data);
+        const platform_sum_results = platform_sum_data['results']
+        setPlatformSumData(platform_sum_results[0].platform);
+        setPlatformAddData(platform_sum_results);
     }
 
     const fetchPlatformTableData = async () => {
-        const platform_table_data = await fetch(data_file)
-            .then(response => {
-                return response.json()
-            })
-        setPlatformTableData(platform_table_data);
+        const platform_data = await restApiCall('platform/'+platform);
+        setPlatformTableData(platform_data);
     }
+
 
     useEffect(() => {
         fetchPlatformSumData();
@@ -94,20 +98,21 @@ function Platform() {
                     platformSumData.version != '' ? platformSumData.version : '-'
                 }</li>
                 <li key="platform_technic"><span className='line_key'>Technic</span>{platformSumData.technic}</li>
-                <li key="platform_nb_scores"><span className='line_key'>Number of scores</span>{numberBadge(platformSumData.scores_count)}</li>
-                { platformSumData.scores_count != platformAddData.omics_count ?
-                    <li key="platform_nb_entries"><span className='line_key'>Number of {platformAddData.omics_type}</span>{numberBadge(platformAddData.omics_count.toString)}</li>:''
-                }
-                { platformAddData.cohorts ?
-                    <li key="platform_cohorts"><span className='line_key'>Cohort{platformAddData.cohorts.length > 1 && 's'}</span><PlatformCohort cohorts={platformAddData.cohorts}/></li>:''
-                }
+                <li key="platform_nb_scores"><span className='line_key'>Number of scores</span>{numberBadge(platformSumData.scores_count)}</li>    
             </ul>
+            <h4>Publications</h4>
+            { platformAddData.length > 0 ?
+                <div className="d-flex flex-column">
+                    { platformAddData.map((additional) => <><PlatformAdditonal data={additional} /></>)}
+                </div> : ''
+             }
+
             <div className="mt-3 me-4 sm:mt-0 sm:ml-3">
                 <a className="btn btn-primary shadow" href={"/plot/"+platformSumData.name} role="button">Go to Plots</a>
             </div>
-            {platformSumData && platformSumData.type && platformTableData ? 
+            {platformTableData && platformTableData.type ?
                 <div className="mt-4">
-                    <DataTable table_key={platform} data={platformTableData} columns={get_table_columns(platformSumData.type)} groups={get_table_column_groups(platformSumData.type)}/>
+                    <DataTableServer url_suffix={get_url_endpoint(platformTableData.type)} columns={get_table_columns(platformTableData.type)} groups={get_table_column_groups(platformTableData.type)}/>
                 </div>
                 :
                 <div>Loading ...</div>

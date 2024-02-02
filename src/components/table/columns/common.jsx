@@ -32,6 +32,14 @@ export const omicspred_omics_type = function(type) {
     )
 }
 
+
+export const omicspred_platform_omics_type = function(platform,type) {
+    return (
+        <a key={platform} href={"/platform/"+platform}><span className={"border_left_mark border_color_"+type}>{platform}</span></a>
+    )
+}
+
+
 export const common_cols = {
     'omicspred_id': {
         field: 'id', 

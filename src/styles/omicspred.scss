@@ -236,6 +236,9 @@ ul.key_val_line {
 .MuiFormLabel-root {
     font-weight: bold !important;
 }
+.MuiDataGrid-cell {
+    padding: 12px !important;
+}
 
 /* Images */
 .op_big_icons {
@@ -250,6 +253,9 @@ ul.key_val_line {
 /* Bootstrap overwrite */
 .btn-primary:hover {
     color: #FFF !important;
+}
+.table_card > tbody > tr > td {
+    padding: 4px;
 }
 
 
@@ -292,7 +298,7 @@ ul.key_val_line {
 
 .border_left_mark {
     border-left: 6px solid;
-    padding: 0rem 0.5rem;
+    padding: 0rem 0rem 0rem 0.5rem;
 }
 .left_mark {
     padding: 2px 0.25rem;

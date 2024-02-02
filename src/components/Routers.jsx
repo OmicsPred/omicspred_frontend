@@ -3,12 +3,14 @@ import Home from "../pages/Home";
 import FAQs from "../pages/FAQs";
 import Cohorts from "../pages/Cohorts";
 import About from "../pages/About";
+import Publications from "../pages/Publications";
 import Platforms from "../pages/Platforms";
 import Scores from "../pages/Scores";
 import PhecodesFull from "../pages/Applications/PhecodesFull";
 import PhecodesSum from "../pages/Applications/PhecodesSum";
 import Metabolomics from "../pages/Metabolomics";
 import Proteomics from "../pages/Proteomics";
+import Publication from "../pages/Publication";
 import Platform from "../pages/Platform";
 import Score from "../pages/Score";
 import Gene from "../pages/Gene";
@@ -20,7 +22,7 @@ import Applications from "../pages/Applications";
 import Search from "../pages/Tests/Search";
 // import SearchES from "../pages/Tests/SearchES";
 import Plot from "../pages/Tests/Plot";
-import PlatformRest from "../pages/Tests/Platform"
+import PlatformFile from "../pages/Tests/Platform"
 
 
 function OpRouters() {
@@ -33,6 +35,7 @@ function OpRouters() {
                 <Route path="/about" element={<About />} />
 
                 {/* Group pages */}
+                <Route path="/publications" element={<Publications />} />
                 <Route path="/platforms" element={<Platforms />} />
                 <Route path="/scores" element={<Scores />} />
                 <Route path="/applications" element={<Applications />} />
@@ -42,6 +45,7 @@ function OpRouters() {
                 <Route path="/proteomics/:platform" element={<Proteomics />} />
                 
                 {/* Individual pages */}
+                <Route path="/publication/:pubmed_id" element={<Publication />} />
                 <Route path="/platform/:platform" element={<Platform />} />
                 <Route path="/score/:score" element={<Score />} />
                 <Route path="/gene/:gene" element={<Gene />} />
@@ -55,7 +59,7 @@ function OpRouters() {
                 {/* Test pages */}
                 {/* <Route path="/search_es" element={<SearchES />} /> */}
                 <Route path="/plot/:platform" element={<Plot />} />
-                <Route path="/platform_rest/:platform" element={<PlatformRest />} />
+                <Route path="/platform_file/:platform" element={<PlatformFile />} />
 
             </Routes>
         </Router>
