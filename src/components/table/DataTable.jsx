@@ -34,6 +34,9 @@ const DataTable = (props) => {
       else if (row.name) {
         return row.name;
       }
+      else if (props.col_for_id) {
+        return row[col_for_id]
+      }
       else {
         return generateString(20);
       }
@@ -55,7 +58,6 @@ const DataTable = (props) => {
             rows={props.data}
             getRowId={(row) => getRowId(row)}
             getRowHeight={() => row_height_settings}
-            // getRowId={(row) => row.id}
             // rowCount={rowCountState}
             // paginationMode="server"
             sx={{ '--DataGrid-overlayHeight': '200px' }}

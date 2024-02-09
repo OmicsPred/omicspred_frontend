@@ -33,3 +33,6 @@ typings/
 
 # Yarn Integrity file
 .yarn-integrity
+
+# Google Cloud config file
+app.yaml

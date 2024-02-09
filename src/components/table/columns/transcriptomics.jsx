@@ -21,10 +21,11 @@ export const transcriptomics_columns = {
         },
         common_cols['gene_name'],
         common_cols['variants_number'],
-        cohort_cols['INTERVAL']['R2'],
-        cohort_cols['INTERVAL']['Rho'],
-        cohort_cols['INTERVAL_withheld_subset']['R2'],
-        cohort_cols['INTERVAL_withheld_subset']['Rho']
+        // Cohorts columns
+        // cohort_cols['INTERVAL']['R2'],
+        // cohort_cols['INTERVAL']['Rho'],
+        // cohort_cols['INTERVAL_withheld_subset']['R2'],
+        // cohort_cols['INTERVAL_withheld_subset']['Rho']
     ]
 };
 

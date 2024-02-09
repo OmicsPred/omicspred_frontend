@@ -20,7 +20,13 @@ function Platforms() {
             valueGetter: (params) => { return params.row.name }
         },
         { field: 'full_name', headerName: 'Full Name', width: 200 },
-        { field: 'version', headerName: 'Version' },
+        {
+            field: 'versions',
+            headerName: 'Versions',
+            renderCell: (params) => {
+                return params.row.versions.join(', ');
+            },
+        },
         { field: 'technic', headerName: 'Technic', width: 450 },
         { 
             field: 'type', 

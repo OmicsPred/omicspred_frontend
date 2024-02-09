@@ -14,15 +14,17 @@ export const cohort_valueGetter = function(row,cohort,method) {
 export const omicspred_internal_link = function(op_id,type,index) {
     let op_url = "/"+type+"/"+op_id;
     return (
-        <>
-            {index ? ', ': ''}<a key={op_id} href={op_url}>{op_id}</a>
-        </>
+        <span key={op_id+'_'+type+'_span'}>
+            {index ? ', ': ''}<a key={op_id+'_'+type} href={op_url}>{op_id}</a>
+        </span>
     )
 }
 
 export const omicspred_internal_links = function(op_ids,type) {
     return ( 
-        op_ids.map((op_id, index) => omicspred_internal_link(op_id, type, index))
+        <>
+            {op_ids.map((op_id, index) => omicspred_internal_link(op_id, type, index))}
+        </>
     )
 }
 
@@ -35,7 +37,7 @@ export const omicspred_omics_type = function(type) {
 
 export const omicspred_platform_omics_type = function(platform,type) {
     return (
-        <a key={platform} href={"/platform/"+platform}><span className={"border_left_mark border_color_"+type}>{platform}</span></a>
+        <a key={platform+'-'+type} href={"/platform/"+platform}><span className={"border_left_mark border_color_"+type}>{platform}</span></a>
     )
 }
 
@@ -330,8 +332,8 @@ export const cohort_cols = {
         }
     },
     'UKB': {
-        'R2': { 
-            field: 'UKB_R2', 
+        'R2': {
+            field: 'UKB_R2',
             headerName: 'R2',
             headerClassName: 'col_border_left',
             minWidth: 100,
@@ -351,8 +353,8 @@ export const cohort_cols = {
         }
     },
     'ORCADES': {
-        'R2': { 
-            field: 'ORCADES_R2', 
+        'R2': {
+            field: 'ORCADES_R2',
             headerName: 'R2',
             headerClassName: 'col_border_left',
             minWidth: 100,
@@ -381,8 +383,8 @@ export const cohort_cols = {
         }
     },
     'VIKING': {
-        'R2': { 
-            field: 'VIKING_R2', 
+        'R2': {
+            field: 'VIKING_R2',
             headerName: 'R2',
             headerClassName: 'col_border_left',
             minWidth: 100,
@@ -411,8 +413,8 @@ export const cohort_cols = {
         }
     },
     'MEC-CN': {
-        'R2': { 
-            field: 'MEC-CN_R2', 
+        'R2': {
+            field: 'MEC-CN_R2',
             headerName: 'R2',
             headerClassName: 'col_border_left',
             minWidth: 100,
@@ -442,7 +444,7 @@ export const cohort_cols = {
     },
     'MEC-IN': {
         'R2': {
-            field: 'MEC-IN_R2', 
+            field: 'MEC-IN_R2',
             headerName: 'R2',
             headerClassName: 'col_border_left',
             minWidth: 100,
@@ -471,8 +473,8 @@ export const cohort_cols = {
         }
     },
     'MEC-MA': {
-        'R2': { 
-            field: 'MEC-MA_R2', 
+        'R2': {
+            field: 'MEC-MA_R2',
             headerName: 'R2',
             headerClassName: 'col_border_left',
             minWidth: 100,
@@ -501,8 +503,8 @@ export const cohort_cols = {
         }
     },
     'INTERVAL_withheld_subset': {
-        'R2': { 
-            field: 'INTERVAL_withheld_subset_R2', 
+        'R2': {
+            field: 'INTERVAL_withheld_subset_R2',
             headerName: 'R2',
             headerClassName: 'col_border_left',
             // width: 300,
@@ -519,8 +521,8 @@ export const cohort_cols = {
         }
     },
     'NSPHS': {
-        'R2': { 
-            field: 'NSPHS_R2', 
+        'R2': {
+            field: 'NSPHS_R2',
             headerName: 'R2',
             headerClassName: 'col_border_left',
             // width: 300,
@@ -545,10 +547,10 @@ export const cohort_cols = {
     },
     'FENLAND': {
         'R2': {
-            field: 'FENLAND_R2', 
+            field: 'FENLAND_R2',
             headerName: 'R2',
             headerClassName: 'col_border_left',
-            // width: 300,
+            width: 90,
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'FENLAND','R2');
             }
@@ -556,6 +558,7 @@ export const cohort_cols = {
         'Rho': {
             field: 'FENLAND_Rho', 
             headerName: 'Rho',
+            width: 100,
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'FENLAND','Rho');
             }
@@ -570,7 +573,7 @@ export const cohort_cols = {
     },
     'JHS': {
         'R2': {
-            field: 'JHS_R2', 
+            field: 'JHS_R2',
             headerName: 'R2',
             headerClassName: 'col_border_left',
             // width: 300,
@@ -592,6 +595,66 @@ export const cohort_cols = {
                 return cohort_valueGetter(params.row,'JHS','Missing Rate');
             }
         }
+    },
+    'MESA-AFA': {
+        'R2': {
+            field: 'MESA-AFA_R2',
+            headerName: 'R2',
+            headerClassName: 'col_border_left',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'MESA-AFA','R2');
+            }
+        }
+    },
+    'MESA-ALL': {
+        'R2': {
+            field: 'MESA-ALL_R2',
+            headerName: 'R2',
+            headerClassName: 'col_border_left',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'MESA-ALL','R2');
+            }
+        }
+    },
+    'MESA-CHN': {
+        'R2': {
+            field: 'MESA-CHN_R2',
+            headerName: 'R2',
+            headerClassName: 'col_border_left',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'MESA-CHN','R2');
+            }
+        }
+    },
+    'MESA-EUR': {
+        'R2': {
+            field: 'MESA-EUR_R2',
+            headerName: 'R2',
+            headerClassName: 'col_border_left',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'MESA-EUR','R2');
+            }
+        }
+    },
+    'MESA-HIS': {
+        'R2': {
+            field: 'MESA-HIS_R2',
+            headerName: 'R2',
+            headerClassName: 'col_border_left',
+            minWidth: 100,
+            flex: 0.5,
+            valueGetter: (params) => {
+                return cohort_valueGetter(params.row,'MESA-HIS','R2');
+            }
+        }
     }
 }
 
@@ -608,17 +671,17 @@ export const common_column_groups = {
         headerClassName: 'cols_group'
     
     },
-    'MEC CN': {
+    'MEC-CN': {
         groupId: 'MEC CN',
         children: [{ field: 'MEC-CN_R2' }, { field: 'MEC-CN_Rho' }, { field: 'MEC-CN_Missing Rate' }],
         headerClassName: 'cols_group'
     },
-    'MEC IN': {
+    'MEC-IN': {
         groupId: 'MEC IN',
         children: [{ field: 'MEC-IN_R2' }, { field: 'MEC-IN_Rho' }, { field: 'MEC-IN_Missing Rate' }],
         headerClassName: 'cols_group'
     },
-    'MEC MA': {
+    'MEC-MA': {
         groupId: 'MEC MA',
         children: [{ field: 'MEC-MA_R2' }, { field: 'MEC-MA_Rho' }, { field: 'MEC-MA_Missing Rate' }],
         headerClassName: 'cols_group'
@@ -654,4 +717,29 @@ export const common_column_groups = {
         children: [{ field: 'VIKING_R2' }, { field: 'VIKING_Rho' }, { field: 'VIKING_Missing Rate' }],
         headerClassName: 'cols_group'
     },
+    'MESA-AFA': {
+        groupId: 'MESA AFA',
+        children: [{ field: 'MESA-AFA_R2' },],
+        headerClassName: 'cols_group'
+    },
+    'MESA-ALL': {
+        groupId: 'MESA ALL',
+        children: [{ field: 'MESA-ALL_R2' },],
+        headerClassName: 'cols_group'
+    },
+    'MESA-CHN': {
+        groupId: 'MESA CHN',
+        children: [{ field: 'MESA-CHN_R2' },],
+        headerClassName: 'cols_group'
+    },
+    'MESA-EUR': {
+        groupId: 'MESA EUR',
+        children: [{ field: 'MESA-EUR_R2' },],
+        headerClassName: 'cols_group'
+    },
+    'MESA-HIS': {
+        groupId: 'MESA HIS',
+        children: [{ field: 'MESA-HIS_R2' },],
+        headerClassName: 'cols_group'
+    }
 }
