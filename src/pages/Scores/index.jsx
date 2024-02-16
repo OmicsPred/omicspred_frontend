@@ -30,15 +30,37 @@ function Scores() {
         if (data_list) {
             const platforms_by_omic = [];
             data_list.map(data => {
-                let type = data.platform.type;
-                if (!platforms_by_omic[type]) {
-                    platforms_by_omic[type] = [];
+                const platform_type = data.platform.type;
+                const platform_name = data.platform.name;
+                const platform_tissue = data.tissue.label;
+                let new_platform = true;
+                if (!platforms_by_omic[platform_type]) {
+                    platforms_by_omic[platform_type] = [];
                 }
-                let obj = {};
-                obj['name'] = data.platform.name;
-                obj['count'] = data.platform.scores_count;
-                obj['tissue'] = data.tissue.label;
-                platforms_by_omic[type].push(obj);
+                // Existing platform with more than 1 publications
+                const type_length = platforms_by_omic[platform_type].length;
+                if (type_length > 0) {
+                    for (let i=0;i<type_length;i++) {
+                        if (platforms_by_omic[platform_type][i].name == platform_name) {
+                            new_platform = false;
+                            platforms_by_omic[platform_type][i].count += data.omics_count
+                            if (!platforms_by_omic[platform_type][i].tissues.includes(platform_tissue)) {
+                                platforms_by_omic[platform_type][i].tissues.push(platform_tissue);
+                            }
+                            // for (let j=0;j<data.cohorts.length;j++) {
+                            //   const cohort_name = data.cohorts[j].name_short;
+                            // TODO compare with existing list to add new cohorts
+                            // }
+                        }
+                    }
+                }
+                if (new_platform == true) {
+                    let obj = {};
+                    obj['name'] = data.platform.name;
+                    obj['count'] = data.platform.scores_count;
+                    obj['tissues'] = [data.tissue.label];
+                    platforms_by_omic[platform_type].push(obj);
+                }
             });
             return platforms_by_omic;
         }
@@ -77,7 +99,7 @@ function Scores() {
                                                         <span className="me-2" style={{display:"inline-block", minWidth:"75px"}}><Href text={item.name} href={'/Platform/'+item.name}/>:</span>
                                                         <span style={{display:"inline-block", minWidth:"95px", textAlign:"right"}}>{numberBadge(item.count)} scores</span>
                                                         <span className="ms-3 me-3">-</span>
-                                                        <span><span className='badge bg-secondary'>{item.tissue}</span></span>
+                                                        <span>{item.tissues.map((tissue) => <span key={item.name+'-'+tissue} className='badge bg-secondary'>{tissue}</span>)}</span>
                                                     </li>
                                                 )}
                                                 </ul>

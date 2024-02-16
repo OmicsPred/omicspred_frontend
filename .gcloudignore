@@ -15,12 +15,14 @@
 .gitignore
 
 # Dev directories
+/data_files/
 /node_modules/
-# /src/
-/styles/
+/public/
 
 # Config
 .env.development
+package*
+vite.config.js
 
 # Other
 app.yaml_template

@@ -1,7 +1,19 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid'
-
+// import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid'
+// import { DataGrid, GridToolbar } from '@mui/x-data-grid'
+import { DataGrid, GridToolbarContainer, GridToolbarColumnsButton, GridToolbarFilterButton, GridToolbarQuickFilter } from '@mui/x-data-grid'
 const rest_url = process.env.OMICSPRED_REST_API_URL;
+
+function CustomToolbar() {
+  return (
+    <GridToolbarContainer>
+      <GridToolbarColumnsButton />
+      <GridToolbarFilterButton />
+      <GridToolbarQuickFilter />
+    </GridToolbarContainer>
+  );
+}
+
 
 const DataTableServer = (props) => {
 
@@ -173,17 +185,17 @@ const DataTableServer = (props) => {
           onSortModelChange={onSortModelChange}
           filterMode="server"
           onFilterModelChange={onFilterModelChange}
-          // slots={{ 
-          //   toolbar: GridToolbar
-          // }}
+          slots={{
+            toolbar: CustomToolbar
+          }}
           // slotProps={{
           //   toolbar: {
           //     showQuickFilter: true
           //   }
           // }}
-          slots={{ 
-            toolbar: GridToolbarQuickFilter
-          }}
+          // slots={{
+          //   toolbar: GridToolbarQuickFilter
+          // }}
         />
       </div>
     )

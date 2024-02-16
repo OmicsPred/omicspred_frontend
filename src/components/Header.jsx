@@ -24,12 +24,15 @@ function Header() {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Link href="/">Home</Nav.Link>
-                            <Nav.Link href="/scores">Scores</Nav.Link>
-                            <NavDropdown title="Metadata" id="basic-nav-dropdown">
+                            <NavDropdown title="Browse" id="basic-nav-dropdown" renderMenuOnMount={true}>
+                                <NavDropdown.Item href="/scores">Scores</NavDropdown.Item>
                                 <NavDropdown.Item href="/publications">Publications</NavDropdown.Item>
                                 <NavDropdown.Item href="/platforms">Platforms</NavDropdown.Item>
                             </NavDropdown>
-                            <Nav.Link href="/applications">Applications</Nav.Link>
+                            <NavDropdown title="PheWAS" id="basic-nav-dropdown" renderMenuOnMount={true}>
+                                <NavDropdown.Item href="/applications/phecode/sum">Summary</NavDropdown.Item>
+                                <NavDropdown.Item href="/applications/phecode/full">All Associations</NavDropdown.Item>
+                            </NavDropdown>
                             <Nav.Link href={process.env.OMICSPRED_SUBMIT_SCORES_URL} target="_blank">Submit Score</Nav.Link>
                             <Nav.Link href="/faqs">FAQs</Nav.Link>
                             <Nav.Link href="/cohorts">Cohorts</Nav.Link>

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Href from "../../components/Href";
-import { internal_publication_link } from '../../components/Common';
-import DataTable from "../../components/table/DataTable";
-import { score_columns } from '../../components/table/columns/score'
-import restApiCall from '../../components/RestAPI';
-import { numberBadge } from '../../components/Generic';
+import Href from "../../../components/Href";
+import { internal_publication_link } from '../../../components/Common';
+import DataTable from "../../../components/table/DataTable";
+import { score_columns } from '../../../components/table/columns/score'
+import restApiCall from '../../../components/RestAPI';
+import { numberBadge } from '../../../components/Generic';
 
 
-function Score() {
+function ScoreTest() {
     const { score } = useParams();
 
     const [scoreData, setScoreData] = useState([])
@@ -21,7 +21,7 @@ function Score() {
     const [metricData, setMetricData] = useState([])
 
     const fetchScoreData = async () => {
-        const score_data = await restApiCall('score/'+score);
+        const score_data = await restApiCall('score/performance/'+score);
         console.log(score_data);
         setScoreData(score_data);
         setPlatformData(score_data.platform);
@@ -29,19 +29,20 @@ function Score() {
         setTranscriptsData(score_data.transcripts);
         setProteinsData(score_data.proteins);
         setMetabolitesData(score_data.metabolites);
+        setMetricData(score_data.score_performance);
         const score_app_data = await restApiCall('applications_score/'+score);
         setPhecodeData(score_app_data.phecode);
     }
 
-    const fetchScoreMetrics = async () => {
-        const score_metric_data = await restApiCall('performance/search?opgs_id='+score);
-        console.log(score_metric_data);
-        setMetricData(score_metric_data.results);
-    }
+    // const fetchScoreMetrics = async () => {
+    //     const score_metric_data = await restApiCall('performance/search?opgs_id='+score);
+    //     console.log(score_metric_data);
+    //     setMetricData(score_metric_data.results);
+    // }
 
     useEffect(() => {
         fetchScoreData(); 
-        fetchScoreMetrics();
+        // fetchScoreMetrics();
     },[])
 
 
@@ -108,4 +109,4 @@ function Score() {
     );
 }
 
-export default Score;
+export default ScoreTest;

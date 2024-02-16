@@ -21,9 +21,9 @@ export const proteomics_columns = {
     'Somalogic': [
         common_cols['omicspred_id'],
         common_cols['protein_id'],
-        // common_cols['gene_name'],
-        // common_cols['protein_name'],
-        // common_cols['variants_number']//,
+        common_cols['gene_name'],
+        common_cols['protein_name'],
+        common_cols['variants_number']//,
         // Cohorts columns
         // cohort_cols['INTERVAL']['R2'],
         // cohort_cols['INTERVAL']['Rho'],

@@ -155,6 +155,14 @@ function Search() {
                         {/* Options Panel */}
                         <div className='hl_grey_box me-5 py-2 px-4' style={{minWidth:"250px"}}>
                             { esOptions && esOptions.length > 0 ? esOptions.map((data) => <SidePanelFilter handleChange={handleChange} filter={data} key={data.type+'_side'}/>) : <div>No data</div>}
+                            {/* Legend of feature type in the results */}
+                            <div style={{marginLeft:"24px",marginTop:"24px"}}>
+                                <legend className="mb-3" style={{fontWeight:"bold",fontSize:"1rem",color:"rgba(0, 0, 0, 0.6)"}}>Result types</legend>
+                                { esResults.map((data) => isFiltered(data._source) && <div key={'legend_'+data._index} className="op_search_feature_legend mb-1" >
+                                    <span className={'px-2 py-2 me-3 mb-1 bg_'+data._index}></span>
+                                    <span>{data._index}</span>
+                                </div>)}
+                            </div>
                         </div>
                         {/* Result panel */}
                         <div>

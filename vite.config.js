@@ -1,10 +1,13 @@
-import { defineConfig, loadEnv } from 'vite'
-import react from '@vitejs/plugin-react-swc'
-
+import { defineConfig, loadEnv } from 'vite';
+import react from '@vitejs/plugin-react-swc';
 import { dependencies } from './package.json';
 
 const lib_chunks = {
   '@emotion': 'emotion',
+  // '@mui/icons-material': 'mui-material',
+  // '@mui/material': 'mui-material',
+  // '@mui/styled-engine': 'mui-other',
+  // '@mui/x-data-grid': 'mui-other',
   '@mui': 'mui',
   '@popperjs': 'popperjs',
   'bootstrap': 'bootstrap',
@@ -18,6 +21,7 @@ const lib_chunks = {
 function renderChunks(deps) {
   let chunks = {};
   Object.keys(deps).forEach((key) => {
+    console.log("- DEP: "+key);
     let label_found = 0;
     for (const [label, value] of Object.entries(lib_chunks)) {
       if (key.includes(label)) {

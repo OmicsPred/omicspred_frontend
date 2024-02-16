@@ -9,7 +9,6 @@ import Href from '../../components/Href';
 function Protein() {
     let { protein } = useParams();
     const [elementData, setElementData] = useState([])
-    const [geneData, setGeneData] = useState([])
 
     const element = 'protein';
     const url_suffix = "score/searchby"+element+"/"+protein;
@@ -17,22 +16,16 @@ function Protein() {
         common_cols['omicspred_id'],
         common_cols['platform_type'],
         common_cols['platform_name'],
+        common_cols['publication'],
         common_cols['variants_number'],
         common_cols['scoring_file']
-    ]
-
-    const gene_columns = [
-      common_cols['gene_id'],
-      common_cols['gene_name']
     ]
 
     const gene_details = (gene) => {
       const gene_name = gene.name;
       console.log("GENE NAME: "+gene_name);
       const gene_ext_id = gene.external_id;
-      let gene_html = '';
       if (gene_name) {
-        // return <Href text={gene_name} href={'/gene/'+gene_name}/>
         return (
           <>
             <Href text={gene_name} href={'/gene/'+gene_name}/>{gene_ext_id ? <small className='ps-2'>({gene_ext_id})</small>:''}

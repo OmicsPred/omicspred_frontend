@@ -20,6 +20,8 @@ import Phecode from "../pages/Applications/Phecode";
 import Applications from "../pages/Applications";
 // Tests
 import Search from "../pages/Tests/Search";
+import ScoreTest from "../pages/Tests/Score";
+import ProteinTest from "../pages/Tests/Protein";
 // import SearchES from "../pages/Tests/SearchES";
 import Plot from "../pages/Tests/Plot";
 import PlatformFile from "../pages/Tests/Platform"
@@ -60,6 +62,8 @@ function OpRouters() {
                 {/* <Route path="/search_es" element={<SearchES />} /> */}
                 <Route path="/plot/:platform" element={<Plot />} />
                 <Route path="/platform_file/:platform" element={<PlatformFile />} />
+                <Route path="/test/score/:score" element={<ScoreTest />} />
+                <Route path="/test/protein/:protein" element={<ProteinTest />} />
 
             </Routes>
         </Router>

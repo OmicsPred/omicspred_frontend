@@ -1,7 +1,8 @@
 import { numberBadge } from "../../../components/Generic";
-import PlatformCohort from '../../Home/components/PlatformCohort';
+import PlatformSampleCohorts from './PlatformSampleCohorts';
+import Href from "../../../components/Href";
 
-const PublicationCard = (props) =>{
+const PublicationCard = (props) => {
     const additional = props.data
     const publication = additional.publication;
     const key = publication.pmid
@@ -14,11 +15,16 @@ const PublicationCard = (props) =>{
                     <div className="card-body">
                         <h4 className="card-title">{publication.title}</h4>
                         <div className="card-text">
-                            <div>{publication.firstauthor} <i>et al.</i> - {publication.journal} ({pub_year})</div>
-                            <ul className="key_val_line mb-1">
-                                <li key="platform_nb_entries"><span className='line_key'>Number of scores</span>{numberBadge(additional.omics_count)}</li>
-                                <li key="platform_cohorts"><span className='line_key'>Cohort{additional.cohorts.length > 1 && 's'}</span><PlatformCohort cohorts={additional.cohorts}/></li>
-                            </ul>
+                            <div><Href key={key+'_pub_link'} text={[publication.firstauthor," ",<i key={key+'_i'}>et al.</i>," - ",publication.journal," (",pub_year,")"]} href={"/publication/"+key}/></div>
+                            <div><span className="me-1"><b>Number of scores</b>:</span>{numberBadge(additional.omics_count)}</div>
+                            <div className="d-flex">
+                                { additional.samples_training.length > 0 ?
+                                    <div key={key+"_platform_training_cohorts"}><span><b>Training Cohort{additional.samples_training.length > 1 && 's'}</b></span><PlatformSampleCohorts key={key+'_training'} samples={additional.samples_training}/></div>:''
+                                }
+                                { additional.samples_validation.length > 0 ?
+                                    <div className="ms-4 ps-4" key={key+"_platform_validation_cohorts"} style={{borderLeft:"1px solid #CCC"}}><span><b>Validation Cohort{additional.samples_validation.length > 1 && 's'}</b></span><PlatformSampleCohorts key={key+'_validation'} samples={additional.samples_validation}/></div>:''
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>

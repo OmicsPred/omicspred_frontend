@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import {cohort_cols, common_column_groups} from '../../components/table/columns/common';
 import { metabolomics_columns,metabolomics_column_groups } from '../../components/table/columns/metabolomics';
@@ -70,20 +70,49 @@ function Platform() {
 
         // Fetch Cohort columns
         let cohorts = [];
-        for (let i=0; i< platforms.length;i++) {
+        for (let i=0; i<platforms.length; i++) {
             console.log('# platform:');
             console.log(platforms[i]);
-            for (let j=0; j< platforms[i]['cohorts'].length;j++) {
-                const cohort = platforms[i]['cohorts'][j]['name_short'];
-                if (cohort_cols[cohort]) {
-                    cohorts.push(cohort);
+            // Training cohorts
+            for (let j=0; j<platforms[i]['samples_training'].length; j++) {
+                const sample_cohorts = platforms[i]['samples_training'][j]['cohorts'];
+                for (let k=0; k<sample_cohorts.length; k++) {
+                    const cohort = sample_cohorts[k]['name_short'];
+                    if (cohort) {
+                        console.log(">> Training: "+cohort);
+                    }
+                    if (cohort_cols[cohort]) {
+                        cohorts.push(cohort);
+                    }
+                    else {
+                        const cohort_col_labels = Object.keys(cohort_cols);
+                        for (let l=0; l<cohort_col_labels.length; l++) {
+                            const cohort_col_label = cohort_col_labels[l];
+                            if (cohort_col_label.startsWith(cohort) && !cohorts.includes(cohort_col_label)) {
+                                cohorts.push(cohort_col_label);
+                            }
+                        }
+                    }
                 }
-                else {
-                    const cohort_col_labels = Object.keys(cohort_cols);
-                    for (let k=0; k < cohort_col_labels.length; k++) {
-                        const cohort_col_label = cohort_col_labels[k];
-                        if (cohort_col_label.startsWith(cohort) && !cohorts.includes(cohort_col_label)) {
-                            cohorts.push(cohort_col_label);
+            }
+            // Training cohorts
+            for (let j=0; j< platforms[i]['samples_validation'].length;j++) {
+                const sample_cohorts = platforms[i]['samples_validation'][j]['cohorts'];
+                for (let k=0; k<sample_cohorts.length; k++) {
+                    const cohort = sample_cohorts[k]['name_short'];
+                    if (cohort) {
+                        console.log(">> Validation: "+cohort);
+                    }
+                    if (cohort_cols[cohort]) {
+                        cohorts.push(cohort);
+                    }
+                    else {
+                        const cohort_col_labels = Object.keys(cohort_cols);
+                        for (let l=0; l<cohort_col_labels.length; l++) {
+                            const cohort_col_label = cohort_col_labels[l];
+                            if (cohort_col_label.startsWith(cohort) && !cohorts.includes(cohort_col_label)) {
+                                cohorts.push(cohort_col_label);
+                            }
                         }
                     }
                 }
@@ -95,7 +124,7 @@ function Platform() {
         for (let i=0; i< cohorts.length; i++) {
             const cohort = cohorts[i];
             if (cohort_cols[cohort]) {
-                for (let j=0; j< metric_cols.length; j++) {
+                for (let j=0; j<metric_cols.length; j++) {
                     const metric = metric_cols[j];
                     if (cohort_cols[cohort][metric]) {
                         columns.push(cohort_cols[cohort][metric])
@@ -115,17 +144,40 @@ function Platform() {
         
         let cohorts = [];
         for (let i=0; i< platforms.length;i++) {
-            for (let j=0; j< platforms[i]['cohorts'].length;j++) {
-                const cohort = platforms[i]['cohorts'][j]['name_short'];
-                if (common_column_groups[cohort]) {
-                    cohorts.push(cohort);
+            // Training cohorts
+            for (let j=0; j< platforms[i]['samples_training'].length;j++) {
+                const sample_cohorts = platforms[i]['samples_training'][j]['cohorts'];
+                for (let k=0; k<sample_cohorts.length; k++) {
+                    const cohort = sample_cohorts[k]['name_short'];
+                    if (common_column_groups[cohort] && !cohorts.includes(cohort)) {
+                        cohorts.push(cohort);
+                    }
+                    else {;
+                        const cohort_col_group_labels = Object.keys(common_column_groups);
+                        for (let l=0; l < cohort_col_group_labels.length; l++) {
+                            const cohort_col_grp_label = cohort_col_group_labels[l];
+                            if (cohort_col_grp_label.startsWith(cohort) && !cohorts.includes(cohort_col_grp_label)) {
+                                cohorts.push(cohort_col_grp_label);
+                            }
+                        }
+                    }
                 }
-                else {;
-                    const cohort_col_group_labels = Object.keys(common_column_groups);
-                    for (let k=0; k < cohort_col_group_labels.length; k++) {
-                        const cohort_col_grp_label = cohort_col_group_labels[k];
-                        if (cohort_col_grp_label.startsWith(cohort) && !cohorts.includes(cohort_col_grp_label)) {
-                            cohorts.push(cohort_col_grp_label);
+            }
+            // Validation cohorts
+            for (let j=0; j< platforms[i]['samples_validation'].length;j++) {
+                const sample_cohorts = platforms[i]['samples_validation'][j]['cohorts'];
+                for (let k=0; k<sample_cohorts.length; k++) {
+                    const cohort = sample_cohorts[k]['name_short'];
+                    if (common_column_groups[cohort] && !cohorts.includes(cohort)) {
+                        cohorts.push(cohort);
+                    }
+                    else {;
+                        const cohort_col_group_labels = Object.keys(common_column_groups);
+                        for (let l=0; l < cohort_col_group_labels.length; l++) {
+                            const cohort_col_grp_label = cohort_col_group_labels[l];
+                            if (cohort_col_grp_label.startsWith(cohort) && !cohorts.includes(cohort_col_grp_label)) {
+                                cohorts.push(cohort_col_grp_label);
+                            }
                         }
                     }
                 }

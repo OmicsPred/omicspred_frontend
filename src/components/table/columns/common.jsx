@@ -1,13 +1,28 @@
 import { FileEarmarkText } from 'react-bootstrap-icons';
+import { internal_publication_link } from '../../Common';
 
 export const cohort_valueGetter = function(row,cohort,method) {
     let result = '';
     let cohort_label = cohort+'_'+method;
     if (row.performance_data) {
         if (row.performance_data[cohort_label]) {
-        result = row.performance_data[cohort_label].estimate;
+            result = row.performance_data[cohort_label].estimate;
         }
-    }  
+    }
+    else if (row.score_performance) {
+        for (let i=0; i<row.score_performance.length; i++) {
+            const perf = row.score_performance[i];
+            if (perf.cohort_label==cohort) {
+                for (let j=0; j<perf.performance_metrics.length; j++) {
+                    const pm = perf.performance_metrics[j];
+                    if (pm.name_short==method) {
+                        result = pm.estimate;
+                        break;
+                    }
+                }
+            }
+        }
+    }
     return result;
 }
 
@@ -49,6 +64,7 @@ export const common_cols = {
         minWidth: 150,
         flex: 0.5,
         resizable: false,
+        hideable: false,
         renderCell: (params) => {
             let op_id = params.row.id;
             if (params.row.score_id) {
@@ -81,9 +97,19 @@ export const common_cols = {
         minWidth: 150,
         flex: 1,
         renderCell: (params) => {
-            return omicspred_internal_link(params.row.platform.name,'Platform');
+            return omicspred_internal_link(params.row.platform.name,'platform');
         },
         valueGetter: (params) => { return params.row.platform.name }
+    },
+    'publication': {
+        field: 'publication',
+        headerName: 'Publication',
+        minWidth: 150,
+        flex: 1,
+        renderCell: (params) => {
+            return internal_publication_link (params.row.publication);
+        },
+        valueGetter: (params) => { return params.row.publication.firstauthor }
     },
     'scoring_file': { 
         field: 'scoring_file', 
@@ -98,6 +124,7 @@ export const common_cols = {
         headerName: 'UniProt ID',
         minWidth: 120,
         flex: 0.5,
+        hideable: false,
         renderCell: (params) => {
             let pr_ids = [];
             if (params.row.proteins) {
@@ -160,6 +187,7 @@ export const common_cols = {
         headerName: 'Biochemical Name',
         minWidth: 200,
         flex: 1,
+        hideable: false,
         renderCell: (params) => {
             let metabolite_names = [];
             if (params.row.metabolites) {
@@ -180,6 +208,7 @@ export const common_cols = {
         headerName: 'PheCode', 
         minWidth: 100,
         flex: 1,
+        hideable: false,
         renderCell: (params) => {
             let phe_id = params.row.id;
             if (params.row.phecode) {
@@ -600,7 +629,7 @@ export const cohort_cols = {
         'R2': {
             field: 'MESA-AFA_R2',
             headerName: 'R2',
-            headerClassName: 'col_border_left',
+            headerClassName: ['training_col','col_border_left'],
             minWidth: 100,
             flex: 0.5,
             valueGetter: (params) => {
@@ -612,7 +641,7 @@ export const cohort_cols = {
         'R2': {
             field: 'MESA-ALL_R2',
             headerName: 'R2',
-            headerClassName: 'col_border_left',
+            headerClassName: ['training_col','col_border_left'],
             minWidth: 100,
             flex: 0.5,
             valueGetter: (params) => {
@@ -624,7 +653,7 @@ export const cohort_cols = {
         'R2': {
             field: 'MESA-CHN_R2',
             headerName: 'R2',
-            headerClassName: 'col_border_left',
+            headerClassName: ['training_col','col_border_left'],
             minWidth: 100,
             flex: 0.5,
             valueGetter: (params) => {
@@ -636,7 +665,7 @@ export const cohort_cols = {
         'R2': {
             field: 'MESA-EUR_R2',
             headerName: 'R2',
-            headerClassName: 'col_border_left',
+            headerClassName: ['training_col','col_border_left'],
             minWidth: 100,
             flex: 0.5,
             valueGetter: (params) => {
@@ -648,7 +677,7 @@ export const cohort_cols = {
         'R2': {
             field: 'MESA-HIS_R2',
             headerName: 'R2',
-            headerClassName: 'col_border_left',
+            headerClassName: ['training_col','col_border_left'],
             minWidth: 100,
             flex: 0.5,
             valueGetter: (params) => {
@@ -720,26 +749,26 @@ export const common_column_groups = {
     'MESA-AFA': {
         groupId: 'MESA AFA',
         children: [{ field: 'MESA-AFA_R2' },],
-        headerClassName: 'cols_group'
+        headerClassName: ['training_col','cols_group']
     },
     'MESA-ALL': {
         groupId: 'MESA ALL',
         children: [{ field: 'MESA-ALL_R2' },],
-        headerClassName: 'cols_group'
+        headerClassName: ['training_col','cols_group']
     },
     'MESA-CHN': {
         groupId: 'MESA CHN',
         children: [{ field: 'MESA-CHN_R2' },],
-        headerClassName: 'cols_group'
+        headerClassName: ['training_col','cols_group']
     },
     'MESA-EUR': {
         groupId: 'MESA EUR',
         children: [{ field: 'MESA-EUR_R2' },],
-        headerClassName: 'cols_group'
+        headerClassName: ['training_col','cols_group']
     },
     'MESA-HIS': {
         groupId: 'MESA HIS',
         children: [{ field: 'MESA-HIS_R2' },],
-        headerClassName: 'cols_group'
+        headerClassName: ['training_col','cols_group']
     }
 }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import DataTableServer from '../../../components/table/DataTableServer';
 
-const PlatformDataTable = (props) =>{
+const PlatformDataTable = (props) => {
 
     const [platformRestEndpoint, setPlatformRestEndpoint] = useState([])
 
