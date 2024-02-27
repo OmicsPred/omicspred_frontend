@@ -15,8 +15,6 @@ function Search() {
     }
 
     const [esResults, setEsResults] = useState([])
-    // const [esPlatforms, setEsPlatforms] = useState([])
-    // const [esOmics, setEsOmics] = useState([])
     const [esOptions, setEsOptions] = useState([])
 
     const indexes = ['gene','metabolite','phecode','protein','score'];
@@ -29,13 +27,16 @@ function Search() {
     };
 
     const fetchESResults = async () => {
-        const results = await restApiCallWithData(es_url,query_content);
-        console.log(">>> results:");
+        let credentials = undefined;
+        if (process.env.OMICSPRED_ES_USERNAME && process.env.OMICSPRED_ES_PASSWORD) {
+            credentials = `Basic ${btoa(process.env.OMICSPRED_ES_USERNAME + ':' + process.env.OMICSPRED_ES_PASSWORD)}`;
+        }
+        const results = await restApiCallWithData(es_url,query_content,credentials);
+        console.log(">>> results for "+query+":");
         const results_list = results.hits.hits;
         console.log(results_list);
         let omics_counts = {};
         let platform_counts = {};
-        // let platforms = [];
         let options = [];
         for (let i=0; i < results_list.length; i++) {
             // Omics types

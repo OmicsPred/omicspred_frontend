@@ -1,10 +1,12 @@
 
-export default async function restApiCallWithData(rest_url,data) {
+export default async function restApiCallWithData(rest_url,data,credentials) {
+    let call_headers = {'Content-Type': 'application/json'};
+    if (credentials) {
+      call_headers['Authorization'] = credentials;
+    }
     const options = {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: call_headers,
         body: JSON.stringify(data)
       };
     try{

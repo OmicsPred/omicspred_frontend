@@ -1,4 +1,5 @@
-import {common_cols, cohort_cols, common_column_groups, omicspred_internal_link} from "./common";
+import {common_cols, common_column_groups, omicspred_internal_link} from "./common";
+// import {common_cols, cohort_cols, common_column_groups, omicspred_internal_link} from "./common";
 
 // Export Metabolomics columns
 export const metabolomics_columns = {

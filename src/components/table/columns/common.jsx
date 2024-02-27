@@ -80,12 +80,12 @@ export const common_cols = {
             return op_id 
         }
     },
-    'variants_number': { field: 'variants_number', headerName: '#SNP', flex: 0.5},
+    'variants_number': { field: 'variants_number', headerName: '#SNP', flex: 0.4},
     'platform_type': { 
         field: 'platform_type', 
         headerName: 'Omics',
-        minWidth: 150,
-        flex: 1,
+        minWidth: 100,
+        flex: 0.6,
         renderCell: (params) => {
             return omicspred_omics_type(params.row.platform.type);
         },
@@ -95,7 +95,7 @@ export const common_cols = {
         field: 'platform_name', 
         headerName: 'Platform',
         minWidth: 150,
-        flex: 1,
+        flex: 0.6,
         renderCell: (params) => {
             return omicspred_internal_link(params.row.platform.name,'platform');
         },
@@ -105,7 +105,7 @@ export const common_cols = {
         field: 'publication',
         headerName: 'Publication',
         minWidth: 150,
-        flex: 1,
+        flex: 0.8,
         renderCell: (params) => {
             return internal_publication_link (params.row.publication);
         },
@@ -114,7 +114,8 @@ export const common_cols = {
     'scoring_file': { 
         field: 'scoring_file', 
         headerName: 'Scoring File',
-        flex: 1,
+        minWidth: 100,
+        flex: 0.5,
         renderCell: (params) => {
             return <FileEarmarkText color="blue" size={24}/>;
         }
@@ -148,7 +149,7 @@ export const common_cols = {
     },
     'protein_name': { 
         field: 'protein_name', 
-        headerName: 'Protein',
+        headerName: 'Protein Name',
         minWidth: 150,
         flex: 1,
         valueGetter: (params) => {

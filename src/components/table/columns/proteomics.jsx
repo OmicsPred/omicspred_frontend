@@ -1,4 +1,5 @@
-import {common_cols, cohort_cols, common_column_groups} from "./common";
+import {common_cols, common_column_groups} from "./common";
+// import {common_cols, cohort_cols, common_column_groups} from "./common";
 
 // Export Proteomics columns
 export const proteomics_columns = {
