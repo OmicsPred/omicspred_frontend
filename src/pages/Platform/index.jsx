@@ -137,11 +137,31 @@ function Platform() {
     }
 
 
+    const get_metadata_column_groups = (type) => {
+        switch(type) {
+            case 'Metabolomics':
+                if (platform in metabolomics_column_groups) {
+                    return metabolomics_column_groups[platform];
+                }
+            // case 'Proteomics':
+            //     if (platform in proteomics_column_groups) {
+            //         return proteomics_column_groups[platform];
+            //     }
+            // case 'Transcriptomics':
+            //     if (platform in transcriptomics_column_groups) {
+            //         return transcriptomics_column_groups[platform];
+            //     }
+            default:
+                return [];
+        }
+    }
+
+
     const get_table_column_groups = (platforms) => {
         const type = platforms[0].platform.type;
         console.log('get_table_column_groups: |'+type+'|')
-        let col_groups = [];
-        
+        let col_groups = get_metadata_column_groups(type);
+
         let cohorts = [];
         for (let i=0; i< platforms.length;i++) {
             // Training cohorts
@@ -282,17 +302,10 @@ function Platform() {
                 </div> : ''
             }
             </div>
-            
+
             <div className="mt-4 me-4 sm:mt-0 sm:ml-3">
                 { platformVersionsList.length > 0 && platformVersionsSelection.length > 0 ? platformVersionsList.map((version) => <button className="btn btn-primary shadow btn-sm me-2"  data-version={version} key={platform+'_'+version} onClick={handleVersionSelectionClick}>{platform} {version}</button>):''}
             </div>
-            {/* {platformSumData && platformSumData.type && platformDataEndpoint ?
-                <div className="mt-4">
-                    <PlatformDataTable rest_endpoint={platformDataEndpoint} columns={platformTableColumns} column_groups={platformTableColumnGroups}/>
-                </div>
-                :
-                <div>Loading ...</div>
-            } */}
             {platformSumData && platformSumData.type ?
                 <div className="mt-4">
                     <DataTableServer url_suffix={get_url_endpoint(platformSumData.type)} columns={platformTableColumns} groups={platformTableColumnGroups}/>
@@ -300,7 +313,7 @@ function Platform() {
                 :
                 <div>Loading ...</div>
             }
-        </> 
+        </>
     );
 }
 

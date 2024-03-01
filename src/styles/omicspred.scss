@@ -320,11 +320,11 @@ ul.key_val_line {
 .training_col {
     color: $op_blue_2;
 }
-.cols_group {
-    border-left: 1px solid;
-}
 .col_border_left {
     border-left: 1px solid;
+}
+.col_border_right {
+    border-right: 1px solid;
 }
 
 /* Button */
