@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import restApiCall from '../../components/RestAPI';
 import Href from "../../components/Href";
+import { publication_score_columns_start, publication_score_columns_end, publication_transcriptomics_columns, publication_proteomics_columns, publication_metabolomics_columns } from '../../components/table/columns/scores';
 import DataTable from "../../components/table/DataTable";
+import DataTableServer from '../../components/table/DataTableServer';
 
 import {omicspred_omics_type, omicspred_internal_link} from "../../components/table/columns/common";
 
@@ -12,6 +14,8 @@ function Publication() {
     const [publicationData, setPublicationData] = useState([])
     const [publicationYear, setPublicationYear] = useState([])
     const [platformsData, setPlatformsData] = useState([])
+
+    const url_endpoint = 'score/search?pmid='+pubmed_id;
 
     const columns = [
         { 
@@ -56,7 +60,7 @@ function Publication() {
             field: 'scores_count', 
             headerName: '#Scores', 
             width: 150,
-            valueGetter: (params) => { return params.row.platform.scores_count }
+            valueGetter: (params) => { return params.row.scores_count }
         }
     ]
 
@@ -72,6 +76,30 @@ function Publication() {
     const buildPublicationYear = (date_publication) => {
         const year = date_publication.split('-')[0]
         setPublicationYear(year);
+    }
+
+    // Generate the columns for the scores table
+    const score_columns = (platforms) => {
+        let score_columns = publication_score_columns_start;
+        let platform_types = []
+        for (const platform of platforms) {
+            const p_type = platform.platform.type;
+            if (!platform_types.includes(p_type)) {
+                platform_types.push(p_type);
+            }
+        }
+        // Proteomics and Transcriptomics share the Gene column
+        if (platform_types.includes('Proteomics')) {
+            score_columns = score_columns.concat(publication_proteomics_columns)
+        }
+        else if (platform_types.includes('Transcriptomics')) {
+            score_columns = score_columns.concat(publication_transcriptomics_columns)
+        }
+        if (platform_types.includes('Metabolomics')) {
+            score_columns = score_columns.concat(publication_metabolomics_columns)
+        }
+        score_columns = score_columns.concat(publication_score_columns_end);
+        return score_columns;
     }
 
     // Convert date into DD/MM/YYYY format
@@ -111,9 +139,18 @@ function Publication() {
                     </div>
                 </div>   
             </div>
-            <div>
-                <DataTable key="platforms" data={platformsData} columns={columns}/>
-            </div>
+            <h3 className='mt-4'>Platform(s)</h3>
+            { platformsData ?
+                <>
+                    <div>
+                        <DataTable key="platforms" data={platformsData} columns={columns}/>
+                    </div>
+                    <h3 className='mt-4'>Scores</h3>
+                    <div>
+                        <DataTableServer url_suffix={url_endpoint} columns={score_columns(platformsData)} />
+                    </div>
+                </> : ''
+            }
         </>
     )
 }

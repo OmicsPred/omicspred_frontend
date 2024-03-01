@@ -36,7 +36,7 @@ export const omicspred_internal_link = function(op_id,type,index) {
 }
 
 export const omicspred_internal_links = function(op_ids,type) {
-    return ( 
+    return (
         <>
             {op_ids.map((op_id, index) => omicspred_internal_link(op_id, type, index))}
         </>
@@ -44,7 +44,7 @@ export const omicspred_internal_links = function(op_ids,type) {
 }
 
 export const omicspred_omics_type = function(type) {
-    return ( 
+    return (
         <span className={"border_left_mark border_color_"+type}>{type}</span>
     )
 }
@@ -59,8 +59,8 @@ export const omicspred_platform_omics_type = function(platform,type) {
 
 export const common_cols = {
     'omicspred_id': {
-        field: 'id', 
-        headerName: 'OmicsPred ID', 
+        field: 'id',
+        headerName: 'OmicsPred ID',
         minWidth: 150,
         flex: 0.5,
         resizable: false,
@@ -69,7 +69,7 @@ export const common_cols = {
             let op_id = params.row.id;
             if (params.row.score_id) {
                 op_id = params.row.score_id;
-            }   
+            }
             return omicspred_internal_link(op_id,'Score')
         },
         valueGetter: (params) => {
@@ -77,12 +77,12 @@ export const common_cols = {
             if (params.row.score_id) {
                 op_id = params.row.score_id;
             }
-            return op_id 
+            return op_id
         }
     },
-    'variants_number': { field: 'variants_number', headerName: '#SNP', flex: 0.4},
-    'platform_type': { 
-        field: 'platform_type', 
+    'variants_number': { field: 'variants_number', headerName: '#SNP', minWidth: 80, flex: 0.5},
+    'platform_type': {
+        field: 'platform_type',
         headerName: 'Omics',
         minWidth: 100,
         flex: 0.6,
@@ -91,8 +91,8 @@ export const common_cols = {
         },
         valueGetter: (params) => { return params.row.platform.type }
     },
-    'platform_name': { 
-        field: 'platform_name', 
+    'platform_name': {
+        field: 'platform_name',
         headerName: 'Platform',
         minWidth: 150,
         flex: 0.6,
@@ -111,8 +111,8 @@ export const common_cols = {
         },
         valueGetter: (params) => { return params.row.publication.firstauthor }
     },
-    'scoring_file': { 
-        field: 'scoring_file', 
+    'scoring_file': {
+        field: 'scoring_file',
         headerName: 'Scoring File',
         minWidth: 100,
         flex: 0.5,
@@ -120,8 +120,25 @@ export const common_cols = {
             return <FileEarmarkText color="blue" size={24}/>;
         }
     },
-    'protein_id': { 
-        field: 'uniprot_id', 
+    'trait_reported_id': {
+        field: 'trait_reported_id',
+        // headerName: 'Reported trait ID(s)',
+        headerName: 'Trait ID',
+        headerClassName: 'col_border_left',
+        minWidth: 120,
+        flex: 0.5,
+        hideable: true
+    },
+    'trait_reported': {
+        field: 'trait_reported',
+        // headerName: 'Reported trait(s)',
+        headerName: 'Trait name',
+        minWidth: 200,
+        flex: 1,
+        hideable: true
+    },
+    'protein_id': {
+        field: 'uniprot_id',
         headerName: 'UniProt ID',
         minWidth: 120,
         flex: 0.5,
@@ -129,7 +146,7 @@ export const common_cols = {
         renderCell: (params) => {
             let pr_ids = [];
             if (params.row.proteins) {
-                pr_ids = params.row.proteins.map((protein) => protein.external_id)  
+                pr_ids = params.row.proteins.map((protein) => protein.external_id)
             }
             else if (params.row.external_id) {
                 pr_ids.push(params.row.external_id);
@@ -139,7 +156,7 @@ export const common_cols = {
         valueGetter: (params) => {
             let pr_ids = [];
             if (params.row.proteins) {
-                pr_ids = params.row.proteins.map((protein) => protein.external_id)  
+                pr_ids = params.row.proteins.map((protein) => protein.external_id)
             }
             else if (params.row.external_id) {
                 pr_ids.push(params.row.external_id);
@@ -147,15 +164,15 @@ export const common_cols = {
             return pr_ids.join(',');
         }
     },
-    'protein_name': { 
-        field: 'protein_name', 
+    'protein_name': {
+        field: 'protein_name',
         headerName: 'Protein Name',
         minWidth: 150,
         flex: 1,
         valueGetter: (params) => {
             let pr_names = [];
             if (params.row.proteins) {
-                pr_names = params.row.proteins.map((protein) => protein.name)  
+                pr_names = params.row.proteins.map((protein) => protein.name)
             }
             else if (params.row.name) {
                 pr_names.push(params.row.name);
@@ -163,50 +180,86 @@ export const common_cols = {
             return pr_names.join(';');
         }
     },
-    'gene_name': { 
-        field: 'gene_name', 
+    'gene_name': {
+        field: 'gene_name',
         headerName: 'Gene',
         minWidth: 120,
         flex: 0.5,
         renderCell: (params) => {
             let gene_names = [];
             if (params.row.genes) {
-                gene_names = params.row.genes.map((gene) => gene.name)  
+                gene_names = params.row.genes.map((gene) => gene.name)
             }
            return omicspred_internal_links(gene_names, 'Gene');
         },
         valueGetter: (params) => {
             let gene_names = [];
             if (params.row.genes) {
-                gene_names = params.row.genes.map((gene) => gene.name)  
+                gene_names = params.row.genes.map((gene) => gene.name)
             }
             return gene_names.join(',');
         }
     },
+    'metabolite_id': {
+        field: 'metabolite_id',
+        // headerName: 'Biochemical ID',
+        headerName: 'Identifier',
+        headerClassName: 'col_border_left',
+        minWidth: 150,
+        flex: 0.6,
+        hideable: false,
+        renderCell: (params) => {
+            let metabolite_ids = [];
+            if (params.row.metabolites) {
+                metabolite_ids = params.row.metabolites.map((metabolite) => metabolite.external_id)
+            }
+            return omicspred_internal_links(metabolite_ids, 'metabolite');
+        },
+        valueGetter: (params) => {
+            let metabolite_ids = [];
+            if (params.row.metabolites) {
+                metabolite_ids = params.row.metabolites.map((metabolite) => metabolite.external_id)
+            }
+            return metabolite_ids.join(', ');
+        }
+    },
     'metabolite_name': {
-        field: 'metabolite_name', 
+        field: 'metabolite_name',
         headerName: 'Biochemical Name',
+        headerClassName: 'col_border_right',
         minWidth: 200,
         flex: 1,
         hideable: false,
         renderCell: (params) => {
             let metabolite_names = [];
+            let metabolite_ids = [];
             if (params.row.metabolites) {
-                metabolite_names = params.row.metabolites.map((metabolite) => metabolite.name) 
+                metabolite_names = params.row.metabolites.map((metabolite) => metabolite.name)
+                for (let i=0; i<params.row.metabolites.length; i++) {
+                    const id = params.row.metabolites[i].external_id;
+                    if (id && id != '') {
+                        metabolite_ids.push(id)
+                    }
+                }
             }
-            return omicspred_internal_links(metabolite_names, 'metabolite');
+            if (metabolite_ids.length) {
+                return metabolite_names.join('; ')
+            }
+            else {
+                return omicspred_internal_links(metabolite_names, 'metabolite');
+            }
         },
         valueGetter: (params) => {
             let metabolite_names = [];
             if (params.row.metabolites) {
-                metabolite_names = params.row.metabolites.map((metabolite) => metabolite.name) 
+                metabolite_names = params.row.metabolites.map((metabolite) => metabolite.name)
             }
             return metabolite_names.join(',');
         }
     },
     'phecode_id': {
-        field: 'phecode_id', 
-        headerName: 'PheCode', 
+        field: 'phecode_id',
+        headerName: 'PheCode',
         minWidth: 100,
         flex: 1,
         hideable: false,
@@ -214,51 +267,51 @@ export const common_cols = {
             let phe_id = params.row.id;
             if (params.row.phecode) {
                 phe_id = params.row.phecode.id;
-            }   
+            }
             return omicspred_internal_link(phe_id,'phecode')
         },
         valueGetter: (params) => {
             let phe_id = params.row.id;
             if (params.row.phecode) {
                 phe_id = params.row.phecode.id;
-            }   
+            }
             return phe_id
         }
     },
     'phecode_name': {
-        field: 'phecode_name', 
-        headerName: 'Phenotype', 
+        field: 'phecode_name',
+        headerName: 'Phenotype',
         // width: 300,
         flex: 1,
         renderCell: (params) => {
             let phe_name = params.row.name;
             if (params.row.phecode) {
                 phe_name = params.row.phecode.name;
-            }   
+            }
             return phe_name
         },
         valueGetter: (params) => {
             let phe_name = params.row.name;
             if (params.row.phecode) {
                 phe_name = params.row.phecode.name;
-            }   
+            }
             return phe_name
         }
     },
     'phecode_category': {
-        field: 'phecode_category', 
-        headerName: 'Category', 
+        field: 'phecode_category',
+        headerName: 'Category',
         //width: 200,
         flex: 1,
         renderCell: (params) => {
             return params.row.phecode.category;
         },
-        valueGetter: (params) => {  
+        valueGetter: (params) => {
             return params.row.phecode.category;
         }
     },
-    'pathway_group': { 
-        field: 'pathway_group', 
+    'pathway_group': {
+        field: 'pathway_group',
         headerName: 'Pathway',
         minWidth: 200,
         flex: 1,
@@ -270,12 +323,12 @@ export const common_cols = {
                         result = params.row.metabolites[0].pathway_group;
                     }
                 }
-            }  
+            }
             return result;
         }
     },
-    'pathway_subgroup': { 
-        field: 'pathway_subgroup', 
+    'pathway_subgroup': {
+        field: 'pathway_subgroup',
         headerName: 'Sub Pathway',
         minWidth: 200,
         flex: 1,
@@ -287,7 +340,7 @@ export const common_cols = {
                         result = params.row.metabolites[0].pathway_subgroup;
                     }
                 }
-            }  
+            }
             return result;
         }
     }
@@ -295,8 +348,8 @@ export const common_cols = {
 
 
 export const common_data_cols = {
-   'r2': { 
-        field: 'r2', 
+   'r2': {
+        field: 'r2',
         headerName: 'R2',
         width: 100,
         valueGetter: (params) => {
@@ -304,11 +357,11 @@ export const common_data_cols = {
                 if (params.row.data_values.R2) {
                     return params.row.data_values.R2;
                 }
-            }   
+            }
         }
     },
-    'hazard_ratio': { 
-        field: 'hr', 
+    'hazard_ratio': {
+        field: 'hr',
         headerName: 'Hazard Ratio',
         width: 150,
         valueGetter: (params) => {
@@ -320,11 +373,11 @@ export const common_data_cols = {
                     }
                     return hr;
                 }
-            }   
+            }
         }
     },
-    'fdr': { 
-        field: 'fdr', 
+    'fdr': {
+        field: 'fdr',
         headerName: 'FDR',
         width: 100,
         valueGetter: (params) => {
@@ -332,7 +385,7 @@ export const common_data_cols = {
                 if (params.row.data_values.FDR) {
                     return params.row.data_values.FDR;
                 }
-            }   
+            }
         }
     }
 }
@@ -340,7 +393,7 @@ export const common_data_cols = {
 
 export const cohort_cols = {
     'INTERVAL': {
-        'R2' : { 
+        'R2' : {
             field: 'INTERVAL_R2',
             headerClassName: ['training_col','col_border_left'],
             headerName: 'R2',
@@ -350,8 +403,8 @@ export const cohort_cols = {
                 return cohort_valueGetter(params.row,'INTERVAL','R2');
             }
         },
-        'Rho': { 
-            field: 'INTERVAL_Rho', 
+        'Rho': {
+            field: 'INTERVAL_Rho',
             headerName: 'Rho',
             headerClassName: 'training_col',
             minWidth: 100,
@@ -372,8 +425,8 @@ export const cohort_cols = {
                 return cohort_valueGetter(params.row,'UKB','R2');
             }
         },
-        'Rho': { 
-            field: 'UKB_Rho', 
+        'Rho': {
+            field: 'UKB_Rho',
             headerName: 'Rho',
             minWidth: 100,
             flex: 0.5,
@@ -393,8 +446,8 @@ export const cohort_cols = {
                 return cohort_valueGetter(params.row,'ORCADES','R2');
             }
         },
-        'Rho': { 
-            field: 'ORCADES_Rho', 
+        'Rho': {
+            field: 'ORCADES_Rho',
             headerName: 'Rho',
             minWidth: 100,
             flex: 0.5,
@@ -402,8 +455,8 @@ export const cohort_cols = {
                 return cohort_valueGetter(params.row,'ORCADES','Rho');
             }
         },
-        'Missing Rate': { 
-            field: 'ORCADES_Missing Rate', 
+        'Missing Rate': {
+            field: 'ORCADES_Missing Rate',
             headerName: 'Missing Rate',
             minWidth: 100,
             flex: 0.5,
@@ -423,8 +476,8 @@ export const cohort_cols = {
                 return cohort_valueGetter(params.row,'VIKING','R2');
             }
         },
-        'Rho': { 
-            field: 'VIKING_Rho', 
+        'Rho': {
+            field: 'VIKING_Rho',
             headerName: 'Rho',
             minWidth: 100,
             flex: 0.5,
@@ -432,8 +485,8 @@ export const cohort_cols = {
                 return cohort_valueGetter(params.row,'VIKING','Rho');
             }
         },
-        'Missing Rate': { 
-            field: 'VIKING_Missing Rate', 
+        'Missing Rate': {
+            field: 'VIKING_Missing Rate',
             headerName: 'Missing Rate',
             minWidth: 100,
             flex: 0.5,
@@ -453,8 +506,8 @@ export const cohort_cols = {
                 return cohort_valueGetter(params.row,'MEC-CN','R2');
             }
         },
-        'Rho': { 
-            field: 'MEC-CN_Rho', 
+        'Rho': {
+            field: 'MEC-CN_Rho',
             headerName: 'Rho',
             minWidth: 100,
             flex: 0.5,
@@ -462,8 +515,8 @@ export const cohort_cols = {
                 return cohort_valueGetter(params.row,'MEC-CN','Rho');
             }
         },
-        'Missing Rate': { 
-            field: 'MEC-CN_Missing Rate', 
+        'Missing Rate': {
+            field: 'MEC-CN_Missing Rate',
             headerName: 'Missing Rate',
             minWidth: 100,
             flex: 0.5,
@@ -484,7 +537,7 @@ export const cohort_cols = {
             }
         },
         'Rho': {
-            field: 'MEC-IN_Rho', 
+            field: 'MEC-IN_Rho',
             headerName: 'Rho',
             minWidth: 100,
             flex: 0.5,
@@ -493,7 +546,7 @@ export const cohort_cols = {
             }
         },
         'Missing Rate': {
-            field: 'MEC-IN_Missing Rate', 
+            field: 'MEC-IN_Missing Rate',
             headerName: 'Missing Rate',
             minWidth: 100,
             flex: 0.5,
@@ -513,8 +566,8 @@ export const cohort_cols = {
                 return cohort_valueGetter(params.row,'MEC-MA','R2');
             }
         },
-        'Rho': { 
-            field: 'MEC-MA_Rho', 
+        'Rho': {
+            field: 'MEC-MA_Rho',
             headerName: 'Rho',
             minWidth: 100,
             flex: 0.5,
@@ -522,8 +575,8 @@ export const cohort_cols = {
                 return cohort_valueGetter(params.row,'MEC-MA','Rho');
             }
         },
-        'Missing Rate': { 
-            field: 'MEC-MA_Missing Rate', 
+        'Missing Rate': {
+            field: 'MEC-MA_Missing Rate',
             headerName: 'Missing Rate',
             minWidth: 100,
             flex: 0.5,
@@ -542,8 +595,8 @@ export const cohort_cols = {
                 return cohort_valueGetter(params.row,'INTERVAL withheld subset','R2');
             }
         },
-        'Rho': { 
-            field: 'INTERVAL_withheld_subset_Rho', 
+        'Rho': {
+            field: 'INTERVAL_withheld_subset_Rho',
             headerName: 'Rho',
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'INTERVAL withheld subset','Rho');
@@ -560,15 +613,15 @@ export const cohort_cols = {
                 return cohort_valueGetter(params.row,'NSPHS','R2');
             }
         },
-        'Rho': { 
-            field: 'NSPHS_Rho', 
+        'Rho': {
+            field: 'NSPHS_Rho',
             headerName: 'Rho',
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'NSPHS','Rho');
             }
         },
-        'Missing Rate': { 
-            field: 'NSPHS_Missing Rate', 
+        'Missing Rate': {
+            field: 'NSPHS_Missing Rate',
             headerName: 'Missing Rate',
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'NSPHS','Missing Rate');
@@ -586,7 +639,7 @@ export const cohort_cols = {
             }
         },
         'Rho': {
-            field: 'FENLAND_Rho', 
+            field: 'FENLAND_Rho',
             headerName: 'Rho',
             width: 100,
             valueGetter: (params) => {
@@ -594,7 +647,7 @@ export const cohort_cols = {
             }
         },
         'Missing Rate': {
-            field: 'FENLAND_Missing Rate', 
+            field: 'FENLAND_Missing Rate',
             headerName: 'Missing Rate',
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'FENLAND','Missing Rate');
@@ -612,14 +665,14 @@ export const cohort_cols = {
             }
         },
         'Rho': {
-            field: 'JHS_Rho', 
+            field: 'JHS_Rho',
             headerName: 'Rho',
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'JHS','Rho');
             }
         },
         'Missing Rate': {
-            field: 'JHS_Missing Rate', 
+            field: 'JHS_Missing Rate',
             headerName: 'Missing Rate',
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'JHS','Missing Rate');
@@ -690,86 +743,96 @@ export const cohort_cols = {
 
 
 export const common_column_groups = {
+    'reported_trait': {
+        groupId: 'Reported trait',
+        children: [{ field: 'trait_reported' }, { field: 'trait_reported_id' }],
+        headerClassName: 'col_border_left'
+    },
+    'metabolomic_mapped_trait': {
+        groupId: 'Mapped trait',
+        children: [{ field: 'metabolite_name' }, { field: 'metabolite_id' }],
+        headerClassName: ['col_border_left','col_border_right']
+    },
     'INTERVAL': {
         groupId: 'INTERVAL',
         children: [{ field: 'INTERVAL_R2' }, { field: 'INTERVAL_Rho' }],
-        headerClassName: ['training_col','cols_group']
+        headerClassName: ['training_col','col_border_left']
     },
     'FENLAND': {
         groupId: 'FENLAND',
         children: [{ field: 'FENLAND_R2' }, { field: 'FENLAND_Rho' }, { field: 'FENLAND_Missing Rate' }],
-        headerClassName: 'cols_group'
-    
+        headerClassName: 'col_border_left'
+
     },
     'MEC-CN': {
         groupId: 'MEC CN',
         children: [{ field: 'MEC-CN_R2' }, { field: 'MEC-CN_Rho' }, { field: 'MEC-CN_Missing Rate' }],
-        headerClassName: 'cols_group'
+        headerClassName: 'col_border_left'
     },
     'MEC-IN': {
         groupId: 'MEC IN',
         children: [{ field: 'MEC-IN_R2' }, { field: 'MEC-IN_Rho' }, { field: 'MEC-IN_Missing Rate' }],
-        headerClassName: 'cols_group'
+        headerClassName: 'col_border_left'
     },
     'MEC-MA': {
         groupId: 'MEC MA',
         children: [{ field: 'MEC-MA_R2' }, { field: 'MEC-MA_Rho' }, { field: 'MEC-MA_Missing Rate' }],
-        headerClassName: 'cols_group'
+        headerClassName: 'col_border_left'
     },
     'JHS': {
         groupId: 'JHS',
         children: [{ field: 'JHS_R2' }, { field: 'JHS_Rho' }, { field: 'JHS_Missing Rate' }],
-        headerClassName: 'cols_group'
+        headerClassName: 'col_border_left'
     },
     'NSPHS': {
         groupId: 'NSPHS',
         children: [{ field: 'NSPHS_R2' }, { field: 'NSPHS_Rho' }, { field: 'NSPHS_Missing Rate' }],
-        headerClassName: 'cols_group'
+        headerClassName: 'col_border_left'
     },
     'ORCADES': {
         groupId: 'ORCADES',
         children: [{ field: 'ORCADES_R2' }, { field: 'ORCADES_Rho' }, { field: 'ORCADES_Missing Rate' }],
-        headerClassName: 'cols_group'
+        headerClassName: 'col_border_left'
     },
     'INTERVAL_withheld_subset': {
         groupId: 'INTERVAL_withheld_subset',
         children: [{ field: 'INTERVAL_withheld_subset_R2' }, { field: 'INTERVAL_withheld_subset_Rho' }],
-        headerClassName: 'cols_group',
+        headerClassName: 'col_border_left',
         headerName: 'INTERVAL withheld subset'
     },
     'UKB': {
         groupId: 'UKB',
         children: [{ field: 'UKB_R2' }, { field: 'UKB_Rho' }],
-        headerClassName: 'cols_group'
+        headerClassName: 'col_border_left'
     },
     'VIKING': {
         groupId: 'VIKING',
         children: [{ field: 'VIKING_R2' }, { field: 'VIKING_Rho' }, { field: 'VIKING_Missing Rate' }],
-        headerClassName: 'cols_group'
+        headerClassName: 'col_border_left'
     },
     'MESA-AFA': {
         groupId: 'MESA AFA',
         children: [{ field: 'MESA-AFA_R2' },],
-        headerClassName: ['training_col','cols_group']
+        headerClassName: ['training_col','col_border_left']
     },
     'MESA-ALL': {
         groupId: 'MESA ALL',
         children: [{ field: 'MESA-ALL_R2' },],
-        headerClassName: ['training_col','cols_group']
+        headerClassName: ['training_col','col_border_left']
     },
     'MESA-CHN': {
         groupId: 'MESA CHN',
         children: [{ field: 'MESA-CHN_R2' },],
-        headerClassName: ['training_col','cols_group']
+        headerClassName: ['training_col','col_border_left']
     },
     'MESA-EUR': {
         groupId: 'MESA EUR',
         children: [{ field: 'MESA-EUR_R2' },],
-        headerClassName: ['training_col','cols_group']
+        headerClassName: ['training_col','col_border_left']
     },
     'MESA-HIS': {
         groupId: 'MESA HIS',
         children: [{ field: 'MESA-HIS_R2' },],
-        headerClassName: ['training_col','cols_group']
+        headerClassName: ['training_col','col_border_left']
     }
 }

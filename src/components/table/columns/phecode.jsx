@@ -9,8 +9,8 @@ let base_phecode_columns = {
         common_cols['omicspred_id'],
         common_data_cols['r2'],
         common_cols['platform_name'],
-        { 
-            field: 'omics_name', 
+        {
+            field: 'omics_name',
             headerName: 'Description',
             width: 300
         },
@@ -21,8 +21,8 @@ let base_phecode_columns = {
         common_cols['phecode_id'],
         common_cols['phecode_name'],
         common_cols['phecode_category'],
-        { 
-            field: 'mean_age', 
+        {
+            field: 'mean_age',
             headerName: 'Mean Age',
             width: 150,
             renderCell: (params) => {
@@ -35,8 +35,8 @@ let base_phecode_columns = {
                 }
             }
         },
-        { 
-            field: 'cases_samples', 
+        {
+            field: 'cases_samples',
             headerName: '#Cases/#Samples',
             width: 150,
             renderCell: (params) => {
@@ -49,8 +49,8 @@ let base_phecode_columns = {
                 }
             }
         },
-        { 
-            field: 'percent+female', 
+        {
+            field: 'percent+female',
             headerName: '%Female',
             width: 150,
             renderCell: (params) => {
@@ -69,8 +69,8 @@ const build_columns = () => {
         let platform_idx = platform.toLowerCase();
         platform_idx = platform_idx.replace(' ','_');
         base_phecode_columns['Sum'].push(
-            { 
-                field: platform_idx, 
+            {
+                field: platform_idx,
                 headerName: platform,
                 width: 100,
                 renderCell: (params) => {
