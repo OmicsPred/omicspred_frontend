@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import DataTableFromRestApi from "../../components/table/DataTableFromRestApi";
-import { proteomics_columns } from '../../components/table/columns/proteomics'
-import restApiCall from '../../components/RestAPI';
+import DataTableFromRestApi from "../../../components/table/DataTableFromRestApi";
+import { proteomics_columns } from '../../../components/table/columns/proteomics'
+import restApiCall from '../../../components/RestAPI';
 
 
 function Proteomics() {

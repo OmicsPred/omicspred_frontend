@@ -38,6 +38,7 @@ function Phecode() {
       <div>
         <h2 className='page_title'>Phecode <span>{phecodeData.name}</span> <small>({phecode}</small>)</h2>
         <div className='key_val_line'><span className='line_key'>Category</span>{phecodeData.category}</div>
+        <div className='key_val_line'><span className='line_key'>Source</span><i>Link to PheWAS ?</i></div>
         <h4 className='mt-4'>Associated scores</h4>
         <DataTableFromRestApi table_key="phecode" url_suffix={url_suffix} columns={columns} />
         { phecodeData.child_phecode && phecodeData.child_phecode.length ? <><h4 className='mt-4'>Children Phecode entries</h4><DataTable data={phecodeData.child_phecode} columns={child_columns}/></> : ''}

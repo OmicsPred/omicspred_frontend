@@ -1,5 +1,6 @@
-import { FileEarmarkText } from 'react-bootstrap-icons';
+import { FileEarmarkText, Hr } from 'react-bootstrap-icons';
 import { internal_publication_link } from '../../Common';
+import Href from '../../Href';
 
 export const cohort_valueGetter = function(row,cohort,method) {
     let result = '';
@@ -200,6 +201,30 @@ export const common_cols = {
             return gene_names.join(',');
         }
     },
+    'gene_id_from_list': {
+        field: 'gene_id',
+        headerName: 'Gene ID',
+        minWidth: 120,
+        flex: 0.5,
+        renderCell: (params) => {
+            return omicspred_internal_link(params.row.external_id, 'gene');
+        },
+        valueGetter: (params) => {
+            return params.row.external_id;
+        }
+    },
+    'gene_name_from_list': {
+        field: 'gene_name',
+        headerName: 'Gene',
+        minWidth: 120,
+        flex: 0.5,
+        renderCell: (params) => {
+            return omicspred_internal_link(params.row.name, 'gene');
+        },
+        valueGetter: (params) => {
+            return params.row.name;
+        }
+    },
     'metabolite_id': {
         field: 'metabolite_id',
         // headerName: 'Biochemical ID',
@@ -255,6 +280,42 @@ export const common_cols = {
                 metabolite_names = params.row.metabolites.map((metabolite) => metabolite.name)
             }
             return metabolite_names.join(',');
+        }
+    },
+    'metabolite_id_from_list': {
+        field: 'metabolite_id',
+        headerName: 'Metabolite ID',
+        minWidth: 120,
+        flex: 0.5,
+        renderCell: (params) => {
+            return omicspred_internal_link(params.row.external_id, 'metabolite');
+        },
+        valueGetter: (params) => {
+            return params.row.external_id;
+        }
+    },
+    'metabolite_id_source_from_list': {
+        field: 'metabolite_id_source',
+        headerName: 'Metabolite ID Source',
+        minWidth: 120,
+        flex: 0.5,
+        renderCell: (params) => {
+            return params.row.external_id_source;
+        },
+        valueGetter: (params) => {
+            return params.row.external_id_source;
+        }
+    },
+    'metabolite_name_from_list': {
+        field: 'metabolite_name',
+        headerName: 'Metabolite',
+        minWidth: 120,
+        flex: 0.5,
+        renderCell: (params) => {
+            return omicspred_internal_link(params.row.name, 'metabolite');
+        },
+        valueGetter: (params) => {
+            return params.row.name;
         }
     },
     'phecode_id': {
@@ -342,6 +403,42 @@ export const common_cols = {
                 }
             }
             return result;
+        }
+    },
+    'pathway_id': {
+        field: 'pathway_id',
+        headerName: 'Pathway ID',
+        minWidth: 120,
+        flex: 0.5,
+        renderCell: (params) => {
+            return omicspred_internal_link(params.row.external_id, 'pathway');
+        },
+        valueGetter: (params) => {
+            return params.row.external_id;
+        }
+    },
+    'pathway_id_source': {
+        field: 'pathway_id_source',
+        headerName: 'Pathway Source',
+        minWidth: 120,
+        flex: 0.5,
+        renderCell: (params) => {
+            return params.row.external_id_source;
+        },
+        valueGetter: (params) => {
+            return params.row.external_id_source;
+        }
+    },
+    'pathway_name': {
+        field: 'pathway_name',
+        headerName: 'Pathway name',
+        minWidth: 120,
+        flex: 0.5,
+        renderCell: (params) => {
+            return params.row.external_id ? params.row.name: omicspred_internal_link(params.row.name, 'pathway');
+        },
+        valueGetter: (params) => {
+            return params.row.name;
         }
     }
 }

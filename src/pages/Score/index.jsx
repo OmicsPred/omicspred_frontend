@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { FileEarmarkText } from 'react-bootstrap-icons';
 import Href from "../../components/Href";
 import { internal_publication_link } from '../../components/Common';
 import DataTable from "../../components/table/DataTable";
 import { score_columns } from '../../components/table/columns/score'
 import restApiCall from '../../components/RestAPI';
 import { numberBadge } from '../../components/Generic';
+import { display_gene_link, display_protein_link, display_metabolite_link } from '../MolecularTrait/components/omics';
 
 
 function Score() {
@@ -19,6 +21,10 @@ function Score() {
     const [proteinsData, setProteinsData] = useState([])
     const [phecodeData, setPhecodeData] = useState([])
     const [metricData, setMetricData] = useState([])
+
+    const display_phecode_link = (phecode) => {
+        return <span key={phecode.id}>{phecode.name} (<Href href={'/phecode/'+phecode.id} text={phecode.id}/>)</span>
+    }
 
     const fetchScoreData = async () => {
         const score_data = await restApiCall('score/'+score);
@@ -63,6 +69,7 @@ function Score() {
                                             <tr><td>Method Name</td><td>{scoreData.method_name}</td></tr>
                                             <tr><td>Number of Variants</td><td>{numberBadge(scoreData.variants_number)}</td></tr>
                                             <tr><td>Genome Build</td><td>{scoreData.variants_genomebuild}</td></tr>
+                                            <tr><td>Scoring file</td><td><FileEarmarkText color="blue" size={24}/></td></tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -75,19 +82,19 @@ function Score() {
                                     <table className='table_card'>
                                         <tbody>
                                             {
-                                                genesData.length > 0 ? <tr><td><span className="bg_gene left_mark"></span>Gene{genesData.length > 1 && 's'}</td><td key='genes_data'>{genesData.map((data,index) => <span key={'gene_'+data.name ? data.name : data.external_id}>{index ? ', ': ''}<Href href={data.name ? '/gene/'+data.name : '/gene/'+data.external_id} key={'link'+data.name ? data.name : data.external_id} text={data.name ? data.name : data.external_id}/></span>)}</td></tr> : ''
+                                                genesData.length > 0 ? <tr><td><span className="bg_gene left_mark"></span>Gene{genesData.length > 1 && 's'}</td><td key='genes_data'>{genesData.map((data,index) => display_gene_link(data,index))}</td></tr> : ''
                                             }
                                             {
                                                 transcriptsData.length > 0 ? <tr key='transcripts'><td><span className="bg_transcript left_mark"></span>Transcript{transcriptsData.length > 1 && 's'}</td><td>{transcriptsData.map((data, index) => <span key={'trans_'+data.name}>{index ? ', ': ''}<span key={data.name}>{data.name}</span></span>)}</td></tr> : ''
                                             }
                                             {
-                                                proteinsData.length > 0 ? <tr key='proteins'><td><span className="bg_protein left_mark"></span>Protein{proteinsData.length > 1 && 's'}</td><td>{proteinsData.map((data, index) => <span key={'protein_'+data.name}>{index ? ', ': ''}<span key={data.name}>{data.name} (<Href href={"/protein/"+data.external_id} text={data.external_id}/>)</span></span>)}</td></tr> : ''
+                                                proteinsData.length > 0 ? <tr key='proteins'><td><span className="bg_protein left_mark"></span>Protein{proteinsData.length > 1 && 's'}</td><td>{proteinsData.map((data, index) => display_protein_link(data,index))}</td></tr> : ''
                                             }
                                             {
-                                                metabolitesData.length > 0 ? <tr key='metabolites'><td><span className="bg_metabolite left_mark"></span>Metabolite{metabolitesData.length > 1 && 's'}</td><td>{metabolitesData.map((data, index) => <span key={'metabo_'+data.name}>{index ? ', ': ''}<span key={data.name}>{data.name}</span></span>)}</td></tr> : ''
+                                                metabolitesData.length > 0 ? <tr key='metabolites'><td><span className="bg_metabolite left_mark"></span>Metabolite{metabolitesData.length > 1 && 's'}</td><td>{metabolitesData.map((data, index) => display_metabolite_link(data,index))}</td></tr> : ''
                                             }
                                             {
-                                                phecodeData && phecodeData.name ? <tr key='phenotypes'><td><span className="bg_phecode left_mark"></span>Phecode</td><td>{phecodeData.name} (<Href href={'/phecode/'+phecodeData.id} text={phecodeData.id} key={phecodeData.id}/>)</td></tr> : ''
+                                                phecodeData && phecodeData.name ? <tr key='phenotypes'><td><span className="bg_phecode left_mark"></span>Phecode</td><td>{display_phecode_link(phecodeData)}</td></tr> : ''
                                             }
                                         </tbody>
                                     </table>
@@ -96,7 +103,7 @@ function Score() {
                         </div>
                     </div>
                 </div>
-                
+
                 <div className='mt-4'>   
                     <h5>Evaluations:</h5>
                     <div className='d-flex mt-3'>

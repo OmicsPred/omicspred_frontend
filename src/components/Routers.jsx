@@ -8,14 +8,15 @@ import Platforms from "../pages/Platforms";
 import Scores from "../pages/Scores";
 import PhecodesFull from "../pages/Applications/PhecodesFull";
 import PhecodesSum from "../pages/Applications/PhecodesSum";
-import Metabolomics from "../pages/Metabolomics";
-import Proteomics from "../pages/Proteomics";
+import Metabolomics from "../pages/Omics/Metabolomics";
+import Proteomics from "../pages/Omics/Proteomics";
 import Publication from "../pages/Publication";
 import Platform from "../pages/Platform";
 import Score from "../pages/Score";
-import Gene from "../pages/Gene";
-import Protein from "../pages/Protein";
-import Metabolite from "../pages/Metabolite";
+import Gene from "../pages/MolecularTrait/Gene";
+import Protein from "../pages/MolecularTrait/Protein";
+import Metabolite from "../pages/MolecularTrait/Metabolite";
+import Pathway from "../pages/MolecularTrait/Pathway";
 import Phecode from "../pages/Applications/Phecode";
 import Applications from "../pages/Applications";
 // Tests
@@ -53,6 +54,7 @@ function OpRouters() {
                 <Route path="/gene/:gene" element={<Gene />} />
                 <Route path="/protein/:protein" element={<Protein />} />
                 <Route path="/metabolite/:metabolite" element={<Metabolite />} />
+                <Route path="/pathway/:pathway" element={<Pathway />} />
                 <Route path="/phecode/:phecode" element={<Phecode />} />
                 
                 {/* Search page */}

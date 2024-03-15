@@ -12,6 +12,7 @@ $tr_color: purple; // #975ebe
 $pr_color: #D00;
 $me_color: orange; //#ff974e
 $ph_color: #00CED1; // DarkTurquoise
+$pa_color: #FA8072;
 $hl_color: blue;
 $score_color: blue;
 $op_light_grey: #F8F8F8;
@@ -33,7 +34,8 @@ $type_colors: (
     'protein': $pr_color,
     'metabolite': $me_color,
     'phecode': $ph_color,
-    'score': $score_color
+    'score': $score_color,
+    'pathway': $pa_color
 );
 
 
