@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import DataTableFromRestApi from "../../components/table/DataTableFromRestApi";
-import { metabolomics_columns, metabolomics_column_groups } from '../../components/table/columns/metabolomics'
-import restApiCall from '../../components/RestAPI';
+import DataTableFromRestApi from "../../../components/table/DataTableFromRestApi";
+import { metabolomics_columns, metabolomics_column_groups } from '../../../components/table/columns/metabolomics'
+import restApiCall from '../../../components/RestAPI';
 
 function Metabolomics() {
     let { platform } = useParams();
