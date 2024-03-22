@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { FileEarmarkText } from 'react-bootstrap-icons';
+import { FileEarmarkText, InfoCircleFill } from 'react-bootstrap-icons';
 import Href from "../../components/Href";
 import { internal_publication_link } from '../../components/Common';
 import DataTable from "../../components/table/DataTable";
 import { score_columns } from '../../components/table/columns/score'
 import restApiCall from '../../components/RestAPI';
 import { numberBadge } from '../../components/Generic';
-import { display_gene_link, display_protein_link, display_metabolite_link } from '../MolecularTrait/components/omics';
+import { display_gene_link, display_protein_link, display_metabolite_link, display_pathway_link } from '../MolecularTrait/components/links';
+import { ToogleDiv } from "../../components/Common";
+import { op_title } from '../../components/Common';
+
 
 
 function Score() {
@@ -20,14 +23,37 @@ function Score() {
     const [metabolitesData, setMetabolitesData] = useState([])
     const [proteinsData, setProteinsData] = useState([])
     const [phecodeData, setPhecodeData] = useState([])
+    const [pathwayData, setPathwayData] = useState([])
     const [metricData, setMetricData] = useState([])
 
     const display_phecode_link = (phecode) => {
-        return <span key={phecode.id}>{phecode.name} (<Href href={'/phecode/'+phecode.id} text={phecode.id}/>)</span>
+        let id = phecode.id;
+        id = id.replace('.','%2E');
+        return <span key={phecode.id}>{phecode.name} (<Href href={'/phecode/'+id} text={phecode.id}/>)</span>
+    }
+
+    const get_pathways = (data) => {
+        let pathways = []
+        let pathway_ids = [];
+        if (data.genes) {
+            for (let i=0; i < data.genes.length; i++) {
+                if (data.genes[i].pathways) {
+                    for (let j=0; j < data.genes[i].pathways.length; j++) {
+                        const pathway = data.genes[i].pathways[j];
+                        const pathway_id = pathway.external_id;
+                        if (!pathway_ids.includes(pathway_id)) {
+                            pathway_ids.push(pathway_id);
+                            pathways.push(pathway);
+                        }
+                    }
+                }
+            }
+        }
+        return pathways.sort((a, b) => (a.name > b.name) ? 1 : -1)
     }
 
     const fetchScoreData = async () => {
-        const score_data = await restApiCall('score/'+score);
+        const score_data = await restApiCall('score/'+score+'?include_pathway=1');
         console.log(score_data);
         setScoreData(score_data);
         setPlatformData(score_data.platform);
@@ -37,6 +63,7 @@ function Score() {
         setMetabolitesData(score_data.metabolites);
         const score_app_data = await restApiCall('applications_score/'+score);
         setPhecodeData(score_app_data.phecode);
+        setPathwayData(get_pathways(score_data));
     }
 
     const fetchScoreMetrics = async () => {
@@ -53,7 +80,7 @@ function Score() {
 
     return (
         <>
-            <h2 className='page_title'>Score <span>{score}</span></h2>
+            {op_title('score', scoreData, score, 'id')}
             <div>
                 <div className='d-flex'>
                     <div className="card-deck d-lg-flex flex-lg-row justify-content-center d-md-flex flex-md-row d-sm-flex flex-sm-column me-4">
@@ -70,6 +97,7 @@ function Score() {
                                             <tr><td>Number of Variants</td><td>{numberBadge(scoreData.variants_number)}</td></tr>
                                             <tr><td>Genome Build</td><td>{scoreData.variants_genomebuild}</td></tr>
                                             <tr><td>Scoring file</td><td><FileEarmarkText color="blue" size={24}/></td></tr>
+                                            <tr><td>Terms & Licenses</td><td>{scoreData.license}</td></tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -96,6 +124,15 @@ function Score() {
                                             {
                                                 phecodeData && phecodeData.name ? <tr key='phenotypes'><td><span className="bg_phecode left_mark"></span>Phecode</td><td>{display_phecode_link(phecodeData)}</td></tr> : ''
                                             }
+                                            {
+                                                pathwayData && pathwayData.length > 0 ? <tr key='pathways'><td><span className="bg_pathway left_mark"></span>Pathway{pathwayData.length > 1 && 's'}</td><td>
+                                                    {
+                                                        pathwayData.length > 1 ?
+                                                            <ToogleDiv key={'toggle_pathways'} title={pathwayData.length+' associated pathways'} content={pathwayData.map((data, index) => display_pathway_link(data,index,1))}/>
+                                                            : pathwayData.map((data, index) => display_pathway_link(data,index))
+                                                    }
+                                                    </td></tr> : ''
+                                            }
                                         </tbody>
                                     </table>
                                 </div>
@@ -103,7 +140,6 @@ function Score() {
                         </div>
                     </div>
                 </div>
-
                 <div className='mt-4'>   
                     <h5>Evaluations:</h5>
                     <div className='d-flex mt-3'>

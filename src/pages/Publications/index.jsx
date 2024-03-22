@@ -1,6 +1,7 @@
 import DataTableFromRestApi from "../../components/table/DataTableFromRestApi";
 import Href from "../../components/Href";
 import {omicspred_platform_omics_type} from "../../components/table/columns/common";
+import { browse_title } from '../../components/Common';
 
 function Publications() {
 
@@ -76,7 +77,7 @@ function Publications() {
     
     return (
         <div>
-            <h2 className='page_title'>Publications</h2>
+            { browse_title('hl','publications') }
             <DataTableFromRestApi table_key="publications" url_suffix={url_suffix} columns={columns}/>
         </div>
     );

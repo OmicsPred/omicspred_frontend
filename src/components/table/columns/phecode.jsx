@@ -1,4 +1,4 @@
-import {common_cols,common_data_cols} from "./common";
+import {common_cols,common_data_cols, applications_cols} from "./common";
 
 
 let base_phecode_columns = {
@@ -9,11 +9,9 @@ let base_phecode_columns = {
         common_cols['omicspred_id'],
         common_data_cols['r2'],
         common_cols['platform_name'],
-        {
-            field: 'omics_name',
-            headerName: 'Description',
-            width: 300
-        },
+        applications_cols['gene'],
+        applications_cols['protein'],
+        applications_cols['metabolite'],
         common_data_cols['hazard_ratio'],
         common_data_cols['fdr']
     ],

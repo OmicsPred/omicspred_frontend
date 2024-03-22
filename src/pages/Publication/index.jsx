@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { ChevronRight } from 'react-bootstrap-icons';
 import restApiCall from '../../components/RestAPI';
 import Href from "../../components/Href";
 import { publication_score_columns_start, publication_score_columns_end, publication_transcriptomics_columns, publication_proteomics_columns, publication_metabolomics_columns } from '../../components/table/columns/scores';
 import DataTable from "../../components/table/DataTable";
 import DataTableServer from '../../components/table/DataTableServer';
-
+import PlatformCard from './components/PlatformCard';
 import {omicspred_omics_type, omicspred_internal_link} from "../../components/table/columns/common";
+import { op_subtitle } from '../../components/Common';
 
 
 function Publication() {
@@ -17,6 +19,22 @@ function Publication() {
 
     const url_endpoint = 'score/search?pmid='+pubmed_id;
 
+    const get_cohorts_list = (sample_data) => {
+        const cohorts = [];
+        // Loop over the samples
+        for (let i=0; i< sample_data.length; i++) {
+            const sample_cohorts = sample_data[i].cohorts;
+            // Loop over the cohorts
+            for (let j=0; j< sample_cohorts.length; j++) {
+                const cohort_name = sample_cohorts[j].name_short;
+                if (!cohorts.includes(cohort_name)) {
+                    cohorts.push(cohort_name)
+                }
+            } 
+        }
+        return cohorts.sort().join(', ');
+    }
+
     const columns = [
         { 
             field: 'name', 
@@ -24,7 +42,7 @@ function Publication() {
             minWidth: 150,
             flex: 1,
             renderCell: (params) => {
-                return omicspred_internal_link(params.row.platform.name,'platform');
+                return omicspred_internal_link({'label': params.row.platform.name},'platform');
             },
             valueGetter: (params) => { return params.row.platform.name }
         },
@@ -55,6 +73,30 @@ function Publication() {
                 return omicspred_omics_type(params.row.platform.type);
             },
             valueGetter: (params) => { return params.row.platform.type }
+        },
+        {
+            field: 'cohorts_training',
+            headerName: 'Cohort Training',
+            width: 200,
+            flex: 1,
+            renderCell: (params) => {
+                return get_cohorts_list(params.row.samples_training);
+            },
+            valueGetter: (params) => {
+                return get_cohorts_list(params.row.samples_training);
+            }
+        },
+        {
+            field: 'cohorts_validation',
+            headerName: 'Cohort Validation',
+            width: 200,
+            flex: 1,
+            renderCell: (params) => {
+                return get_cohorts_list(params.row.samples_validation);
+            },
+            valueGetter: (params) => {
+                return get_cohorts_list(params.row.samples_validation);
+            }
         },
         { 
             field: 'scores_count', 
@@ -116,8 +158,8 @@ function Publication() {
 
     return (
         <>
-            <h2 className='page_title'>Publication <span>{publicationData.firstauthor} <i>et al.</i> {publicationData.journal} <small>({publicationYear})</small></span></h2>
-            <div>
+            <h2 className='page_title'>Publication<ChevronRight className={'op_title_separator color_hl'}/><span>{publicationData.firstauthor} <i>et al.</i> {publicationData.journal} <small>({publicationYear})</small></span></h2>
+            <div className='mb-4'>
                 <div className='d-flex'>
                     <div className="card-deck d-lg-flex flex-lg-row justify-content-center d-md-flex flex-md-row d-sm-flex flex-sm-column me-4">
                         <div className="card mb-3 me-5" style={{padding:"0px",maxWidth:"800px"}}>
@@ -139,13 +181,18 @@ function Publication() {
                     </div>
                 </div>   
             </div>
-            <h3 className='mt-4'>Platform(s)</h3>
+            { platformsData && platformsData.length ?
+                <div className="d-flex flex-column">
+                        { platformsData.map((platform_data) => <PlatformCard data={platform_data} key={platform_data.platform.name} />)}
+                </div> : ''
+            }
+            {op_subtitle('hl','platform')}
             { platformsData ?
                 <>
-                    <div>
+                    <div className='mb-4'>
                         <DataTable key="platforms" data={platformsData} columns={columns}/>
                     </div>
-                    <h3 className='mt-4'>Scores</h3>
+                    {op_subtitle('score')}
                     <div>
                         <DataTableServer url_suffix={url_endpoint} columns={score_columns(platformsData)} />
                     </div>

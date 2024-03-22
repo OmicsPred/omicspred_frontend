@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { ChevronRight } from 'react-bootstrap-icons';
 import restApiCallWithData from '../../../components/RestAPIWithData';
 import ResultCard from './components/ResultCard';
 import SidePanelFilter from './components/SidePanelFilter';
@@ -7,15 +8,18 @@ import SidePanelFilter from './components/SidePanelFilter';
 function Search() {
     // Get search query
     const [searchParams, setSearchParams] = useSearchParams();
+    const [esResults, setEsResults] = useState([])
+    const [esOptions, setEsOptions] = useState([])
+    const [omicsChecked, setOmicsChecked] = useState([]);
+    const [platformChecked, setPlatformChecked] = useState([]);
+    const [resultTypes, setResultTypes] = useState([]);
+
     let query = '';
     for (const [key, value] of searchParams.entries()) {
         if (key == 'q') {
             query = value;
         }
     }
-
-    const [esResults, setEsResults] = useState([])
-    const [esOptions, setEsOptions] = useState([])
 
     const indexes = ['gene','metabolite','phecode','protein','score'];
 
@@ -31,6 +35,7 @@ function Search() {
         if (process.env.OMICSPRED_ES_USERNAME && process.env.OMICSPRED_ES_PASSWORD) {
             credentials = `Basic ${btoa(process.env.OMICSPRED_ES_USERNAME + ':' + process.env.OMICSPRED_ES_PASSWORD)}`;
         }
+        console.log("!!!!! FETCH RESULTS !!!!!");
         const results = await restApiCallWithData(es_url,query_content,credentials);
         console.log(">>> results for "+query+":");
         const results_list = results.hits.hits;
@@ -75,13 +80,12 @@ function Search() {
         setEsOptions(options);
         console.log(">>> options");
         console.log(options);
-
+        filter_result_types(results.hits.hits);
     }
 
-    const [omicsChecked, setOmicsChecked] = useState([]);
-    const [platformChecked, setPlatformChecked] = useState([]);
 
     function handleChange(e) {
+        console.log('\n\nXXXX handleChange XXXX');
         if (e.target.name == 'omics') {
             if (e.target.checked) {
                 setOmicsChecked([...omicsChecked, e.target.value]);
@@ -96,10 +100,10 @@ function Search() {
                 setPlatformChecked(platformChecked.filter((item) => item !== e.target.value));
             }
         }
-        console.log("Omics: "+omicsChecked);
-        console.log("Platform: "+platformChecked);
-        console.log("--------------------");
+        console.log('platformChecked:');
+        console.log(platformChecked);
     }
+
 
     function isFiltered(result) {
         let filter_count = 0;
@@ -130,24 +134,38 @@ function Search() {
         else {
             filter_count += 1;
         }
-        if (filter_count > 1) {
-            return true;
-        }
-        else {
-            return false
-        }
+        return (filter_count > 1) ? true : false;
     }
 
 
+    function filter_result_types(results) {
+        let result_types = [];
+        for (let i=0; i < results.length; i++) {
+            const data = results[i];
+            if (isFiltered(data._source)) {
+                const data_type = data._index;
+                if (!result_types.includes(data_type)) {
+                    result_types.push(data_type)
+                }
+            }
+        }
+        setResultTypes(result_types);
+    }
+
+
+    // Fetch search results
     useEffect(() => {
         fetchESResults();
     },[])
 
+    // Update the list of result types whenever a button is clicked on the side panel filters
+    useEffect(() => {
+        filter_result_types(esResults);
+    },[omicsChecked,platformChecked])
+
     return (
         <>
-            <h2 className='page_title'>Search results for <span>{query}</span></h2>
-            {/* <div>Sel. Omics: {omicsChecked.join(', ') }</div>
-            <div>Sel. Platform: {platformChecked.join(', ') }</div> */}
+            <h2 className='page_title'>Search results<ChevronRight className={'op_title_separator color_hl'}/><span>{query}</span></h2>
             <div className='d-flex'>
                 <Suspense fallback={<div>Loading results ...</div>}>
                 { 
@@ -159,17 +177,17 @@ function Search() {
                             {/* Legend of feature type in the results */}
                             <div style={{marginLeft:"24px",marginTop:"24px"}}>
                                 <legend className="mb-3" style={{fontWeight:"bold",fontSize:"1rem",color:"rgba(0, 0, 0, 0.6)"}}>Result types</legend>
-                                { esResults.map((data) => isFiltered(data._source) && <div key={'legend_'+data._index} className="op_search_feature_legend mb-1" >
-                                    <span className={'px-2 py-2 me-3 mb-1 bg_'+data._index}></span>
-                                    <span>{data._index}</span>
-                                </div>)}
+                                { resultTypes && resultTypes.length ? resultTypes.map((data) => <div key={'legend_'+data} className="op_search_feature_legend mb-1" >
+                                    <span className={'px-2 py-2 me-3 mb-1 bg_'+data}></span>
+                                    <span>{data}</span>
+                                </div>): ''}
                             </div>
                         </div>
                         {/* Result panel */}
                         <div>
                             { esResults.map((data) => isFiltered(data._source) && <ResultCard data={data._source} type={data._index} key={data._index+'_'+data._id}/>)}
                         </div>
-                    </>: <div>No data</div>
+                    </>: <h4>No result found</h4>
                 }
                 </Suspense>
             </div>
@@ -178,3 +196,13 @@ function Search() {
 }
 
 export default Search;
+
+function LegendItem(props) {
+    const item = props.item;
+    return (
+        <div key={'legend_'+item} className="op_search_feature_legend mb-1" >
+            <span className={'px-2 py-2 me-3 mb-1 bg_'+item}></span>
+            <span>{item}</span>
+        </div>
+    );
+}

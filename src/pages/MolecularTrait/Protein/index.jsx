@@ -4,7 +4,9 @@ import DataTableFromRestApi from '../../../components/table/DataTableFromRestApi
 import {common_cols} from '../../../components/table/columns/common';
 import restApiCall from '../../../components/RestAPI';
 import Href from '../../../components/Href';
-import { display_gene_link } from '../components/omics';
+import { display_gene_link } from '../components/links';
+import { op_title, op_subtitle } from '../../../components/Common';
+
 
 function Protein() {
     let { protein } = useParams();
@@ -21,8 +23,13 @@ function Protein() {
         common_cols['scoring_file']
     ]
 
-    const uniprot_source_link = () => {
-        return <Href href={process.env.URL_UNIPROT+"uniprotkb/"+elementData.external_id+"/entry"} text="UniProt"/>
+    const external_id_link = () => {
+        if (elementData.external_id_source == 'UniProt') {
+            return <Href href={process.env.URL_UNIPROT+"uniprotkb/"+elementData.external_id+"/entry"} text={elementData.external_id}/>
+        }
+        else {
+            return elementData.external_id
+        }
     }
 
     const fetchSummaryData = async () => {
@@ -37,12 +44,14 @@ function Protein() {
 
     return (
         <div>
-            <h2 className='page_title'>Protein <span>{protein}</span></h2>
+            {op_title('protein', elementData, protein)}
+            {/* <h2 className='page_title'>Protein <span>{protein}</span></h2> */}
             <ul className='key_val_line'>
-            <li><span className='line_key'>Name</span>{elementData.name}</li>
-            { elementData && elementData.external_id_source == 'UniProt' ? <li><span className='line_key'>Source</span>{uniprot_source_link()}</li> : ''}
+            <li><span className='line_key'>Identifier</span>{external_id_link()}</li>
+            {/* { elementData && elementData.external_id_source == 'UniProt' ? <li><span className='line_key'>Source</span>{uniprot_source_link()}</li> : ''} */}
             { elementData && elementData.gene ? <li><span className='line_key'>Gene</span>{display_gene_link(elementData.gene)}</li>:''}
             </ul>
+            {op_subtitle('score')}
             <DataTableFromRestApi table_key="protein" url_suffix={url_suffix} columns={columns}/>
         </div>
     );

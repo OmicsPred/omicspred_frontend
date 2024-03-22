@@ -14,7 +14,7 @@ $me_color: orange; //#ff974e
 $ph_color: #00CED1; // DarkTurquoise
 $pa_color: #FA8072;
 $hl_color: blue;
-$score_color: blue;
+$score_color: #007C82; //blue;
 $op_light_grey: #F8F8F8;
 $op_light_grey_2: #f1f5f9;
 $op_blue_2: #0d6efd;
@@ -157,24 +157,40 @@ a {
 .search_input {
     border: 1px solid $op_blue_2 !important;
 }
-// .logo {
-//     height: 6em;
-//     padding: 1.5em;
-//     will-change: filter;
-//     transition: filter 300ms;
-//     &:hover {
-//         filter: drop-shadow(0 0 2em #646cffaa);
-//     }
-// }
-// .logo.react:hover {
-//     filter: drop-shadow(0 0 2em #61dafbaa);
-// }
+
 
 .page_title {
     margin: 1rem 0rem 2rem;
-    > span {
-        color: $hl_color;
+    font-weight: 200;
+    > span:first-child {
+        // background-color: #007C82;
+        padding:4px 10px;
+        color:#FFF;
+        border-top-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        border-top-right-radius: 4px;
+        border-bottom-left-radius: 4px;
     }
+    > span:last-child {
+        font-weight: bold;
+    }
+}
+.op_title_separator {
+    height:38px;
+    font-size: 26px;
+    vertical-align:top;
+    margin-top:2px;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.op_browse_title {
+    height:38px;
+    font-size: 24px;
+    vertical-align:top;
+    margin-top:3px;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
 }
 
 footer a > svg {
@@ -217,6 +233,14 @@ footer a > svg {
 
 .card {
     padding: 2em;
+}
+
+h5 > .op_subtitle {
+    margin-right: 0.25rem;
+    height:24x;
+    font-size: 18px !important;
+    vertical-align:top;
+    margin-top:3px;
 }
 
 ul.key_val_line {
@@ -374,7 +398,7 @@ ul.key_val_line {
 }
 
 /* Colour classes */
-.hl_color {
+.hl_color, .color_hl {
     color: $hl_color;
 }
 
@@ -439,7 +463,7 @@ ul.key_val_line {
 
 @each $type_key, $type_color in $type_colors {
     .color_#{$type_key} {
-        color: $type_color;
+        color: $type_color !important;
     }
 
     .bg_#{$type_key} {

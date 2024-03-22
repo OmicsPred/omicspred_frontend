@@ -22,7 +22,7 @@ const DataTableFromRestApi = (props) => {
         <>
         {
             restApiDone == true ? 
-            (tableData && tableData.length ? <DataTable key={props.table_key} data={tableData} columns={props.columns} groups={props.groups}/> : "No data found" ) : <div>Loading table ...</div>
+            (tableData && tableData.length ? <DataTable key={props.table_key} data={tableData} columns={props.columns} groups={props.groups} col_for_ids={props.col_for_ids}/> : "No data found" ) : <div>Loading table ...</div>
         }
         </>
     )

@@ -5,7 +5,8 @@ import DataTableFromRestApi from "../../../components/table/DataTableFromRestApi
 import DataTable from '../../../components/table/DataTable';
 import {common_cols} from "../../../components/table/columns/common";
 import restApiCall from '../../../components/RestAPI';
-import { display_synonyms, display_xrefs } from '../components/omics';
+import { display_synonyms, display_xrefs } from '../components/links';
+import { op_title, op_subtitle } from '../../../components/Common';
 
 
 function Metabolite() {
@@ -53,8 +54,7 @@ function Metabolite() {
 
     return (
         <div>
-            <h2 className='page_title'>Metabolite <span>{elementData && elementData.name ? elementData.name : metabolite}</span></h2>
-          
+            {op_title('metabolite', elementData, metabolite)}
             { elementData ?
                 <ul className='key_val_line'>
                 {
@@ -72,6 +72,7 @@ function Metabolite() {
                 </ul>
                 : <div>Loading summary data ...</div> 
             }
+            {op_subtitle('score')}
             <DataTableFromRestApi table_key="metabolite" url_suffix={url_suffix} columns={columns}/>
             { 
 				elementData && pathwayData.length ? <div className="mt-4"><h5>Associated pathways(s)</h5><DataTable key="pathway" data={pathwayData} columns={pathway_columns}/></div> : <div className='mt-4'>No associated pathway found</div>
