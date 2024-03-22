@@ -9,40 +9,56 @@ const metric_valueGetter = function(performance_metrics,method) {
 
 
 export const score_columns = [
-    { 
-        field: 'cohort', 
+    {
+        field: 'cohort',
         headerName: 'Cohort',
         width: 200,
         renderCell: (params) => {
             return params.row.cohort_label;
         }
     },
-    { 
-        field: 'type', 
+    {
+        field: 'ancestry',
+        headerName: 'Ancestry',
+        width: 200,
+        renderCell: (params) => {
+            return params.row.sample.ancestry_broad;
+        }
+    },
+    {
+        field: 'individuals',
+        headerName: 'Sample size',
+        width: 150,
+        renderCell: (params) => {
+            return params.row.sample.sample_number;
+        }
+    },
+    {
+        field: 'type',
         headerName: 'Type',
         width: 200,
         renderCell: (params) => {
             return params.row.evaluation_type;
         }
     },
-    { 
-        field: 'r2', 
+    {
+        field: 'r2',
         headerName: 'R2',
         width: 100,
         valueGetter: (params) => {
             return metric_valueGetter(params.row.performance_metrics,'R2');
         }
     },
-    { 
-        field: 'rho', 
+    {
+        field: 'rho',
         headerName: 'Rho',
         width: 100,
         valueGetter: (params) => {
             return metric_valueGetter(params.row.performance_metrics,'Rho');
         }
     },
-    { 
-        field: 'missing_rate', 
+    {
+        field: 'missing_rate',
         headerName: 'Missing Rate',
         width: 100,
         valueGetter: (params) => {

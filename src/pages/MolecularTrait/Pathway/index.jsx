@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Diagram3 } from 'react-bootstrap-icons';
 import Href from '../../../components/Href';
-import DataTableFromRestApi from '../../../components/table/DataTableFromRestApi';
 import DataTable from '../../../components/table/DataTable';
 import { common_cols } from '../../../components/table/columns/common';
 import restApiCall from '../../../components/RestAPI';
-import restApiCallPaginated from '../../../components/RestAPIPaginated';
+import { op_title, op_subtitle } from '../../../components/Common';
 
 
 function Pathway() {
@@ -13,6 +13,7 @@ function Pathway() {
 	const [elementData, setElementData] = useState([])
 	const [geneData, setGeneData] = useState([])
 	const [metaboliteData, setMetaboliteData] = useState([])
+	const [superpathwayData, setSuperpathwayData] = useState([])
 
     const element = 'pathway';
 
@@ -40,6 +41,9 @@ function Pathway() {
 		if (data.metabolites) {
 			setMetaboliteData(data.metabolites)
 		}
+		if (data.superpathways) {
+			setSuperpathwayData(data.superpathways)
+		}
 	}
 
     useEffect(() => {
@@ -48,22 +52,28 @@ function Pathway() {
 
     return (
 		<div>
-			<h2 className='page_title'>Pathway <span>{elementData && elementData.name ? elementData.name : pathway}</span></h2>
 			{ elementData ?
 				<>
+					{op_title('pathway', elementData, pathway)}
 					<ul className='key_val_line'>
 					{
-						elementData.external_id_source=='Reactome' && elementData.name ? <li><span className='line_key'>Reactome ID</span><Href href={process.env.URL_REACTOME_ENTRY+elementData.external_id} text={elementData.external_id}/></li> : ''
+						elementData.external_id_source=='Reactome' && elementData.name ? <li key="reactome_id"><span className='line_key'>Reactome ID</span><Href href={process.env.URL_REACTOME_ENTRY+elementData.external_id} text={elementData.external_id}/></li> : ''
 					}
 					{
-						elementData.synonyms ? <li><span className='line_key'>Synonym{elementData.synonyms.length > 1 ? 's' : ''}</span>{elementData.synonyms.map((synonym, index) => <span key={synonym.name}>{index ? ', ' : ''}{synonym.name}</span>)}</li> : ''
+						elementData.synonyms ? <li key="reactome_syn"><span className='line_key'>Synonym{elementData.synonyms.length > 1 ? 's' : ''}</span>{elementData.synonyms.map((synonym, index) => <span key={synonym.name}>{index ? ', ' : ''}{synonym.name}</span>)}</li> : ''
+					}
+					{
+						superpathwayData.length ? <li key="reactome_top_level"><span className='line_key'>Top Level Pathway{superpathwayData.length > 1 ? 's' : ''}</span>{superpathwayData.map((pathway, index) => <span>{index ? ', ' : ''}{pathway.name} (<Href key={pathway.external_id} href={process.env.URL_REACTOME_ENTRY+pathway.external_id} text={pathway.external_id}/>)</span>)}</li> : ''
 					}
 					</ul>
+					<div className="mt-3 sm:mt-0 sm:ml-3">
+						<a className="btn btn-primary shadow" href={"/test/reactome/"+elementData.external_id} role="button"><Diagram3 className='me-2' size="16"/>Reactome Diagram</a>
+					</div>
 					{
-						geneData.length ? <div className="mt-4"><h5>Associated gene(s)</h5><DataTable key="gene" data={geneData} columns={gene_columns}/></div> : ''
+						geneData.length ? <div className="mt-4">{op_subtitle('gene')}<DataTable key="gene" data={geneData} columns={gene_columns}/></div> : ''
 					}
 					{
-						metaboliteData.length ? <div className="mt-4"><h5>Associated metabolites(s)</h5><DataTable key="metabolite" data={metaboliteData} columns={metabolite_columns}/></div> : ''
+						metaboliteData.length ? <div className="mt-4">{op_subtitle('metabolite')}<DataTable key="metabolite" data={metaboliteData} columns={metabolite_columns}/></div> : ''
 					}
 				</>
 				: <div>Loading data ...</div> 

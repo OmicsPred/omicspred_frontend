@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { ChevronRight } from 'react-bootstrap-icons';
+
 import {cohort_cols, common_column_groups} from '../../components/table/columns/common';
 import { metabolomics_columns,metabolomics_column_groups } from '../../components/table/columns/metabolomics';
 import { proteomics_columns, proteomics_column_groups } from '../../components/table/columns/proteomics';
@@ -10,6 +12,7 @@ import DataTableServer from '../../components/table/DataTableServer';
 import { numberBadge } from "../../components/Generic";
 import PlatformSummary from './components/PlatformSummary';
 import PublicationCard from './components/PublicationCard';
+import { op_subtitle } from '../../components/Common'
 
 
 function Platform() {
@@ -38,6 +41,19 @@ function Platform() {
                 return "proteomics/"+endpoint_suffix;
             case 'Transcriptomics':
                 return "transcriptomics/"+endpoint_suffix;
+        }
+    }
+
+    const get_data_type = (omics_type) => {
+        switch(omics_type) {
+            case 'Metabolomics':
+                return 'metabolite';
+            case 'Proteomics':
+                return 'protein';
+            case 'Transcriptomics':
+                return 'transcript';
+            default:
+                return 'hl';
         }
     }
 
@@ -290,7 +306,7 @@ function Platform() {
 
     return (
         <>
-            <h2 className='page_title'>Platform <span>{platformSumData.name}</span></h2>
+            <h2 className='page_title'>Platform<ChevronRight className={'op_title_separator color_'+get_data_type(platformSumData.type)}/><span>{platformSumData.name}</span></h2>
             <div className='d-flex'>
                 {platformSumData && platformVersions ? <PlatformSummary metadata={platformSumData} versions={platformVersions}/>: ''}
             { platformAddData.length > 0 ?
@@ -303,11 +319,12 @@ function Platform() {
             }
             </div>
 
-            <div className="mt-4 me-4 sm:mt-0 sm:ml-3">
+            <div className="mt-4 me-4 mb-4 sm:mt-0 sm:ml-3">
                 { platformVersionsList.length > 0 && platformVersionsSelection.length > 0 ? platformVersionsList.map((version) => <button className="btn btn-primary shadow btn-sm me-2"  data-version={version} key={platform+'_'+version} onClick={handleVersionSelectionClick}>{platform} {version}</button>):''}
             </div>
+            {op_subtitle('score')}
             {platformSumData && platformSumData.type ?
-                <div className="mt-4">
+                <div className="mt-2">
                     <DataTableServer url_suffix={get_url_endpoint(platformSumData.type)} columns={platformTableColumns} groups={platformTableColumnGroups}/>
                 </div>
                 :

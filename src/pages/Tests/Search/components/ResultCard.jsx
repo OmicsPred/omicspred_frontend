@@ -25,6 +25,10 @@ export default function ResultCard(props) {
     let result_id = data.name ? data.name : data.id;
     let url_id = data.id ? data.id : data.name
 
+    if (props.type == 'score') {
+        result_id = data.id;
+    }
+
     const key = result_id.replace(' ','_');
 
     const url = '/'+index2url[props.type]+'/'+url_id;

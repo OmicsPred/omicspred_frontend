@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { ChevronRight} from 'react-bootstrap-icons';
 import Href from '../../../components/Href';
 import DataTableFromRestApi from '../../../components/table/DataTableFromRestApi';
 import DataTable from '../../../components/table/DataTable';
 import { common_cols } from '../../../components/table/columns/common';
 import restApiCall from '../../../components/RestAPI';
 import restApiCallPaginated from '../../../components/RestAPIPaginated';
+import { op_title, op_subtitle } from '../../../components/Common';
 
 
 function Gene() {
@@ -32,8 +34,9 @@ function Gene() {
 
 	const pathway_columns = [
 		common_cols['pathway_id'],
-		common_cols['pathway_id_source'],
-		common_cols['pathway_name']
+		common_cols['pathway_name'],
+		common_cols['superpathway_name'],
+		common_cols['pathway_id_source']
 	]
 
 	const fetchSummaryData = async () => {
@@ -61,12 +64,14 @@ function Gene() {
 
 	return (
 		<div>
-			<h2 className='page_title'>Gene <span>{elementData && elementData.name ? elementData.name : gene}</span></h2>
-			
+			{op_title('gene', elementData, gene)}
 			{ elementData ?
 				<ul className='key_val_line'>
 				{
 					elementData.external_id_source=='Ensembl' && elementData.name ? <li><span className='line_key'>Ensembl ID</span><Href href={process.env.URL_ENSEMBL_ENTRY+elementData.external_id} text={elementData.external_id}/></li> : ''
+				}
+				{
+					elementData.description ? <li><span className='line_key'>Description</span>{elementData.description}</li> : ''
 				}
 				{
 					elementData.synonyms ? <li><span className='line_key'>Synonym{elementData.synonyms.length > 1 ? 's' : ''}</span>{elementData.synonyms.map((synonym, index) => <span key={synonym.name}>{index ? ', ' : ''}{synonym.name}</span>)}</li> : ''
@@ -77,12 +82,13 @@ function Gene() {
 				</ul>
 				: <div>Loading summary data ...</div> 
 			}
+			{op_subtitle('score')}
 			<DataTableFromRestApi table_key="gene" url_suffix={url_suffix} columns={columns}/>
 			{ 
-				proteinData && proteinData.length ? <div className="mt-4"><h5>Associated protein(s)</h5><DataTable key="protein" data={proteinData} columns={protein_columns}/></div> : <div className='mt-4'>No associated protein found</div>
+				proteinData && proteinData.length ? <div className="mt-4">{op_subtitle('protein')}<DataTable key="protein" data={proteinData} columns={protein_columns}/></div> : <div className='mt-4'>No associated protein found</div>
 			}
 			{ 
-				elementData && pathwayData.length ? <div className="mt-4"><h5>Associated pathways(s)</h5><DataTable key="pathway" data={pathwayData} columns={pathway_columns}/></div> : <div className='mt-4'>No associated pathway found</div>
+				elementData && pathwayData.length ? <div className="mt-4">{op_subtitle('pathway')}<DataTable key="pathway" data={pathwayData} columns={pathway_columns}/></div> : <div className='mt-4'>No associated pathway found</div>
 			}
 		</div>
 	);
