@@ -2,6 +2,7 @@ import DataTableFromRestApi from "../../components/table/DataTableFromRestApi";
 import Href from "../../components/Href";
 import {omicspred_platform_omics_type} from "../../components/table/columns/common";
 import { browse_title } from '../../components/Common';
+import { thousandifyNumber } from '../../components/Generic';
 
 function Publications() {
 
@@ -12,7 +13,7 @@ function Publications() {
     const columns = [
         { field: 'firstauthor', 
           headerName: 'First Author', 
-          minWidth: 200,
+          minWidth: 150,
           flex: 1,
             renderCell: (params) => {
                 return (<a href={"/publication/"+params.row.pmid}>{params.row.firstauthor}</a>);
@@ -22,7 +23,7 @@ function Publications() {
         { 
             field: 'pmid', 
             headerName: 'PubMed ID', 
-            minWidth: 150,
+            minWidth: 120,
             flex: 1,
             renderCell: (params) => {
                 return <Href href={process.env.URL_ROOT_PUBMED+params.row.pmid} text={params.row.pmid}/>
@@ -32,7 +33,7 @@ function Publications() {
         { 
             field: 'doi', 
             headerName: 'Digital object identifier (doi)', 
-            minWidth: 200,
+            minWidth: 250,
             flex: 1,
             renderCell: (params) => {
                 return <Href href={process.env.URL_ROOT_DOI+params.row.doi} text={params.row.doi}/>
@@ -40,12 +41,12 @@ function Publications() {
             valueGetter: (params) => { return params.row.doi }
         },
         
-        { field: 'title', headerName: 'Title', width: 450 },
-        { field: 'journal', headerName: 'Journal', width: 200 },
+        { field: 'title', headerName: 'Title', minWidth: 450 },
+        { field: 'journal', headerName: 'Journal', minWidth: 150 },
         { 
             field: 'date_publication', 
             headerName: 'Publication Date', 
-            width: 150 ,
+            minWidth: 150 ,
             renderCell: (params) => {
                 // Change date format to DD/MM/YYYY
                 if (params.row.date_publication) {
@@ -72,6 +73,22 @@ function Publications() {
                 )
             },
             valueGetter: (params) => { return params.row.platforms.map((platform) => platform.name) }
+        },
+        {
+            field: 'scores_count',
+            headerName: '#Scores',
+            minWidth: 75,
+            flex: 0.5,
+            align: 'right',
+            renderCell: (params) => {
+                let counts = 0;
+                const platforms = params.row.platforms;
+                // const counts = params.row.platforms.map((platform) => platform.scores_count);
+                for (let i = 0; i < platforms.length; i++ ) {
+                    counts += platforms[i].scores_count;
+                }
+                return thousandifyNumber(counts);
+            }
         }
     ]
     

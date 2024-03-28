@@ -22,26 +22,25 @@ const DataTableServer = (props) => {
     let page_size = default_page_size;
 
     const cols2db = {
-      'id': 'id',
-      'uniprot_id': 'proteins__external_id',
-      'protein_name': 'proteins__name',
-      'gene_name':  'genes__name',
-      'metabolite_name':  'metabolites__name',
-      
+        'id': 'id',
+        'uniprot_id': 'proteins__external_id',
+        'protein_name': 'proteins__name',
+        'gene_name':  'genes__name',
+        'metabolite_name':  'metabolites__name',
     }
 
     const [rowCountState, setRowCountState] = useState(0);
     const [data, setData] = useState([]);
     const [queryParam, setQueryParam] = useState({
-      filter: '',
-      sort_field: '',
-      sort: ''
+        filter: '',
+        sort_field: '',
+        sort: ''
     });
     const [isLoading, setIsLoading] = useState(false);
     const [paginationModel, setPaginationModel] = useState({
-      total: 0,
-      page: 0,
-      pageSize: page_size
+        total: 0,
+        page: 0,
+        pageSize: page_size
     });
 
     let display_groups = false;
@@ -49,6 +48,7 @@ const DataTableServer = (props) => {
       display_groups = true;
     }
 
+    const row_height_settings = 'auto';
 
     // const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_';
     const characters ='0123456789';
@@ -63,72 +63,72 @@ const DataTableServer = (props) => {
     }
 
     function getRowId(row) {
-      // Special combination of columns values to get unique row ID
-      if (props.col_for_ids) {
-        const ids = props.col_for_ids;
-        let row_key = '';
-        for (let i=0; i<ids.length; i++) {
-          const cols = ids[i].split('__');
-          if (cols.length == 2) {
-            row_key = row_key+'_'+row[cols[0]][cols[1]];
-          }
-          else {
-            row_key = row_key+'_'+row[cols[0]];
-          }
+        // Special combination of columns values to get unique row ID
+        if (props.col_for_ids) {
+            const ids = props.col_for_ids;
+            let row_key = '';
+            for (let i=0; i<ids.length; i++) {
+                const cols = ids[i].split('__');
+                if (cols.length == 2) {
+                    row_key = row_key+'_'+row[cols[0]][cols[1]];
+                }
+                else {
+                    row_key = row_key+'_'+row[cols[0]];
+                }
+            }
+            return row_key;
         }
-        return row_key;
-      }
-      else if (row.id) {
-        return row.id
-      }
-      else if (row.name) {
-        return row.name;
-      }
-      else {
-        return generateString(20);
-      }
+        else if (row.id) {
+            return row.id
+        }
+        else if (row.name) {
+            return row.name;
+        }
+        else {
+            return generateString(20);
+        }
     }
     
     //const rest_api_url = (url,offset,limit,filter) => {
     const rest_api_url = (url,offset,limit) => {
-      if (!url.startsWith('http')) {
-          url = rest_url+url;
-      }
-      if (!url.includes('format=json')) {
-          if (url.includes('?')) {
-              url += '&';
-          }
-          else {
-              url += '?';
-          }
-          url += 'format=json';
-      }
-      if (!url.includes('offset=') && offset) {
-        url += '&offset='+offset;
-      }
-      if (!url.includes('limit=') && limit) {
-        url += '&limit='+limit;
-      }
-      // if (!url.includes('filter=') && filter) {
-      //   url += '&filter='+filter;
-      // }
-      const filter = queryParam.filter;
-      console.log("FILTER: "+filter)
-      if (!url.includes('filter=') && filter) {
-        url += '&filter='+filter;
-      }
-      const sort_field = queryParam.sort_field;
-      const sort = queryParam.sort;
-      console.log("SORT: "+sort_field+' | '+sort)
-      if (!url.includes('sort_field=') && sort_field) {
-        if (cols2db[sort_field]) {
-          url += '&sort_field='+cols2db[sort_field];
+        if (!url.startsWith('http')) {
+            url = rest_url+url;
         }
-      }
-      if (!url.includes('sort=') && sort) {
-        url += '&sort='+sort;
-      }
-      return url;
+        if (!url.includes('format=json')) {
+            if (url.includes('?')) {
+                url += '&';
+            }
+            else {
+                url += '?';
+            }
+            url += 'format=json';
+        }
+        if (!url.includes('offset=') && offset) {
+            url += '&offset='+offset;
+        }
+        if (!url.includes('limit=') && limit) {
+            url += '&limit='+limit;
+        }
+        // if (!url.includes('filter=') && filter) {
+        //   url += '&filter='+filter;
+        // }
+        const filter = queryParam.filter;
+        console.log("FILTER: "+filter)
+        if (!url.includes('filter=') && filter) {
+            url += '&filter='+filter;
+        }
+        const sort_field = queryParam.sort_field;
+        const sort = queryParam.sort;
+        console.log("SORT: "+sort_field+' | '+sort)
+        if (!url.includes('sort_field=') && sort_field) {
+            if (cols2db[sort_field]) {
+            url += '&sort_field='+cols2db[sort_field];
+            }
+        }
+        if (!url.includes('sort=') && sort) {
+            url += '&sort='+sort;
+        }
+        return url;
     }
 
     const fetchData = async () => {
@@ -148,26 +148,26 @@ const DataTableServer = (props) => {
     }
 
     const onFilterModelChange = useCallback((filterModel) => {
-      // Here you save the data you need from the filter model
-      const q = filterModel.quickFilterValues[0];
-      if (!q || (q && q.length >= 3)) {
-        setQueryParam(old => ({ ...old, filter: q }))
-      }
+        // Here you save the data you need from the filter model
+        const q = filterModel.quickFilterValues[0];
+        if (!q || (q && q.length >= 3)) {
+            setQueryParam(old => ({ ...old, filter: q }))
+        }
     }, []);
 
     const onSortModelChange = useCallback((sortModel) => {
-      // Here you save the data you need from the filter model
-      if (sortModel.length) {
-        const s = sortModel[0];
-        const field = s.field
-        const sort = s.sort
-        setQueryParam(old => ({ ...old, sort_field: field, sort: sort }))
-      }
+        // Here you save the data you need from the filter model
+        if (sortModel.length) {
+            const s = sortModel[0];
+            const field = s.field
+            const sort = s.sort
+            setQueryParam(old => ({ ...old, sort_field: field, sort: sort }))
+        }
     }, []);
 
     // This replace the 3 useEffect above - test to check this works
     useEffect(() => {
-      fetchData()
+        fetchData()
     }, [paginationModel.page, paginationModel.pageSize, queryParam.filter, queryParam.sort_field, queryParam.sort])
 
     return (
@@ -181,6 +181,7 @@ const DataTableServer = (props) => {
           columns={props.columns}
           rows={data}
           getRowId={(row) => getRowId(row)}
+          getRowHeight={() => row_height_settings}
           // getRowId={(row) => row.id}
           rowCount={rowCountState}
           loading={isLoading}

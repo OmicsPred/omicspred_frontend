@@ -3,12 +3,13 @@ import { useParams } from 'react-router-dom';
 import { ChevronRight } from 'react-bootstrap-icons';
 import restApiCall from '../../components/RestAPI';
 import Href from "../../components/Href";
-import { publication_score_columns_start, publication_score_columns_end, publication_transcriptomics_columns, publication_proteomics_columns, publication_metabolomics_columns } from '../../components/table/columns/scores';
+import { publication_score_columns, publication_transcriptomics_columns, publication_proteomics_columns, publication_metabolomics_columns } from '../../components/table/columns/scores';
 import DataTable from "../../components/table/DataTable";
 import DataTableServer from '../../components/table/DataTableServer';
 import PlatformCard from './components/PlatformCard';
-import {omicspred_omics_type, omicspred_internal_link} from "../../components/table/columns/common";
+import {omicspred_omics_type, omicspred_internal_link, common_cols} from "../../components/table/columns/common";
 import { op_subtitle } from '../../components/Common';
+import { numberBadge } from '../../components/Generic';
 
 
 function Publication() {
@@ -49,7 +50,7 @@ function Publication() {
         { 
             field: 'full_name', 
             headerName: 'Full Name', 
-            width: 200,
+            minWidth: 200,
             valueGetter: (params) => { return params.row.platform.full_name }
         
         },
@@ -61,13 +62,13 @@ function Publication() {
         { 
             field: 'technic', 
             headerName: 'Technic', 
-            width: 450,
+            minWidth: 450,
             valueGetter: (params) => { return params.row.platform.technic }
         },
         { 
             field: 'type', 
             headerName: 'Type',
-            width: 200,
+            minWidth: 180,
             flex: 1,
             renderCell: (params) => {
                 return omicspred_omics_type(params.row.platform.type);
@@ -77,7 +78,7 @@ function Publication() {
         {
             field: 'cohorts_training',
             headerName: 'Cohort Training',
-            width: 200,
+            minWidth: 200,
             flex: 1,
             renderCell: (params) => {
                 return get_cohorts_list(params.row.samples_training);
@@ -89,7 +90,7 @@ function Publication() {
         {
             field: 'cohorts_validation',
             headerName: 'Cohort Validation',
-            width: 200,
+            minWidth: 200,
             flex: 1,
             renderCell: (params) => {
                 return get_cohorts_list(params.row.samples_validation);
@@ -98,12 +99,7 @@ function Publication() {
                 return get_cohorts_list(params.row.samples_validation);
             }
         },
-        { 
-            field: 'scores_count', 
-            headerName: '#Scores', 
-            width: 150,
-            valueGetter: (params) => { return params.row.scores_count }
-        }
+        common_cols['scores_count']
     ]
 
 
@@ -122,7 +118,7 @@ function Publication() {
 
     // Generate the columns for the scores table
     const score_columns = (platforms) => {
-        let score_columns = publication_score_columns_start;
+        let score_columns = publication_score_columns.start;
         let platform_types = []
         for (const platform of platforms) {
             const p_type = platform.platform.type;
@@ -140,9 +136,18 @@ function Publication() {
         if (platform_types.includes('Metabolomics')) {
             score_columns = score_columns.concat(publication_metabolomics_columns)
         }
-        score_columns = score_columns.concat(publication_score_columns_end);
+        score_columns = score_columns.concat(publication_score_columns.end);
         return score_columns;
     }
+
+    const get_scores_count = () => {
+        let scores_count = 0;
+        for (let i=0; i< platformsData.length; i++) {
+            scores_count += platformsData[i].scores_count;
+        }
+        return numberBadge(scores_count);
+    }
+
 
     // Convert date into DD/MM/YYYY format
     const convertPublicationDate = () => {
@@ -173,19 +178,24 @@ function Publication() {
                                             { publicationData.doi ? <tr><td>doi</td><td><Href href={process.env.URL_ROOT_DOI+publicationData.doi} text={publicationData.doi}/></td></tr>:''}
                                             { publicationData.date_publication ? <tr><td>Publication Date</td><td>{convertPublicationDate()}</td></tr>:''}
                                             { publicationData.journal ? <tr><td>Journal</td><td>{publicationData.journal}</td></tr>:''}
+                                            { platformsData ?  <tr><td># Scores</td><td>{get_scores_count()}</td></tr>:''}
                                         </tbody>
                                     </table> 
                                 </div>
                             </div>
                         </div>
                     </div>
+                    { platformsData && platformsData.length ?
+                        <div>
+                            {op_subtitle('hl','samples by platform')}
+                            <div className="d-flex flex-column">
+                                { platformsData.map((platform_data) => <PlatformCard data={platform_data} key={platform_data.platform.name} />)}
+                            </div>
+                        </div>: ''
+                    }
                 </div>   
             </div>
-            { platformsData && platformsData.length ?
-                <div className="d-flex flex-column">
-                        { platformsData.map((platform_data) => <PlatformCard data={platform_data} key={platform_data.platform.name} />)}
-                </div> : ''
-            }
+
             {op_subtitle('hl','platform')}
             { platformsData ?
                 <>

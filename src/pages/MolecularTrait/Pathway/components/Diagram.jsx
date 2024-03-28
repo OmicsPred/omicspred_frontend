@@ -1,31 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { ChevronRight } from 'react-bootstrap-icons';
-import { useExternalScript } from '../../../components/Generic';
+// import { useParams } from 'react-router-dom';
+// import { ChevronRight } from 'react-bootstrap-icons';
+import { Diagram3 } from 'react-bootstrap-icons';
+import { useExternalScript } from '../../../../components/Generic';
 
-function ReactomeDiagram() {
-    let { reactome_id } = useParams();
-    // const [diagramLibraryState, setDiagramLibraryState] = useState(['loading'])
+const ReactomeDiagram = (props) => {
+    const reactome_id = props.reactome_id;
+    const [showDiagram, setShowDiagram] = useState(false);
 
     const diagram_library_url = 'https://reactome.org/DiagramJs/diagram/diagram.nocache.js'
 
-    // const handleScript = (e) => {
-    //     setState(e.type === "load" ? "ready" : "error");
-    // };
-
-    // function AddReactomeDiagramLibrary(url) {
-    //     const script = document.createElement("script");
-    //     script.src = url;
-    //     script.async = false;
-    //     script.addEventListener("load", handleScript);
-    //     script.addEventListener("error", handleScript);
-    //     document.body.appendChild(script);
-    // }
-    // function AddReactomeDiagramLibrary(url) {
-    //     const state = useExternalScript(diagram_library_url);
-    //     setDiagramLibraryState(state);
-    // }
-
+    // setState(useExternalScript(diagram_library_url));
+    
     // Creating the Reactome Diagram widget
     // Take into account a proxy needs to be set up in your server side pointing to www.reactome.org
     function loadReactomeDiagram(){  // This function is automatically called when the widget code is ready to be used
@@ -54,6 +40,7 @@ function ReactomeDiagram() {
         });
     }
 
+    // let state = undefined;
     const state = useExternalScript(diagram_library_url);
 
     function onReactomeDiagramReady(callback) {
@@ -67,20 +54,33 @@ function ReactomeDiagram() {
         }, interval);
     }
 
+    
+    const hideShowDiagram = (e) => {
+        if (showDiagram) {
+            setShowDiagram(false);
+        }
+        else {
+            setShowDiagram(true);
+        }
+    }
+
+
     useEffect(() => {
-        if (state === "ready") {
+        if (state === "ready" && showDiagram) {
             onReactomeDiagramReady();
         }
-    },[state])
+    },[state,showDiagram])
 
     return (
         <>
-            <h2 className='page_title'>Reactome Diagram<ChevronRight className={'op_title_separator color_hl'}/><span>{reactome_id}</span></h2>
-            <div>
-                {state === "loading" && <p>Loading...</p>}
-                {state === "ready" && <div><div className='d-inline-flex' style={{border:'1px solid #DDD'}}><div id="diagramHolder"></div></div></div>}
-                {state === "error" && <p>Error while loading the Reactome Diagram!</p>}
-            </div>
+            <div className="btn btn-primary shadow mt-2" onClick={(e) => {hideShowDiagram(e)}}><Diagram3 className='me-2' size="16"/>{showDiagram ? 'Hide' : 'Show'} Reactome Diagram</div>
+            {showDiagram ? 
+                <div>
+                    {state === "loading" && <p>Loading...</p>}
+                    {state === "ready" && <div><div key="diagram" className='d-inline-flex mt-2' style={{border:'1px solid #DDD'}}><div id="diagramHolder"></div></div></div>}
+                    {state === "error" && <p>Error while loading the Reactome Diagram!</p>}
+                </div>: ''
+            }
         </>
     );
 }

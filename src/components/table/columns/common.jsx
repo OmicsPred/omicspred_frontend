@@ -1,6 +1,9 @@
 import { FileEarmarkText, Hr } from 'react-bootstrap-icons';
 import { internal_publication_link } from '../../Common';
+import { thousandifyNumber } from '../../Generic';
 import Href from '../../Href';
+
+const default_cell_value = process.env.DEFAULT_CELL_VALUE;
 
 export const cohort_valueGetter = function(row,cohort,method) {
     let result = '';
@@ -24,6 +27,9 @@ export const cohort_valueGetter = function(row,cohort,method) {
             }
         }
     }
+    if (!result || result == '') {
+        result = default_cell_value;
+    }
     return result;
 }
 
@@ -39,7 +45,7 @@ export const omicspred_internal_link = function(op_entry,type,index) {
     const op_label = op_entry['label'];
     const op_id = (op_entry['id']) ? op_entry['id'] : op_entry['label']
     let op_url = "/"+type+"/"+op_id
-    op_url = op_url.replace('.','%2E');
+    op_url = op_url.replace('.','_');
     return (
         <span key={op_id+'_'+type+'_span'}>
             {index ? ', ': ''}<Href key={op_id+'_'+type} href={op_url} text={op_label}/>
@@ -49,11 +55,16 @@ export const omicspred_internal_link = function(op_entry,type,index) {
 
 
 export const omicspred_internal_links = function(op_data,type) {
-    return (
-        <>
-            {op_data.map((op_entry, index) => omicspred_internal_link(op_entry, type, index))}
-        </>
-    )
+    if (op_data.length) {
+        return (
+            <>
+                {op_data.map((op_entry, index) => omicspred_internal_link(op_entry, type, index))}
+            </>
+        )
+    }
+    else {
+        return default_cell_value
+    }
 }
 
 
@@ -68,11 +79,9 @@ export const application_molecular_traits = function(mt_entry,index) {
     const mt_label = mt_entry.name ? mt_entry.name : mt_entry.external_id;
     const mt_id = mt_entry.external_id ? mt_entry.external_id : mt_entry.name;
     const mt_type = mt_entry.type
-    let mt_url = "/"+mt_type+"/"+mt_id
+    let mt_url = "/"+mt_type+"/"+mt_id;
     return (
-        <span key={mt_id+'_'+mt_type+'_span'}>{index ? ', ': ''}
-            <Href key={mt_id+'_'+mt_type} href={mt_url} text={mt_label}/>
-        </span>
+        <>{index ? ', ': ''}<Href key={mt_id+'_'+mt_type} href={mt_url} text={mt_label}/></>
     )
 }
 
@@ -100,12 +109,21 @@ export const common_cols = {
             return op_id
         }
     },
-    'variants_number': { field: 'variants_number', headerName: '#SNP', minWidth: 80, flex: 0.5},
+    'variants_number': { 
+        field: 'variants_number', 
+        headerName: '#SNP', 
+        minWidth: 75, 
+        flex: 0.5,
+        align: 'right',
+        renderCell: (params) => {
+            return thousandifyNumber(params.row.variants_number);
+        }
+    },
     'platform_type': {
         field: 'platform_type',
         headerName: 'Omics',
-        minWidth: 100,
-        flex: 0.6,
+        minWidth: 130,
+        flex: 1,
         renderCell: (params) => {
             return omicspred_omics_type(params.row.platform.type);
         },
@@ -124,7 +142,7 @@ export const common_cols = {
     'publication': {
         field: 'publication',
         headerName: 'Publication',
-        minWidth: 150,
+        minWidth: 200,
         flex: 0.8,
         renderCell: (params) => {
             return internal_publication_link (params.row.publication);
@@ -142,7 +160,6 @@ export const common_cols = {
     },
     'trait_reported_id': {
         field: 'trait_reported_id',
-        // headerName: 'Reported trait ID(s)',
         headerName: 'Trait ID',
         headerClassName: 'col_border_left',
         minWidth: 120,
@@ -151,7 +168,6 @@ export const common_cols = {
     },
     'trait_reported': {
         field: 'trait_reported',
-        // headerName: 'Reported trait(s)',
         headerName: 'Trait name',
         minWidth: 200,
         flex: 1,
@@ -187,7 +203,7 @@ export const common_cols = {
     'protein_name': {
         field: 'protein_name',
         headerName: 'Protein Name',
-        minWidth: 150,
+        minWidth: 200,
         flex: 1,
         valueGetter: (params) => {
             let pr_names = [];
@@ -477,6 +493,22 @@ export const common_cols = {
         valueGetter: (params) => {
             return params.row.superpathways;
         }
+    },
+    'description': {
+        field: 'description',
+        headerName: 'Description',
+        minWidth: 200,
+        flex: 0.8
+    },
+    'scores_count':{
+        field: 'scores_count',
+        headerName: '#Scores',
+        minWidth: 80, 
+        flex: 0.5,
+        align: 'right',
+        renderCell: (params) => {
+            return thousandifyNumber(params.row.scores_count);
+        }
     }
 }
 
@@ -532,12 +564,12 @@ export const applications_cols = {
         minWidth: 120,
         flex: 0.5,
         renderCell: (params) => {
-            let genes = [];
             const genes_list =  params.row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'gene'});
             if (genes_list.length > 0) {
-                genes = genes_list.map((gene, index) => application_molecular_traits(gene,index))
+                const genes = genes_list.map((gene, index) => application_molecular_traits(gene,index))
+                return genes;
             }
-           return genes;
+            return default_cell_value;
         },
         valueGetter: (params) => {
             let gene_names = [];
@@ -552,12 +584,12 @@ export const applications_cols = {
         minWidth: 120,
         flex: 0.5,
         renderCell: (params) => {
-            let proteins = [];
             const proteins_list =  params.row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'protein'});
             if (proteins_list.length > 0) {
-                proteins = proteins_list.map((protein, index) => application_molecular_traits(protein,index))
+                const proteins = proteins_list.map((protein, index) => application_molecular_traits(protein,index))
+                return proteins;
             }
-           return proteins;
+            return default_cell_value;
         },
         valueGetter: (params) => {
             let protein_names = [];
@@ -572,12 +604,12 @@ export const applications_cols = {
         minWidth: 120,
         flex: 0.5,
         renderCell: (params) => {
-            let metabolites = [];
             const metabolites_list =  params.row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'metabolite'});
             if (metabolites_list.length > 0) {
-                metabolites = metabolites_list.map((metabolite, index) => application_molecular_traits(metabolite,index))
+                const metabolites = metabolites_list.map((metabolite, index) => application_molecular_traits(metabolite,index))
+                return metabolites;
             }
-           return metabolites;
+            return default_cell_value;
         },
         valueGetter: (params) => {
             let metabolite_names = [];

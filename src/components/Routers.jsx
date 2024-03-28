@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Error404 } from "../pages/Errors";
 import Home from "../pages/Home";
 import FAQs from "../pages/FAQs";
 import Cohorts from "../pages/Cohorts";
@@ -18,12 +19,10 @@ import Protein from "../pages/MolecularTrait/Protein";
 import Metabolite from "../pages/MolecularTrait/Metabolite";
 import Pathway from "../pages/MolecularTrait/Pathway";
 import Phecode from "../pages/Applications/Phecode";
-import Applications from "../pages/Applications";
 // Tests
 import Search from "../pages/Tests/Search";
-// import SearchES from "../pages/Tests/SearchES";
 import Plot from "../pages/Tests/Plot";
-import ReactomeDiagram from "../pages/Tests/Reactome";
+// import ReactomeDiagram from "../pages/Tests/Reactome";
 
 
 function OpRouters() {
@@ -39,7 +38,6 @@ function OpRouters() {
                 <Route path="/publications" element={<Publications />} />
                 <Route path="/platforms" element={<Platforms />} />
                 <Route path="/scores" element={<Scores />} />
-                <Route path="/applications" element={<Applications />} />
                 <Route path="/applications/phecode/full" element={<PhecodesFull />} />
                 <Route path="/applications/phecode/sum" element={<PhecodesSum />} />
                 <Route path="/metabolomics/:platform" element={<Metabolomics />} />
@@ -61,7 +59,10 @@ function OpRouters() {
                 {/* Test pages */}
                 {/* <Route path="/search_es" element={<SearchES />} /> */}
                 <Route path="/plot/:platform" element={<Plot />} />
-                <Route path="/test/reactome/:reactome_id" element={<ReactomeDiagram />} />
+                {/* <Route path="/test/reactome/:reactome_id" element={<ReactomeDiagram />} /> */}
+
+                {/* Errors */}
+                <Route path="*" element={<Error404 />} />
 
             </Routes>
         </Router>

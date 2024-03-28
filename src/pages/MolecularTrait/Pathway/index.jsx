@@ -6,6 +6,7 @@ import DataTable from '../../../components/table/DataTable';
 import { common_cols } from '../../../components/table/columns/common';
 import restApiCall from '../../../components/RestAPI';
 import { op_title, op_subtitle } from '../../../components/Common';
+import ReactomeDiagram from './components/Diagram';
 
 
 function Pathway() {
@@ -19,17 +20,17 @@ function Pathway() {
 
     const gene_columns = [
 		common_cols['gene_id_from_list'],
-		common_cols['gene_name_from_list']
-        // common_cols['gene_id'],
-		// common_cols['gene_name'],
+		common_cols['gene_name_from_list'],
+		common_cols['description']
 	]
+
     const metabolite_columns = [
 		common_cols['metabolite_id_from_list'],
 		common_cols['metabolite_id_source_from_list'],
 		common_cols['metabolite_name_from_list']
-        // common_cols['metabolite_id'],
-        // common_cols['metabolite_name']
     ]
+
+	const key_cols = ['external_id','name'];
 
     const fetchData = async () => {
 		const data = await restApiCall(element+'/'+pathway);
@@ -63,17 +64,18 @@ function Pathway() {
 						elementData.synonyms ? <li key="reactome_syn"><span className='line_key'>Synonym{elementData.synonyms.length > 1 ? 's' : ''}</span>{elementData.synonyms.map((synonym, index) => <span key={synonym.name}>{index ? ', ' : ''}{synonym.name}</span>)}</li> : ''
 					}
 					{
-						superpathwayData.length ? <li key="reactome_top_level"><span className='line_key'>Top Level Pathway{superpathwayData.length > 1 ? 's' : ''}</span>{superpathwayData.map((pathway, index) => <span>{index ? ', ' : ''}{pathway.name} (<Href key={pathway.external_id} href={process.env.URL_REACTOME_ENTRY+pathway.external_id} text={pathway.external_id}/>)</span>)}</li> : ''
+						superpathwayData.length ? <li key="reactome_top_level"><span className='line_key'>Top Level Pathway{superpathwayData.length > 1 ? 's' : ''}</span>{superpathwayData.map((pathway, index) => <span key={pathway.name}>{index ? ', ' : ''}{pathway.name} (<Href key={pathway.external_id} href={process.env.URL_REACTOME_ENTRY+pathway.external_id} text={pathway.external_id}/>)</span>)}</li> : ''
 					}
 					</ul>
-					<div className="mt-3 sm:mt-0 sm:ml-3">
+					{/* <div className="mt-3 sm:mt-0 sm:ml-3">
 						<a className="btn btn-primary shadow" href={"/test/reactome/"+elementData.external_id} role="button"><Diagram3 className='me-2' size="16"/>Reactome Diagram</a>
-					</div>
+					</div> */}
+					<ReactomeDiagram reactome_id={elementData.external_id} />
 					{
-						geneData.length ? <div className="mt-4">{op_subtitle('gene')}<DataTable key="gene" data={geneData} columns={gene_columns}/></div> : ''
+						geneData.length ? <div key="gene_table" className="mt-4">{op_subtitle('gene')}<DataTable key="gene" data={geneData} columns={gene_columns} col_for_ids={key_cols}/></div> : ''
 					}
 					{
-						metaboliteData.length ? <div className="mt-4">{op_subtitle('metabolite')}<DataTable key="metabolite" data={metaboliteData} columns={metabolite_columns}/></div> : ''
+						metaboliteData.length ? <div key="metabolite_table" className="mt-4">{op_subtitle('metabolite')}<DataTable key="metabolite" data={metaboliteData} columns={metabolite_columns} col_for_ids={key_cols}/></div> : ''
 					}
 				</>
 				: <div>Loading data ...</div> 

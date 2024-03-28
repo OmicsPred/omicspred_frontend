@@ -9,10 +9,10 @@ import { transcriptomics_columns, transcriptomics_column_groups } from '../../co
 import restApiCall from '../../components/RestAPI';
 import DataTableServer from '../../components/table/DataTableServer';
 // import PlatformDataTable from './components/PlatformDataTable';
-import { numberBadge } from "../../components/Generic";
+// import { numberBadge } from "../../components/Generic";
 import PlatformSummary from './components/PlatformSummary';
 import PublicationCard from './components/PublicationCard';
-import { op_subtitle } from '../../components/Common'
+import { op_subtitle, get_data_type } from '../../components/Common'
 
 
 function Platform() {
@@ -41,19 +41,6 @@ function Platform() {
                 return "proteomics/"+endpoint_suffix;
             case 'Transcriptomics':
                 return "transcriptomics/"+endpoint_suffix;
-        }
-    }
-
-    const get_data_type = (omics_type) => {
-        switch(omics_type) {
-            case 'Metabolomics':
-                return 'metabolite';
-            case 'Proteomics':
-                return 'protein';
-            case 'Transcriptomics':
-                return 'transcript';
-            default:
-                return 'hl';
         }
     }
 
@@ -311,7 +298,7 @@ function Platform() {
                 {platformSumData && platformVersions ? <PlatformSummary metadata={platformSumData} versions={platformVersions}/>: ''}
             { platformAddData.length > 0 ?
                 <div>
-                    <h4>Publications ({platformAddData.length})</h4>
+                    <h5>Publications ({platformAddData.length})</h5>
                     <div className="d-flex flex-column">
                         { platformAddData.map((additional) => <PublicationCard data={additional} key={additional.publication.doi} />)}
                     </div>

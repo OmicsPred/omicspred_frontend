@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Href from "./Href";
-import { PlusCircleFill, DashCircleFill, ChevronRight, SlashLg } from 'react-bootstrap-icons';
+import { ChevronRight, SlashLg } from 'react-bootstrap-icons';
 
 
 export const internal_publication_link = (publication) => {
@@ -15,28 +15,17 @@ export const internal_publication_link = (publication) => {
 }
 
 
-export const ToogleDiv = (props) => {
-    const [show, setShow] = useState(false);
-    
-    useEffect(() => {}, [show])
-    
-    const hideShowDiv = (e) => {
-        if (show) {
-            setShow(false);
-        }
-        else {
-            setShow(true);
-        }
+export const get_data_type = (omics_type) => {
+    switch(omics_type) {
+        case 'Metabolomics':
+            return 'metabolite';
+        case 'Proteomics':
+            return 'protein';
+        case 'Transcriptomics':
+            return 'transcript';
+        default:
+            return 'hl';
     }
-
-    return (
-        <>
-            <div className="op_toogle" onClick={(e) => {
-              hideShowDiv(e)
-            }}>{props.title}{show ? <DashCircleFill className="ms-1"/>:<PlusCircleFill className="ms-1"/>}</div>
-            {show ? <div>{props.content}</div>:null}
-        </>
-    )
 }
 
 
@@ -66,42 +55,9 @@ export const op_subtitle = (type,label) => {
     return <h5><ChevronRight className={'op_subtitle color_'+type}/>Associated {label}(s)</h5>
 }
 
-
-export const useExternalScript = (url) => {
-  let [state, setState] = useState(url ? "loading" : "idle");
-
-  useEffect(() => {
-    if (!url) {
-        setState("idle");
-        return;
+export const op_subtitle_no_asso = (type,label) => {
+    if (!label) {
+        label = type;
     }
-
-    let script = document.querySelector(`script[src="${url}"]`);
-
-    const handleScript = (e) => {
-        setState(e.type === "load" ? "ready" : "error");
-    };
-
-    if (!script) {
-        script = document.createElement("script");
-        script.type = "application/javascript";
-        script.src = url;
-        script.async = true;
-        // document.head.appendChild(script);
-        document.body.appendChild(script);
-        script.addEventListener("load", handleScript);
-        script.addEventListener("error", handleScript);
-    }
-    else {
-        script.addEventListener("load", handleScript);
-        script.addEventListener("error", handleScript);
-    }
-
-    return () => {
-        script.removeEventListener("load", handleScript);
-        script.removeEventListener("error", handleScript);
-    };
-  }, [url]);
-
-  return state;
-};
+    return <h5><ChevronRight className={'op_subtitle color_'+type}/>{label}</h5>
+}

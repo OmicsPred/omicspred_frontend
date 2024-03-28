@@ -83,7 +83,9 @@ function Gene() {
 				: <div>Loading summary data ...</div> 
 			}
 			{op_subtitle('score')}
-			<DataTableFromRestApi table_key="gene" url_suffix={url_suffix} columns={columns}/>
+			<div className='d-flex'>
+				<DataTableFromRestApi table_key="gene" url_suffix={url_suffix} columns={columns}/>
+			</div>
 			{ 
 				proteinData && proteinData.length ? <div className="mt-4">{op_subtitle('protein')}<DataTable key="protein" data={proteinData} columns={protein_columns}/></div> : <div className='mt-4'>No associated protein found</div>
 			}
