@@ -1,3 +1,5 @@
+const default_cell_value = process.env.DEFAULT_CELL_VALUE;
+
 const metric_valueGetter = function(performance_metrics,method) {
     for (let i=0; i<performance_metrics.length; i++) {
         const metric = performance_metrics[i];
@@ -5,6 +7,7 @@ const metric_valueGetter = function(performance_metrics,method) {
             return metric.estimate
         }
     }
+    return default_cell_value;
 }
 
 

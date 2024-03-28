@@ -1,35 +1,41 @@
-import { numberBadge } from "../../../components/Generic";
-import PlatformSampleCohorts from './PlatformSampleCohorts';
+import { ChevronRight } from 'react-bootstrap-icons';
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 import Href from "../../../components/Href";
+import { SampleTable } from '../../../components/Sample';
+
 
 const PublicationCard = (props) => {
     const additional = props.data
     const publication = additional.publication;
+    const samples_training = additional.samples_training;
+    const samples_validation = additional.samples_validation;
     const key = publication.pmid
 
     const pub_year = publication.date_publication.split('-')[0]
+
     return (
-        <div className="result_card mb-3" key={key+"_res"} style={{float:"left"}}>
-            <div className="card-deck" key={key+"_card"}>
-                <div className="card" style={{padding:"0px", maxWidth:"750px"}}>
-                    <div className="card-body">
-                        <h4 className="card-title">{publication.title}</h4>
-                        <div className="card-text">
-                            <div><Href key={key+'_pub_link'} text={[publication.firstauthor," ",<i key={key+'_i'}>et al.</i>," - ",publication.journal," (",pub_year,")"]} href={"/publication/"+key}/></div>
-                            <div><span className="me-1"><b>Number of scores</b>:</span>{numberBadge(additional.omics_count)}</div>
-                            <div className="d-flex">
-                                { additional.samples_training.length > 0 ?
-                                    <div key={key+"_platform_training_cohorts"}><span><b>Training Cohort{additional.samples_training.length > 1 && 's'}</b></span><PlatformSampleCohorts key={key+'_training'} samples={additional.samples_training}/></div>:''
-                                }
-                                { additional.samples_validation.length > 0 ?
-                                    <div className="ms-4 ps-4" key={key+"_platform_validation_cohorts"} style={{borderLeft:"1px solid #CCC"}}><span><b>Validation Cohort{additional.samples_validation.length > 1 && 's'}</b></span><PlatformSampleCohorts key={key+'_validation'} samples={additional.samples_validation}/></div>:''
-                                }
-                            </div>
-                        </div>
+        <Accordion>
+            <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls={key+'_panel_content'}
+            id={key+'_panel_header'}
+            >
+                <div>
+                    <div>
+                        <ChevronRight className="hl_color me-2"/><span className="font-bold">{publication.title}</span>
                     </div>
+                    <div className="ms-4">{[publication.firstauthor," ",<i key={key+'_i'}>et al.</i>," - ",publication.journal," (",pub_year,")"]}</div>
                 </div>
-            </div>
-        </div>
-    );
+            </AccordionSummary>
+            <AccordionDetails>
+                <div className="mb-2"><Href key={key+'_pub_link'} text="OmicsPred publication page" href={"/publication/"+key}/></div>
+                <SampleTable table_name={key} samples_training={samples_training} samples_validation={samples_validation}/>
+            </AccordionDetails>
+        </Accordion>
+    )
 };
 export default PublicationCard;

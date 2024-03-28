@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { FileEarmarkText, InfoCircleFill } from 'react-bootstrap-icons';
+import { FileEarmarkText } from 'react-bootstrap-icons';
 import Href from "../../components/Href";
-import { internal_publication_link } from '../../components/Common';
+import { internal_publication_link, op_title } from '../../components/Common';
 import DataTable from "../../components/table/DataTable";
 import { score_columns } from '../../components/table/columns/score'
 import restApiCall from '../../components/RestAPI';
-import { numberBadge } from '../../components/Generic';
+import { ToogleDiv, numberBadge } from '../../components/Generic';
 import { display_gene_link, display_protein_link, display_metabolite_link, display_pathway_link } from '../MolecularTrait/components/links';
-import { ToogleDiv } from "../../components/Common";
-import { op_title } from '../../components/Common';
-
 
 
 function Score() {
@@ -28,7 +25,7 @@ function Score() {
 
     const display_phecode_link = (phecode) => {
         let id = phecode.id;
-        id = id.replace('.','%2E');
+        id = id.replace('.','_');
         return <span key={phecode.id}>{phecode.name} (<Href href={'/phecode/'+id} text={phecode.id}/>)</span>
     }
 
@@ -96,7 +93,7 @@ function Score() {
                                             <tr><td>Method Name</td><td>{scoreData.method_name}</td></tr>
                                             <tr><td>Number of Variants</td><td>{numberBadge(scoreData.variants_number)}</td></tr>
                                             <tr><td>Genome Build</td><td>{scoreData.variants_genomebuild}</td></tr>
-                                            <tr><td>Scoring file</td><td><FileEarmarkText color="blue" size={24}/></td></tr>
+                                            <tr><td>Scoring file</td><td><FileEarmarkText className="hl_color" size={24}/></td></tr>
                                             <tr><td>Terms & Licenses</td><td>{scoreData.license}</td></tr>
                                         </tbody>
                                     </table>
