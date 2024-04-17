@@ -93,7 +93,7 @@ function Score() {
                                             <tr><td>Method Name</td><td>{scoreData.method_name}</td></tr>
                                             <tr><td>Number of Variants</td><td>{numberBadge(scoreData.variants_number)}</td></tr>
                                             <tr><td>Genome Build</td><td>{scoreData.variants_genomebuild}</td></tr>
-                                            <tr><td>Scoring file</td><td><FileEarmarkText className="hl_color" size={24}/></td></tr>
+                                            {/* <tr><td>Scoring file</td><td><FileEarmarkText className="hl_color" size={24}/></td></tr> */}
                                             <tr><td>Terms & Licenses</td><td>{scoreData.license}</td></tr>
                                         </tbody>
                                     </table>

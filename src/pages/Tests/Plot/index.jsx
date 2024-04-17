@@ -1,27 +1,37 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useParams } from 'react-router-dom';
-import { ChevronRight } from 'react-bootstrap-icons';
+import { ChevronRight, Book } from 'react-bootstrap-icons';
 import restApiCall from '../../../components/RestAPI';
 import Charts from "./components/Chart";
-import { get_data_type } from '../../../components/Common';
+import { get_data_type, publication_ref } from '../../../components/Common';
 
 const Plot = (props) => {
-    let { platform } = useParams();
+    let { platform, pmid } = useParams();
     const [platformSumData, setPlatformSumData] = useState([])
+    const [publicationSumData, setPublicationSumData] = useState([])
     const [plotData, setPlotData] = useState([])
     const [scoreData, setScoreData] = useState([])
 
-    const default_cohort = 'INTERVAL';
+    const default_cohort = {
+        '36991119' :'INTERVAL',
+        '35202437' : 'MESA-ALL'
+    };
 
     const platform_file_name = platform.replace(" ", "_");
 
     const data_dir = process.env.OMICSPRED_DATA_DIR;
-    const plot_file = data_dir+platform_file_name+'_plot.json';
-    const plot_score_file = data_dir+platform_file_name+'_plot_score.json';
+    const plot_file = data_dir+platform_file_name+'_'+pmid+'_plot.json';
+    const plot_score_file = data_dir+platform_file_name+'_'+pmid+'_plot_score.json';
 
     const fetchPlatformSumData = async () => {
         const platform_sum_data = await restApiCall('platform/'+platform);
         setPlatformSumData(platform_sum_data);
+    }
+
+    const fetchPublicationSumData = async () => {
+        const publication_sum_data = await restApiCall('publication/'+pmid);
+        const publication_label = 
+        setPublicationSumData(publication_sum_data);
     }
 
     const fetchPlotData = async () => {
@@ -42,6 +52,7 @@ const Plot = (props) => {
 
     useEffect(() => {
         fetchPlatformSumData();
+        fetchPublicationSumData();
         fetchPlotData();
         fetchScoreData(); 
     },[])
@@ -49,14 +60,15 @@ const Plot = (props) => {
     return (
         <>
             {platformSumData ? <h2 className='page_title'>Visualize performance of genetic scores<ChevronRight className={'op_title_separator color_'+get_data_type(platformSumData.type)}/><span>{platformSumData.name}</span></h2>:''}
+            {publicationSumData ? <h4 className='page_subtitle'>Publication:{publication_ref(publicationSumData,true)}</h4>: ''}
             <div>
                 { plotData.length && scoreData.length ?
                     <Suspense fullback={<div className="h-[600px] w-full bg-red-600">Loading ...</div>}>
-                        <Charts pagename={platform} tdata={scoreData} data={plotData} default_cohort={default_cohort}/>
+                        <Charts pagename={platform} tdata={scoreData} data={plotData} default_cohort={default_cohort[pmid]}/>
                     </Suspense> : 'Loading chart data ...'
                 }
             </div>
         </>
     );
 }
-export default Plot;
+export default Plot

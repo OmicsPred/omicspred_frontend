@@ -1,4 +1,4 @@
-import { ChevronRight } from 'react-bootstrap-icons';
+import { ChevronRight, Book, GraphUp } from 'react-bootstrap-icons';
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -32,7 +32,15 @@ const PublicationCard = (props) => {
                 </div>
             </AccordionSummary>
             <AccordionDetails>
-                <div className="mb-2"><Href key={key+'_pub_link'} text="OmicsPred publication page" href={"/publication/"+key}/></div>
+                <div className="mb-3">
+                    <Href key={key+'_pub_link'} role="button" text="Publication page" href={"/publication/"+key} icon={<Book/>}/>
+                    { key == '36991119' ?
+                        <>
+                            <span className="me-3"></span>
+                            <Href key={key+'_plot_link'} role="button" text="Go to Plots" href={"/plot/"+additional.platform.name+"/"+key} icon={<GraphUp/>} />
+                        </> : ''
+                    }
+                </div>
                 <SampleTable table_name={key} samples_training={samples_training} samples_validation={samples_validation}/>
             </AccordionDetails>
         </Accordion>

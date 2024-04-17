@@ -21,11 +21,12 @@
 
 # Config
 .env.development
+.env.development_template
+.env.production_template
 package*
 vite.config.js
 
 # Other
 app.yaml_template
-pgs-catalog-cred.json_template
 LICENSE.md
 README.md

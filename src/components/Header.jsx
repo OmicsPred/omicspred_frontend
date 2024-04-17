@@ -28,6 +28,7 @@ function Header() {
                                 <NavDropdown.Item href="/scores">Scores</NavDropdown.Item>
                                 <NavDropdown.Item href="/publications">Publications</NavDropdown.Item>
                                 <NavDropdown.Item href="/platforms">Platforms</NavDropdown.Item>
+                                <NavDropdown.Item href="/pathways">Pathways</NavDropdown.Item>
                             </NavDropdown>
                             <NavDropdown title="PheWAS" id="basic-nav-dropdown" renderMenuOnMount={true}>
                                 <NavDropdown.Item href="/applications/phecode/sum">Summary</NavDropdown.Item>

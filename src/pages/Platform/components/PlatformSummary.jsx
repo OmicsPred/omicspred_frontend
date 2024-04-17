@@ -1,4 +1,3 @@
-import { GraphUp } from 'react-bootstrap-icons';
 import { numberBadge } from "../../../components/Generic";
 
 
@@ -25,9 +24,6 @@ const PlatformSummary = (props) => {
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="mt-3 sm:mt-0 sm:ml-3">
-                <a className="btn btn-primary shadow" href={"/plot/"+platform_sum.name} role="button"><GraphUp size="16"/> Go to Plots</a>
             </div>
         </div>
     )

@@ -19,7 +19,7 @@ function Applications() {
               <Href text="UK biobank" href={process.env.URL_UKB}/>{" "}
               to test for associations with complex phenotypes.
             </p>
-            <a href="/Applications" className="btn btn-primary">Learn more</a>
+            <a href="/applications/phecode/sum" className="btn btn-primary">PheWAS page</a>
           </div>
           <div className="card-footer">
             <img src={ukb_img} alt="UKB"/>
@@ -33,7 +33,7 @@ function Applications() {
             <p className="card-text">Genetic scores for proteomics were applied to assess the extent to which biological pathways are genetically controlled using data at{" "}
               <Href text="Reactome" href={process.env.URL_REACTOME}/>{"."}
             </p>
-            <a href="/Applications" className="btn btn-primary">Learn more</a>
+            <a href="/pathways" className="btn btn-primary">Browse Pathways</a>
           </div>
           <div className="card-footer">
             <img src={reactome_img} alt="Reactome"/>

@@ -11,8 +11,8 @@ const PlatformDataTable = (props) => {
     }), [props.rest_endpoint]
 
     return (
-        <div className="mt-4">
-            <DataTableServer url_suffix={platformRestEndpoint} columns={props.columns} groups={props.column_groups}/>
+        <div className="mt-2">
+            <DataTableServer key={platformRestEndpoint} url_suffix={platformRestEndpoint} columns={props.columns} groups={props.column_groups}/>
         </div>
     )
 };

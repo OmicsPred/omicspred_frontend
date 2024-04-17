@@ -1,7 +1,8 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ChevronRight } from 'react-bootstrap-icons';
-import restApiCallWithData from '../../../components/RestAPIWithData';
+// import restApiCallWithData from '../../../components/RestAPIWithData';
+import restApiCall from '../../../components/RestAPI';
 import ResultCard from './components/ResultCard';
 import SidePanelFilter from './components/SidePanelFilter';
 
@@ -21,24 +22,29 @@ function Search() {
         }
     }
 
-    const indexes = ['gene','metabolite','phecode','protein','score'];
+    // const indexes = ['gene','metabolite','phecode','protein','score'];
 
-    const es_url = process.env.OMICSPRED_ES_URL+indexes.join(',')+'/_search?pretty=true';
+    // const es_url = process.env.OMICSPRED_ES_URL+indexes.join(',')+'/_search?pretty=true';
+    const es_url = process.env.OMICSPRED_ES_URL+'?q='+query;
 
-    const query_content = { 
-        "size": 20,
-        "query": { "query_string": {"query": query} } 
-    };
+    // const query_content = {
+    //     "size": 20,
+    //     "query": { "query_string": {"query": query} }
+    // };
 
     const fetchESResults = async () => {
         let credentials = undefined;
-        if (process.env.OMICSPRED_ES_USERNAME && process.env.OMICSPRED_ES_PASSWORD) {
-            credentials = `Basic ${btoa(process.env.OMICSPRED_ES_USERNAME + ':' + process.env.OMICSPRED_ES_PASSWORD)}`;
-        }
+        // if (process.env.OMICSPRED_ES_USERNAME && process.env.OMICSPRED_ES_PASSWORD) {
+        //     credentials = `Basic ${btoa(process.env.OMICSPRED_ES_USERNAME + ':' + process.env.OMICSPRED_ES_PASSWORD)}`;
+        // }
         console.log("!!!!! FETCH RESULTS !!!!!");
-        const results = await restApiCallWithData(es_url,query_content,credentials);
+        // const results = await restApiCallWithData(es_url,query_content,credentials);
+        const results = await restApiCall(es_url);
+
         console.log(">>> results for "+query+":");
-        const results_list = results.hits.hits;
+        // const results_list = results.hits.hits;
+        const results_list = results;
+
         console.log(results_list);
         let omics_counts = {};
         let platform_counts = {};
@@ -74,18 +80,19 @@ function Search() {
         const omics = Object.keys(omics_counts).sort();
         const platforms = Object.keys(platform_counts).sort();
 
-        setEsResults(results.hits.hits);
+        // setEsResults(results.hits.hits);
+        setEsResults(results);
         options.push({header:'Omics', type:'omics', list: omics.sort(), counts: omics_counts})
         options.push({header:'Platform', type:'platform', list: platforms.sort(), counts: platform_counts})
         setEsOptions(options);
         console.log(">>> options");
         console.log(options);
-        filter_result_types(results.hits.hits);
+        // filter_result_types(results.hits.hits);
+        filter_result_types(results);
     }
 
 
     function handleChange(e) {
-        console.log('\n\nXXXX handleChange XXXX');
         if (e.target.name == 'omics') {
             if (e.target.checked) {
                 setOmicsChecked([...omicsChecked, e.target.value]);
@@ -185,7 +192,7 @@ function Search() {
                         </div>
                         {/* Result panel */}
                         <div>
-                            { esResults.map((data) => isFiltered(data._source) && <ResultCard data={data._source} type={data._index} key={data._index+'_'+data._id}/>)}
+                            { esResults.map((data) => isFiltered(data._source) && <ResultCard data={data._source} type={data._index} key={data._index+'_'+data._source.id}/>)}
                         </div>
                     </>: <h4>No result found</h4>
                 }

@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import FAQs from "../pages/FAQs";
 import Cohorts from "../pages/Cohorts";
 import About from "../pages/About";
+import Pathways from "../pages/Pathways";
 import Publications from "../pages/Publications";
 import Platforms from "../pages/Platforms";
 import Scores from "../pages/Scores";
@@ -35,6 +36,7 @@ function OpRouters() {
                 <Route path="/about" element={<About />} />
 
                 {/* Group pages */}
+                <Route path="/pathways" element={<Pathways />} />
                 <Route path="/publications" element={<Publications />} />
                 <Route path="/platforms" element={<Platforms />} />
                 <Route path="/scores" element={<Scores />} />
@@ -58,7 +60,7 @@ function OpRouters() {
 
                 {/* Test pages */}
                 {/* <Route path="/search_es" element={<SearchES />} /> */}
-                <Route path="/plot/:platform" element={<Plot />} />
+                <Route path="/plot/:platform/:pmid" element={<Plot />} />
                 {/* <Route path="/test/reactome/:reactome_id" element={<ReactomeDiagram />} /> */}
 
                 {/* Errors */}

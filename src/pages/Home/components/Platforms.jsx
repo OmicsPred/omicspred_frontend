@@ -98,10 +98,10 @@ function Platforms() {
                             </div>:''
                           }
                           <div className='mt-2 mb-3'>
-                            <span className='badge bg-secondary me-2'>{item.o_type}</span>{item.tissues.map((tissue) => <span key={item.name+'-'+tissue} className='badge bg-secondary'>{tissue}</span>)}
+                            <span className={'badge bg_'+item.o_type+' me-2'}>{item.o_type}</span>{item.tissues.map((tissue) => <span key={item.name+'-'+tissue} className='badge text-bg-dark'>{tissue}</span>)}
                           </div>
                         </div>
-                        <a href={"/platform/"+item.name} className="btn btn-primary">Learn more</a>
+                        <a href={"/platform/"+item.name} className="btn btn-primary shadow">Platform page</a>
                       </div>
                     </div>
                   )}

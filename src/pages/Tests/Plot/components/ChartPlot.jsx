@@ -390,15 +390,15 @@ export default function ChartPlot(props) {
   
     return (
         <>
-            <div className="mx-5" style={{display:'flex',justifyContent:'center'}}>
+            <div className="d-flex mx-5" style={{justifyContent:'center'}}>
                 <div style={{position:'relative', height:'65vh', width:'80vw'}}>
                     <Chart ref={ChartRef} options={options} data={data} />
-                    <div style={{display:'flex',justifyContent:'center'}} className="mt-3">
-                        <button className="btn btn-primary shadow" onClick={DownloadAsImage}>
-                            <Download size={20} /> <span>Export as image</span>
-                        </button>
-                    </div>
                 </div>
+            </div>
+            <div className="d-flex ms-5 mt-3" style={{justifyContent:'start'}}>
+                <button className="btn btn-primary shadow mb-3" onClick={DownloadAsImage}>
+                    <Download size={20} /> <span>Export as image</span>
+                </button>
             </div>
         </>
     );

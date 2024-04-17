@@ -48,16 +48,15 @@ function Phecode() {
         <div>
             {op_title('phecode', phecodeData, phecode_id)}
             <ul className='key_val_line'>
-                <li><span className='line_key'>Identifier</span>{phecodeData.id}</li>
-                <li><span className='line_key'>Category</span>{phecodeData.category}</li>
-                <li><span className='line_key'># Associated Score{phecodeData.scores_count > 1 ? 's' : ''}</span>{numberBadge(phecodeData.scores_count)}</li>
+                <li key='phecode_id'><span className='line_key'>Identifier</span>{phecodeData.id}</li>
+                <li key='phecode_cat'><span className='line_key'>Category</span>{phecodeData.category}</li>
+                <li key='phecode_scores'><span className='line_key'># Associated Score{phecodeData.scores_count > 1 ? 's' : ''}</span>{numberBadge(phecodeData.scores_count)}</li>
             </ul>
             {op_subtitle('score')}
             <div className='d-flex mb-5'>
                 <DataTableFromRestApi table_key="phecode" url_suffix={url_suffix} columns={columns} col_for_ids={column_keys}/>
             </div>
             { phecodeData.child_phecode && phecodeData.child_phecode.length ? <>{op_subtitle_no_asso('hl','Children Phecode entries')}<div className='d-flex'><DataTable data={phecodeData.child_phecode} columns={child_columns}/></div></> : ''}
-
         </div>
     );
 }

@@ -175,6 +175,16 @@ a {
         font-weight: bold;
     }
 }
+
+.page_subtitle {
+    margin-bottom: 2rem;
+    font-weight: 200;
+    > span:last-child {
+        font-weight: bold;
+        padding-left:10px;
+    }
+}
+
 .op_title_separator {
     height:38px;
     font-size: 26px;
@@ -269,6 +279,7 @@ ul.key_val_line {
     font-weight: bold !important;
 }
 .MuiDataGrid-cell {
+    display: block !important;
     padding: 12px !important;
 }
 
@@ -372,6 +383,7 @@ ul.key_val_line {
 
 /* Button */
 .op_toogle {
+    display: block !important;
     line-height: 24px;
     height: 24px;
     svg {

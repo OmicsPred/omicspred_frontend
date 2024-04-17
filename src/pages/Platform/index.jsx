@@ -13,6 +13,7 @@ import DataTableServer from '../../components/table/DataTableServer';
 import PlatformSummary from './components/PlatformSummary';
 import PublicationCard from './components/PublicationCard';
 import { op_subtitle, get_data_type } from '../../components/Common'
+import _ from 'underscore';
 
 
 function Platform() {
@@ -25,7 +26,8 @@ function Platform() {
     const [platformVersions, setPlatformVersions] = useState([])
     const [platformVersionsList, setPlatformVersionsList] = useState([])
     const [platformVersionsSelection, setPlatformVersionsSelection] = useState([])
-    // const [platformDataEndpoint, setPlatformDataEndpoint] = useState([])
+    const [platformDataEndpoint, setPlatformDataEndpoint] = useState([])
+
 
     // const platform_type = 'Proteomics';
 
@@ -65,7 +67,7 @@ function Platform() {
     }
 
 
-    const get_table_columns = (platforms) => {
+    const get_table_columns = (platforms, versions) => {
         const type = platforms[0].platform.type;
         console.log('get_table_columns: |'+type+'|')
         // Fetch metadata columns for a given platform
@@ -74,47 +76,51 @@ function Platform() {
         // Fetch Cohort columns
         let cohorts = [];
         for (let i=0; i<platforms.length; i++) {
-            console.log('# platform:');
+            console.log('# platforms[i]:');
             console.log(platforms[i]);
-            // Training cohorts
-            for (let j=0; j<platforms[i]['samples_training'].length; j++) {
-                const sample_cohorts = platforms[i]['samples_training'][j]['cohorts'];
-                for (let k=0; k<sample_cohorts.length; k++) {
-                    const cohort = sample_cohorts[k]['name_short'];
-                    if (cohort) {
-                        console.log(">> Training: "+cohort);
-                    }
-                    if (cohort_cols[cohort]) {
-                        cohorts.push(cohort);
-                    }
-                    else {
-                        const cohort_col_labels = Object.keys(cohort_cols);
-                        for (let l=0; l<cohort_col_labels.length; l++) {
-                            const cohort_col_label = cohort_col_labels[l];
-                            if (cohort_col_label.startsWith(cohort) && !cohorts.includes(cohort_col_label)) {
-                                cohorts.push(cohort_col_label);
+            const platform = platforms[i]['platform'];
+            if (!versions || (versions && versions.includes(platform['version']))) {
+                console.log("::::: Platform "+platform['name']+' | Versions: '+platform['version']+" :::::");
+                // Training cohorts
+                for (let j=0; j<platforms[i]['samples_training'].length; j++) {
+                    const sample_cohorts = platforms[i]['samples_training'][j]['cohorts'];
+                    for (let k=0; k<sample_cohorts.length; k++) {
+                        const cohort = sample_cohorts[k]['name_short'];
+                        if (cohort) {
+                            console.log(">> Training: "+cohort);
+                        }
+                        if (cohort_cols[cohort]) {
+                            cohorts.push(cohort);
+                        }
+                        else {
+                            const cohort_col_labels = Object.keys(cohort_cols);
+                            for (let l=0; l<cohort_col_labels.length; l++) {
+                                const cohort_col_label = cohort_col_labels[l];
+                                if (cohort_col_label.startsWith(cohort) && !cohorts.includes(cohort_col_label)) {
+                                    cohorts.push(cohort_col_label);
+                                }
                             }
                         }
                     }
                 }
-            }
-            // Training cohorts
-            for (let j=0; j< platforms[i]['samples_validation'].length;j++) {
-                const sample_cohorts = platforms[i]['samples_validation'][j]['cohorts'];
-                for (let k=0; k<sample_cohorts.length; k++) {
-                    const cohort = sample_cohorts[k]['name_short'];
-                    if (cohort) {
-                        console.log(">> Validation: "+cohort);
-                    }
-                    if (cohort_cols[cohort]) {
-                        cohorts.push(cohort);
-                    }
-                    else {
-                        const cohort_col_labels = Object.keys(cohort_cols);
-                        for (let l=0; l<cohort_col_labels.length; l++) {
-                            const cohort_col_label = cohort_col_labels[l];
-                            if (cohort_col_label.startsWith(cohort) && !cohorts.includes(cohort_col_label)) {
-                                cohorts.push(cohort_col_label);
+                // Training cohorts
+                for (let j=0; j< platforms[i]['samples_validation'].length;j++) {
+                    const sample_cohorts = platforms[i]['samples_validation'][j]['cohorts'];
+                    for (let k=0; k<sample_cohorts.length; k++) {
+                        const cohort = sample_cohorts[k]['name_short'];
+                        if (cohort) {
+                            console.log(">> Validation: "+cohort);
+                        }
+                        if (cohort_cols[cohort]) {
+                            cohorts.push(cohort);
+                        }
+                        else {
+                            const cohort_col_labels = Object.keys(cohort_cols);
+                            for (let l=0; l<cohort_col_labels.length; l++) {
+                                const cohort_col_label = cohort_col_labels[l];
+                                if (cohort_col_label.startsWith(cohort) && !cohorts.includes(cohort_col_label)) {
+                                    cohorts.push(cohort_col_label);
+                                }
                             }
                         }
                     }
@@ -136,7 +142,7 @@ function Platform() {
             }
         }
 
-        return columns
+        return columns;
     }
 
 
@@ -207,9 +213,6 @@ function Platform() {
             }
         }
 
-        console.log("# cohort groups labels:");
-        console.log(cohorts);
-
         // Fetch column group details
         for (let i=0; i< cohorts.length; i++) {
             const cohort = cohorts[i];
@@ -228,10 +231,10 @@ function Platform() {
             platform_sum_data.versions.sort()
             setPlatformVersionsList(platform_sum_data.versions)
             setPlatformVersions(platform_sum_data.versions.join(', '));
-            setPlatformVersionsSelection(platform_sum_data.versions)
-            // //if (platformVersionsSelection.length == 0) {
-            //     setPlatformVersionsSelection(platform_sum_data.versions);
-            // //}
+            setPlatformVersionsSelection(platform_sum_data.versions);
+        }
+        else {
+            setPlatformDataEndpoint(get_url_endpoint(platform_sum_data.type));
         }
     }
 
@@ -244,10 +247,6 @@ function Platform() {
         setPlatformTableColumns(table_cols);
         const table_col_grp = get_table_column_groups(platform_add_results);
         setPlatformTableColumnGroups(table_col_grp);
-        // const url_endpoint = get_url_endpoint(platformSumData.type);
-        // setPlatformDataEndpoint(url_endpoint);
-        // console.log("{{{ "+platformSumData.type+" }}}");
-        // console.log("[[[ "+url_endpoint+" ]]]");
     }
 
     // Allow to opt in/out a particular version of the platform and resend a REST API query
@@ -262,7 +261,6 @@ function Platform() {
                 selected_versions = platformVersionsSelection.filter(function (version) {
                     return version !== version_val;
                 });
-                setPlatformVersionsSelection(selected_versions);
             }
         }
         else {
@@ -270,25 +268,26 @@ function Platform() {
             if (!platformVersionsSelection.includes(version_val)) {
                 selected_versions = platformVersionsSelection;
                 selected_versions.push(version_val);
-                setPlatformVersionsSelection(selected_versions);
             }
         }
-        alert('New selection: '+selected_versions+'!');
+        setPlatformVersionsSelection(selected_versions);
+        updatePlatformDataEndpoint();
     }
+
+    const updatePlatformDataEndpoint = () => {
+        setPlatformDataEndpoint(get_url_endpoint(platformSumData.type));
+    }
+
 
     useEffect(() => {
         fetchPlatformSumData();
         fetchPlatformAdditionalData();
-    },[])
+    },[]);
 
-    // useEffect(() => {
-    //     fetchURLEndpoint();
-    //     //console.log("ENDPOINT: "+platformDataEndpoint);
-    // },[])
-
-    // useEffect(() => {
-    //     fetchPlatformAdditionalData();
-    // },[])
+    useEffect(() => {
+        console.log("=> Update Enpoint in useEffect");
+        updatePlatformDataEndpoint();
+    },[platformVersionsSelection]);
 
 
     return (
@@ -310,9 +309,9 @@ function Platform() {
                 { platformVersionsList.length > 0 && platformVersionsSelection.length > 0 ? platformVersionsList.map((version) => <button className="btn btn-primary shadow btn-sm me-2"  data-version={version} key={platform+'_'+version} onClick={handleVersionSelectionClick}>{platform} {version}</button>):''}
             </div>
             {op_subtitle('score')}
-            {platformSumData && platformSumData.type ?
+            { platformTableColumns && platformDataEndpoint && platformDataEndpoint.includes(platform) ?
                 <div className="mt-2">
-                    <DataTableServer url_suffix={get_url_endpoint(platformSumData.type)} columns={platformTableColumns} groups={platformTableColumnGroups}/>
+                   <DataTableServer key={platformDataEndpoint} url_suffix={platformDataEndpoint} columns={platformTableColumns} groups={platformTableColumnGroups}/>
                 </div>
                 :
                 <div>Loading ...</div>
