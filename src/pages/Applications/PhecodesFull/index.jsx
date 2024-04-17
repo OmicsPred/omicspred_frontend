@@ -1,5 +1,6 @@
 import DataTableServer from '../../../components/table/DataTableServer';
 import { phecode_columns } from '../../../components/table/columns/phecode'
+import { page_title } from '../../../components/Common';
 
 
 function PhecodesFull() {
@@ -10,7 +11,8 @@ function PhecodesFull() {
 
     return (
         <>
-            <h2 className='page_title'>Full list of associations identified in the PheWAS</h2>
+            {page_title('phecode', 'PheWAS', 'All Associations')}
+            <h4 className='page_title'>Full list of associations identified in the PheWAS</h4>
             <div className="mt-4">
                 <DataTableServer key="phecode_full" url_suffix={url_suffix} columns={phecode_columns['Full']} col_for_ids={column_keys}/>
             </div>

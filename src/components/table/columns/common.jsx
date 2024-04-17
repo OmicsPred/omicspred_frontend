@@ -1,9 +1,12 @@
 import { FileEarmarkText, Hr } from 'react-bootstrap-icons';
 import { internal_publication_link } from '../../Common';
-import { thousandifyNumber } from '../../Generic';
+import { thousandifyNumber, ToogleDiv } from '../../Generic';
 import Href from '../../Href';
 
 const default_cell_value = process.env.DEFAULT_CELL_VALUE;
+
+const data_separator = ', ';
+const display_threshold = 10;
 
 export const cohort_valueGetter = function(row,cohort,method) {
     let result = '';
@@ -33,6 +36,10 @@ export const cohort_valueGetter = function(row,cohort,method) {
     return result;
 }
 
+export const inline_rendering = function(content) {
+    return <div className="d-inline">{content}</div>
+}
+
 
 export const omicspred_omics_type = function(type) {
     return (
@@ -56,11 +63,13 @@ export const omicspred_internal_link = function(op_entry,type,index) {
 
 export const omicspred_internal_links = function(op_data,type) {
     if (op_data.length) {
-        return (
-            <>
-                {op_data.map((op_entry, index) => omicspred_internal_link(op_entry, type, index))}
-            </>
-        )
+        const content = op_data.map((op_entry, index) => omicspred_internal_link(op_entry, type, index))
+        if (op_data.length == 1) {
+            return content
+        }
+        else {
+            return inline_rendering(content);
+        }
     }
     else {
         return default_cell_value
@@ -74,6 +83,23 @@ export const omicspred_platform_omics_type = function(platform,type) {
     )
 }
 
+const sort_objects = function(objects, key) {
+    function compare(a, b) {
+        a = a[key];
+        b = b[key];
+        const type = (typeof(a) === 'string' || typeof(b) === 'string') ? 'string' : 'number';
+        let result;
+        if (type === 'string') {
+            result = a.localeCompare(b);
+        }
+        else {
+            result = a - b;
+        }
+        return result;
+    }
+    return objects.sort(compare);
+}
+
 
 export const application_molecular_traits = function(mt_entry,index) {
     const mt_label = mt_entry.name ? mt_entry.name : mt_entry.external_id;
@@ -81,7 +107,7 @@ export const application_molecular_traits = function(mt_entry,index) {
     const mt_type = mt_entry.type
     let mt_url = "/"+mt_type+"/"+mt_id;
     return (
-        <>{index ? ', ': ''}<Href key={mt_id+'_'+mt_type} href={mt_url} text={mt_label}/></>
+        <span key={mt_id+'_'+mt_type}>{index ? ', ': ''}<Href href={mt_url} text={mt_label}/></span>
     )
 }
 
@@ -197,7 +223,7 @@ export const common_cols = {
             else if (params.row.external_id) {
                 pr_ids.push(params.row.external_id);
             }
-            return pr_ids.join(',');
+            return pr_ids.join(data_separator);
         }
     },
     'protein_name': {
@@ -213,7 +239,7 @@ export const common_cols = {
             else if (params.row.name) {
                 pr_names.push(params.row.name);
             }
-            return pr_names.join(';');
+            return pr_names.join(data_separator);
         }
     },
     'gene_name': {
@@ -226,14 +252,21 @@ export const common_cols = {
             if (params.row.genes) {
                 gene_names = params.row.genes.map((gene) => ({'id': (gene.external_id ? gene.external_id : gene.name),'label': gene.name}))
             }
-           return omicspred_internal_links(gene_names, 'Gene');
+            gene_names = sort_objects(gene_names,'label');
+
+            if (gene_names.length>display_threshold) {
+                return <ToogleDiv content={omicspred_internal_links(gene_names, 'Gene')} title={gene_names.length+' genes'}/>;
+            }
+            else {
+                return omicspred_internal_links(gene_names, 'Gene');
+            }
         },
         valueGetter: (params) => {
             let gene_names = [];
             if (params.row.genes) {
                 gene_names = params.row.genes.map((gene) => gene.name)
             }
-            return gene_names.join(',');
+            return gene_names.join(data_separator);
         }
     },
     'gene_id_from_list': {
@@ -262,8 +295,7 @@ export const common_cols = {
     },
     'metabolite_id': {
         field: 'metabolite_id',
-        // headerName: 'Biochemical ID',
-        headerName: 'Identifier',
+        headerName: 'Metabolite ID',
         headerClassName: 'col_border_left',
         minWidth: 150,
         flex: 0.6,
@@ -273,19 +305,25 @@ export const common_cols = {
             if (params.row.metabolites) {
                 metabolite_ids = params.row.metabolites.map((metabolite) => ({'label': metabolite.external_id}))
             }
-            return omicspred_internal_links(metabolite_ids, 'metabolite');
+
+            if (metabolite_ids.length>display_threshold) {
+                return <ToogleDiv content={omicspred_internal_links(metabolite_ids, 'metabolite')} title={metabolite_ids.length+' metabolites'}/>;
+            }
+            else {
+                return omicspred_internal_links(metabolite_ids, 'metabolite');
+            }
         },
         valueGetter: (params) => {
             let metabolite_ids = [];
             if (params.row.metabolites) {
                 metabolite_ids = params.row.metabolites.map((metabolite) => metabolite.external_id)
             }
-            return metabolite_ids.join(', ');
+            return metabolite_ids.join(data_separator);
         }
     },
     'metabolite_name': {
         field: 'metabolite_name',
-        headerName: 'Biochemical Name',
+        headerName: 'Metabolite Name',
         headerClassName: 'col_border_right',
         minWidth: 200,
         flex: 1,
@@ -305,7 +343,7 @@ export const common_cols = {
                 }
             }
             if (metabolite_ids.length) {
-                return metabolite_names.join('; ')
+                return metabolite_names.join(data_separator);
             }
             else {
                 return omicspred_internal_links(metabolite_labels, 'metabolite');
@@ -316,7 +354,7 @@ export const common_cols = {
             if (params.row.metabolites) {
                 metabolite_names = params.row.metabolites.map((metabolite) => metabolite.name)
             }
-            return metabolite_names.join(',');
+            return metabolite_names.join(data_separator);
         }
     },
     'metabolite_id_from_list': {
@@ -445,8 +483,8 @@ export const common_cols = {
     'pathway_id': {
         field: 'pathway_id',
         headerName: 'Pathway ID',
-        minWidth: 120,
-        flex: 0.5,
+        minWidth: 80,
+        flex: 0.4,
         renderCell: (params) => {
             return omicspred_internal_link({'label': params.row.external_id}, 'pathway');
         },
@@ -470,8 +508,8 @@ export const common_cols = {
     'pathway_name': {
         field: 'pathway_name',
         headerName: 'Pathway name',
-        minWidth: 120,
-        flex: 0.5,
+        minWidth: 150,
+        flex: 0.7,
         renderCell: (params) => {
             return params.row.external_id ? params.row.name: omicspred_internal_link({'label': params.row.name}, 'pathway');
         },
@@ -480,7 +518,7 @@ export const common_cols = {
         }
     },
     'superpathway_name': {
-        field: 'superpathway_name',
+        field: 'superpathways_name',
         headerName: 'Top Level Pathway',
         minWidth: 120,
         flex: 0.5,
@@ -567,7 +605,7 @@ export const applications_cols = {
             const genes_list =  params.row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'gene'});
             if (genes_list.length > 0) {
                 const genes = genes_list.map((gene, index) => application_molecular_traits(gene,index))
-                return genes;
+                return <div className="d-inline">{genes}</div>;
             }
             return default_cell_value;
         },
@@ -575,7 +613,7 @@ export const applications_cols = {
             let gene_names = [];
             const genes_list =  params.row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'gene'});
             gene_names = genes_list.map((gene) => gene.name ? gene.name : gene.external_id);
-            return gene_names.join(',');
+            return gene_names.join(data_separator);
         }
     },
     'protein': {
@@ -587,7 +625,7 @@ export const applications_cols = {
             const proteins_list =  params.row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'protein'});
             if (proteins_list.length > 0) {
                 const proteins = proteins_list.map((protein, index) => application_molecular_traits(protein,index))
-                return proteins;
+                return <div className="d-inline">{proteins}</div>;
             }
             return default_cell_value;
         },
@@ -595,7 +633,7 @@ export const applications_cols = {
             let protein_names = [];
             const proteins_list =  params.row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'protein'});
             protein_names = proteins_list.map((protein) => protein.name ? protein.name : protein.external_id);
-            return protein_names.join(',');
+            return protein_names.join(data_separator);
         }
     },
     'metabolite': {
@@ -607,7 +645,7 @@ export const applications_cols = {
             const metabolites_list =  params.row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'metabolite'});
             if (metabolites_list.length > 0) {
                 const metabolites = metabolites_list.map((metabolite, index) => application_molecular_traits(metabolite,index))
-                return metabolites;
+                return <div className="d-inline">{metabolites}</div>;
             }
             return default_cell_value;
         },
@@ -615,7 +653,7 @@ export const applications_cols = {
             let metabolite_names = [];
             const metabolites_list =  params.row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'metabolite'});
             metabolite_names = metabolites_list.map((metabolite) => metabolite.name ? metabolite.name : metabolite.external_id);
-            return metabolite_names.join(',');
+            return metabolite_names.join(data_separator);
         }
     }
 }

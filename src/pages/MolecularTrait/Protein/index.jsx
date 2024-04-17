@@ -20,7 +20,7 @@ function Protein() {
         common_cols['platform_name'],
         common_cols['publication'],
         common_cols['variants_number'],
-        common_cols['scoring_file']
+        // common_cols['scoring_file']
     ]
 
     const external_id_link = () => {

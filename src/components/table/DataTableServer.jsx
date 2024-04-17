@@ -22,11 +22,13 @@ const DataTableServer = (props) => {
     let page_size = default_page_size;
 
     const cols2db = {
-        'id': 'id',
+        'gene_id': 'genes__external_id',
         'uniprot_id': 'proteins__external_id',
-        'protein_name': 'proteins__name',
-        'gene_name':  'genes__name',
-        'metabolite_name':  'metabolites__name',
+        'metabolite_id': 'metabolites__external_id',
+        'pathway_id': 'external_id',
+        // 'protein_name': 'proteins__name',
+        // 'gene_name':  'genes__name',
+        // 'metabolite_name':  'metabolites__name',
     }
 
     const [rowCountState, setRowCountState] = useState(0);
@@ -122,7 +124,10 @@ const DataTableServer = (props) => {
         console.log("SORT: "+sort_field+' | '+sort)
         if (!url.includes('sort_field=') && sort_field) {
             if (cols2db[sort_field]) {
-            url += '&sort_field='+cols2db[sort_field];
+                url += '&sort_field='+cols2db[sort_field];
+            }
+            else {
+                url += '&sort_field='+sort_field;
             }
         }
         if (!url.includes('sort=') && sort) {

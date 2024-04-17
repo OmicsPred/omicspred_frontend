@@ -8,7 +8,7 @@ import DataTable from "../../components/table/DataTable";
 import DataTableServer from '../../components/table/DataTableServer';
 import PlatformCard from './components/PlatformCard';
 import {omicspred_omics_type, omicspred_internal_link, common_cols} from "../../components/table/columns/common";
-import { op_subtitle } from '../../components/Common';
+import { op_subtitle, publication_ref } from '../../components/Common';
 import { numberBadge } from '../../components/Generic';
 
 
@@ -163,7 +163,7 @@ function Publication() {
 
     return (
         <>
-            <h2 className='page_title'>Publication<ChevronRight className={'op_title_separator color_hl'}/><span>{publicationData.firstauthor} <i>et al.</i> {publicationData.journal} <small>({publicationYear})</small></span></h2>
+            <h2 className='page_title'>Publication<ChevronRight className={'op_title_separator color_hl'}/>{publication_ref(publicationData, true)}</h2>
             <div className='mb-4'>
                 <div className='d-flex'>
                     <div className="card-deck d-lg-flex flex-lg-row justify-content-center d-md-flex flex-md-row d-sm-flex flex-sm-column me-4">
@@ -189,7 +189,7 @@ function Publication() {
                         <div>
                             {op_subtitle('hl','samples by platform')}
                             <div className="d-flex flex-column">
-                                { platformsData.map((platform_data) => <PlatformCard data={platform_data} key={platform_data.platform.name} />)}
+                                { platformsData.map((platform_data) => <PlatformCard data={platform_data} pmid={publicationData.pmid} key={platform_data.platform.name} />)}
                             </div>
                         </div>: ''
                     }

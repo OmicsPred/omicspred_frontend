@@ -21,7 +21,7 @@ function Metabolite() {
         common_cols['platform_type'],
         common_cols['platform_name'],
         common_cols['variants_number'],
-        common_cols['scoring_file']
+        // common_cols['scoring_file']
     ]
 
     const pathway_columns = [
@@ -75,7 +75,7 @@ function Metabolite() {
             {op_subtitle('score')}
             <DataTableFromRestApi table_key="metabolite" url_suffix={url_suffix} columns={columns}/>
             { 
-				elementData && pathwayData.length ? <div className="mt-4"><h5>Associated pathways(s)</h5><DataTable key="pathway" data={pathwayData} columns={pathway_columns}/></div> : <div className='mt-4'>No associated pathway found</div>
+				elementData && pathwayData.length ? <div className="mt-4">{op_subtitle('pathway')}<DataTable key="pathway" data={pathwayData} columns={pathway_columns}/></div> : <div className='mt-4'>No associated pathway found</div>
 			}
         </div>
     );

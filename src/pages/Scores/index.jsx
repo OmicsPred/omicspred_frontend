@@ -1,4 +1,3 @@
-// import React, { useState } from 'react';
 import { scores_columns } from '../../components/table/columns/scores';
 import DataTableServer from '../../components/table/DataTableServer';
 import { browse_title } from '../../components/Common';

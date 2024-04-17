@@ -2,11 +2,18 @@ import { BoxArrowUpRight } from 'react-bootstrap-icons';
 
 const Href = (props) => {
 
+    let extra_classes = '';
+    const button_classes = ' btn btn-primary shadow'
+
+    if (props.role=='button') {
+        extra_classes = button_classes;
+    }
+
     // Internal link
     if (props.href.startsWith('/')) {
         return(
-            <a href={props.href}>
-                {props.icon}{props.icon && ' '}{props.text}
+            <a href={props.href} className={extra_classes}>
+                {props.icon}{props.icon && <span className='me-2'></span>}{props.text}
             </a>
         );
     }
@@ -15,7 +22,7 @@ const Href = (props) => {
         // Without external link icon
         if (props.no_external_icon) {
             return(
-                <a href={props.href} target="_blank">
+                <a href={props.href} className={extra_classes} target="_blank">
                     {props.icon}{props.icon && ' '}{props.text}
                 </a>
             );
@@ -23,7 +30,7 @@ const Href = (props) => {
         // With external link icon
         else {
             return(
-                <a className="external-link" href={props.href} target="_blank"> 
+                <a className={"external-link"+extra_classes} href={props.href} target="_blank">
                     {props.icon}{props.icon && ' '}{props.text}<BoxArrowUpRight/>
                 </a>
             );

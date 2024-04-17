@@ -29,12 +29,16 @@ export const get_data_type = (omics_type) => {
 }
 
 
-export const browse_title = (type, label) => {
+export const page_title = (type, category, label) => {
     if (!label) {
         label = type+'s';
     }
     const label_uc = label.charAt(0).toUpperCase() + label.slice(1);
-    return <h2 className='page_title'>Browse<SlashLg className={'op_browse_title color_'+type}/><span>{label_uc}</span></h2>
+    return <h2 className='page_title'>{category}<ChevronRight className={'op_title_separator color_'+type}/><span>{label_uc}</span></h2>
+}
+
+export const browse_title = (type, label) => {
+    return page_title(type, 'Browse', label);
 }
 
 
@@ -45,6 +49,11 @@ export const op_title = (type, data, label, force_use_label) => {
         value = (data && data.name) ? data.name : label;
     }
     return <h2 className='page_title'><span className={'bg_'+type}>{type_uc}</span><ChevronRight className={'op_title_separator color_'+type}/><span>{value}</span></h2>
+}
+
+
+export const op_title2 = (type, prefix, label) => {
+    return <h2 className='page_title'>{prefix}<ChevronRight className={'op_title_separator color_'+type}/><span>{label}</span></h2>
 }
 
 
@@ -60,4 +69,12 @@ export const op_subtitle_no_asso = (type,label) => {
         label = type;
     }
     return <h5><ChevronRight className={'op_subtitle color_'+type}/>{label}</h5>
+}
+
+export const publication_ref = (publication,display_year) => {
+    let year = undefined;
+    if (display_year && publication.date_publication) {
+        year = publication.date_publication.split('-')[0]
+    }
+    return <span>{publication.firstauthor} <i>et al.</i> {publication.journal} {year ? <small>({year})</small> : ''}</span>
 }

@@ -220,29 +220,24 @@ export default function ChartDoughnut(props) {
 
   return (
     <>
-      <div className="mt-5">
-        {/* <div className="w-full  min-h-full h-full absolute grid place-items-center  left-0 top-0 right-0 bottom-0 font-semibold  z-20 bg-transparent text-slate-800">
-          {props.name_1}
-        </div> */}
-        {/* <div className="relative"> */}
-          {/* <h3><span style={{color:'blue'}}>{props.name_1}</span> <small>VS</small> <span style={{color:'blue'}}>{props.name_2}</span></h3> */}
-          <div className="mx-5" style={{display:'flex',justifyContent:'center'}}>
-            <div style={{position:'relative', height:'45vh', width:'30vw'}}>
-              <Doughnut
-                // className="relative"
-                ref={ChartRef}
-                plugins={[{}]}
-                options={options}
-                data={data}
-              />
-              <div style={{display:'flex',justifyContent:'center'}} className="mt-3">
-                <button className="btn btn-primary shadow" onClick={DownloadAsImage}>
-                  <Download size={20} /> <span>Export as image</span>
-                </button>
-              </div>
+        <div className="mt-5">
+            <div className="d-flex mx-5" style={{justifyContent:'center'}}>
+                <div style={{position:'relative', height:'45vh', width:'30vw'}}>
+                <Doughnut
+                    // className="relative"
+                    ref={ChartRef}
+                    plugins={[{}]}
+                    options={options}
+                    data={data}
+                />
+                </div>
             </div>
-          </div>
-      </div>
+            <div className="d-flex ms-5 mt-3" style={{justifyContent:'start'}} >
+                <button className="btn btn-primary shadow" onClick={DownloadAsImage}>
+                    <Download size={20} /> <span>Export as image</span>
+                </button>
+            </div>
+        </div>
     </>
   );
 }

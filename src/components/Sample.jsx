@@ -77,8 +77,6 @@ const PlatformSampleCohorts = (props) => {
             }
             cohorts_obj[cohort_name]['ancestry'][ancestry] += participants;
         }
-        console.log('cohorts_obj:');
-        console.log(cohorts_obj);
         return cohorts_obj
     }
 
