@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import DataTableFromRestApi from '../../../components/table/DataTableFromRestApi';
+import DataTable from '../../../components/table/DataTable';
 import {common_cols} from '../../../components/table/columns/common';
+import {score_molecular_trait_columns}  from "../../../components/table/columns/scores";
+import { pathway_molecular_trait_columns} from '../../../components/table/columns/pathways';
 import restApiCall from '../../../components/RestAPI';
 import Href from '../../../components/Href';
 import { display_gene_link } from '../components/links';
@@ -11,17 +14,10 @@ import { op_title, op_subtitle } from '../../../components/Common';
 function Protein() {
     let { protein } = useParams();
     const [elementData, setElementData] = useState([])
+    const [pathwayData, setPathwayData] = useState([])
 
     const element = 'protein';
     const url_suffix = "score/searchby"+element+"/"+protein;
-    const columns = [
-        common_cols['omicspred_id'],
-        common_cols['platform_type'],
-        common_cols['platform_name'],
-        common_cols['publication'],
-        common_cols['variants_number'],
-        // common_cols['scoring_file']
-    ]
 
     const external_id_link = () => {
         if (elementData.external_id_source == 'UniProt') {
@@ -36,6 +32,7 @@ function Protein() {
         const data = await restApiCall(element+'/'+protein+'?include_gene=1');
         console.log(data);
         setElementData(data);
+        setPathwayData(data.pathways)
     }
 
     useEffect(() => {
@@ -52,7 +49,10 @@ function Protein() {
             { elementData && elementData.gene ? <li><span className='line_key'>Gene</span>{display_gene_link(elementData.gene)}</li>:''}
             </ul>
             {op_subtitle('score')}
-            <DataTableFromRestApi table_key="protein" url_suffix={url_suffix} columns={columns}/>
+            <DataTableFromRestApi table_key="protein" url_suffix={url_suffix} columns={score_molecular_trait_columns}/>
+            {
+				elementData && pathwayData.length ? <div className="mt-4">{op_subtitle('pathway')}<DataTable key="pathway" data={pathwayData} columns={pathway_molecular_trait_columns}/></div> : <div className='mt-4'>No associated pathway found</div>
+			}
         </div>
     );
 }

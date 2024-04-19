@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { ChevronRight} from 'react-bootstrap-icons';
 import Href from '../../../components/Href';
 import DataTableFromRestApi from '../../../components/table/DataTableFromRestApi';
 import DataTable from '../../../components/table/DataTable';
 import { common_cols } from '../../../components/table/columns/common';
+import {score_molecular_trait_columns}  from "../../../components/table/columns/scores";
+import { pathway_molecular_trait_columns} from '../../../components/table/columns/pathways';
 import restApiCall from '../../../components/RestAPI';
 import restApiCallPaginated from '../../../components/RestAPIPaginated';
 import { op_title, op_subtitle } from '../../../components/Common';
@@ -18,25 +19,12 @@ function Gene() {
 
 	const element = 'gene';
 	const url_suffix = "score/searchby"+element+"/"+gene;
-	const columns = [
-		common_cols['omicspred_id'],
-		common_cols['platform_type'],
-		common_cols['platform_name'],
-		common_cols['publication'],
-		common_cols['variants_number'],
-		// common_cols['scoring_file']
-	]
 
+	const protein_id_col = {...common_cols['protein_id'], field: 'external_id'}
+	const protein_name_col = {...common_cols['protein_name'], field: 'name'}
 	const protein_columns = [
-		common_cols['protein_id'],
-		common_cols['protein_name']
-	]
-
-	const pathway_columns = [
-		common_cols['pathway_id'],
-		common_cols['pathway_name'],
-		common_cols['superpathway_name'],
-		common_cols['pathway_id_source']
+		protein_id_col,
+		protein_name_col
 	]
 
 	const fetchSummaryData = async () => {
@@ -84,13 +72,13 @@ function Gene() {
 			}
 			{op_subtitle('score')}
 			<div className='d-flex'>
-				<DataTableFromRestApi table_key="gene" url_suffix={url_suffix} columns={columns}/>
+				<DataTableFromRestApi table_key="gene" url_suffix={url_suffix} columns={score_molecular_trait_columns}/>
 			</div>
 			{ 
 				proteinData && proteinData.length ? <div className="mt-4">{op_subtitle('protein')}<DataTable key="protein" data={proteinData} columns={protein_columns}/></div> : <div className='mt-4'>No associated protein found</div>
 			}
 			{ 
-				elementData && pathwayData.length ? <div className="mt-4">{op_subtitle('pathway')}<DataTable key="pathway" data={pathwayData} columns={pathway_columns}/></div> : <div className='mt-4'>No associated pathway found</div>
+				elementData && pathwayData.length ? <div className="mt-4">{op_subtitle('pathway')}<DataTable key="pathway" data={pathwayData} columns={pathway_molecular_trait_columns}/></div> : <div className='mt-4'>No associated pathway found</div>
 			}
 		</div>
 	);

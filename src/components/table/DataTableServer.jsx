@@ -26,6 +26,7 @@ const DataTableServer = (props) => {
         'uniprot_id': 'proteins__external_id',
         'metabolite_id': 'metabolites__external_id',
         'pathway_id': 'external_id',
+        'phecode_id': 'phecode_as_float'
         // 'protein_name': 'proteins__name',
         // 'gene_name':  'genes__name',
         // 'metabolite_name':  'metabolites__name',

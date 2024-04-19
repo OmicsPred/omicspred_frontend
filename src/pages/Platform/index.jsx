@@ -136,7 +136,8 @@ function Platform() {
                 for (let j=0; j<metric_cols.length; j++) {
                     const metric = metric_cols[j];
                     if (cohort_cols[cohort][metric]) {
-                        columns.push(cohort_cols[cohort][metric])
+                        const cohort_metric_col = {...cohort_cols[cohort][metric], sortable: false}
+                        columns.push(cohort_metric_col)
                     }
                 }
             }
