@@ -77,6 +77,40 @@ export const omicspred_internal_links = function(op_data,type) {
 }
 
 
+export const omicspred_external_link = function(op_entry,index) {
+    const op_label = op_entry['label'];
+    const op_id = (op_entry['id']) ? op_entry['id'] : op_entry['label']
+
+    if (op_entry['source'] && op_entry['source'].toLowerCase() == 'reactome') {
+        const url = process.env.URL_REACTOME_ENTRY+op_id;
+        return (
+            <span key={op_id+'_span'}>
+                {index ? ', ': ''}<Href key={op_id+'_a'} href={url} text={op_label}/>
+            </span>
+        )
+    }
+    else {
+        return <span key={op_id+'_span'}>{index ? ', ': ''}{op_label}</span>
+    }
+}
+
+
+export const omicspred_external_links = function(op_data) {
+    if (op_data.length) {
+        const content = op_data.map((op_entry, index) => omicspred_external_link(op_entry, index))
+        if (op_data.length == 1) {
+            return content
+        }
+        else {
+            return inline_rendering(content);
+        }
+    }
+    else {
+        return default_cell_value
+    }
+}
+
+
 export const omicspred_platform_omics_type = function(platform,type) {
     return (
         <a key={platform+'-'+type} href={"/platform/"+platform}><span className={"border_left_mark border_color_"+type}>{platform}</span></a>
@@ -146,7 +180,7 @@ export const common_cols = {
         }
     },
     'platform_type': {
-        field: 'platform_type',
+        field: 'platform__platform_master__type',
         headerName: 'Omics',
         minWidth: 130,
         flex: 1,
@@ -156,7 +190,7 @@ export const common_cols = {
         valueGetter: (params) => { return params.row.platform.type }
     },
     'platform_name': {
-        field: 'platform_name',
+        field: 'platform__name',
         headerName: 'Platform',
         minWidth: 150,
         flex: 0.6,
@@ -166,7 +200,7 @@ export const common_cols = {
         valueGetter: (params) => { return params.row.platform.name }
     },
     'publication': {
-        field: 'publication',
+        field: 'publication__firstauthor',
         headerName: 'Publication',
         minWidth: 200,
         flex: 0.8,
@@ -200,7 +234,7 @@ export const common_cols = {
         hideable: true
     },
     'protein_id': {
-        field: 'uniprot_id',
+        field: 'proteins__external_id',
         headerName: 'UniProt ID',
         minWidth: 120,
         flex: 0.5,
@@ -227,7 +261,7 @@ export const common_cols = {
         }
     },
     'protein_name': {
-        field: 'protein_name',
+        field: 'proteins__name',
         headerName: 'Protein Name',
         minWidth: 200,
         flex: 1,
@@ -242,8 +276,27 @@ export const common_cols = {
             return pr_names.join(data_separator);
         }
     },
+    'gene_id': {
+        field: 'genes__external_id',
+        headerName: 'Ensembl ID',
+        width: 200,
+        renderCell: (params) => {
+            let gene_ids = [];
+            if (params.row.genes) {
+                gene_ids = params.row.genes.map((gene) => ({'label': gene.external_id}));
+            }
+            return omicspred_internal_links(gene_ids, 'gene');
+        },
+        valueGetter: (params) => {
+            let gene_ids = '';
+            if (params.row.genes) {
+                gene_ids = params.row.genes.map((gene) => gene.external_id)
+            }
+            return gene_ids.join(data_separator);
+        }
+    },
     'gene_name': {
-        field: 'gene_name',
+        field: 'genes__name',
         headerName: 'Gene',
         minWidth: 120,
         flex: 0.5,
@@ -322,7 +375,7 @@ export const common_cols = {
         }
     },
     'metabolite_name': {
-        field: 'metabolite_name',
+        field: 'metabolites__name',
         headerName: 'Metabolite Name',
         headerClassName: 'col_border_right',
         minWidth: 200,
@@ -435,7 +488,7 @@ export const common_cols = {
         }
     },
     'phecode_category': {
-        field: 'phecode_category',
+        field: 'phecode__category',
         headerName: 'Category',
         //width: 200,
         flex: 0.8,
@@ -523,13 +576,15 @@ export const common_cols = {
         minWidth: 120,
         flex: 0.5,
         renderCell: (params) => {
+            let sp_pathways = []
             if (params.row.superpathways) {
-                const superpathways_list = params.row.superpathways.map((superpathway) => ({'id': superpathway.external_id, 'label': superpathway.name}))
-                return omicspred_internal_links(superpathways_list, 'pathway');
+                sp_pathways = params.row.superpathways.map((superpathway) => ({'id':superpathway.external_id,'label': superpathway.name, 'source':superpathway.external_id_source}))
+                return omicspred_external_links(sp_pathways);
             }
         },
         valueGetter: (params) => {
-            return params.row.superpathways;
+            const superpathways_list = params.row.superpathways.map((superpathway) => (superpathway.name))
+            return superpathways_list.join(data_separator);
         }
     },
     'description': {
@@ -1018,7 +1073,7 @@ export const common_column_groups = {
     },
     'metabolomic_mapped_trait': {
         groupId: 'Mapped trait',
-        children: [{ field: 'metabolite_name' }, { field: 'metabolite_id' }],
+        children: [{ field: 'metabolites__name' }, { field: 'metabolite_id' }],
         headerClassName: ['col_border_left','col_border_right']
     },
     'INTERVAL': {

@@ -1,12 +1,13 @@
 import {common_cols,common_data_cols, applications_cols} from "./common";
 
+const omicspred_id_col = {...common_cols['omicspred_id'], field: 'score_id'}
 
 let base_phecode_columns = {
     'Full': [
         common_cols['phecode_id'],
         common_cols['phecode_name'],
         common_cols['phecode_category'],
-        common_cols['omicspred_id'],
+        omicspred_id_col,
         common_data_cols['r2'],
         common_cols['platform_name'],
         applications_cols['gene'],
@@ -20,7 +21,7 @@ let base_phecode_columns = {
         common_cols['phecode_name'],
         common_cols['phecode_category'],
         {
-            field: 'mean_age',
+            field: 'sample_age',
             headerName: 'Mean Age',
             width: 150,
             renderCell: (params) => {
@@ -34,7 +35,7 @@ let base_phecode_columns = {
             }
         },
         {
-            field: 'cases_samples',
+            field: 'sample_cases',
             headerName: '#Cases/#Samples',
             width: 150,
             renderCell: (params) => {
@@ -48,7 +49,7 @@ let base_phecode_columns = {
             }
         },
         {
-            field: 'percent+female',
+            field: 'sample_percent_female',
             headerName: '%Female',
             width: 150,
             renderCell: (params) => {
@@ -71,6 +72,7 @@ const build_columns = () => {
                 field: platform_idx,
                 headerName: platform,
                 width: 100,
+                sortable: false,
                 renderCell: (params) => {
                     let platform_count = 0;
                     if (params.row.platform_counts) {
