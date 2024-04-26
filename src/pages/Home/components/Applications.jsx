@@ -1,5 +1,4 @@
 import Href from "../../../components/Href"
-
 import ukb_img from "../../../assets/ukb.png";
 import reactome_img from "../../../assets/Reactome.png";
 

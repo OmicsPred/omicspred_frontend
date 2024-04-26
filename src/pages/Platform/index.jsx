@@ -12,7 +12,7 @@ import DataTableServer from '../../components/table/DataTableServer';
 // import { numberBadge } from "../../components/Generic";
 import PlatformSummary from './components/PlatformSummary';
 import PublicationCard from './components/PublicationCard';
-import { op_subtitle, get_data_type } from '../../components/Common'
+import { op_subtitle, get_data_type, get_cohorts_cols_list, get_cohorts_col_groups_list } from '../../components/Common'
 import _ from 'underscore';
 
 
@@ -84,46 +84,12 @@ function Platform() {
                 // Training cohorts
                 for (let j=0; j<platforms[i]['samples_training'].length; j++) {
                     const sample_cohorts = platforms[i]['samples_training'][j]['cohorts'];
-                    for (let k=0; k<sample_cohorts.length; k++) {
-                        const cohort = sample_cohorts[k]['name_short'];
-                        if (cohort) {
-                            console.log(">> Training: "+cohort);
-                        }
-                        if (cohort_cols[cohort]) {
-                            cohorts.push(cohort);
-                        }
-                        else {
-                            const cohort_col_labels = Object.keys(cohort_cols);
-                            for (let l=0; l<cohort_col_labels.length; l++) {
-                                const cohort_col_label = cohort_col_labels[l];
-                                if (cohort_col_label.startsWith(cohort) && !cohorts.includes(cohort_col_label)) {
-                                    cohorts.push(cohort_col_label);
-                                }
-                            }
-                        }
-                    }
+                    cohorts = get_cohorts_cols_list(sample_cohorts, cohorts);
                 }
-                // Training cohorts
+                // Validation cohorts
                 for (let j=0; j< platforms[i]['samples_validation'].length;j++) {
                     const sample_cohorts = platforms[i]['samples_validation'][j]['cohorts'];
-                    for (let k=0; k<sample_cohorts.length; k++) {
-                        const cohort = sample_cohorts[k]['name_short'];
-                        if (cohort) {
-                            console.log(">> Validation: "+cohort);
-                        }
-                        if (cohort_cols[cohort]) {
-                            cohorts.push(cohort);
-                        }
-                        else {
-                            const cohort_col_labels = Object.keys(cohort_cols);
-                            for (let l=0; l<cohort_col_labels.length; l++) {
-                                const cohort_col_label = cohort_col_labels[l];
-                                if (cohort_col_label.startsWith(cohort) && !cohorts.includes(cohort_col_label)) {
-                                    cohorts.push(cohort_col_label);
-                                }
-                            }
-                        }
-                    }
+                    cohorts = get_cohorts_cols_list(sample_cohorts, cohorts);
                 }
             }
         }
@@ -177,40 +143,12 @@ function Platform() {
             // Training cohorts
             for (let j=0; j< platforms[i]['samples_training'].length;j++) {
                 const sample_cohorts = platforms[i]['samples_training'][j]['cohorts'];
-                for (let k=0; k<sample_cohorts.length; k++) {
-                    const cohort = sample_cohorts[k]['name_short'];
-                    if (common_column_groups[cohort] && !cohorts.includes(cohort)) {
-                        cohorts.push(cohort);
-                    }
-                    else {;
-                        const cohort_col_group_labels = Object.keys(common_column_groups);
-                        for (let l=0; l < cohort_col_group_labels.length; l++) {
-                            const cohort_col_grp_label = cohort_col_group_labels[l];
-                            if (cohort_col_grp_label.startsWith(cohort) && !cohorts.includes(cohort_col_grp_label)) {
-                                cohorts.push(cohort_col_grp_label);
-                            }
-                        }
-                    }
-                }
+                cohorts = get_cohorts_col_groups_list(sample_cohorts,cohorts);
             }
             // Validation cohorts
             for (let j=0; j< platforms[i]['samples_validation'].length;j++) {
                 const sample_cohorts = platforms[i]['samples_validation'][j]['cohorts'];
-                for (let k=0; k<sample_cohorts.length; k++) {
-                    const cohort = sample_cohorts[k]['name_short'];
-                    if (common_column_groups[cohort] && !cohorts.includes(cohort)) {
-                        cohorts.push(cohort);
-                    }
-                    else {;
-                        const cohort_col_group_labels = Object.keys(common_column_groups);
-                        for (let l=0; l < cohort_col_group_labels.length; l++) {
-                            const cohort_col_grp_label = cohort_col_group_labels[l];
-                            if (cohort_col_grp_label.startsWith(cohort) && !cohorts.includes(cohort_col_grp_label)) {
-                                cohorts.push(cohort_col_grp_label);
-                            }
-                        }
-                    }
-                }
+                cohorts = get_cohorts_col_groups_list(sample_cohorts,cohorts);
             }
         }
 

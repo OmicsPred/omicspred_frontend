@@ -1,7 +1,7 @@
 import Href from "../../../components/Href"
 
 
-const PlatformCohort = (props) =>{
+const PlatformCohort = (props) => {
     const sample_cohorts = props.sample_cohorts;
 
     const get_cohorts_list = () => {

@@ -1,5 +1,5 @@
 import { FileEarmarkText, Hr } from 'react-bootstrap-icons';
-import { internal_publication_link } from '../../Common';
+import { internal_publication_link, omicspred_omics_type } from '../../Common';
 import { thousandifyNumber, ToogleDiv } from '../../Generic';
 import Href from '../../Href';
 
@@ -36,15 +36,9 @@ export const cohort_valueGetter = function(row,cohort,method) {
     return result;
 }
 
+
 export const inline_rendering = function(content) {
     return <div className="d-inline">{content}</div>
-}
-
-
-export const omicspred_omics_type = function(type) {
-    return (
-        <span className={"border_left_mark border_color_"+type}>{type}</span>
-    )
 }
 
 
@@ -172,8 +166,8 @@ export const common_cols = {
     'variants_number': { 
         field: 'variants_number', 
         headerName: '#SNP', 
-        minWidth: 75, 
-        flex: 0.5,
+        // minWidth: 75,
+        // flex: 0.5,
         align: 'right',
         renderCell: (params) => {
             return thousandifyNumber(params.row.variants_number);
@@ -202,8 +196,8 @@ export const common_cols = {
     'publication': {
         field: 'publication__firstauthor',
         headerName: 'Publication',
-        minWidth: 200,
-        flex: 0.8,
+        minWidth: 280,
+        // flex: 0.8,
         renderCell: (params) => {
             return internal_publication_link (params.row.publication);
         },
@@ -236,8 +230,9 @@ export const common_cols = {
     'protein_id': {
         field: 'proteins__external_id',
         headerName: 'UniProt ID',
-        minWidth: 120,
-        flex: 0.5,
+        minWidth: 150,
+        // minWidth: 120,
+        // flex: 0.5,
         hideable: false,
         renderCell: (params) => {
             let pr_ids = [];
@@ -263,8 +258,8 @@ export const common_cols = {
     'protein_name': {
         field: 'proteins__name',
         headerName: 'Protein Name',
-        minWidth: 200,
-        flex: 1,
+        minWidth: 300,
+        // flex: 1,
         valueGetter: (params) => {
             let pr_names = [];
             if (params.row.proteins) {
@@ -298,8 +293,9 @@ export const common_cols = {
     'gene_name': {
         field: 'genes__name',
         headerName: 'Gene',
-        minWidth: 120,
-        flex: 0.5,
+        minWidth: 150,
+        // minWidth: 120,
+        // flex: 0.5,
         renderCell: (params) => {
             let gene_names = [];
             if (params.row.genes) {
@@ -519,6 +515,7 @@ export const common_cols = {
     'pathway_subgroup': {
         field: 'pathway_subgroup',
         headerName: 'Sub Pathway',
+        headerClassName: 'col_border_right',
         minWidth: 200,
         flex: 1,
         valueGetter: (params) => {
@@ -720,8 +717,8 @@ export const cohort_cols = {
             field: 'INTERVAL_R2',
             headerClassName: ['training_col','col_border_left'],
             headerName: 'R2',
-            minWidth: 100,
-            flex: 0.5,
+            // minWidth: 100,
+            // flex: 0.5,
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'INTERVAL','R2');
             }
@@ -730,8 +727,8 @@ export const cohort_cols = {
             field: 'INTERVAL_Rho',
             headerName: 'Rho',
             headerClassName: 'training_col',
-            minWidth: 100,
-            flex: 0.5,
+            // minWidth: 100,
+            // flex: 0.5,
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'INTERVAL','Rho');
             }
@@ -742,8 +739,8 @@ export const cohort_cols = {
             field: 'UKB_R2',
             headerName: 'R2',
             headerClassName: 'col_border_left',
-            minWidth: 100,
-            flex: 0.5,
+            // minWidth: 100,
+            // flex: 0.5,
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'UKB','R2');
             }
@@ -751,8 +748,8 @@ export const cohort_cols = {
         'Rho': {
             field: 'UKB_Rho',
             headerName: 'Rho',
-            minWidth: 100,
-            flex: 0.5,
+            // minWidth: 100,
+            // flex: 0.5,
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'UKB','Rho');
             }
@@ -763,8 +760,8 @@ export const cohort_cols = {
             field: 'ORCADES_R2',
             headerName: 'R2',
             headerClassName: 'col_border_left',
-            minWidth: 100,
-            flex: 0.5,
+            // minWidth: 100,
+            // flex: 0.5,
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'ORCADES','R2');
             }
@@ -772,8 +769,8 @@ export const cohort_cols = {
         'Rho': {
             field: 'ORCADES_Rho',
             headerName: 'Rho',
-            minWidth: 100,
-            flex: 0.5,
+            // minWidth: 100,
+            // flex: 0.5,
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'ORCADES','Rho');
             }
@@ -781,8 +778,8 @@ export const cohort_cols = {
         'Missing Rate': {
             field: 'ORCADES_Missing Rate',
             headerName: 'Missing Rate',
-            minWidth: 100,
-            flex: 0.5,
+            // minWidth: 100,
+            // width: 100,
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'ORCADES','Missing Rate');
             }
@@ -793,8 +790,8 @@ export const cohort_cols = {
             field: 'VIKING_R2',
             headerName: 'R2',
             headerClassName: 'col_border_left',
-            minWidth: 100,
-            flex: 0.5,
+            // minWidth: 100,
+            // flex: 0.5,
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'VIKING','R2');
             }
@@ -802,8 +799,8 @@ export const cohort_cols = {
         'Rho': {
             field: 'VIKING_Rho',
             headerName: 'Rho',
-            minWidth: 100,
-            flex: 0.5,
+            // minWidth: 100,
+            // flex: 0.5,
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'VIKING','Rho');
             }
@@ -823,8 +820,8 @@ export const cohort_cols = {
             field: 'MEC-CN_R2',
             headerName: 'R2',
             headerClassName: 'col_border_left',
-            minWidth: 100,
-            flex: 0.5,
+            // minWidth: 100,
+            // flex: 0.5,
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'MEC-CN','R2');
             }
@@ -832,8 +829,8 @@ export const cohort_cols = {
         'Rho': {
             field: 'MEC-CN_Rho',
             headerName: 'Rho',
-            minWidth: 100,
-            flex: 0.5,
+            // minWidth: 100,
+            // flex: 0.5,
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'MEC-CN','Rho');
             }
@@ -853,8 +850,8 @@ export const cohort_cols = {
             field: 'MEC-IN_R2',
             headerName: 'R2',
             headerClassName: 'col_border_left',
-            minWidth: 100,
-            flex: 0.5,
+            // minWidth: 100,
+            // flex: 0.5,
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'MEC-IN','R2');
             }
@@ -862,8 +859,8 @@ export const cohort_cols = {
         'Rho': {
             field: 'MEC-IN_Rho',
             headerName: 'Rho',
-            minWidth: 100,
-            flex: 0.5,
+            // minWidth: 100,
+            // flex: 0.5,
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'MEC-IN','Rho');
             }
@@ -871,8 +868,8 @@ export const cohort_cols = {
         'Missing Rate': {
             field: 'MEC-IN_Missing Rate',
             headerName: 'Missing Rate',
-            minWidth: 100,
-            flex: 0.5,
+            // minWidth: 100,
+            // flex: 0.5,
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'MEC-IN','Missing Rate');
             }
@@ -883,8 +880,8 @@ export const cohort_cols = {
             field: 'MEC-MA_R2',
             headerName: 'R2',
             headerClassName: 'col_border_left',
-            minWidth: 100,
-            flex: 0.5,
+            // minWidth: 100,
+            // flex: 0.5,
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'MEC-MA','R2');
             }
@@ -892,8 +889,8 @@ export const cohort_cols = {
         'Rho': {
             field: 'MEC-MA_Rho',
             headerName: 'Rho',
-            minWidth: 100,
-            flex: 0.5,
+            // minWidth: 100,
+            // flex: 0.5,
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'MEC-MA','Rho');
             }
@@ -901,8 +898,8 @@ export const cohort_cols = {
         'Missing Rate': {
             field: 'MEC-MA_Missing Rate',
             headerName: 'Missing Rate',
-            minWidth: 100,
-            flex: 0.5,
+            // minWidth: 100,
+            // flex: 0.5,
             valueGetter: (params) => {
                 return cohort_valueGetter(params.row,'MEC-MA','Missing Rate');
             }
@@ -1074,6 +1071,11 @@ export const common_column_groups = {
     'metabolomic_mapped_trait': {
         groupId: 'Mapped trait',
         children: [{ field: 'metabolites__name' }, { field: 'metabolite_id' }],
+        headerClassName: ['col_border_left','col_border_right']
+    },
+    'pathway': {
+        groupId: 'Pathway',
+        children: [{ field: 'pathway_group' }, { field: 'pathway_subgroup' }],
         headerClassName: ['col_border_left','col_border_right']
     },
     'INTERVAL': {

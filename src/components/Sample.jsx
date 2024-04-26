@@ -1,6 +1,7 @@
-import { CollectionFill } from 'react-bootstrap-icons';
+// import { CollectionFill } from 'react-bootstrap-icons';
 import Href from "../components/Href";
-import { ToogleDiv, participantsBadge } from "../components/Generic";
+// import { ToogleDiv, participantsBadge } from "../components/Generic";
+import { participantsBadge } from "../components/Generic";
 
 
 export const SampleTable = (props) => {
@@ -12,11 +13,11 @@ export const SampleTable = (props) => {
             <thead>
                 <tr>
                     <th scope="col">Sample Type</th>
-                    <th scope="col">Sample Name</th>
+                    <th scope="col">Cohort</th>
+                    <th scope="col">Ancestry</th>
                     <th scope="col">Participants</th>
                     <th scope="col">% Males</th>
                     <th scope="col">Mean Age</th>
-                    <th scope="col">Cohort(s)</th>
                 </tr>
             </thead>
             <tbody>
@@ -70,7 +71,8 @@ const PlatformSampleCohorts = (props) => {
             }
             else {
                 cohorts_obj[cohort_name] = {
-                    'url': <Href text='External link' href={cohort_url}/>,
+                    // 'url': <Href text='External link' href={cohort_url}/>,
+                    'url': cohort_url,
                     'ancestry': {}
                 }
                 cohorts_obj[cohort_name]['ancestry'][ancestry] = 0;
@@ -80,16 +82,13 @@ const PlatformSampleCohorts = (props) => {
         return cohorts_obj
     }
 
-    const render_ancestries = (data) => {
+    const render_ancestries = (cohort_name, data, sample_participants) => {
         return (
-            <>
-                <ul>
+            <span key={'anc_'+cohort_name}>
                 { 
-                    Object.keys(data['ancestry']).map((key) => <li key={'sublist_'+key}>{key}: {participantsBadge(data['ancestry'][key])}</li>)
+                    Object.keys(data['ancestry']).map((key) => <div key={'sublist_'+key}>{key}{data['ancestry'][key] == sample_participants ? '': <>: {participantsBadge(data['ancestry'][key])}</>}</div>)
                 }
-                </ul>
-                {data['url']}
-            </>
+            </span>
         )
     }
 
@@ -99,29 +98,28 @@ const PlatformSampleCohorts = (props) => {
         <>
             { samples_list.map((sample,index) =>
                 <tr key={sample_type+sample.participants+'_tr'}>
-                    { index == 0 ? <td scope="row" rowSpan={samples_list.length}><b>{sample_type}</b></td> : '' }
-                    <td><CollectionFill className={sample_type == 'Validation' ? 'hl_color me-2' : 'color_gene me-2'}/>#{index+1}</td>
-                    { sample.participants ? <td>{participantsBadge(sample.participants)}</td> : '' }
-                    { sample.sample_percent_male? <td>{sample.sample_percent_male}</td> : '' }
-                    { sample.sample_age ? <td>{sample.sample_age} {sample.sample_age_sd ? ' ± '+sample.sample_age_sd:''}</td> : '' }
+                    { index == 0 ? <td scope="row" rowSpan={samples_list.length}>{sample_type == 'Training'? <span className='training_col font-bold'>{sample_type}</span>:<span className='font-bold'>{sample_type}</span>}</td> : '' }
                     <td>
                         { sample.cohorts.length > 1 ?
-                                <ul className="mb-0">
+                                <ul key={'ul_'+cohort_name}className="mb-0">
                                 {
                                     Object.keys(sample.cohorts).map((cohort_name) => {
                                         return (
-                                            <li key={'li_'+cohort_name}><ToogleDiv key={'toggle_'+cohort_name} title={cohort_name} content={render_ancestries(sample.cohorts[cohort_name])}/></li>
+                                            <li key={'li_'+cohort_name}><Href key={cohort_name+'_link'} href={sample.cohorts[cohort_name]['url']} text={cohort_name}/></li>
                                         )
                                     })
-
                                 }
                                 </ul>
                             :
-                            Object.keys(sample.cohorts).map((cohort_name) => {
-                                return (<ToogleDiv key={'toggle_'+cohort_name} title={cohort_name} content={render_ancestries(sample.cohorts[cohort_name])}/>)
-                            })
+                            Object.keys(sample.cohorts).map((cohort_name) => <Href key={cohort_name+'_link'} href={sample.cohorts[cohort_name]['url']} text={cohort_name}/>)
                         }
                     </td>
+                    <td>
+                        { Object.keys(sample.cohorts).map((cohort_name) => render_ancestries(cohort_name,sample.cohorts[cohort_name],sample.participants)) }
+                    </td>
+                    { sample.participants ? <td>{participantsBadge(sample.participants)}</td> : '' }
+                    { sample.sample_percent_male? <td>{sample.sample_percent_male}</td> : '' }
+                    { sample.sample_age ? <td>{sample.sample_age} {sample.sample_age_sd ? ' ± '+sample.sample_age_sd:''}</td> : '' }
                 </tr>
             )}
         </>

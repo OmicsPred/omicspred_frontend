@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
 import Href from "./Href";
-import { ChevronRight, SlashLg } from 'react-bootstrap-icons';
+import { ChevronRight } from 'react-bootstrap-icons';
+import {cohort_cols, common_column_groups} from './table/columns/common';
 
 
 export const internal_publication_link = (publication) => {
@@ -77,4 +77,56 @@ export const publication_ref = (publication,display_year) => {
         year = publication.date_publication.split('-')[0]
     }
     return <span>{publication.firstauthor} <i>et al.</i> {publication.journal} {year ? <small>({year})</small> : ''}</span>
+}
+
+export const omicspred_omics_type = (type) => {
+    return (
+        <span className={"border_left_mark border_color_"+type}>{type}</span>
+    )
+}
+
+
+export const get_cohorts_cols_list = (sample_cohorts, cohorts_list) => {
+    for (let j=0; j<sample_cohorts.length; j++) {
+        const cohort = sample_cohorts[j]['name_short'].replaceAll(' ','_');
+        if (cohort_cols[cohort]) {
+            cohorts_list.push(cohort);
+        }
+        else {
+            const cohort_col_labels = Object.keys(cohort_cols);
+            for (let k=0; k<cohort_col_labels.length; k++) {
+                const cohort_col_label = cohort_col_labels[k];
+                if (cohort_col_label.toLowerCase() == cohort.toLowerCase()) {
+                    cohorts_list.push(cohort_col_label);
+                }
+                else if (cohort_col_label.startsWith(cohort) && !cohorts_list.includes(cohort_col_label)) {
+                    cohorts_list.push(cohort_col_label);
+                }
+            }
+        }
+    }
+    return cohorts_list;
+}
+
+
+export const get_cohorts_col_groups_list = (sample_cohorts, cohorts_list) => {
+    for (let j=0; j<sample_cohorts.length; j++) {
+        const cohort = sample_cohorts[j]['name_short'].replaceAll(' ','_');
+        if (common_column_groups[cohort] && !cohorts_list.includes(cohort)) {
+            cohorts_list.push(cohort);
+        }
+        else {;
+            const cohort_col_group_labels = Object.keys(common_column_groups);
+            for (let k=0; k < cohort_col_group_labels.length; k++) {
+                const cohort_col_grp_label = cohort_col_group_labels[k];
+                if (cohort_col_grp_label.toLowerCase() == cohort.toLowerCase()) {
+                    cohorts_list.push(cohort_col_grp_label);
+                }
+                else if (cohort_col_grp_label.startsWith(cohort) && !cohorts_list.includes(cohort_col_grp_label)) {
+                    cohorts_list.push(cohort_col_grp_label);
+                }
+            }
+        }
+    }
+    return cohorts_list;
 }

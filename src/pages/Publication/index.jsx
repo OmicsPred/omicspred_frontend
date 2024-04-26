@@ -3,12 +3,9 @@ import { useParams } from 'react-router-dom';
 import { ChevronRight } from 'react-bootstrap-icons';
 import restApiCall from '../../components/RestAPI';
 import Href from "../../components/Href";
-import { publication_score_columns, publication_transcriptomics_columns, publication_proteomics_columns, publication_metabolomics_columns } from '../../components/table/columns/scores';
-import DataTable from "../../components/table/DataTable";
-import DataTableServer from '../../components/table/DataTableServer';
-import PlatformCard from './components/PlatformCard';
-import {omicspred_omics_type, omicspred_internal_link, common_cols} from "../../components/table/columns/common";
-import { op_subtitle, publication_ref } from '../../components/Common';
+import PlatformTable from './components/PlatformTable';
+import { platforms_columns } from "../../components/table/columns/platforms";
+import { op_subtitle_no_asso, publication_ref,  } from '../../components/Common';
 import { numberBadge } from '../../components/Generic';
 
 
@@ -20,87 +17,7 @@ function Publication() {
 
     const url_endpoint = 'score/search?pmid='+pubmed_id;
 
-    const get_cohorts_list = (sample_data) => {
-        const cohorts = [];
-        // Loop over the samples
-        for (let i=0; i< sample_data.length; i++) {
-            const sample_cohorts = sample_data[i].cohorts;
-            // Loop over the cohorts
-            for (let j=0; j< sample_cohorts.length; j++) {
-                const cohort_name = sample_cohorts[j].name_short;
-                if (!cohorts.includes(cohort_name)) {
-                    cohorts.push(cohort_name)
-                }
-            } 
-        }
-        return cohorts.sort().join(', ');
-    }
-
-    const columns = [
-        { 
-            field: 'name', 
-            headerName: 'Name', 
-            minWidth: 150,
-            flex: 1,
-            renderCell: (params) => {
-                return omicspred_internal_link({'label': params.row.platform.name},'platform');
-            },
-            valueGetter: (params) => { return params.row.platform.name }
-        },
-        { 
-            field: 'full_name', 
-            headerName: 'Full Name', 
-            minWidth: 200,
-            valueGetter: (params) => { return params.row.platform.full_name }
-        
-        },
-        { 
-            field: 'version', 
-            headerName: 'Version',
-            valueGetter: (params) => { return params.row.platform.version }
-        },
-        { 
-            field: 'technic', 
-            headerName: 'Technic', 
-            minWidth: 450,
-            valueGetter: (params) => { return params.row.platform.technic }
-        },
-        { 
-            field: 'type', 
-            headerName: 'Type',
-            minWidth: 180,
-            flex: 1,
-            renderCell: (params) => {
-                return omicspred_omics_type(params.row.platform.type);
-            },
-            valueGetter: (params) => { return params.row.platform.type }
-        },
-        {
-            field: 'cohorts_training',
-            headerName: 'Cohort Training',
-            minWidth: 200,
-            flex: 1,
-            renderCell: (params) => {
-                return get_cohorts_list(params.row.samples_training);
-            },
-            valueGetter: (params) => {
-                return get_cohorts_list(params.row.samples_training);
-            }
-        },
-        {
-            field: 'cohorts_validation',
-            headerName: 'Cohort Validation',
-            minWidth: 200,
-            flex: 1,
-            renderCell: (params) => {
-                return get_cohorts_list(params.row.samples_validation);
-            },
-            valueGetter: (params) => {
-                return get_cohorts_list(params.row.samples_validation);
-            }
-        },
-        common_cols['scores_count']
-    ]
+    const columns = platforms_columns;
 
 
     const fetchPublicationData = async () => {
@@ -116,28 +33,12 @@ function Publication() {
         setPublicationYear(year);
     }
 
-    // Generate the columns for the scores table
-    const score_columns = (platforms) => {
-        let score_columns = publication_score_columns.start;
-        let platform_types = []
-        for (const platform of platforms) {
-            const p_type = platform.platform.type;
-            if (!platform_types.includes(p_type)) {
-                platform_types.push(p_type);
-            }
+    // Convert date into DD/MM/YYYY format
+    const convertPublicationDate = () => {
+        if (publicationData.date_publication) {
+            const date_array = publicationData.date_publication.split('-')
+            return date_array[2]+"/"+date_array[1]+"/"+date_array[0]
         }
-        // Proteomics and Transcriptomics share the Gene column
-        if (platform_types.includes('Proteomics')) {
-            score_columns = score_columns.concat(publication_proteomics_columns)
-        }
-        else if (platform_types.includes('Transcriptomics')) {
-            score_columns = score_columns.concat(publication_transcriptomics_columns)
-        }
-        if (platform_types.includes('Metabolomics')) {
-            score_columns = score_columns.concat(publication_metabolomics_columns)
-        }
-        score_columns = score_columns.concat(publication_score_columns.end);
-        return score_columns;
     }
 
     const get_scores_count = () => {
@@ -146,15 +47,6 @@ function Publication() {
             scores_count += platformsData[i].scores_count;
         }
         return numberBadge(scores_count);
-    }
-
-
-    // Convert date into DD/MM/YYYY format
-    const convertPublicationDate = () => {
-        if (publicationData.date_publication) {
-            const date_array = publicationData.date_publication.split('-')
-            return date_array[2]+"/"+date_array[1]+"/"+date_array[0]
-        }
     }
 
     useEffect(() => {
@@ -185,29 +77,15 @@ function Publication() {
                             </div>
                         </div>
                     </div>
-                    { platformsData && platformsData.length ?
-                        <div>
-                            {op_subtitle('hl','samples by platform')}
-                            <div className="d-flex flex-column">
-                                { platformsData.map((platform_data) => <PlatformCard data={platform_data} pmid={publicationData.pmid} key={platform_data.platform.name} />)}
-                            </div>
-                        </div>: ''
-                    }
                 </div>   
             </div>
 
-            {op_subtitle('hl','platform')}
-            { platformsData ?
-                <>
-                    <div className='mb-4'>
-                        <DataTable key="platforms" data={platformsData} columns={columns}/>
-                    </div>
-                    {op_subtitle('score')}
-                    <div>
-                        <DataTableServer url_suffix={url_endpoint} columns={score_columns(platformsData)} />
-                    </div>
-                </> : ''
-            }
+            {op_subtitle_no_asso('hl','List of Scores by Platform')}
+            <div className='d-flex mt-3'>
+                <div>
+                    { platformsData && publicationData.pmid ? platformsData.map((platform) => <PlatformTable key={platform.platform.name+"_platform_table"} data={platform} pmid={publicationData.pmid} />):''}
+                </div>
+            </div>
         </>
     )
 }

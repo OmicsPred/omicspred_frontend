@@ -21,7 +21,7 @@ function Gene() {
 	const url_suffix = "score/searchby"+element+"/"+gene;
 
 	const protein_id_col = {...common_cols['protein_id'], field: 'external_id'}
-	const protein_name_col = {...common_cols['protein_name'], field: 'name'}
+	const protein_name_col = {...common_cols['protein_name'], field: 'name',minWidth:'400'}
 	const protein_columns = [
 		protein_id_col,
 		protein_name_col
@@ -71,9 +71,7 @@ function Gene() {
 				: <div>Loading summary data ...</div> 
 			}
 			{op_subtitle('score')}
-			<div className='d-flex'>
-				<DataTableFromRestApi table_key="gene" url_suffix={url_suffix} columns={score_molecular_trait_columns}/>
-			</div>
+			<DataTableFromRestApi table_key="gene" url_suffix={url_suffix} columns={score_molecular_trait_columns}/>
 			{ 
 				proteinData && proteinData.length ? <div className="mt-4">{op_subtitle('protein')}<DataTable key="protein" data={proteinData} columns={protein_columns}/></div> : <div className='mt-4'>No associated protein found</div>
 			}
