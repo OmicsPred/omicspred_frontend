@@ -57,6 +57,7 @@ export const metabolomics_column_groups = {
     'Metabolon': [
         common_column_groups['reported_trait'],
         common_column_groups['metabolomic_mapped_trait'],
+        common_column_groups['pathway'],
         // common_column_groups['INTERVAL'],
         // common_column_groups['INTERVAL_withheld_subset'],
         // common_column_groups['ORCADES']
@@ -64,12 +65,13 @@ export const metabolomics_column_groups = {
     'Nightingale': [
         common_column_groups['reported_trait'],
         common_column_groups['metabolomic_mapped_trait'],
+        common_column_groups['pathway'],
         // common_column_groups['INTERVAL'],
         // common_column_groups['UKB'],
         // common_column_groups['ORCADES'],
         // common_column_groups['VIKING'],
-        // common_column_groups['MEC CN'],
-        // common_column_groups['MEC IN'],
-        // common_column_groups['MEC MA']
+        // common_column_groups['MEC-CN'],
+        // common_column_groups['MEC-IN'],
+        // common_column_groups['MEC-MA']
     ]
 };

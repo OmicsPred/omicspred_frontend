@@ -1,6 +1,6 @@
 import DataTableFromRestApi from "../../components/table/DataTableFromRestApi";
-import {omicspred_omics_type, omicspred_internal_link} from "../../components/table/columns/common";
-import { browse_title } from '../../components/Common';
+import {omicspred_internal_link} from "../../components/table/columns/common";
+import { browse_title, omicspred_omics_type } from '../../components/Common';
 import { common_cols } from '../../components/table/columns/common';
 
 

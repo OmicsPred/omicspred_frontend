@@ -18,16 +18,21 @@ function Pathway() {
 
     const element = 'pathway';
 
+	const gene_scores_count_col = {...common_cols['scores_count'], field: 'pathway_genes__gene_score'}
+	const metabolite_scores_count_col = {...common_cols['scores_count'], field: 'pathway_metabolites__metabolite_score'}
+
     const gene_columns = [
 		common_cols['gene_id_from_list'],
 		common_cols['gene_name_from_list'],
-		common_cols['description']
+		common_cols['description'],
+		gene_scores_count_col
 	]
 
     const metabolite_columns = [
 		common_cols['metabolite_id_from_list'],
 		common_cols['metabolite_id_source_from_list'],
-		common_cols['metabolite_name_from_list']
+		common_cols['metabolite_name_from_list'],
+		metabolite_scores_count_col
     ]
 
 	const key_cols = ['external_id','name'];

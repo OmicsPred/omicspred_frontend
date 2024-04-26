@@ -177,46 +177,47 @@ const DataTableServer = (props) => {
     }, [paginationModel.page, paginationModel.pageSize, queryParam.filter, queryParam.sort_field, queryParam.sort])
 
     return (
-      
-      <div className="table-responsive">
-        <DataGrid
-          key="server-side"
-          autoHeight
-          experimentalFeatures={{ columnGrouping: display_groups }}
-          columnGroupingModel={props.groups}
-          columns={props.columns}
-          rows={data}
-          getRowId={(row) => getRowId(row)}
-          getRowHeight={() => row_height_settings}
-          // getRowId={(row) => row.id}
-          rowCount={rowCountState}
-          loading={isLoading}
-          pageSizeOptions={[10, 25, 50, 75, 100]}
-          paginationModel={paginationModel}
-          paginationMode="server"
-          onPaginationModelChange={setPaginationModel}
-          initialState={{ 
-            pagination: { 
-              paginationModel: paginationModel
-            }
-          }}
-          sortingOrder={['asc','desc']}
-          onSortModelChange={onSortModelChange}
-          filterMode="server"
-          onFilterModelChange={onFilterModelChange}
-          slots={{
-            toolbar: CustomToolbar
-          }}
-          // slotProps={{
-          //   toolbar: {
-          //     showQuickFilter: true
-          //   }
-          // }}
-          // slots={{
-          //   toolbar: GridToolbarQuickFilter
-          // }}
-        />
-      </div>
+        <div className='d-flex'>
+            <div className="table-responsive">
+                <DataGrid
+                key="server-side"
+                autoHeight
+                experimentalFeatures={{ columnGrouping: display_groups }}
+                columnGroupingModel={props.groups}
+                columns={props.columns}
+                rows={data}
+                getRowId={(row) => getRowId(row)}
+                getRowHeight={() => row_height_settings}
+                // getRowId={(row) => row.id}
+                rowCount={rowCountState}
+                loading={isLoading}
+                pageSizeOptions={[10, 25, 50, 75, 100]}
+                paginationModel={paginationModel}
+                paginationMode="server"
+                onPaginationModelChange={setPaginationModel}
+                initialState={{
+                    pagination: {
+                    paginationModel: paginationModel
+                    }
+                }}
+                sortingOrder={['asc','desc']}
+                onSortModelChange={onSortModelChange}
+                filterMode="server"
+                onFilterModelChange={onFilterModelChange}
+                slots={{
+                    toolbar: CustomToolbar
+                }}
+                // slotProps={{
+                //   toolbar: {
+                //     showQuickFilter: true
+                //   }
+                // }}
+                // slots={{
+                //   toolbar: GridToolbarQuickFilter
+                // }}
+                />
+            </div>
+        </div>
     )
 }
 

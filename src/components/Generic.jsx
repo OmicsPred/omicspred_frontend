@@ -39,12 +39,17 @@ export const ToogleDiv = (props) => {
         }
     }
 
+    let toogle_class = 'op_toogle';
+    if (props.type == 'button') {
+        toogle_class = 'btn shadow op_toogle_btn';
+    }
+
     return (
         <>
-            <div className="op_toogle" onClick={(e) => {
+            <div className={toogle_class} onClick={(e) => {
               hideShowDiv(e)
             }}>{props.title}{show ? <DashCircleFill className="ms-1"/>:<PlusCircleFill className="ms-1"/>}</div>
-            {show ? <div>{props.content}</div>:null}
+            {show ? <div className="mt-2">{props.content}</div>:null}
         </>
     )
 }
