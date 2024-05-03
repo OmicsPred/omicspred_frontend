@@ -17,7 +17,7 @@ function Protein() {
     const [pathwayData, setPathwayData] = useState([])
 
     const element = 'protein';
-    const url_suffix = "score/searchby"+element+"/"+protein;
+    const url_suffix = "score/search/"+element+"/"+protein;
 
     const external_id_link = () => {
         if (elementData.external_id_source == 'UniProt') {

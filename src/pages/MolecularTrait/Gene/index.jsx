@@ -18,7 +18,7 @@ function Gene() {
 	const [pathwayData, setPathwayData] = useState([])
 
 	const element = 'gene';
-	const url_suffix = "score/searchby"+element+"/"+gene;
+	const url_suffix = "score/search/"+element+"/"+gene;
 
 	const protein_id_col = {...common_cols['protein_id'], field: 'external_id'}
 	const protein_name_col = {...common_cols['protein_name'], field: 'name',minWidth:'400'}

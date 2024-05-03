@@ -117,9 +117,9 @@ const PlatformSampleCohorts = (props) => {
                     <td>
                         { Object.keys(sample.cohorts).map((cohort_name) => render_ancestries(cohort_name,sample.cohorts[cohort_name],sample.participants)) }
                     </td>
-                    { sample.participants ? <td>{participantsBadge(sample.participants)}</td> : '' }
-                    { sample.sample_percent_male? <td>{sample.sample_percent_male}</td> : '' }
-                    { sample.sample_age ? <td>{sample.sample_age} {sample.sample_age_sd ? ' ± '+sample.sample_age_sd:''}</td> : '' }
+                    { sample.participants ? <td>{participantsBadge(sample.participants)}</td> : <td>-</td> }
+                    { sample.sample_percent_male? <td>{sample.sample_percent_male}</td> : <td>-</td> }
+                    { sample.sample_age ? <td>{sample.sample_age} {sample.sample_age_sd ? ' ± '+sample.sample_age_sd:''}</td> : <td>-</td> }
                 </tr>
             )}
         </>

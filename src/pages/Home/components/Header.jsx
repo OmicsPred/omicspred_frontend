@@ -38,10 +38,10 @@ const Header = (props) => {
 
             <div style={{display:'flex',justifyContent:'center'}} className="mt-3 mb-3">
               <div className="mt-3 me-4 sm:mt-0 sm:ml-3">
-                <a className="btn btn-primary shadow" href="/Scores" role="button">Scores</a>
+                <a className="btn btn-primary shadow" href="/Scores" role="button">Browse Scores</a>
               </div>
               <div className="mt-3 sm:mt-0 sm:ml-3">
-                <a className="btn btn-primary shadow" href="/Applications" role="button">Applications</a>
+                <a className="btn btn-primary shadow" href="/applications/phecode/sum" role="button">PheWAS data</a>
               </div>
             </div>
           </div>
