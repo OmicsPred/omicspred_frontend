@@ -91,6 +91,7 @@ function Score() {
                                             { scoreData.publication ? <tr><td>Publication</td><td>{internal_publication_link(scoreData.publication)}</td></tr>:''}
                                             <tr><td>Platform</td><td><a href={'/platform/'+platformData.name}>{platformData.name}</a>{platformData.version ? <span className='ms-1'>{platformData.version}</span> : ''}<span className={'ms-2 badge badge_'+platformData.type}>{platformData.type}</span></td></tr>
                                             <tr><td>Method Name</td><td>{scoreData.method_name}</td></tr>
+                                            { scoreData.trait_reported ? <tr><td>Reported Trait</td><td>{scoreData.trait_reported}</td></tr>:''}
                                             <tr><td>Number of Variants</td><td>{numberBadge(scoreData.variants_number)}</td></tr>
                                             <tr><td>Genome Build</td><td>{scoreData.variants_genomebuild}</td></tr>
                                             {/* <tr><td>Scoring file</td><td><FileEarmarkText className="hl_color" size={24}/></td></tr> */}

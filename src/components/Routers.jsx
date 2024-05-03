@@ -23,6 +23,8 @@ import Phecode from "../pages/Applications/Phecode";
 // Tests
 import Search from "../pages/Tests/Search";
 import Plot from "../pages/Tests/Plot";
+// import OPDoughnut from "../pages/Tests/Doughnut";
+// import PublicationOld from "../pages/Tests/PublicationOld";
 // import ReactomeDiagram from "../pages/Tests/Reactome";
 
 
@@ -61,6 +63,8 @@ function OpRouters() {
                 {/* Test pages */}
                 {/* <Route path="/search_es" element={<SearchES />} /> */}
                 <Route path="/plot/:platform/:pmid" element={<Plot />} />
+                {/* <Route path="/publication_old/:pubmed_id" element={<PublicationOld />} /> */}
+                {/* <Route path="/doughnut/" element={<OPDoughnut />} /> */}
                 {/* <Route path="/test/reactome/:reactome_id" element={<ReactomeDiagram />} /> */}
 
                 {/* Errors */}

@@ -51,3 +51,12 @@ export const score_molecular_trait_columns = [
     common_cols['variants_number'],
     // common_cols['scoring_file']
 ]
+
+export const score_metabolite_columns = [
+    common_cols['omicspred_id'],
+    common_cols['trait_reported'],
+    // common_cols['platform_type'],
+    common_cols['platform_name'],
+    common_cols['publication'],
+    common_cols['variants_number'],
+]

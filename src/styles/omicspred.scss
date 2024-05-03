@@ -15,8 +15,10 @@ $ph_color: #00CED1; // DarkTurquoise
 $pa_color: #FA8072;
 $hl_color: blue;
 $score_color: #007C82; //blue;
+$op_grey: #CCC;
 $op_light_grey: #F8F8F8;
 $op_light_grey_2: #f1f5f9;
+$op_light_grey_3: #EFEFEF;
 $op_hover_grey: rgba(0, 0, 0, 0.04);
 $op_blue_2: #0d6efd;
 $op_blue_3: #0a58ca;
@@ -63,11 +65,14 @@ header {
 }
 
 footer {
-    width:100vw !important;
+    min-width: 100% !important;
     a > svg {
         vertical-align: top !important;
         margin-top:1px;
         font-size: 22px;
+    }
+    .op_copyright {
+        text-align:center;
     }
 }
 
@@ -153,6 +158,32 @@ a {
         margin-right:0px;
         max-width: 766px;
         height: 765px;
+    }
+    .home_box {
+        border:1px solid $op_grey;
+        border-radius:6px;
+        padding:1rem;
+        background-color:white;
+    }
+    .home_category {
+        display:flex;
+        justify-content:space-between;
+        span {
+            font-size:24px;
+        }
+        span:first-child {
+            font-weight:200;
+            padding-right:2rem;
+        }
+        span:last-child {
+            font-weight:bold;
+        }
+        &:hover {
+            cursor: pointer;
+            span {
+                color:$op_blue_3;
+            }
+        }
     }
 }
 
@@ -334,8 +365,17 @@ ul.key_val_line {
 
 
 /* Tables */
+.table-responsive {
+    width: 100%;
+}
+.MuiDataGrid-toolbarContainer {
+    background-color: #222;
+    button {
+        color: #4e9cea;//#5e9fdf;//#1976D2;
+    }
+}
 .MuiDataGrid-columnHeadersInner {
-    background-color: #EFEFEF;
+    background-color: $op_light_grey_3;
 }
 
 .MuiDataGrid-columnHeaderTitle {
@@ -372,7 +412,7 @@ ul.key_val_line {
 
 .table_op {
     thead > tr > th {
-        background-color: #efefef;
+        background-color: $op_light_grey_3;
         padding: 8px 10px;
     }
     thead > tr > td:first-child {

@@ -4,7 +4,8 @@ import Href from '../../../components/Href';
 import DataTableFromRestApi from "../../../components/table/DataTableFromRestApi";
 import DataTable from '../../../components/table/DataTable';
 import {common_cols} from "../../../components/table/columns/common";
-import {score_molecular_trait_columns}  from "../../../components/table/columns/scores";
+// import {score_molecular_trait_columns}  from "../../../components/table/columns/scores";
+import {score_metabolite_columns}  from "../../../components/table/columns/scores";
 import {pathway_molecular_trait_columns}  from "../../../components/table/columns/pathways";
 
 import restApiCall from '../../../components/RestAPI';
@@ -18,7 +19,7 @@ function Metabolite() {
     const [pathwayData, setPathwayData] = useState([])
 
     const element = 'metabolite';
-    const url_suffix = "score/searchby"+element+"/"+metabolite;
+    const url_suffix = "score/search/"+element+"/"+metabolite;
 
     const pathway_columns = [
 		common_cols['pathway_id'],
@@ -69,7 +70,8 @@ function Metabolite() {
                 : <div>Loading summary data ...</div> 
             }
             {op_subtitle('score')}
-            <DataTableFromRestApi table_key="metabolite" url_suffix={url_suffix} columns={score_molecular_trait_columns}/>
+            <DataTableFromRestApi table_key="metabolite" url_suffix={url_suffix} columns={score_metabolite_columns}/>
+            {/* <DataTableFromRestApi table_key="metabolite" url_suffix={url_suffix} columns={score_molecular_trait_columns}/> */}
             { 
 				elementData && pathwayData.length ? <div className="mt-4">{op_subtitle('pathway')}<DataTable key="pathway" data={pathwayData} columns={pathway_molecular_trait_columns}/></div> : <div className='mt-4'>No associated pathway found</div>
 			}

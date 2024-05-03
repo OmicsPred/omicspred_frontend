@@ -214,7 +214,7 @@ export const common_cols = {
     },
     'trait_reported_id': {
         field: 'trait_reported_id',
-        headerName: 'Trait ID',
+        headerName: 'Reported trait ID',
         headerClassName: 'col_border_left',
         minWidth: 120,
         flex: 0.5,
@@ -222,7 +222,7 @@ export const common_cols = {
     },
     'trait_reported': {
         field: 'trait_reported',
-        headerName: 'Trait name',
+        headerName: 'Reported trait',
         minWidth: 200,
         flex: 1,
         hideable: true
@@ -446,7 +446,7 @@ export const common_cols = {
         field: 'phecode_id',
         headerName: 'PheCode',
         minWidth: 100,
-        flex: 0.5,
+        // flex: 0.5,
         hideable: false,
         renderCell: (params) => {
             let phe_id = params.row.id;
@@ -466,8 +466,8 @@ export const common_cols = {
     'phecode_name': {
         field: 'phecode_name',
         headerName: 'Phenotype',
-        // width: 300,
-        flex: 1,
+        minWidth: 300,
+        // flex: 1,
         renderCell: (params) => {
             let phe_name = params.row.name;
             if (params.row.phecode) {
@@ -486,8 +486,8 @@ export const common_cols = {
     'phecode_category': {
         field: 'phecode__category',
         headerName: 'Category',
-        //width: 200,
-        flex: 0.8,
+        minWidth: 200,
+        // flex: 0.8,
         renderCell: (params) => {
             return params.row.phecode.category;
         },
@@ -533,8 +533,8 @@ export const common_cols = {
     'pathway_id': {
         field: 'pathway_id',
         headerName: 'Pathway ID',
-        minWidth: 80,
-        flex: 0.4,
+        minWidth: 150,
+        // flex: 0.4,
         renderCell: (params) => {
             return omicspred_internal_link({'label': params.row.external_id}, 'pathway');
         },
@@ -558,8 +558,8 @@ export const common_cols = {
     'pathway_name': {
         field: 'pathway_name',
         headerName: 'Pathway name',
-        minWidth: 150,
-        flex: 0.7,
+        minWidth: 250,
+        // flex: 0.7,
         renderCell: (params) => {
             return params.row.external_id ? params.row.name: omicspred_internal_link({'label': params.row.name}, 'pathway');
         },
@@ -570,8 +570,8 @@ export const common_cols = {
     'superpathway_name': {
         field: 'superpathways_name',
         headerName: 'Top Level Pathway',
-        minWidth: 120,
-        flex: 0.5,
+        minWidth: 200,
+        // flex: 0.5,
         renderCell: (params) => {
             let sp_pathways = []
             if (params.row.superpathways) {

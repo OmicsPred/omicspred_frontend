@@ -12,6 +12,7 @@ const Stats = (props) => {
     const [publicationsCount, setPublicationsCount] = useState([]);
     const [omicsTypesCount, setOmicsTypesCount] = useState([]);
     const [omicsCount, setOmicsCount] = useState([]);
+    const [pheWASCount, setPheWASCount] = useState([]);
 
     const title = 'Scores distribution by Omics type'
 
@@ -21,6 +22,13 @@ const Stats = (props) => {
         "Transcriptomics": '#800080'
     };
 
+
+    const fetchPheWasAssoCount = async () => {
+        const phecode_data = await restApiCall('applications_score/all?limit=1');
+        if (phecode_data) {
+            setPheWASCount(phecode_data.count)
+        }
+    }
 
     const fetchOmicsChartData = async () => {
         // const platform_data = await restApiCall('platform/additional/summary');
@@ -90,27 +98,21 @@ const Stats = (props) => {
     }
 
     useEffect(() => {
+        fetchPheWasAssoCount();
         fetchOmicsChartData();
     },[])
 
     return (
         <div className='d-flex flex-column'>
-            <div className="mb-4" style={{border:"1px solid #CCC",borderRadius:"6px",padding:"1rem",backgroundColor:'white'}}>
-                { scoresCount && scoresCount > 0 ?<div className='d-flex justify-content-between mb-2'><span style={{fontWeight:'200',fontSize:'24px',paddingRight:'2rem'}}>Scores</span><span style={{fontWeight:'bold',fontSize:'24px'}}>{thousandifyNumber(scoresCount)}</span></div>:''}
-                { platformsCount && platformsCount > 0 ? <div className='d-flex justify-content-between mb-2'><span style={{fontWeight:'200',fontSize:'24px',paddingRight:'2rem'}}>Platforms</span><span style={{fontWeight:'bold',fontSize:'24px'}}>{platformsCount}</span></div>:''}
-                { publicationsCount && publicationsCount > 0 ? <div className='d-flex justify-content-between mb-2'><span style={{fontWeight:'200',fontSize:'24px',paddingRight:'2rem'}}>Publications</span><span style={{fontWeight:'bold',fontSize:'24px'}}>{publicationsCount}</span></div>:''}
-                { omicsTypesCount && omicsTypesCount > 0 ?<div className='d-flex justify-content-between mb-2'><span style={{fontWeight:'200',fontSize:'24px',paddingRight:'2rem'}}>Omics Types</span><span style={{fontWeight:'bold',fontSize:'24px'}}>{omicsTypesCount}</span></div>:''}
-                {/* { omicsCount ?
-                    <>
-                        <hr/>
-                        <div>
-                            {Object.keys(type_colours).map((type) => <div className="d-flex justify-content-between " key={type}><span className='me-3'>{omicspred_omics_type(type)}</span><span style={{fontWeight:'bold'}}>{thousandifyNumber(omicsCount[type])}</span></div>)}
-                        </div>
-                    </>:''
-                } */}
+            <div className="home_box mb-4">
+                { scoresCount && scoresCount > 0 ?<div className='home_category mb-2' onClick={() => {location.href = '/scores'}}><span>Scores</span><span>{thousandifyNumber(scoresCount)}</span></div>:''}
+                { pheWASCount && pheWASCount > 0 ? <div className='home_category mb-2' onClick={() => {location.href = '/applications/phecode/full'}} title="PheWAS Associations"><span>PheWAS</span><span>{thousandifyNumber(pheWASCount)}</span></div>:''}
+                { platformsCount && platformsCount > 0 ? <div className='home_category mb-2' onClick={() => {location.href = '/platforms'}}><span>Platforms</span><span>{platformsCount}</span></div>:''}
+                { publicationsCount && publicationsCount > 0 ? <div className='home_category mb-2' onClick={() => {location.href = '/publications'}}><span>Publications</span><span>{publicationsCount}</span></div>:''}
+                { omicsTypesCount && omicsTypesCount > 0 ?<div className='home_category' onClick={() => {location.href = '#platforms'}}><span>Omics Types</span><span>{omicsTypesCount}</span></div>:''}
             </div>
             { omicsChartData  && omicsChartData.labels ? 
-            <div style={{border:"1px solid #CCC",borderRadius:"6px",padding:"1rem",backgroundColor:'white'}}>
+            <div className="home_box">
                 <div className='mb-2' style={{fontSize:"13px",fontWeight:200}}>{title}</div>
                 <OPDoughnut data={omicsChartData} width="200" display_legend="false"/>
                 {/* <OPDoughnut data={omicsChartData} title={title} width="200" display_legend="false"/> */}
