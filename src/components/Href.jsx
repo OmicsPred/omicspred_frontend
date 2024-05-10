@@ -4,9 +4,13 @@ const Href = (props) => {
 
     let extra_classes = '';
     const button_classes = ' btn btn-primary shadow'
+    const button_small_classes = ' btn-sm btn-primary shadow'
 
     if (props.role=='button') {
         extra_classes = button_classes;
+    }
+    else if (props.role=='button-small') {
+        extra_classes = button_classes+' btn-sm';
     }
 
     // Internal link

@@ -178,11 +178,10 @@ const DataTableServer = (props) => {
 
     return (
         <div className='d-flex'>
-            <div className="table-responsive">
+            <div className="table-responsive" style={{flexBasis: "fit-content"}}>
                 <DataGrid
                 key="server-side"
                 autoHeight
-                experimentalFeatures={{ columnGrouping: display_groups }}
                 columnGroupingModel={props.groups}
                 columns={props.columns}
                 rows={data}

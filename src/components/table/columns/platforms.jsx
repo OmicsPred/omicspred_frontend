@@ -20,6 +20,9 @@ const get_cohorts_list = (sample_data) => {
     return cohorts.sort().join(', ');
 }
 
+const common_platform_columns = [
+    { field: 'full_name', headerName: 'Full Name', minWidth: 200 },
+]
 
 export const platforms_columns = [
     { 
@@ -28,27 +31,64 @@ export const platforms_columns = [
         minWidth: 150,
         flex: 1,
         renderCell: (params) => {
-            return omicspred_internal_link({'label': params.row.platform.name},'platform');
+            return omicspred_internal_link({'label':params.row.name},'platform');
+        }
+    },
+    { field: 'full_name', headerName: 'Full Name', minWidth: 200 },
+    {
+        field: 'versions',
+        headerName: 'Versions',
+        renderCell: (params) => {
+            return params.row.versions.length ? params.row.versions.join(', ') : default_cell_value;
         },
-        valueGetter: (params) => { return params.row.platform.name }
+    },
+    {
+        field: 'technic',
+        headerName: 'Technic',
+        minWidth: 450,
+        renderCell: (params) => {
+            return params.row.technic ? params.row.technic : default_cell_value;
+        }
+    },
+    { 
+        field: 'type', 
+        headerName: 'Type',
+        minWidth: 180,
+        flex: 1,
+        renderCell: (params) => {
+            return omicspred_omics_type(params.row.type);
+        }
+    },
+    common_cols['scores_count']
+]
+
+
+export const publication_platform_columns = [
+    {
+        field: 'name',
+        headerName: 'Name',
+        minWidth: 150,
+        flex: 1,
+        renderCell: (params) => {
+            return omicspred_internal_link({'label': params.row.platform.name},'platform');
+        }
     },
     { 
         field: 'full_name', 
         headerName: 'Full Name', 
-        minWidth: 200,
-        valueGetter: (params) => { return params.row.platform.full_name }
-    
+        minWidth: 200
     },
     { 
         field: 'version', 
         headerName: 'Version',
-        valueGetter: (params) => { return params.row.platform.version }
     },
     { 
         field: 'technic', 
         headerName: 'Technic', 
         minWidth: 450,
-        valueGetter: (params) => { return params.row.platform.technic }
+        renderCell: (params) => {
+            return params.row.platform.technic ? params.row.platform.technic : default_cell_value;
+        }
     },
     { 
         field: 'type', 
@@ -57,8 +97,7 @@ export const platforms_columns = [
         flex: 1,
         renderCell: (params) => {
             return omicspred_omics_type(params.row.platform.type);
-        },
-        valueGetter: (params) => { return params.row.platform.type }
+        }
     },
     {
         field: 'cohorts_training',
@@ -68,8 +107,8 @@ export const platforms_columns = [
         renderCell: (params) => {
             return get_cohorts_list(params.row.samples_training);
         },
-        valueGetter: (params) => {
-            return get_cohorts_list(params.row.samples_training);
+        valueGetter: (value, row) => {
+            return get_cohorts_list(row.samples_training);
         }
     },
     {
@@ -80,8 +119,8 @@ export const platforms_columns = [
         renderCell: (params) => {
             return get_cohorts_list(params.row.samples_validation);
         },
-        valueGetter: (params) => {
-            return get_cohorts_list(params.row.samples_validation);
+        valueGetter: (value, row) => {
+            return get_cohorts_list( row.samples_validation);
         }
     },
     common_cols['scores_count']

@@ -61,11 +61,10 @@ const DataTable = (props) => {
     // }, [rowCount, setRowCountState])
 
     return (
-      <div className='d-flex'>
+      <div className="d-flex" >
         <div className="table-responsive">
           <DataGrid
             autoHeight
-            experimentalFeatures={{ columnGrouping: display_groups }}
             columnGroupingModel={props.groups}
             columns={props.columns}
             rows={props.data}

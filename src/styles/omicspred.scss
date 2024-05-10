@@ -94,11 +94,16 @@ a {
     }
 }
 
+#content {
+    width:100vw;
+}
+
 .App {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
+
 
 .container-extra {
     margin-top: 4rem;
@@ -367,6 +372,7 @@ ul.key_val_line {
 /* Tables */
 .table-responsive {
     width: 100%;
+    flex-basis: fit-content;
 }
 .MuiDataGrid-toolbarContainer {
     background-color: #222;

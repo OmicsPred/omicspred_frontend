@@ -4,8 +4,8 @@ import { ChevronRight } from 'react-bootstrap-icons';
 import restApiCall from '../../components/RestAPI';
 import Href from "../../components/Href";
 import PlatformTable from './components/PlatformTable';
-import { platforms_columns } from "../../components/table/columns/platforms";
-import { op_subtitle_no_asso, publication_ref,  } from '../../components/Common';
+import { publication_platform_columns } from "../../components/table/columns/platforms";
+import { op_subtitle_no_asso, publication_ref } from '../../components/Common';
 import { numberBadge } from '../../components/Generic';
 
 
@@ -17,7 +17,7 @@ function Publication() {
 
     const url_endpoint = 'score/search?pmid='+pubmed_id;
 
-    const columns = platforms_columns;
+    const columns = publication_platform_columns;
 
 
     const fetchPublicationData = async () => {

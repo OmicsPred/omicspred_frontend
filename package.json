@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "@emotion/styled": "^11.11.5",
-    "@mui/icons-material": "^5.15.15",
-    "@mui/material": "^5.15.15",
+    "@mui/icons-material": "^5.15.16",
+    "@mui/material": "^5.15.16",
     "@mui/styled-engine": "^5.15.14",
-    "@mui/x-data-grid": "^6.19.11",
+    "@mui/x-data-grid": "^7.3.2",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.2",
@@ -27,7 +27,7 @@
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.23.0",
-    "sass": "^1.76.0",
+    "sass": "^1.77.0",
     "underscore": "^1.13.6"
   },
   "devDependencies": {
@@ -38,6 +38,6 @@
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.3.5",
-    "vite": "^5.2.10"
+    "vite": "^5.2.11"
   }
 }

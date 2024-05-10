@@ -226,6 +226,14 @@ const PlatformTable = (props) => {
                     <div><ChevronRight className={"color_"+platform_type+" me-2"}/><span className="font-bold">{platform_name}</span></div>
                     <div><span className="me-1"># Scores:</span>{scores_count}</div>
                     <div>{omicspred_omics_type(platform_type)}</div>
+                    { pmid == '36991119' ?
+                        <div>
+                            <Href key={platformName+'_plot_link'} role="button" text="Go to Plots" href={"/plot/"+platformName+"/"+pmid} icon={<GraphUp/>} />
+                        </div> : ''
+                    }
+                    <div>
+                        <Href key={platformName+'_platform_link'} role="button" text="Platform page" href={"/platform/"+platformName}/>
+                    </div>
                 </div>
                 {/* <div className="d-flex justify-content-start">
                     <ChevronRight className={"color_"+platform_type+" me-2 mt-1"}/><span className="font-bold">{platform_name}</span>
@@ -252,21 +260,9 @@ const PlatformTable = (props) => {
                                     <ToogleDiv key={'toggle_dowloads_'+platformName} type='button' title={<><FileEarmarkArrowDown className='me-1'/>Downloads</>} content={<DownloadList urls={platformDownloads}/>}/>
                                 </div>:''
                             }
-                            <div>
-                                <Href key={platformName+'_platform_link'} role="button" text="Platform page" href={"/platform/"+platformName}/>
-                            </div>
-                            { pmid == '36991119' ?
-                                <div className='ms-3'>
-                                    <Href key={platformName+'_plot_link'} role="button" text="Go to Plots" href={"/plot/"+platformName+"/"+pmid} icon={<GraphUp/>} />
-                                </div> : ''
-                            }
                         </div>
-                        {/* <ToogleDiv key={'toggle_sample_'+platformName} title="Sample details" content={<SampleTable table_name={platformName+'_platform_samples'} samples_training={samples_training} samples_validation={samples_validation}/>}/> */}
-                        {/* <SampleTable table_name={platformName+'_platform_samples'} samples_training={samples_training} samples_validation={samples_validation}/> */}
                         <DataTableServer key={platformName+'_table'} url_suffix={platformDataEndpoint} columns={platformTableColumns} groups={platformTableColumnGroups}/>
                     </>:''
-
-                    // <DataTableServer url_suffix={url_endpoint} columns={score_columns(platformsData)} />:''
                 }
             </AccordionDetails>
         </Accordion>
