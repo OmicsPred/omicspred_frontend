@@ -2,14 +2,19 @@ import {common_cols} from "./common";
 
 
 // const metabolite_name_col = {...common_cols['metabolite_name'], field: 'metabolites__name'}
+const gene_id_col = {...common_cols['gene_name'], headerClassName: 'col_border_left'}
+const protein_id_col = {...common_cols['protein_id'], headerName: 'Protein'}
+const metabolite_id_col = {...common_cols['metabolite_id'], headerName: 'Metabolite', headerClassName: 'col_border_right'}
 
 // Export Scores columns
 export const scores_columns = [
     common_cols['omicspred_id'],
-    common_cols['gene_name'],
-    common_cols['protein_id'],
-    common_cols['protein_name'],
-    common_cols['metabolite_name'],
+    gene_id_col,
+    protein_id_col,
+    // common_cols['protein_name'],
+    // common_cols['metabolite_name'],
+    metabolite_id_col,
+    common_cols['molecular_trait_name'],
     common_cols['variants_number'],
     common_cols['platform_type'],
     common_cols['platform_name'],

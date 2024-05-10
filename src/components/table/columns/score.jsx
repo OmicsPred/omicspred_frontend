@@ -48,24 +48,24 @@ export const score_columns = [
         field: 'r2',
         headerName: 'R2',
         width: 100,
-        valueGetter: (params) => {
-            return metric_valueGetter(params.row.performance_metrics,'R2');
+        valueGetter: (value, row) => {
+            return metric_valueGetter(row.performance_metrics,'R2');
         }
     },
     {
         field: 'rho',
         headerName: 'Rho',
         width: 100,
-        valueGetter: (params) => {
-            return metric_valueGetter(params.row.performance_metrics,'Rho');
+        valueGetter: (value, row) => {
+            return metric_valueGetter(row.performance_metrics,'Rho');
         }
     },
     {
         field: 'missing_rate',
         headerName: 'Missing Rate',
         width: 100,
-        valueGetter: (params) => {
-            return metric_valueGetter(params.row.performance_metrics,'Missing Rate');
+        valueGetter: (value, row) => {
+            return metric_valueGetter(row.performance_metrics,'Missing Rate');
         }
     }
 ]

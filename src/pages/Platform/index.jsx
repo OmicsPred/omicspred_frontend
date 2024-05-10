@@ -234,14 +234,14 @@ function Platform() {
             <h2 className='page_title'>Platform<ChevronRight className={'op_title_separator color_'+get_data_type(platformSumData.type)}/><span>{platformSumData.name}</span></h2>
             <div className='d-flex'>
                 {platformSumData && platformVersions ? <PlatformSummary metadata={platformSumData} versions={platformVersions}/>: ''}
-            { platformAddData.length > 0 ?
-                <div>
-                    <h5>Publications ({platformAddData.length})</h5>
-                    <div className="d-flex flex-column">
-                        { platformAddData.map((additional) => <PublicationCard data={additional} key={additional.publication.doi} />)}
-                    </div>
-                </div> : ''
-            }
+                { platformAddData.length > 0 ?
+                    <div>
+                        <h5>Publications ({platformAddData.length})</h5>
+                        <div className="d-flex flex-column">
+                            { platformAddData.map((additional) => <PublicationCard data={additional} key={additional.publication.doi} />)}
+                        </div>
+                    </div> : ''
+                }
             </div>
 
             <div className="mt-4 me-4 mb-4 sm:mt-0 sm:ml-3">

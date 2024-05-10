@@ -17,8 +17,8 @@ const ReactomeDiagram = (props) => {
     function loadReactomeDiagram(){  // This function is automatically called when the widget code is ready to be used
         var diagram = Reactome.Diagram.create({
             "placeHolder" : "diagramHolder",
-            "width" : 950, // minimum recommended width
-            "height" : 500
+            "width" : 1050, // minimum recommended width: 950
+            "height" : 550
         });
 
         // Initialising with a pathway ID

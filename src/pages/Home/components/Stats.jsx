@@ -80,7 +80,10 @@ const Stats = (props) => {
             const category = labels[j];
             const label_data = data_types[category];
             const bg_colour = type_colours[category];
-            data.labels.push(category+' ('+thousandifyNumber(label_data)+')');
+            const percent = (label_data/global_scores_count)*100;
+            const percent_rounded = percent.toFixed(2)
+            // data.labels.push(category+' ('+thousandifyNumber(label_data)+')');
+            data.labels.push(category+' ('+percent_rounded+'%)');
             dataset.data.push(label_data);
             dataset.backgroundColor.push(bg_colour);
         }
