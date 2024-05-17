@@ -19,7 +19,7 @@ const Plot = (props) => {
 
     const platform_file_name = platform.replace(" ", "_");
 
-    const data_dir = process.env.OMICSPRED_DATA_DIR;
+    const data_dir = process.env.PROJECT_DATA_DIR;
     const plot_file = data_dir+platform_file_name+'_'+pmid+'_plot.json';
     const plot_score_file = data_dir+platform_file_name+'_'+pmid+'_plot_score.json';
 

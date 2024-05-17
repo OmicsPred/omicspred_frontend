@@ -4,21 +4,26 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import SearchBar from './SearchBar';
+import Href from "./Href"
 
 
 function Header() {
+
+    const search_examples = JSON.parse(process.env.SEARCH_EXAMPLES);
+    const project_name = process.env.PROJECT_NAME
+
     return (
         <header>
-            <Navbar bg="light" expand="lg" sticky="top" position="fixed">
+            <Navbar bg="light" expand="md" sticky="top" position="fixed">
                 <Container>
                     <Navbar.Brand href="/">
                     <img
                         className='pe-2'
-                        src='/images/OmicsPred_logo.png'
+                        src={'/images/'+project_name+'_logo.png'}
                         height='30'
                         alt=''
                         loading='lazy'
-                    />OmicsPred
+                    />{project_name}
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
@@ -34,48 +39,22 @@ function Header() {
                                 <NavDropdown.Item href="/applications/phecode/sum">Summary</NavDropdown.Item>
                                 <NavDropdown.Item href="/applications/phecode/full">All Associations</NavDropdown.Item>
                             </NavDropdown>
-                            <Nav.Link href={process.env.OMICSPRED_SUBMIT_SCORES_URL} target="_blank">Submit Score</Nav.Link>
+                            <Nav.Link href={process.env.PROJECT_SUBMIT_SCORES_URL} target="_blank">Submit Score</Nav.Link>
                             <Nav.Link href="/faqs">FAQs</Nav.Link>
                             <Nav.Link href="/cohorts">Cohorts</Nav.Link>
                             <Nav.Link href="/about">About</Nav.Link>
                         </Nav>
-                        {/* <SearchProvider
-                            config={{
-                                ...config,
-                                trackUrlState: false
-                            }}
-                            >
-                            <SearchBox
-                                className="d-flex search_btn" 
-                                onSubmit={(searchTerm) => {
-                                    window.location.href = `/search?q=${searchTerm}`;
-                                }}
-                                autocompleteMinimumCharacters={3}
-                                autocompleteResults={{
-                                    linkTarget: "",//"_blank",
-                                    sectionTitle: "Suggestions",
-                                    titleField: "label",
-                                    //urlField: "label",
-                                    shouldTrackClickThrough: true,
-                                    clickThroughTags: ["search"]
-                                }}
-                                autocompleteSuggestions={true}
-                                debounceLength={0}
-                            />
-                        </SearchProvider> */}
-                        {/* <Form className="d-flex">
-                            <Form.Control
-                                type="search"
-                                placeholder="Search"
-                                className="me-2"
-                                aria-label="Search"
-                            />
-                            <Button variant="outline-primary">Search</Button>
-                        </Form> */}
-                        { window.location.pathname == '/' ? '':<SearchBar/> }
+                        { window.location.pathname == '/' ? '':<div id='nav_search_bar'><SearchBar/></div> }
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
+            {/* Only displayed in small screens */}
+            <div className='bg-light search_box_2'>
+                <div className='large_search_bar col-10 offset-1'>
+                    <SearchBar/>
+                    <div className='mt-1'>Examples: {search_examples.map((example_term, index) => <span key={'search_'+example_term}>{index > 0 ? ', ': ''}<Href text={example_term} href={'/search?q='+example_term}/></span>)}</div>
+                </div>
+            </div>
         </header>
     );
 }

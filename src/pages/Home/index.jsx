@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import restApiCallPaginated from '../../components/RestAPIPaginated';
 import Header from "./components/Header"
+import Stats from "./components/Stats"
+import About from "./components/About"
 import Platforms from "./components/Platforms"
 import Applications from "./components/Applications"
 import Citation from "./components/Citation"
@@ -23,8 +25,10 @@ function Home() {
 
   return (
     <>
-      <Header data={platformData}/>
-      { platformData && platformData.length > 0 ? <Platforms data={platformData}/>:'' }
+      <Header/>
+      { platformData && platformData.length > 0 ? <Stats data={platformData}/> : ''}
+      <About/>
+      { platformData && platformData.length > 0 ? <Platforms data={platformData}/> : ''}
       <Applications/>
       <Citation/>
       <Feedback/>

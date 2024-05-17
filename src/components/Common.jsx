@@ -57,18 +57,28 @@ export const op_title2 = (type, prefix, label) => {
 }
 
 
-export const op_subtitle = (type,label) => {
+export const op_subtitle = (type,label,count) => {
     if (!label) {
         label = type;
     }
-    return <h5><ChevronRight className={'op_subtitle color_'+type}/>Associated {label}(s)</h5>
+    let suffix = ''
+    if (count) {
+        if (count > 1) {
+            suffix += 's'
+        }
+        suffix += ' ('+count+')'
+    }
+    else {
+        suffix += '(s)'
+    }
+    return <h5><ChevronRight className={'op_subtitle color_'+type}/>Associated {label}{suffix}</h5>
 }
 
-export const op_subtitle_no_asso = (type,label) => {
+export const op_subtitle_no_asso = (type,label,count) => {
     if (!label) {
         label = type;
     }
-    return <h5><ChevronRight className={'op_subtitle color_'+type}/>{label}</h5>
+    return <h5><ChevronRight className={'op_subtitle color_'+type}/>{label}{count ? ' ('+count+')' : ''}</h5>
 }
 
 export const publication_ref = (publication,display_year) => {

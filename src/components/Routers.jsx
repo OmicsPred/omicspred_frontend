@@ -21,8 +21,9 @@ import Metabolite from "../pages/MolecularTrait/Metabolite";
 import Pathway from "../pages/MolecularTrait/Pathway";
 import Phecode from "../pages/Applications/Phecode";
 // Tests
-import Search from "../pages/Tests/Search";
+import Search from "../pages/Search";
 import Plot from "../pages/Tests/Plot";
+// import MuiDoughnut from "../pages/Tests/MuiDoughnut";
 // import OPDoughnut from "../pages/Tests/Doughnut";
 // import PublicationOld from "../pages/Tests/PublicationOld";
 // import ReactomeDiagram from "../pages/Tests/Reactome";
@@ -65,6 +66,7 @@ function OpRouters() {
                 <Route path="/plot/:platform/:pmid" element={<Plot />} />
                 {/* <Route path="/publication_old/:pubmed_id" element={<PublicationOld />} /> */}
                 {/* <Route path="/doughnut/" element={<OPDoughnut />} /> */}
+                {/* <Route path="/doughnut/" element={<MuiDoughnut />} /> */}
                 {/* <Route path="/test/reactome/:reactome_id" element={<ReactomeDiagram />} /> */}
 
                 {/* Errors */}
