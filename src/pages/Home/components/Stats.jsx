@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ChevronRight } from 'react-bootstrap-icons';
 import restApiCall from '../../../components/RestAPI';
 import OPDoughnut from "../../Tests/Doughnut";
 import { thousandifyNumber } from '../../../components/Generic';
@@ -10,11 +11,15 @@ const Stats = (props) => {
     const [scoresCount, setScoresCount] = useState([]);
     const [platformsCount, setPlatformsCount] = useState([]);
     const [publicationsCount, setPublicationsCount] = useState([]);
-    const [omicsTypesCount, setOmicsTypesCount] = useState([]);
+    // const [omicsTypesCount, setOmicsTypesCount] = useState([]);
     const [omicsCount, setOmicsCount] = useState([]);
     const [pheWASCount, setPheWASCount] = useState([]);
+    const [pathwaysCount, setPathwaysCount] = useState([]);
 
     const title = 'Scores distribution by Omics type'
+
+    const project_name = process.env.PROJECT_NAME
+
 
     const type_colours = {
         "Metabolomics": 'orange',
@@ -23,10 +28,15 @@ const Stats = (props) => {
     };
 
 
-    const fetchPheWasAssoCount = async () => {
-        const phecode_data = await restApiCall('applications_score/all?limit=1');
-        if (phecode_data) {
-            setPheWASCount(phecode_data.count)
+    const fetchCounts = async () => {
+        const data = await restApiCall('info');
+        if (data) {
+            const count_data = data.data_count;
+            setPheWASCount(count_data.phewas)
+            setPathwaysCount(count_data.pathways)
+            setScoresCount(count_data.scores);
+            setPlatformsCount(count_data.platforms);
+            setPublicationsCount(count_data.publications);
         }
     }
 
@@ -43,7 +53,7 @@ const Stats = (props) => {
 
     const build_omics_data = (response) => {
         let global_scores_count = 0;
-        let data = { 
+        let data = {
             'labels': [] ,
             'datasets': []
         }
@@ -53,28 +63,31 @@ const Stats = (props) => {
             'backgroundColor': [],
         }
         let data_types = {};
-        let platforms = [];
-        let publications = []
+        // let platforms = [];
+        // let publications = []
+        console.log('response - start');
+        console.log(response);
+        console.log('response - end');
         for (let i=0;i<response.length;i++) {
             const resp = response[i];
-            const platform_name = resp.platform.name;
-            const publication_doi = resp.publication.doi;
+            // const platform_name = resp.platform.name;
+            // const publication_doi = resp.publication.doi;
             const type = resp.platform.type;
             const count = resp.scores_count;
             console.log('# '+type+': '+count)
             if (!data_types[type]) {
                 data_types[type] = 0;
             }
-            if (!platforms.includes(platform_name)) {
-                platforms.push(platform_name)
-            }
-            if (!publications.includes(publication_doi)) {
-                publications.push(publication_doi)
-            }
+            // if (!platforms.includes(platform_name)) {
+            //     platforms.push(platform_name)
+            // }
+            // if (!publications.includes(publication_doi)) {
+            //     publications.push(publication_doi)
+            // }
             data_types[type] += count;
             global_scores_count += count;
         }
-        
+
         const labels = Object.keys(data_types).sort();
         for (let j=0;j<labels.length;j++) {
             const category = labels[j];
@@ -88,10 +101,10 @@ const Stats = (props) => {
             dataset.backgroundColor.push(bg_colour);
         }
 
-        setScoresCount(global_scores_count);
-        setPlatformsCount(platforms.length);
-        setPublicationsCount(publications.length);
-        setOmicsTypesCount(labels.length)
+        // setScoresCount(global_scores_count);
+        // setPlatformsCount(platforms.length);
+        // setPublicationsCount(publications.length);
+        // setOmicsTypesCount(labels.length)
         setOmicsCount(data_types);
 
         data.datasets.push(dataset);
@@ -100,35 +113,60 @@ const Stats = (props) => {
         return data
     }
 
+    const display_count_block = (title,count,url,type) => {
+        if (!type) {
+            type = title;
+        }
+        return (
+            <div className='home_stats_box'>
+                <div className='home_stats_title'><ChevronRight className='hl_color me-1' size="20px"/>{title}</div>
+                <div className='home_stats_count'>{thousandifyNumber(count)}</div>
+                <div className='home_stats_btn'>
+                    <a className="btn btn-primary btn-sm shadow"  href={url} role="button">Browse</a>
+
+                    {/* <a className="btn btn-primary btn-sm shadow"  href={url} role="button">Browse {type}</a> */}
+                </div>
+            </div>
+        )
+    }
+
     useEffect(() => {
-        fetchPheWasAssoCount();
+        fetchCounts();
+    },[])
+    useEffect(() => {
         fetchOmicsChartData();
     },[])
 
     return (
-        <div className='d-flex flex-column'>
-            <div className="home_box mb-4">
-                { scoresCount && scoresCount > 0 ?<div className='home_category mb-2' onClick={() => {location.href = '/scores'}}><span>Scores</span><span>{thousandifyNumber(scoresCount)}</span></div>:''}
-                { pheWASCount && pheWASCount > 0 ? <div className='home_category mb-2' onClick={() => {location.href = '/applications/phecode/full'}} title="PheWAS Associations"><span>PheWAS</span><span>{thousandifyNumber(pheWASCount)}</span></div>:''}
-                { platformsCount && platformsCount > 0 ? <div className='home_category mb-2' onClick={() => {location.href = '/platforms'}}><span>Platforms</span><span>{platformsCount}</span></div>:''}
-                { publicationsCount && publicationsCount > 0 ? <div className='home_category mb-2' onClick={() => {location.href = '/publications'}}><span>Publications</span><span>{publicationsCount}</span></div>:''}
-                { omicsTypesCount && omicsTypesCount > 0 ?<div className='home_category' onClick={() => {location.href = '#platforms'}}><span>Omics Types</span><span>{omicsTypesCount}</span></div>:''}
+        <div className='op_stats_container mt-5'>
+            <div>
+                <h5 className='mb-4'>{project_name} data summary</h5>
+                <div className='op_stats2'>
+                    { scoresCount && scoresCount > 0 ? display_count_block('Genetic Scores',scoresCount,'/scores' ,'Scores') : ''}
+                    { pheWASCount && pheWASCount > 0 ? display_count_block('PheWAS associations',pheWASCount,'/applications/phecode/full' ,'PheWAS') : ''}
+                    { pathwaysCount && pathwaysCount > 0 ? display_count_block('Pathways',pathwaysCount,'/pathways') : ''}
+                    { platformsCount && platformsCount > 0 ? display_count_block('Platforms',platformsCount,'/platforms') : ''}
+                    { publicationsCount && publicationsCount > 0 ? display_count_block('Publications',publicationsCount,'/publications') : ''}
+                </div>
             </div>
-            { omicsChartData  && omicsChartData.labels ? 
-            <div className="home_box">
-                <div className='mb-2' style={{fontSize:"13px",fontWeight:200}}>{title}</div>
-                <OPDoughnut data={omicsChartData} width="200" display_legend="false"/>
-                {/* <OPDoughnut data={omicsChartData} title={title} width="200" display_legend="false"/> */}
-                { omicsCount ?
-                    <>
-                        <hr/>
-                        <div>
-                            {Object.keys(type_colours).map((type) => <div className="d-flex justify-content-between " key={type}><span className='me-3'>{omicspred_omics_type(type)}</span><span style={{fontWeight:'bold'}}>{thousandifyNumber(omicsCount[type])}</span></div>)}
+
+            <div className='op_stats_separator'></div>
+            { omicsChartData  && Object.keys(omicsChartData).length > 0 && omicsCount && Object.keys(omicsCount).length > 0 ?
+                <div className='d-flex justify-content-center'>
+                    <div>
+                    <div>
+                        <h5 className='mb-4'>{title}</h5>
+                        <div className='d-flex justify-content-center op_stats_dist'>
+                            {/* Chart */}
+                            <OPDoughnut data={omicsChartData} width="200" display_legend="false"/>
+                            {/* Legend */}
+                            <div style={{borderLeft:"1px solid #CCC",paddingLeft:"1rem"}}>
+                                {Object.keys(type_colours).map((type) => <div className="d-flex justify-content-between " key={type}><span className='me-3'>{omicspred_omics_type(type)}</span><span style={{fontWeight:'bold'}}>{thousandifyNumber(omicsCount[type])}</span></div>)}
+                            </div>
                         </div>
-                    </>:''
-                }
-            </div>
-             :''}
+                    </div></div>
+                </div>
+            :''}
         </div>
     )
 }

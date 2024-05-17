@@ -55,6 +55,44 @@ export const ToogleDiv = (props) => {
 }
 
 
+export const ToogleText = (props) => {
+    const [show, setShow] = useState(false);
+
+    const threshold = props.limit ? parseInt(props.limit) : 75;
+    const whole_text = props.text;
+
+    useEffect(() => {}, [show])
+
+    const hideShowDiv = (e) => {
+        if (show) {
+            setShow(false);
+        }
+        else {
+            setShow(true);
+        }
+    }
+
+    let toogle_class = 'op_toogle_text';
+
+    if (whole_text.length <= threshold) {
+        return whole_text;
+    }
+    else {
+        const displayed_text = whole_text.slice(0, threshold)
+        const hidden_text = whole_text.slice(threshold)
+        return (
+            <p className='mb-0'>
+                <span>{displayed_text}</span>
+                {show ? hidden_text: '...'}
+                <a className={toogle_class} onClick={(e) => {hideShowDiv(e)}}>
+                    {show ? ' [less]':' [more]'}
+                </a>
+            </p>
+        )
+    }
+}
+
+
 export const useExternalScript = (url) => {
     let [state, setState] = useState(url ? "loading" : "idle");
 

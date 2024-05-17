@@ -6,6 +6,8 @@ const SearchBar = (props) => {
 
     const [searchInput, setSearchInput] = useState("");
 
+    const project_name = process.env.PROJECT_NAME
+
     const handleSubmit = (event) => {
         event.preventDefault();
         
@@ -14,17 +16,12 @@ const SearchBar = (props) => {
         }
     }
 
-    // const button_type = "outline-primary";
-    // if (props.type == 'home') {
-    //     button_type = "primary";
-    // }
-
     return (
         <Form onSubmit={handleSubmit}>
             <Form.Group className="d-flex" >
                 <Form.Control
                     type="search"
-                    placeholder="Search"
+                    placeholder={"Search "+project_name}
                     className="me-2 search_input"
                     aria-label="Search"
                     onChange={e => setSearchInput(e.target.value)}

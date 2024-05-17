@@ -2,7 +2,7 @@ import Href from "./Href";
 
 
 const CitationCard = () => {
-  const doi = process.env.OMICSPRED_DOI;
+  const doi = process.env.PROJECT_DOI;
   return (
     <div className="ps-5 pe-5">
       <div className="card" style={{padding:"0px",textAlign:"center"}}>

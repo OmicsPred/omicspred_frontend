@@ -1,5 +1,5 @@
-import Href from "../../../../components/Href"
-import { numberBadge } from '../../../../components/Generic';
+import Href from "../../../components/Href"
+import { numberBadge } from '../../../components/Generic';
 import OmicsList from "./OmicsList"
 
 const index2url = {

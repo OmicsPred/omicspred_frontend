@@ -73,41 +73,39 @@ function Platform() {
         // Fetch metadata columns for a given platform
         let columns = get_metadata_columns(type);
 
-        // Fetch Cohort columns
-        let cohorts = [];
-        for (let i=0; i<platforms.length; i++) {
-            console.log('# platforms[i]:');
-            console.log(platforms[i]);
-            const platform = platforms[i]['platform'];
-            if (!versions || (versions && versions.includes(platform['version']))) {
-                console.log("::::: Platform "+platform['name']+' | Versions: '+platform['version']+" :::::");
-                // Training cohorts
-                for (let j=0; j<platforms[i]['samples_training'].length; j++) {
-                    const sample_cohorts = platforms[i]['samples_training'][j]['cohorts'];
-                    cohorts = get_cohorts_cols_list(sample_cohorts, cohorts);
-                }
-                // Validation cohorts
-                for (let j=0; j< platforms[i]['samples_validation'].length;j++) {
-                    const sample_cohorts = platforms[i]['samples_validation'][j]['cohorts'];
-                    cohorts = get_cohorts_cols_list(sample_cohorts, cohorts);
-                }
-            }
-        }
+        // // Fetch Cohort columns
+        // let cohorts = [];
+        // for (let i=0; i<platforms.length; i++) {
+        //     const platform = platforms[i]['platform'];
+        //     if (!versions || (versions && versions.includes(platform['version']))) {
+        //         console.log("::::: Platform "+platform['name']+' | Versions: '+platform['version']+" :::::");
+        //         // Training cohorts
+        //         for (let j=0; j<platforms[i]['samples_training'].length; j++) {
+        //             const sample_cohorts = platforms[i]['samples_training'][j]['cohorts'];
+        //             cohorts = get_cohorts_cols_list(sample_cohorts, cohorts);
+        //         }
+        //         // Validation cohorts
+        //         for (let j=0; j< platforms[i]['samples_validation'].length;j++) {
+        //             const sample_cohorts = platforms[i]['samples_validation'][j]['cohorts'];
+        //             cohorts = get_cohorts_cols_list(sample_cohorts, cohorts);
+        //         }
+        //     }
+        // }
 
-        // Fetch columns details
-        const metric_cols = ['R2','Rho','Missing Rate'];
-        for (let i=0; i< cohorts.length; i++) {
-            const cohort = cohorts[i];
-            if (cohort_cols[cohort]) {
-                for (let j=0; j<metric_cols.length; j++) {
-                    const metric = metric_cols[j];
-                    if (cohort_cols[cohort][metric]) {
-                        const cohort_metric_col = {...cohort_cols[cohort][metric], sortable: false}
-                        columns.push(cohort_metric_col)
-                    }
-                }
-            }
-        }
+        // // Fetch columns details
+        // const metric_cols = ['R2','Rho','Missing Rate'];
+        // for (let i=0; i< cohorts.length; i++) {
+        //     const cohort = cohorts[i];
+        //     if (cohort_cols[cohort]) {
+        //         for (let j=0; j<metric_cols.length; j++) {
+        //             const metric = metric_cols[j];
+        //             if (cohort_cols[cohort][metric]) {
+        //                 const cohort_metric_col = {...cohort_cols[cohort][metric], sortable: false}
+        //                 columns.push(cohort_metric_col)
+        //             }
+        //         }
+        //     }
+        // }
 
         return columns;
     }
@@ -138,27 +136,27 @@ function Platform() {
         console.log('get_table_column_groups: |'+type+'|')
         let col_groups = get_metadata_column_groups(type);
 
-        let cohorts = [];
-        for (let i=0; i< platforms.length;i++) {
-            // Training cohorts
-            for (let j=0; j< platforms[i]['samples_training'].length;j++) {
-                const sample_cohorts = platforms[i]['samples_training'][j]['cohorts'];
-                cohorts = get_cohorts_col_groups_list(sample_cohorts,cohorts);
-            }
-            // Validation cohorts
-            for (let j=0; j< platforms[i]['samples_validation'].length;j++) {
-                const sample_cohorts = platforms[i]['samples_validation'][j]['cohorts'];
-                cohorts = get_cohorts_col_groups_list(sample_cohorts,cohorts);
-            }
-        }
+        // let cohorts = [];
+        // for (let i=0; i< platforms.length;i++) {
+        //     // Training cohorts
+        //     for (let j=0; j< platforms[i]['samples_training'].length;j++) {
+        //         const sample_cohorts = platforms[i]['samples_training'][j]['cohorts'];
+        //         cohorts = get_cohorts_col_groups_list(sample_cohorts,cohorts);
+        //     }
+        //     // Validation cohorts
+        //     for (let j=0; j< platforms[i]['samples_validation'].length;j++) {
+        //         const sample_cohorts = platforms[i]['samples_validation'][j]['cohorts'];
+        //         cohorts = get_cohorts_col_groups_list(sample_cohorts,cohorts);
+        //     }
+        // }
 
-        // Fetch column group details
-        for (let i=0; i< cohorts.length; i++) {
-            const cohort = cohorts[i];
-            if (common_column_groups[cohort]) {
-                col_groups.push(common_column_groups[cohort])
-            }
-        }
+        // // Fetch column group details
+        // for (let i=0; i< cohorts.length; i++) {
+        //     const cohort = cohorts[i];
+        //     if (common_column_groups[cohort]) {
+        //         col_groups.push(common_column_groups[cohort])
+        //     }
+        // }
 
         return col_groups;
     }

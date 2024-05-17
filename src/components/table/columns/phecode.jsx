@@ -90,3 +90,13 @@ const build_columns = () => {
 
 
 export const phecode_columns = build_columns();
+
+
+export const score_phecode_columns = [
+    common_cols['phecode_id'],
+    common_cols['phecode_name'],
+    common_cols['phecode_category'],
+    common_data_cols['r2'],
+    common_data_cols['hazard_ratio'],
+    common_data_cols['fdr']
+]

@@ -2,7 +2,7 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ChevronRight } from 'react-bootstrap-icons';
 // import restApiCallWithData from '../../../components/RestAPIWithData';
-import restApiCall from '../../../components/RestAPI';
+import restApiCall from '../../components/RestAPI';
 import ResultCard from './components/ResultCard';
 import SidePanelFilter from './components/SidePanelFilter';
 
@@ -33,11 +33,10 @@ function Search() {
     // };
 
     const fetchESResults = async () => {
-        let credentials = undefined;
+        // let credentials = undefined;
         // if (process.env.OMICSPRED_ES_USERNAME && process.env.OMICSPRED_ES_PASSWORD) {
         //     credentials = `Basic ${btoa(process.env.OMICSPRED_ES_USERNAME + ':' + process.env.OMICSPRED_ES_PASSWORD)}`;
         // }
-        console.log("!!!!! FETCH RESULTS !!!!!");
         // const results = await restApiCallWithData(es_url,query_content,credentials);
         const results = await restApiCall(es_url);
 
@@ -160,6 +159,14 @@ function Search() {
     }
 
 
+    function display_result_card(data) {
+        if (isFiltered(data._source)) {
+            let result_key = data._index;
+            result_key += (data._source.id) ? data._source.id : data._source.name;
+            return <ResultCard data={data._source} type={data._index} key={result_key}/>
+        }
+    }
+
     // Fetch search results
     useEffect(() => {
         fetchESResults();
@@ -172,7 +179,10 @@ function Search() {
 
     return (
         <>
-            <h2 className='page_title'>Search results<ChevronRight className={'op_title_separator color_hl'}/><span>{query}</span></h2>
+            <div className='d-flex'>
+                <h2 className='page_title'>Search results<ChevronRight className={'op_title_separator color_hl'}/><span>{query}</span></h2>
+                <div className='mt-4 ms-3'><span class="badge rounded-pill text-bg-primary">{esResults ? esResults.length: 0} hits</span></div>
+            </div>
             <div className='d-flex'>
                 <Suspense fallback={<div>Loading results ...</div>}>
                 { 
@@ -192,7 +202,10 @@ function Search() {
                         </div>
                         {/* Result panel */}
                         <div>
-                            { esResults.map((data) => isFiltered(data._source) && <ResultCard data={data._source} type={data._index} key={data._index+'_'+data._source.id}/>)}
+                            { esResults.map((data) => console.log("@@@ "+data._index+' | '+data._source.id+' | '+data._source.name))}
+                            {/* { esResults.map((data) => isFiltered(data._source) && <ResultCard data={data._source} type={data._index} key={data._index+'_'+(data._source.id) ? data._source.id : data._source.name}/>)} */}
+                            { esResults.map((data) => display_result_card(data))}
+
                         </div>
                     </>: <h4>No result found</h4>
                 }

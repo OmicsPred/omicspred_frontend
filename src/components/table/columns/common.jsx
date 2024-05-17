@@ -1,6 +1,6 @@
 import { FileEarmarkText, Hr } from 'react-bootstrap-icons';
 import { internal_publication_link, omicspred_omics_type } from '../../Common';
-import { thousandifyNumber, ToogleDiv } from '../../Generic';
+import { thousandifyNumber, ToogleDiv, ToogleText } from '../../Generic';
 import Href from '../../Href';
 
 const default_cell_value = process.env.DEFAULT_CELL_VALUE;
@@ -48,11 +48,16 @@ export const omicspred_internal_link = function(op_entry,type,index) {
     const op_title = (op_entry['desc']) ? op_entry['desc'] : undefined
     let op_url = "/"+type+"/"+op_id
     op_url = op_url.replace('.','_');
-    return (
-        <span key={op_id+'_'+type+'_span'} title={op_title ? op_title:''}>
-            {index ? ', ': ''}<Href key={op_id+'_'+type} href={op_url} text={op_label}/>
-        </span>
-    )
+    if (op_id) {
+        return (
+            <span key={op_id+'_'+type+'_span'} title={op_title ? op_title:''}>
+                {index ? ', ': ''}<Href key={op_id+'_'+type} href={op_url} text={op_label}/>
+            </span>
+        )
+    }
+    else {
+        return default_cell_value
+    }
 }
 
 
@@ -166,7 +171,8 @@ export const common_cols = {
     },
     'variants_number': { 
         field: 'variants_number', 
-        headerName: '#SNP', 
+        headerName: '#SNP',
+        type: 'number',
         // minWidth: 75,
         // flex: 0.5,
         align: 'right',
@@ -425,7 +431,7 @@ export const common_cols = {
                 mt_names = row.metabolites.map((metabolite) => metabolite.name)
             }
             else if (row.genes.length > 0) {
-                mt_names = row.genes.map((gene) => gene.description)
+                mt_names = row.genes.map((gene) => gene.descriptions.length ? <ToogleText key={gene.name ? gene.name : gene.external_id} text={gene.descriptions[0]}/>:'')
             }
             return mt_names.join(data_separator);
         }
@@ -619,6 +625,7 @@ export const common_cols = {
     'scores_count':{
         field: 'scores_count',
         headerName: '#Scores',
+        type: 'number',
         minWidth: 80, 
         flex: 0.5,
         align: 'right',
@@ -661,11 +668,15 @@ export const common_data_cols = {
     'fdr': {
         field: 'fdr',
         headerName: 'FDR',
+        description: 'False Discovery Rate (FDR) adjusted P-value',
         width: 100,
         valueGetter: (value, row) => {
             if (row.data_values) {
                 if (row.data_values.FDR) {
                     return row.data_values.FDR;
+                }
+                else {
+                    return default_cell_value;
                 }
             }
         }
