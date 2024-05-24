@@ -52,7 +52,7 @@ function Header() {
             <div className='bg-light search_box_2'>
                 <div className='large_search_bar col-10 offset-1'>
                     <SearchBar/>
-                    <div className='mt-1'>Examples: {search_examples.map((example_term, index) => <span key={'search_'+example_term}>{index > 0 ? ', ': ''}<Href text={example_term} href={'/search?q='+example_term}/></span>)}</div>
+                    <div className='op_examples mt-1'>Examples: {search_examples.map((example_term, index) => <span key={'search_'+example_term}>{index > 0 ? ', ': ''}<Href text={example_term} href={'/search?q='+example_term}/></span>)}</div>
                 </div>
             </div>
         </header>

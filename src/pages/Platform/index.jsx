@@ -230,8 +230,10 @@ function Platform() {
     return (
         <>
             <h2 className='page_title'>Platform<ChevronRight className={'op_title_separator color_'+get_data_type(platformSumData.type)}/><span>{platformSumData.name}</span></h2>
-            <div className='d-flex'>
+            <div className='d-flex justify-content-center d-flex flex-lg-row flex-column'>
                 {platformSumData && platformVersions ? <PlatformSummary metadata={platformSumData} versions={platformVersions}/>: ''}
+                <div className='me-5 d-none d-lg-inline-block'></div>
+                <div className='pt-3 d-lg-none'></div>
                 { platformAddData.length > 0 ?
                     <div>
                         <h5>Publications ({platformAddData.length})</h5>
@@ -241,7 +243,6 @@ function Platform() {
                     </div> : ''
                 }
             </div>
-
             <div className="mt-4 me-4 mb-4 sm:mt-0 sm:ml-3">
                 { platformVersionsList.length > 0 && platformVersionsSelection.length > 0 ? platformVersionsList.map((version) => <button className="btn btn-primary shadow btn-sm me-2"  data-version={version} key={platform+'_'+version} onClick={handleVersionSelectionClick}>{platform} {version}</button>):''}
             </div>

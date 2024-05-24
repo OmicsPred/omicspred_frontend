@@ -16,7 +16,7 @@ const Header = () => {
         <div>
             {/* Title & subtitle */}
             <div style={{textAlign:"center"}}>
-                <h1 className="hl_color">{project_name}</h1>
+                <h1 className="op_color_1">{project_name}</h1>
                 <h4>An atlas of genetic scores for prediction of multi-omics data</h4>
             </div>
 

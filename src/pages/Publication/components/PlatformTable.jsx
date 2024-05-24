@@ -14,7 +14,7 @@ import { proteomics_columns, proteomics_column_groups } from '../../../component
 import { transcriptomics_columns, transcriptomics_column_groups } from '../../../components/table/columns/transcriptomics';
 import DataTableServer from '../../../components/table/DataTableServer';
 import { SampleTable } from '../../../components/Sample';
-import { DownloadList } from '../../../components/Downloads';
+import { DownloadList, get_download_list } from '../../../components/Downloads';
 
 
 const PlatformTable = (props) => {
@@ -38,14 +38,6 @@ const PlatformTable = (props) => {
 
     // const columns = get_table_columns(platform);
     // const columns_groups = get_table_column_groups(platform);
-
-    const download_labels = {
-        "scoring_files": "Scoring files",
-        "scoring_files_pgsc_calc": "Scoring files (pgsc_calc compatible)",
-        "validation_results": "Validation Results",
-        "score_variant_info": "Variants info",
-        "gwas_sumstats": "GWAS summary stats"
-    }
 
     const get_url_endpoint = (type, pmid) => {
         let endpoint_suffix = platform_name+"?pmid="+pmid;
@@ -177,12 +169,7 @@ const PlatformTable = (props) => {
         console.log('>> platform data:')
         console.log(platform.platform.name);
         if (platform.scoring_files_urls) {
-            let urls = {}
-            for (const [key, value] of Object.entries(download_labels)) {
-                if (platform.scoring_files_urls[key]) {
-                    urls[value] = platform.scoring_files_urls[key];
-                }
-            }
+            const urls = get_download_list(platform.scoring_files_urls)
             setPlatformDownloads(urls);
         }
     }
@@ -235,12 +222,6 @@ const PlatformTable = (props) => {
                         <Href key={platformName+'_platform_link'} role="button" text="Platform page" href={"/platform/"+platformName}/>
                     </div>
                 </div>
-                {/* <div className="d-flex justify-content-start">
-                    <ChevronRight className={"color_"+platform_type+" me-2 mt-1"}/><span className="font-bold">{platform_name}</span>
-                    <div style={{position:"absolute",left:"15rem"}}><span className="me-1"># Scores:</span>{scores_count}</div>
-                    <div style={{position:"absolute",left:"30rem"}}>{omicspred_omics_type(platform_type)}</div>
-                </div> */}
-                
             </AccordionSummary>
             <AccordionDetails>
                 { loadedStatus == true ?
@@ -252,12 +233,14 @@ const PlatformTable = (props) => {
                             </ul>:''
                         }
                         <div className="d-flex mb-3">
+                            {/* Samples table */}
                             <div className='me-3'>
                                 <ToogleDiv key={'toggle_sample_'+platformName} type='button' title={<><People className='me-1'/>Sample details</>} content={<SampleTable table_name={platformName+'_platform_samples'} samples_training={samples_training} samples_validation={samples_validation}/>}/>
                             </div>
+                            {/* Download buttons */}
                             { platformDownloads ?
                                 <div className='me-3'>
-                                    <ToogleDiv key={'toggle_dowloads_'+platformName} type='button' title={<><FileEarmarkArrowDown className='me-1'/>Downloads</>} content={<DownloadList urls={platformDownloads}/>}/>
+                                    <ToogleDiv key={'toggle_dowloads_'+platformName} type='button' class_name='card px-2 py-1' title={<><FileEarmarkArrowDown className='me-1'/>Downloads</>} content={<DownloadList urls={platformDownloads}/>}/>
                                 </div>:''
                             }
                         </div>

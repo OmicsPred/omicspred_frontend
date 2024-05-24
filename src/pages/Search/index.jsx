@@ -50,7 +50,7 @@ function Search() {
         let options = [];
         for (let i=0; i < results_list.length; i++) {
             // Omics types
-            if (results_list[i]['_source']['omics_type']) { 
+            if (results_list[i]['_source']['omics_type']) {
                 const res_omics = results_list[i]['_source']['omics_type'];
                 for (let j=0; j < res_omics.length; j++) {
                     const omic_label = res_omics[j];
@@ -146,16 +146,21 @@ function Search() {
 
     function filter_result_types(results) {
         let result_types = [];
+        let result_types_count = {}
         for (let i=0; i < results.length; i++) {
             const data = results[i];
             if (isFiltered(data._source)) {
                 const data_type = data._index;
                 if (!result_types.includes(data_type)) {
                     result_types.push(data_type)
+                    result_types_count[data_type] = 1;
+                }
+                else {
+                    result_types_count[data_type] += 1
                 }
             }
         }
-        setResultTypes(result_types);
+        setResultTypes(result_types_count);
     }
 
 
@@ -181,31 +186,31 @@ function Search() {
         <>
             <div className='d-flex'>
                 <h2 className='page_title'>Search results<ChevronRight className={'op_title_separator color_hl'}/><span>{query}</span></h2>
-                <div className='mt-4 ms-3'><span class="badge rounded-pill text-bg-primary">{esResults ? esResults.length: 0} hits</span></div>
+                <div className='mt-4 ms-3'><span className="badge rounded-pill text-bg-primary">{esResults ? esResults.length: 0 } hits</span></div>
             </div>
             <div className='d-flex'>
                 <Suspense fallback={<div>Loading results ...</div>}>
-                { 
+                {
                     esResults && esResults.length > 0 ?
                     <>
-                        {/* Options Panel */}
-                        <div className='hl_grey_box me-5 py-2 px-4' style={{minWidth:"250px"}}>
+                        {/* Selection Panel */}
+                        <div className='search_selection_panel'>
                             { esOptions && esOptions.length > 0 ? esOptions.map((data) => <SidePanelFilter handleChange={handleChange} filter={data} key={data.type+'_side'}/>) : <div>No data</div>}
+
                             {/* Legend of feature type in the results */}
-                            <div style={{marginLeft:"24px",marginTop:"24px"}}>
-                                <legend className="mb-3" style={{fontWeight:"bold",fontSize:"1rem",color:"rgba(0, 0, 0, 0.6)"}}>Result types</legend>
-                                { resultTypes && resultTypes.length ? resultTypes.map((data) => <div key={'legend_'+data} className="op_search_feature_legend mb-1" >
-                                    <span className={'px-2 py-2 me-3 mb-1 bg_'+data}></span>
-                                    <span>{data}</span>
-                                </div>): ''}
+                            <div className="MuiBox-root search_selection_block">
+                                <fieldset>
+                                    <legend className="mb-3">Result types</legend>
+                                    { resultTypes && Object.keys(resultTypes).length > 0 ? Object.keys(resultTypes).map((data) => <div key={'legend_'+data} className="op_search_feature_legend mb-1" >
+                                        <span className={'px-2 py-2 me-3 mb-1 bg_'+data}></span>
+                                        <span>{data} ({resultTypes[data]})</span>
+                                    </div>): ''}
+                                </fieldset>
                             </div>
                         </div>
                         {/* Result panel */}
                         <div>
-                            { esResults.map((data) => console.log("@@@ "+data._index+' | '+data._source.id+' | '+data._source.name))}
-                            {/* { esResults.map((data) => isFiltered(data._source) && <ResultCard data={data._source} type={data._index} key={data._index+'_'+(data._source.id) ? data._source.id : data._source.name}/>)} */}
                             { esResults.map((data) => display_result_card(data))}
-
                         </div>
                     </>: <h4>No result found</h4>
                 }

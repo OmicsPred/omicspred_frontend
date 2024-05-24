@@ -27,8 +27,8 @@ export const display_metabolite_link = (metabolite, index) => {
     return display_omics_link(metabolite,'metabolite',index)
 }
 
-export const display_pathway_link = (pathway, index, is_multiple) => {
-    if (is_multiple) {
+export const display_pathway_link = (pathway, index, data_size) => {
+    if (data_size > 1) {
         return <li key={pathway.external_id}><small>{display_omics_link(pathway,'pathway')}</small></li>
     }
     else {
