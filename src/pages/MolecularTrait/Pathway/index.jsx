@@ -5,7 +5,7 @@ import Href from '../../../components/Href';
 import DataTable from '../../../components/table/DataTable';
 import { common_cols } from '../../../components/table/columns/common';
 import restApiCall from '../../../components/RestAPI';
-import { op_title, op_subtitle } from '../../../components/Common';
+import { op_title, op_subtitle, display_information } from '../../../components/Common';
 import ReactomeDiagram from './components/Diagram';
 import { display_superpathways } from '../components/links';
 
@@ -53,6 +53,18 @@ function Pathway() {
 		}
 	}
 
+	const get_information_content = () => {
+		return (
+			<>
+				{
+					elementData.external_id_source=='Reactome' && elementData.name ? <tr><td>Reactome ID</td><td><Href href={process.env.URL_REACTOME_ENTRY+elementData.external_id} text={elementData.external_id}/></td></tr>:''
+				}
+				{ elementData.synonyms ? <tr><td>Synonym{elementData.synonyms.length > 1 ? 's' : ''}</td><td>{display_synonyms(elementData.synonyms)}</td></tr>:''}
+				{ superpathwayData.length ? <tr><td>Top Level Pathway{superpathwayData.length > 1 ? 's' : ''}</td><td>{display_superpathways(superpathwayData)}</td></tr>:''}
+            </>
+        )
+    }
+
     useEffect(() => {
 		fetchData();
 	},[])
@@ -61,42 +73,19 @@ function Pathway() {
 		<div>
 			{ elementData ?
 				<>
+					{/* Summary Data */}
 					{op_title('pathway', elementData, pathway)}
-					{/* <ul className='key_val_line'>
-					{
-						elementData.external_id_source=='Reactome' && elementData.name ? <li key="reactome_id"><span className='line_key'>Reactome ID</span><Href href={process.env.URL_REACTOME_ENTRY+elementData.external_id} text={elementData.external_id}/></li> : ''
-					}
-					{
-						elementData.synonyms ? <li key="reactome_syn"><span className='line_key'>Synonym{elementData.synonyms.length > 1 ? 's' : ''}</span>{elementData.synonyms.map((synonym, index) => <span key={synonym.name}>{index ? ', ' : ''}{synonym.name}</span>)}</li> : ''
-					}
-					{
-						superpathwayData.length ? <li key="reactome_top_level"><span className='line_key'>Top Level Pathway{superpathwayData.length > 1 ? 's' : ''}</span>{superpathwayData.map((pathway, index) => <span key={pathway.name}>{index ? ', ' : ''}{pathway.name} (<Href key={pathway.external_id} href={process.env.URL_REACTOME_ENTRY+pathway.external_id} text={pathway.external_id}/>)</span>)}</li> : ''
-					}
-					</ul> */}
-					<div className='d-flex'>
-						<div className="card-deck d-lg-flex flex-lg-row justify-content-center d-md-flex flex-md-row d-sm-flex flex-sm-column me-4">
-							<div className="card op_card mb-3 me-5">
-								<div className="card-header"><h5 className="mb-0">Pathway information</h5></div>
-								<div className="card-body">
-									<div className="card-text">
-										<table className='table_card table_card_col_centered'>
-											<tbody>
-												{
-													elementData.external_id_source=='Reactome' && elementData.name ? <tr><td>Reactome ID</td><td><Href href={process.env.URL_REACTOME_ENTRY+elementData.external_id} text={elementData.external_id}/></td></tr>:''
-												}
-												{ elementData.synonyms ? <tr><td>Synonym{elementData.synonyms.length > 1 ? 's' : ''}</td><td>{display_synonyms(elementData.synonyms)}</td></tr>:''}
-												{ superpathwayData.length ? <tr><td>Top Level Pathway{superpathwayData.length > 1 ? 's' : ''}</td><td>{display_superpathways(superpathwayData)}</td></tr>:''}
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+					{ elementData ? display_information(element, get_information_content()):'' }
+
+					{/* Reactome Diagram */}
 					<ReactomeDiagram reactome_id={elementData.external_id} />
+
+					{/* Associated genes */}
 					{
 						geneData.length ? <div key="gene_table" className="mt-4">{op_subtitle('gene')}<DataTable key="gene" data={geneData} columns={gene_columns} col_for_ids={key_cols}/></div> : ''
 					}
+
+					{/* Associated metabolites */}
 					{
 						metaboliteData.length ? <div key="metabolite_table" className="mt-4">{op_subtitle('metabolite')}<DataTable key="metabolite" data={metaboliteData} columns={metabolite_columns} col_for_ids={key_cols}/></div> : ''
 					}

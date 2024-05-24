@@ -2,15 +2,29 @@ import { FileEarmarkArrowDown } from 'react-bootstrap-icons';
 
 {/* <tr><td>Scoring file</td><td><FileEarmarkText className="hl_color" size={24}/></td></tr> */}
 
-export const DownloadButtons = (props) => {
+export const download_labels = {
+    "scoring_files": {"label": "Scoring files"},
+    "scoring_files_pgsc_calc": {"label": "Scoring files", "sub_label": "pgsc_calc compatible"},
+    "validation_results": {"label": "Validation Results"},
+    "score_variant_info": {"label": "Variants info"},
+    "gwas_sumstats": {"label": "GWAS summary stats"}
+}
 
-    const download_labels = {
-        "scoring_files": "Scoring files",
-        "scoring_files_pgsc_calc": "Scoring files (pgsc_calc compatible)",
-        "validation_results": "Validation Results",
-        "score_variant_info": "Variants info",
-        "gwas_sumstats": "GWAS summary stats"
+export const get_download_list = (scoring_files_urls) => {
+    let urls = {};
+    for (const key of Object.keys(download_labels)) {
+        if (scoring_files_urls[key]) {
+            urls[key] = {'url': scoring_files_urls[key], "label": download_labels[key]["label"]};
+            if (download_labels[key]['sub_label']) {
+                urls[key]['sub_label'] = download_labels[key]['sub_label']
+            }
+        }
     }
+    return urls
+}
+
+
+export const DownloadButtons = (props) => {
 
     return (
         <>
@@ -27,12 +41,24 @@ export const DownloadButtons = (props) => {
 
 export const DownloadList = (props) => {
 
+    const icon_size = 24;
+    const div_size = icon_size + (8 * 2); // 40
+
     return (
         <>
             { props.urls ? 
-                <table className='table op_table'>
+                <table className='table op_dwnld_table'>
                     <tbody>
-                        { Object.keys(props.urls).map((label) => <tr key={label}><td>{label}</td><td><a href={props.urls[label]} target="_blank"><FileEarmarkArrowDown className="hl_color" size={24}/></a></td></tr>)}
+                        { Object.keys(props.urls).map((entry) =>
+                            <tr key={'download_'+entry}>
+                                <td>{props.urls[entry]['label']}{props.urls[entry]['sub_label'] ? <small> ({props.urls[entry]['sub_label']})</small>:''}</td>
+                                <td className="p-0">
+                                    <a href={props.urls[entry]['url']} title={'Download '+props.urls[entry]['label']} target="_blank">
+                                        <div className="p-2" style={{width:div_size+"px",height:div_size+"px"}}><FileEarmarkArrowDown className="hl_color" size={icon_size}/></div>
+                                    </a>
+                                </td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
                 :''

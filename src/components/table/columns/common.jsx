@@ -1,5 +1,5 @@
 import { FileEarmarkText, Hr } from 'react-bootstrap-icons';
-import { internal_publication_link, omicspred_omics_type } from '../../Common';
+import { internal_publication_link, omicspred_omics_type, display_description } from '../../Common';
 import { thousandifyNumber, ToogleDiv, ToogleText } from '../../Generic';
 import Href from '../../Href';
 
@@ -279,6 +279,26 @@ export const common_cols = {
             return pr_names.join(data_separator);
         }
     },
+    'protein_desc': {
+        field: 'proteins__descriptions',
+        headerName: 'Protein Descriptions',
+        minWidth: 300,
+        // flex: 1,
+        renderCell: (params) => {
+            let pr_desc_list = [];
+            if (params.row.descriptions) {
+                pr_desc_list = display_description(params.row.descriptions)
+                // const pr_name = params.row.name ? params.row.name : params.row.external_id;
+                // pr_desc_list = params.row.descriptions.map((desc,index) => <ToogleText key={pr_name+'_'+index} text={desc}/>)
+            }
+            return pr_desc_list;
+        },
+        valueGetter: (value, row) => {
+            if (row.descriptions) {
+                return row.descriptions.join(data_separator);
+            }
+        }
+    },
     'gene_id': {
         field: 'genes__external_id',
         headerName: 'Ensembl ID',
@@ -503,14 +523,14 @@ export const common_cols = {
             if (params.row.phecode) {
                 phe_name = params.row.phecode.name;
             }
-            return phe_name
+            return phe_name;
         },
         valueGetter: (value, row) => {
             let phe_name = row.name;
             if (row.phecode) {
                 phe_name = row.phecode.name;
             }
-            return phe_name
+            return phe_name;
         }
     },
     'phecode_category': {
@@ -519,10 +539,18 @@ export const common_cols = {
         minWidth: 200,
         // flex: 0.8,
         renderCell: (params) => {
-            return params.row.phecode.category;
+            let phe_cat = params.row.category;
+            if (params.row.phecode) {
+                phe_cat = params.row.phecode.category;
+            }
+            return phe_cat;
         },
         valueGetter: (value, row) => {
-            return row.phecode.category;
+            let phe_cat = row.category;
+            if (row.phecode) {
+                phe_cat = row.phecode.category;
+            }
+            return phe_cat;
         }
     },
     'pathway_group': {

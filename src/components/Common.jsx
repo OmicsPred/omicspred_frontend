@@ -1,7 +1,7 @@
 import Href from "./Href";
 import { ChevronRight } from 'react-bootstrap-icons';
-import {cohort_cols, common_column_groups} from './table/columns/common';
-
+import { cohort_cols, common_column_groups } from './table/columns/common';
+import { ToogleDiv, ToogleText } from './Generic';
 
 export const internal_publication_link = (publication) => {
     let firstauthor = publication.firstauthor;
@@ -43,7 +43,7 @@ export const browse_title = (type, label) => {
 
 
 export const op_title = (type, data, label, force_use_label) => {
-    const type_uc = type.charAt(0).toUpperCase() + type.slice(1);
+    const type_uc = (type == 'phecode') ? 'PheWAS' : type.charAt(0).toUpperCase() + type.slice(1);
     let value = label;
     if (!force_use_label) {
         value = (data && data.name) ? data.name : label;
@@ -66,20 +66,44 @@ export const op_subtitle = (type,label,count) => {
         if (count > 1) {
             suffix += 's'
         }
-        suffix += ' ('+count+')'
     }
     else {
         suffix += '(s)'
     }
-    return <h5><ChevronRight className={'op_subtitle color_'+type}/>Associated {label}{suffix}</h5>
+    return <h5><ChevronRight className={'op_subtitle color_'+type}/>Associated {label}{suffix}{count ? <> (<span className={'color_'+type}>{count}</span>)</> : ''}</h5>
 }
+
 
 export const op_subtitle_no_asso = (type,label,count) => {
     if (!label) {
         label = type;
     }
-    return <h5><ChevronRight className={'op_subtitle color_'+type}/>{label}{count ? ' ('+count+')' : ''}</h5>
+    return <h5><ChevronRight className={'op_subtitle color_'+type}/>{label}{count ? <> (<span className={'color_'+type}>{count}</span>)</> : ''}</h5>
 }
+
+
+export const display_information = (type, content) => {
+    const type_uc = type.charAt(0).toUpperCase() + type.slice(1)
+    return (
+        <div className='d-flex'>
+            <div className="card-deck d-lg-flex flex-lg-row justify-content-center d-md-flex flex-md-row d-sm-flex flex-sm-column me-4">
+                <div className="card op_card mb-3">
+                    <div className="card-header"><h5 className="mb-0">{type_uc} information</h5></div>
+                    <div className="card-body">
+                        <div className="card-text">
+                            <table className='table_card table_card_col_centered'>
+                                <tbody>
+                                    {content}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 
 export const publication_ref = (publication,display_year) => {
     let year = undefined;
@@ -88,6 +112,7 @@ export const publication_ref = (publication,display_year) => {
     }
     return <span>{publication.firstauthor} <i>et al.</i> {publication.journal} {year ? <small>({year})</small> : ''}</span>
 }
+
 
 export const omicspred_omics_type = (type) => {
     return (
@@ -139,4 +164,14 @@ export const get_cohorts_col_groups_list = (sample_cohorts, cohorts_list) => {
         }
     }
     return cohorts_list;
+}
+
+{/* Format the list of descriptions for the molecular traits */}
+export const display_description = (description_list) => {
+    if (description_list.length == 1) {
+        return <ToogleText text={description_list[0]} limit='200'/>;
+    }
+    else {
+        return (<ToogleDiv key={'toggle_description'} title={<><span className='font-bold'>{description_list.length}</span> descriptions</>} content={<ul className='mb-2'>{description_list.map((description,index) => <li key={'description_'+index}><ToogleText text={description}/></li>)}</ul>}/>)
+    }
 }

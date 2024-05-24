@@ -43,13 +43,16 @@ export const ToogleDiv = (props) => {
     if (props.type == 'button') {
         toogle_class = 'btn shadow op_toogle_btn';
     }
+    else if (props.type == 'button_blue') {
+        toogle_class = 'btn btn-primary shadow op_toogle_btn_blue';
+    }
 
     return (
         <>
             <div className={toogle_class} onClick={(e) => {
               hideShowDiv(e)
             }}>{props.title}{show ? <DashCircleFill className="ms-1"/>:<PlusCircleFill className="ms-1"/>}</div>
-            {show ? <div className="mt-2">{props.content}</div>:null}
+            {show ? <div className="d-flex mt-2"><div className={props.class_name ? props.class_name : ''}>{props.content}</div></div>:null}
         </>
     )
 }
@@ -58,7 +61,7 @@ export const ToogleDiv = (props) => {
 export const ToogleText = (props) => {
     const [show, setShow] = useState(false);
 
-    const threshold = props.limit ? parseInt(props.limit) : 75;
+    const threshold = props.limit ? parseInt(props.limit) : 100;
     const whole_text = props.text;
 
     useEffect(() => {}, [show])

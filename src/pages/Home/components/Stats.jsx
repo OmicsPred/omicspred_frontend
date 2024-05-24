@@ -65,9 +65,6 @@ const Stats = (props) => {
         let data_types = {};
         // let platforms = [];
         // let publications = []
-        console.log('response - start');
-        console.log(response);
-        console.log('response - end');
         for (let i=0;i<response.length;i++) {
             const resp = response[i];
             // const platform_name = resp.platform.name;
@@ -117,9 +114,14 @@ const Stats = (props) => {
         if (!type) {
             type = title;
         }
+        const small_title = title.replace('associations', 'asso.')
         return (
             <div className='home_stats_box'>
-                <div className='home_stats_title'><ChevronRight className='hl_color me-1' size="20px"/>{title}</div>
+                <div className='home_stats_title'>
+                    <ChevronRight className='hl_color me-1' size="20px"/>
+                    <span className='d-sm-none'>{small_title}</span>
+                    <span className='d-none d-sm-inline'>{title}</span>
+                </div>
                 <div className='home_stats_count'>{thousandifyNumber(count)}</div>
                 <div className='home_stats_btn'>
                     <a className="btn btn-primary btn-sm shadow"  href={url} role="button">Browse</a>
@@ -154,17 +156,16 @@ const Stats = (props) => {
             { omicsChartData  && Object.keys(omicsChartData).length > 0 && omicsCount && Object.keys(omicsCount).length > 0 ?
                 <div className='d-flex justify-content-center'>
                     <div>
-                    <div>
                         <h5 className='mb-4'>{title}</h5>
                         <div className='d-flex justify-content-center op_stats_dist'>
                             {/* Chart */}
-                            <OPDoughnut data={omicsChartData} width="200" display_legend="false"/>
+                            <OPDoughnut data={omicsChartData} width="180" display_legend="false"/>
                             {/* Legend */}
-                            <div style={{borderLeft:"1px solid #CCC",paddingLeft:"1rem"}}>
+                            <div>
                                 {Object.keys(type_colours).map((type) => <div className="d-flex justify-content-between " key={type}><span className='me-3'>{omicspred_omics_type(type)}</span><span style={{fontWeight:'bold'}}>{thousandifyNumber(omicsCount[type])}</span></div>)}
                             </div>
                         </div>
-                    </div></div>
+                    </div>
                 </div>
             :''}
         </div>

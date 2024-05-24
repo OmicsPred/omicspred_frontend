@@ -12,7 +12,7 @@ function PhecodesFull() {
     return (
         <>
             {page_title('phecode', 'PheWAS', 'All Associations')}
-            <h4 className='page_title'>Full list of associations identified in the PheWAS</h4>
+            <h4 className='page_title'>Full list of associations identified in PheWAS</h4>
             <div className="mt-4">
                 <DataTableServer key="phecode_full" url_suffix={url_suffix} columns={phecode_columns['Full']} col_for_ids={column_keys}/>
             </div>

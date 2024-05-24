@@ -13,7 +13,7 @@ const index2url = {
 const index2id = {
     'gene': 'Ensembl ID',
     'metabolite': 'Metabolon ID',
-    'phecode': 'Phecode',
+    'phecode': 'PheCode',
     'protein': 'UniProt ID',
     'score': 'OmicsPred ID'
 }

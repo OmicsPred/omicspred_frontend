@@ -1,3 +1,5 @@
+import { thousandifyNumber } from '../../Generic';
+
 const default_cell_value = process.env.DEFAULT_CELL_VALUE;
 
 const metric_valueGetter = function(performance_metrics,method) {
@@ -33,7 +35,10 @@ export const score_columns = [
         headerName: 'Sample size',
         width: 150,
         renderCell: (params) => {
-            return params.row.sample.sample_number;
+            return thousandifyNumber(params.row.sample.sample_number);
+        },
+        valueGetter: (value, row) => {
+            return row.sample.sample_number;
         }
     },
     {
