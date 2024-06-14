@@ -19,8 +19,8 @@ const Platforms = (props) => {
 
   const buildPlatformListByOmic = (data_list) => {
     if (data_list) {
-        const platforms_seen = []
-        const platforms_by_omic = [];
+        let platforms_seen = []
+        let platforms_by_omic = [];
         data_list.map(data => {
             const platform_type = data.platform.type;
             const platform_name = data.platform.name;
@@ -42,13 +42,14 @@ const Platforms = (props) => {
                         }
                         // Samples validation - Add cohort names to existing Plaform entry
                         let existing_samples_validation = platforms_by_omic[platform_type][i].samples_validation;
-                        let existing_cohorts = []
+                        let existing_cohorts = [];
                         for (let j=0; j<existing_samples_validation.length;j++) {
-                            const cohort_name = samples_validation.cohorts[0].name_short;
+                            const cohort_name = existing_samples_validation[j].cohorts[0].name_short;
                             if (!existing_cohorts.includes(cohort_name)) {
-                            existing_cohorts.push(cohort_name);
+                                existing_cohorts.push(cohort_name);
                             }
                         }
+                        console.log(existing_cohorts);
                         for (let k=0; k<samples_validation.length;k++) {
                             if (samples_validation[k].cohorts && samples_validation[k].cohorts.length > 0) {
                                 const cohort_name = samples_validation[k].cohorts[0].name_short;

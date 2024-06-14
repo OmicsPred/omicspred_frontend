@@ -40,11 +40,11 @@ const OPDoughnut = (props) => {
             setDoughnutData(props.data)
         }
         else {
-            const platform_data = await restApiCall('platform/additional/all');
-            if (platform_data.results) {
-                console.log('# platform_data:');
-                console.log(platform_data);
-                setDoughnutData(build_omics_distribution(platform_data.results));
+            const dataset_data = await restApiCall('dataset/all');
+            if (dataset_data.results) {
+                console.log('# dataset_data:');
+                console.log(dataset_data);
+                setDoughnutData(build_omics_distribution(dataset_data.results));
             }
         }
         // Update Options //

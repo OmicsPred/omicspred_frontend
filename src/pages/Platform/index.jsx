@@ -19,7 +19,8 @@ import _ from 'underscore';
 function Platform() {
     let { platform } = useParams();
     const [platformSumData, setPlatformSumData] = useState([])
-    const [platformAddData, setPlatformAddData] = useState([])
+    const [datasetData, setDatasetData] = useState([])
+    const [platformScoresCount, setPlatformScoresCount] = useState(0)
     // const [platformTableData, setPlatformTableData] = useState([])
     const [platformTableColumns, setPlatformTableColumns] = useState([])
     const [platformTableColumnGroups, setPlatformTableColumnGroups] = useState([])
@@ -176,14 +177,20 @@ function Platform() {
     }
 
     const fetchPlatformAdditionalData = async () => {
-        const platform_add_data = await restApiCall('platform/additional/'+platform);
-        console.log(platform_add_data['results']);
-        const platform_add_results = platform_add_data['results']
-        setPlatformAddData(platform_add_results);
-        const table_cols = get_table_columns(platform_add_results);
+        const dataset_data = await restApiCall('dataset/'+platform);
+        console.log(dataset_data['results']);
+        const dataset_results = dataset_data['results']
+        setDatasetData(dataset_results);
+        const table_cols = get_table_columns(dataset_results);
         setPlatformTableColumns(table_cols);
-        const table_col_grp = get_table_column_groups(platform_add_results);
+        const table_col_grp = get_table_column_groups(dataset_results);
         setPlatformTableColumnGroups(table_col_grp);
+        // Count total number of scores for the platform
+        let platform_scores_count = 0
+        for (let i=0;i<dataset_results.length;i++) {
+            platform_scores_count += dataset_results[i].scores_count;
+        }
+        setPlatformScoresCount(platform_scores_count);
     }
 
     // Allow to opt in/out a particular version of the platform and resend a REST API query
@@ -230,15 +237,15 @@ function Platform() {
     return (
         <>
             <h2 className='page_title'>Platform<ChevronRight className={'op_title_separator color_'+get_data_type(platformSumData.type)}/><span>{platformSumData.name}</span></h2>
-            <div className='d-flex justify-content-center d-flex flex-lg-row flex-column'>
-                {platformSumData && platformVersions ? <PlatformSummary metadata={platformSumData} versions={platformVersions}/>: ''}
+            <div className='d-flex justify-content-start d-flex flex-lg-row flex-column'>
+                {platformSumData && platformVersions && platformScoresCount ? <PlatformSummary metadata={platformSumData} scores_count={platformScoresCount} versions={platformVersions}/>: ''}
                 <div className='me-5 d-none d-lg-inline-block'></div>
                 <div className='pt-3 d-lg-none'></div>
-                { platformAddData.length > 0 ?
+                { datasetData.length > 0 ?
                     <div>
-                        <h5>Publications ({platformAddData.length})</h5>
+                        <h5>Dataset{datasetData.length > 1 ? 's': ''} ({datasetData.length})</h5>
                         <div className="d-flex flex-column">
-                            { platformAddData.map((additional) => <PublicationCard data={additional} key={additional.publication.doi} />)}
+                            { datasetData.map((dataset) => <PublicationCard data={dataset} key={dataset.publication.doi+'_'+dataset.name} />)}
                         </div>
                     </div> : ''
                 }

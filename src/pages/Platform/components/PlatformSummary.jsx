@@ -14,7 +14,7 @@ const PlatformSummary = (props) => {
                 <tr><td>Long Name</td><td>{platform_sum.full_name}</td></tr>
                 { platform_versions != '' ? <tr><td>Versions</td><td>{platform_versions}</td></tr> : ''}
                 <tr><td>Technic</td><td>{platform_sum.technic}</td></tr>
-                <tr><td>Number of scores</td><td>{numberBadge(platform_sum.scores_count)}</td></tr>
+                <tr><td>Number of scores</td><td>{numberBadge(props.scores_count)}</td></tr>
             </>
         )
     }

@@ -79,8 +79,13 @@ export default function ChartPlot(props) {
     const [colors, setColors] = useState([]);
   
     const updatecolors = async () => {
-      const datatocolor = Object.values(props.missed);
+      let datatocolor = Object.values(props.missed);
   
+      // Set the default value to 0 if there is no missing rate data
+      if (!datatocolor || datatocolor.length == 0) {
+        datatocolor = data2.map((item) => { return 0;});
+      }
+
       const toreturn = datatocolor.map((e) => {
         if (e >= 0 && e < 0.35) {
           return "blue";

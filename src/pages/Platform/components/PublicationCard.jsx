@@ -7,18 +7,28 @@ import { People } from 'react-bootstrap-icons';
 
 import Href from "../../../components/Href";
 import { SampleTable } from '../../../components/Sample';
-import { op_subtitle_no_asso } from '../../../components/Common';
 
 
 const PublicationCard = (props) => {
-    const additional = props.data
-    const publication = additional.publication;
-    const platform_name = additional.platform.name;
-    const samples_training = additional.samples_training;
-    const samples_validation = additional.samples_validation;
+    const dataset = props.data;
+    const dataset_name = dataset.name;
+    const publication = dataset.publication;
+    const platform_name = dataset.platform.name;
+    const samples_training = dataset.samples_training;
+    const samples_validation = dataset.samples_validation;
     const key = publication.pmid
 
     const pub_year = publication.date_publication.split('-')[0]
+
+    let plot_url = "/plot/"+platform_name+"/"+key;
+    if (dataset_name) {
+        plot_url += '?dataset='+dataset_name;
+    }
+
+    let samples_label = platform_name+' samples';
+    if (dataset_name) {
+        samples_label += ' ('+dataset_name+')'
+    }
 
     return (
         <Accordion>
@@ -32,36 +42,21 @@ const PublicationCard = (props) => {
                         <div>
                             <ChevronRight className="hl_color me-2"/><span className="font-bold">{publication.title}</span>
                         </div>
+                        {dataset_name ? <div className="ms-4">Dataset: <b>{dataset_name}</b></div>:''}
                         <div className="ms-4">
                             <span >{[publication.firstauthor," ",<i key={key+'_i'}>et al.</i>," - ",publication.journal," (",pub_year,")"]}</span>
-                            {/* <span className='ms-4'>
+                            <span className='ms-4'>
+                                <Href key={key+'_'+dataset_name+'_plot_link'} role="button-small" text={platform_name+" plots"} href={plot_url} icon={<GraphUp/>} />
+                            </span>
+                            <span className='ms-4'>
                                 <Href key={key+'_pub_link'} role="button-small" text="Publication page" href={"/publication/"+key} icon={<Book/>}/>
-                            </span> */}
-                            { key == '36991119' ?
-                                <span className='ms-4'>
-                                    <Href key={key+'_plot_link'} role="button-small" text={platform_name+" plots"} href={"/plot/"+platform_name+"/"+key} icon={<GraphUp/>} />
-                                </span>: ''
-                            }
+                            </span>
                         </div>
                     </div>
-                    {/* { key == '36991119' ?
-                        <div style={{display:'block'}}>
-                            <Href key={key+'_plot_link'} role="button-small" text={platform_name+" plots"} href={"/plot/"+platform_name+"/"+key} icon={<GraphUp/>} />
-                        </div> : ''
-                    } */}
                 </div>
             </AccordionSummary>
             <AccordionDetails>
-                <div className="mb-3">
-                    <Href key={key+'_pub_link'} role="button-small" text="Publication page" href={"/publication/"+key} icon={<Book/>}/>
-                    {/* { key == '36991119' ?
-                        <>
-                            <span className="me-3"></span>
-                            <Href key={key+'_plot_link'} role="button" text={platform_name+" plots"} href={"/plot/"+platform_name+"/"+key} icon={<GraphUp/>} />
-                        </> : ''
-                    } */}
-                </div>
-                <h5 className='mt-4'><People className='me-2 op_subtitle color_hl' style={{fontSize:'10px',verticalAlign:'top'}}/>{platform_name+' samples'}</h5>
+                <h5 className='mt-1'><People className='me-2 op_subtitle color_hl' style={{fontSize:'10px',verticalAlign:'top'}}/>{samples_label}</h5>
                 <SampleTable table_name={key} samples_training={samples_training} samples_validation={samples_validation}/>
             </AccordionDetails>
         </Accordion>

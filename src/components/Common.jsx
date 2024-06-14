@@ -86,7 +86,7 @@ export const display_information = (type, content) => {
     const type_uc = type.charAt(0).toUpperCase() + type.slice(1)
     return (
         <div className='d-flex'>
-            <div className="card-deck d-lg-flex flex-lg-row justify-content-center d-md-flex flex-md-row d-sm-flex flex-sm-column me-4">
+            <div className="card-deck d-lg-flex flex-lg-row justify-content-center d-md-flex flex-md-row d-sm-flex flex-sm-column">
                 <div className="card op_card mb-3">
                     <div className="card-header"><h5 className="mb-0">{type_uc} information</h5></div>
                     <div className="card-body">

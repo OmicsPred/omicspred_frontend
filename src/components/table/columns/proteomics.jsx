@@ -47,11 +47,27 @@ export const proteomics_columns = {
 };
 
 
+const olink_interval_training_col = {...common_cols['INTERVAL'], field: 'score_id'}
+
 export const proteomics_column_groups = {
-    'Olink': [
-        common_column_groups['INTERVAL'],
+    'Olink-INTERVAL': [
+        {...common_column_groups['INTERVAL'], headerClassName: ['training_col','col_border_left']},
         common_column_groups['NSPHS'],
         common_column_groups['ORCADES']
+    ],
+    'Olink-UKB_European': [
+        {...common_column_groups['UKB'], headerClassName: ['training_col','col_border_left']},
+        common_column_groups['UKB_Withheld_ALL'],
+        common_column_groups['UKB_Withheld_AFR'],
+        common_column_groups['UKB_Withheld_AMR'],
+        common_column_groups['UKB_Withheld_EAS'],
+        common_column_groups['UKB_Withheld_EUR'],
+        common_column_groups['UKB_Withheld_SAS'],
+        common_column_groups['INTERVAL']
+    ],
+    'Olink-UKB_Multi-ancestry': [
+        {...common_column_groups['UKB'], headerClassName: ['training_col','col_border_left']},
+        common_column_groups['INTERVAL']
     ],
     'Somalogic': [
         common_column_groups['INTERVAL'],

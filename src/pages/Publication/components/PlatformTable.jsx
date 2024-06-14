@@ -18,29 +18,35 @@ import { DownloadList, get_download_list } from '../../../components/Downloads';
 
 
 const PlatformTable = (props) => {
-    const [platformName, setPlatformName] = useState([])
-    const [platformInfo, setPlatformInfo] = useState([]);
-    const [platformDataEndpoint, setPlatformDataEndpoint] = useState([])
+    const [platformName, setPlatformName] = useState()
+    const [platformInfo, setPlatformInfo] = useState();
+    const [platformDataEndpoint, setPlatformDataEndpoint] = useState()
     const [platformTableColumns, setPlatformTableColumns] = useState([])
     const [platformTableColumnGroups, setPlatformTableColumnGroups] = useState([])
     const [platformDownloads, setPlatformDownloads] = useState([])
     const [loadedStatus, setLoadedStatus] = useState(false);
+    const [datasetName, setDatasetName] = useState();
 
-    const platform = props.data;
-    const platform_name = platform.platform.name;
-    const platform_type = platform.platform.type;
+    const dataset = props.data;
+    const platform_name = dataset.platform.name;
+    const platform_type = dataset.platform.type;
     const samples_training = props.data.samples_training;
     const samples_validation = props.data.samples_validation;
     const p_key = platform_name;
-    const scores_count = numberBadge(platform.scores_count)
+    const scores_count = numberBadge(dataset.scores_count)
     const pmid = props.pmid;
-    // const url_endpoint = get_url_endpoint(platform_type, props.pmid)
 
-    // const columns = get_table_columns(platform);
-    // const columns_groups = get_table_column_groups(platform);
+    let plot_url = "/plot/"+platformName+"/"+pmid;
+    if (dataset.name) {
+        plot_url += '?dataset='+dataset.name;
+    }
 
-    const get_url_endpoint = (type, pmid) => {
+
+    const get_url_endpoint = (type, pmid, dataset) => {
         let endpoint_suffix = platform_name+"?pmid="+pmid;
+        if (dataset) {
+            endpoint_suffix += '&dataset='+dataset
+        }
         switch(type) {
             case 'Metabolomics':
                 return "metabolomics/"+endpoint_suffix;
@@ -56,15 +62,15 @@ const PlatformTable = (props) => {
         switch(type) {
             case 'Metabolomics':
                 if (platform_name in metabolomics_columns) {
-                    return metabolomics_columns[platform_name];
+                    return metabolomics_columns[platform_name].map(object => ({ ...object }));
                 }
             case 'Proteomics':
                 if (platform_name in proteomics_columns) {
-                    return proteomics_columns[platform_name];
+                    return proteomics_columns[platform_name].map(object => ({ ...object }));
                 }
             case 'Transcriptomics':
                 if (platform_name in transcriptomics_columns) {
-                    return transcriptomics_columns[platform_name];
+                    return transcriptomics_columns[platform_name].map(object => ({ ...object }));
                 }
             default:
                 return [];
@@ -72,22 +78,24 @@ const PlatformTable = (props) => {
     }
 
 
-    const get_table_columns = (platform) => {
-        const platform_name = platform.platform.name;
-        const platform_type = platform.platform.type;
+    const get_table_columns = (dataset) => {
+        const platform_name = dataset.platform.name;
+        const platform_type = dataset.platform.type;
         // Fetch metadata columns for a given platform
         let columns = get_metadata_columns(platform_name,platform_type);
 
         // Fetch Cohort columns
         let cohorts = [];
         // Training cohorts
-        for (let i=0; i<platform['samples_training'].length; i++) {
-            const sample_cohorts = platform['samples_training'][i]['cohorts'];
+        for (let i=0; i<dataset['samples_training'].length; i++) {
+            const sample_cohorts = dataset['samples_training'][i]['cohorts'];
             cohorts = get_cohorts_cols_list(sample_cohorts, cohorts);
         }
+        // Fetch the training cohorts
+        const cohorts_training = Object.values(cohorts);
         // Validation cohorts
-        for (let i=0; i< platform['samples_validation'].length;i++) {
-            const sample_cohorts = platform['samples_validation'][i]['cohorts'];
+        for (let i=0; i< dataset['samples_validation'].length;i++) {
+            const sample_cohorts = dataset['samples_validation'][i]['cohorts'];
             cohorts = get_cohorts_cols_list(sample_cohorts, cohorts);
         }
         // Fetch columns details
@@ -98,13 +106,24 @@ const PlatformTable = (props) => {
                 for (let j=0; j<metric_cols.length; j++) {
                     const metric = metric_cols[j];
                     if (cohort_cols[cohort][metric]) {
-                        const cohort_metric_col = {...cohort_cols[cohort][metric], sortable: false}
-                        columns.push(cohort_metric_col)
+                        // Use a different display for the training cohorts
+                        if (cohorts_training.includes(cohort)) {
+                            let training_header_class = 'training_col'
+                            if (cohort_cols[cohort][metric].headerClassName == 'col_border_left') {
+                                training_header_class = ['training_col','col_border_left']
+                            }
+                            const cohort_metric_col = {...cohort_cols[cohort][metric], headerClassName: training_header_class, sortable: false}
+                            columns.push(cohort_metric_col)
+                        }
+                        else {
+                            const cohort_metric_col = {...cohort_cols[cohort][metric], sortable: false}
+                            columns.push(cohort_metric_col)
+                        }
                     }
                 }
             }
         }
-        return columns;
+        setPlatformTableColumns(columns)
     }
 
 
@@ -128,21 +147,28 @@ const PlatformTable = (props) => {
     }
 
 
-    const get_table_column_groups = (platform) => {
-        const platform_name = platform.platform.name;
-        const platform_type = platform.platform.type;
+    const get_table_column_groups = (dataset) => {
+        const platform_name = dataset.platform.name;
+        const platform_type = dataset.platform.type;
         let col_groups = get_metadata_column_groups(platform_name,platform_type);
 
         let cohorts = [];
         // Training cohorts
 
-        for (let i=0; i<platform['samples_training'].length;i++) {
-            const sample_cohorts = platform['samples_training'][i]['cohorts'];
+        for (let i=0; i<dataset['samples_training'].length;i++) {
+            const sample_cohorts = dataset['samples_training'][i]['cohorts'];
             cohorts = get_cohorts_col_groups_list(sample_cohorts,cohorts);
         }
+        // Fetch the training cohorts
+        let cohorts_training = [];
+        for (let i=0; i< cohorts.length; i++) {
+            const cohort = cohorts[i];
+            cohorts_training.push(cohort);
+        }
+
         // Validation cohorts
-        for (let i=0; i<platform['samples_validation'].length;i++) {
-            const sample_cohorts = platform['samples_validation'][i]['cohorts'];
+        for (let i=0; i<dataset['samples_validation'].length;i++) {
+            const sample_cohorts = dataset['samples_validation'][i]['cohorts'];
             cohorts = get_cohorts_col_groups_list(sample_cohorts,cohorts);
         }
 
@@ -150,7 +176,12 @@ const PlatformTable = (props) => {
         for (let i=0; i< cohorts.length; i++) {
             const cohort = cohorts[i];
             if (common_column_groups[cohort]) {
-                col_groups.push(common_column_groups[cohort])
+                if (cohorts_training.includes(cohort)) {
+                    col_groups.push({...common_column_groups[cohort], headerClassName: ['training_col','col_border_left']})
+                }
+                else {
+                    col_groups.push(common_column_groups[cohort])
+                }
             }
         }
         return col_groups;
@@ -158,18 +189,16 @@ const PlatformTable = (props) => {
 
 
     const prepareTable = () => {
-        const platform = props.data;
-        setPlatformName(platform.platform.name);
-        const url_endpoint = get_url_endpoint(platform.platform.type, props.pmid);
+        const dataset = props.data;
+        setDatasetName(dataset.name);
+        setPlatformName(dataset.platform.name);
+        const url_endpoint = get_url_endpoint(dataset.platform.type, props.pmid, dataset.name);
         setPlatformDataEndpoint(url_endpoint);
-        const columns = get_table_columns(platform);
-        setPlatformTableColumns(columns);
-        const columns_groups = get_table_column_groups(platform);
+        get_table_columns(dataset);
+        const columns_groups = get_table_column_groups(dataset);
         setPlatformTableColumnGroups(columns_groups);
-        console.log('>> platform data:')
-        console.log(platform.platform.name);
-        if (platform.scoring_files_urls) {
-            const urls = get_download_list(platform.scoring_files_urls)
+        if (dataset.scoring_files_urls) {
+            const urls = get_download_list(dataset.scoring_files_urls)
             setPlatformDownloads(urls);
         }
     }
@@ -203,21 +232,25 @@ const PlatformTable = (props) => {
     useEffect(() => {},[loadedStatus]);
 
     return (
-        <Accordion onChange={(e,expanded) => {loadTable(expanded)}}>
+        <Accordion key={datasetName+"_"+platformName+'_accordion'} onChange={(e,expanded) => {loadTable(expanded)}}>
             <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls={p_key+'_panel_content'}
             id={p_key+'_panel_header'}
             >
                 <div className='platform_accordion'>
-                    <div><ChevronRight className={"color_"+platform_type+" me-2"}/><span className="font-bold">{platform_name}</span></div>
+                    <div className='d-flex flex-column'>
+                        <div>
+                            <ChevronRight className={"color_"+platform_type+" me-2"}/>
+                            <span className="font-bold">{platform_name}</span>
+                        </div>
+                        {datasetName ? <div style={{marginLeft: "24px"}} title='Dataset name'><small>{datasetName}</small></div>:''}
+                    </div>
                     <div><span className="me-1"># Scores:</span>{scores_count}</div>
                     <div>{omicspred_omics_type(platform_type)}</div>
-                    { pmid == '36991119' ?
-                        <div>
-                            <Href key={platformName+'_plot_link'} role="button" text="Go to Plots" href={"/plot/"+platformName+"/"+pmid} icon={<GraphUp/>} />
-                        </div> : ''
-                    }
+                    <div>
+                        <Href key={platformName+'_plot_link'} role="button" text="Go to Plots" href={plot_url} icon={<GraphUp/>} />
+                    </div>
                     <div>
                         <Href key={platformName+'_platform_link'} role="button" text="Platform page" href={"/platform/"+platformName}/>
                     </div>
@@ -244,7 +277,7 @@ const PlatformTable = (props) => {
                                 </div>:''
                             }
                         </div>
-                        <DataTableServer key={platformName+'_table'} url_suffix={platformDataEndpoint} columns={platformTableColumns} groups={platformTableColumnGroups}/>
+                        <DataTableServer key={datasetName+'_'+platformName+'_table'} url_suffix={platformDataEndpoint} columns={platformTableColumns} groups={platformTableColumnGroups}/>
                     </>:''
                 }
             </AccordionDetails>

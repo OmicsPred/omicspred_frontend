@@ -45,6 +45,18 @@ export const display_description = (description_list) => {
     }
 }
 
+export const display_proteins = (proteins_list) => {
+    let display_list = [];
+    for (let i=0; i < proteins_list.length; i++) {
+        const protein = proteins_list[i];
+        const protein_id = protein.external_id ? protein.external_id : protein.name;
+        console.log(protein_id);
+        display_list.push(<span key={'protein_'+protein_id}>{i > 0 ? ', ' : '' }<Href text={protein_id} href={'/protein/'+protein_id}/></span>)
+    }
+    return display_list;
+}
+
+
 export const display_synonyms = (synonyms) => {
     if (synonyms.length == 1) {
         const synonym = synonyms[0];

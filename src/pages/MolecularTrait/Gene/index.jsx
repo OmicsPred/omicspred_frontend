@@ -7,7 +7,7 @@ import { pathway_molecular_trait_columns} from '../../../components/table/column
 import restApiCall from '../../../components/RestAPI';
 import restApiCallPaginated from '../../../components/RestAPIPaginated';
 import { op_title, op_subtitle, display_information, display_description } from '../../../components/Common';
-import { display_synonyms } from '../components/links';
+import { display_synonyms, display_proteins } from '../components/links';
 import { get_cohort_columns, get_table_columns, get_table_column_groups } from '../components/columns';
 
 
@@ -74,6 +74,8 @@ function Gene() {
 			}
 			{ elementData.synonyms ? <tr><td>Synonym{elementData.synonyms.length > 1 ? 's' : ''}</td><td>{display_synonyms(elementData.synonyms)}</td></tr>:''}
 			{ elementData.biotype ? <tr><td>Gene type</td><td>{elementData.biotype.replace('_', ' ')}</td></tr>:''}
+			{/* Protein entry */}
+			{ proteinData && proteinData.length ? <tr><td>Protein{proteinData.length > 1 ? 's' : ''}</td><td>{display_proteins(proteinData)}</td></tr>:''}
 			</>
 		)
 	}
@@ -88,8 +90,9 @@ function Gene() {
 		<div>
 			{/* Summary Data */}
 			{op_title('gene', elementData, gene)}
-			{ elementData ? display_information(element, get_information_content()):'' }
-
+			<div className='op_card_container_info'>
+				{ elementData ? display_information(element, get_information_content()):'' }
+			</div>
 			{/* Associated scores */}
 			{
 				scoreData && scoreData.length ?
