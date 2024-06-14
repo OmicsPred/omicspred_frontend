@@ -780,7 +780,8 @@ export const cohort_cols = {
     'INTERVAL': {
         'R2' : {
             field: 'INTERVAL_R2',
-            headerClassName: ['training_col','col_border_left'],
+            headerClassName: 'col_border_left',
+            // headerClassName: ['training_col','col_border_left'],
             headerName: 'R2',
             // minWidth: 100,
             // flex: 0.5,
@@ -791,7 +792,7 @@ export const cohort_cols = {
         'Rho': {
             field: 'INTERVAL_Rho',
             headerName: 'Rho',
-            headerClassName: 'training_col',
+            // headerClassName: 'training_col',
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
@@ -1064,66 +1065,192 @@ export const cohort_cols = {
             }
         }
     },
-    'MESA-AFA': {
+    'UKB_Withheld_ALL': {
         'R2': {
-            field: 'MESA-AFA_R2',
+            field: 'UKB_Withheld_ALL_R2',
             headerName: 'R2',
-            headerClassName: ['training_col','col_border_left'],
-            minWidth: 100,
-            flex: 0.5,
+            headerClassName: 'col_border_left',
+            // minWidth: 100,
+            // flex: 0.5,
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'MESA-AFA','R2');
+                return cohort_valueGetter(row,'UKB_Withheld_ALL','R2');
+            }
+        },
+        'Rho': {
+            field: 'UKB_Withheld_ALL_Rho',
+            headerName: 'Rho',
+            // minWidth: 100,
+            // flex: 0.5,
+            valueGetter: (value, row) => {
+                return cohort_valueGetter(row,'UKB_Withheld_ALL','Rho');
             }
         }
     },
-    'MESA-ALL': {
+    'UKB_Withheld_AFR': {
         'R2': {
-            field: 'MESA-ALL_R2',
+            field: 'UKB_Withheld_AFR_R2',
             headerName: 'R2',
-            headerClassName: ['training_col','col_border_left'],
-            minWidth: 100,
-            flex: 0.5,
+            headerClassName: 'col_border_left',
+            // minWidth: 100,
+            // flex: 0.5,
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'MESA-ALL','R2');
+                return cohort_valueGetter(row,'UKB_Withheld_AFR','R2');
+            }
+        },
+        'Rho': {
+            field: 'UKB_Withheld_AFR_Rho',
+            headerName: 'Rho',
+            // minWidth: 100,
+            // flex: 0.5,
+            valueGetter: (value, row) => {
+                return cohort_valueGetter(row,'UKB_Withheld_AFR','Rho');
             }
         }
     },
-    'MESA-CHN': {
+    'UKB_Withheld_AMR': {
         'R2': {
-            field: 'MESA-CHN_R2',
+            field: 'UKB_Withheld_AMR_R2',
             headerName: 'R2',
-            headerClassName: ['training_col','col_border_left'],
-            minWidth: 100,
-            flex: 0.5,
+            headerClassName: 'col_border_left',
+            // minWidth: 100,
+            // flex: 0.5,
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'MESA-CHN','R2');
+                return cohort_valueGetter(row,'UKB_Withheld_AMR','R2');
+            }
+        },
+        'Rho': {
+            field: 'UKB_Withheld_AMR_Rho',
+            headerName: 'Rho',
+            // minWidth: 100,
+            // flex: 0.5,
+            valueGetter: (value, row) => {
+                return cohort_valueGetter(row,'UKB_Withheld_AMR','Rho');
             }
         }
     },
-    'MESA-EUR': {
+    'UKB_Withheld_EAS': {
         'R2': {
-            field: 'MESA-EUR_R2',
+            field: 'UKB_Withheld_EAS_R2',
             headerName: 'R2',
-            headerClassName: ['training_col','col_border_left'],
-            minWidth: 100,
-            flex: 0.5,
+            headerClassName: 'col_border_left',
+            // minWidth: 100,
+            // flex: 0.5,
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'MESA-EUR','R2');
+                return cohort_valueGetter(row,'UKB_Withheld_EAS','R2');
+            }
+        },
+        'Rho': {
+            field: 'UKB_Withheld_EAS_Rho',
+            headerName: 'Rho',
+            // minWidth: 100,
+            // flex: 0.5,
+            valueGetter: (value, row) => {
+                return cohort_valueGetter(row,'UKB_Withheld_EAS','Rho');
             }
         }
     },
-    'MESA-HIS': {
+    'UKB_Withheld_EUR': {
         'R2': {
-            field: 'MESA-HIS_R2',
+            field: 'UKB_Withheld_EUR_R2',
             headerName: 'R2',
-            headerClassName: ['training_col','col_border_left'],
-            minWidth: 100,
-            flex: 0.5,
+            headerClassName: 'col_border_left',
+            // minWidth: 100,
+            // flex: 0.5,
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'MESA-HIS','R2');
+                return cohort_valueGetter(row,'UKB_Withheld_EUR','R2');
+            }
+        },
+        'Rho': {
+            field: 'UKB_Withheld_EUR_Rho',
+            headerName: 'Rho',
+            // minWidth: 100,
+            // flex: 0.5,
+            valueGetter: (value, row) => {
+                return cohort_valueGetter(row,'UKB_Withheld_EUR','Rho');
             }
         }
-    }
+    },
+    'UKB_Withheld_SAS': {
+        'R2': {
+            field: 'UKB_Withheld_SAS_R2',
+            headerName: 'R2',
+            headerClassName: 'col_border_left',
+            // minWidth: 100,
+            // flex: 0.5,
+            valueGetter: (value, row) => {
+                return cohort_valueGetter(row,'UKB_Withheld_SAS','R2');
+            }
+        },
+        'Rho': {
+            field: 'UKB_Withheld_SAS_Rho',
+            headerName: 'Rho',
+            // minWidth: 100,
+            // flex: 0.5,
+            valueGetter: (value, row) => {
+                return cohort_valueGetter(row,'UKB_Withheld_SAS','Rho');
+            }
+        }
+    },
+    // 'MESA-AFA': {
+    //     'R2': {
+    //         field: 'MESA-AFA_R2',
+    //         headerName: 'R2',
+    //         headerClassName: ['training_col','col_border_left'],
+    //         minWidth: 100,
+    //         flex: 0.5,
+    //         valueGetter: (value, row) => {
+    //             return cohort_valueGetter(row,'MESA-AFA','R2');
+    //         }
+    //     }
+    // },
+    // 'MESA-ALL': {
+    //     'R2': {
+    //         field: 'MESA-ALL_R2',
+    //         headerName: 'R2',
+    //         headerClassName: ['training_col','col_border_left'],
+    //         minWidth: 100,
+    //         flex: 0.5,
+    //         valueGetter: (value, row) => {
+    //             return cohort_valueGetter(row,'MESA-ALL','R2');
+    //         }
+    //     }
+    // },
+    // 'MESA-CHN': {
+    //     'R2': {
+    //         field: 'MESA-CHN_R2',
+    //         headerName: 'R2',
+    //         headerClassName: ['training_col','col_border_left'],
+    //         minWidth: 100,
+    //         flex: 0.5,
+    //         valueGetter: (value, row) => {
+    //             return cohort_valueGetter(row,'MESA-CHN','R2');
+    //         }
+    //     }
+    // },
+    // 'MESA-EUR': {
+    //     'R2': {
+    //         field: 'MESA-EUR_R2',
+    //         headerName: 'R2',
+    //         headerClassName: ['training_col','col_border_left'],
+    //         minWidth: 100,
+    //         flex: 0.5,
+    //         valueGetter: (value, row) => {
+    //             return cohort_valueGetter(row,'MESA-EUR','R2');
+    //         }
+    //     }
+    // },
+    // 'MESA-HIS': {
+    //     'R2': {
+    //         field: 'MESA-HIS_R2',
+    //         headerName: 'R2',
+    //         headerClassName: ['training_col','col_border_left'],
+    //         minWidth: 100,
+    //         flex: 0.5,
+    //         valueGetter: (value, row) => {
+    //             return cohort_valueGetter(row,'MESA-HIS','R2');
+    //         }
+    //     }
+    // }
 }
 
 
@@ -1151,7 +1278,7 @@ export const common_column_groups = {
     'INTERVAL': {
         groupId: 'INTERVAL',
         children: [{ field: 'INTERVAL_R2' }, { field: 'INTERVAL_Rho' }],
-        headerClassName: ['training_col','col_border_left']
+        headerClassName: 'col_border_left'
     },
     'FENLAND': {
         groupId: 'FENLAND',
@@ -1205,29 +1332,59 @@ export const common_column_groups = {
         children: [{ field: 'VIKING_R2' }, { field: 'VIKING_Rho' }, { field: 'VIKING_Missing Rate' }],
         headerClassName: 'col_border_left'
     },
-    'MESA-AFA': {
-        groupId: 'MESA AFA',
-        children: [{ field: 'MESA-AFA_R2' },],
-        headerClassName: ['training_col','col_border_left']
+    'UKB_Withheld_ALL': {
+        groupId: 'UKB Withheld ALL',
+        children: [{ field: 'UKB_Withheld_ALL_R2' }, { field: 'UKB_Withheld_ALL_Rho' }],
+        headerClassName: 'col_border_left'
     },
-    'MESA-ALL': {
-        groupId: 'MESA ALL',
-        children: [{ field: 'MESA-ALL_R2' },],
-        headerClassName: ['training_col','col_border_left']
+    'UKB_Withheld_AFR': {
+        groupId: 'UKB Withheld AFR',
+        children: [{ field: 'UKB_Withheld_AFR_R2' }, { field: 'UKB_Withheld_AFR_Rho' }],
+        headerClassName: 'col_border_left'
     },
-    'MESA-CHN': {
-        groupId: 'MESA CHN',
-        children: [{ field: 'MESA-CHN_R2' },],
-        headerClassName: ['training_col','col_border_left']
+    'UKB_Withheld_AMR': {
+        groupId: 'UKB Withheld AMR',
+        children: [{ field: 'UKB_Withheld_AMR_R2' }, { field: 'UKB_Withheld_AMR_Rho' }],
+        headerClassName: 'col_border_left'
     },
-    'MESA-EUR': {
-        groupId: 'MESA EUR',
-        children: [{ field: 'MESA-EUR_R2' },],
-        headerClassName: ['training_col','col_border_left']
+    'UKB_Withheld_EAS': {
+        groupId: 'UKB Withheld EAS',
+        children: [{ field: 'UKB_Withheld_EAS_R2' }, { field: 'UKB_Withheld_EAS_Rho' }],
+        headerClassName: 'col_border_left'
     },
-    'MESA-HIS': {
-        groupId: 'MESA HIS',
-        children: [{ field: 'MESA-HIS_R2' },],
-        headerClassName: ['training_col','col_border_left']
-    }
+    'UKB_Withheld_EUR': {
+        groupId: 'UKB Withheld EUR',
+        children: [{ field: 'UKB_Withheld_EUR_R2' }, { field: 'UKB_Withheld_EUR_Rho' }],
+        headerClassName: 'col_border_left'
+    },
+    'UKB_Withheld_SAS': {
+        groupId: 'UKB Withheld SAS',
+        children: [{ field: 'UKB_Withheld_SAS_R2' }, { field: 'UKB_Withheld_SAS_Rho' }],
+        headerClassName: 'col_border_left'
+    },
+    // 'MESA-AFA': {
+    //     groupId: 'MESA AFA',
+    //     children: [{ field: 'MESA-AFA_R2' },],
+    //     headerClassName: ['training_col','col_border_left']
+    // },
+    // 'MESA-ALL': {
+    //     groupId: 'MESA ALL',
+    //     children: [{ field: 'MESA-ALL_R2' },],
+    //     headerClassName: ['training_col','col_border_left']
+    // },
+    // 'MESA-CHN': {
+    //     groupId: 'MESA CHN',
+    //     children: [{ field: 'MESA-CHN_R2' },],
+    //     headerClassName: ['training_col','col_border_left']
+    // },
+    // 'MESA-EUR': {
+    //     groupId: 'MESA EUR',
+    //     children: [{ field: 'MESA-EUR_R2' },],
+    //     headerClassName: ['training_col','col_border_left']
+    // },
+    // 'MESA-HIS': {
+    //     groupId: 'MESA HIS',
+    //     children: [{ field: 'MESA-HIS_R2' },],
+    //     headerClassName: ['training_col','col_border_left']
+    // }
 }

@@ -355,11 +355,14 @@ footer a {
     }
 }
 
-.external-link > svg:last-child {
-    display: inline-block;
-    font-size: 1rem;
-    vertical-align: top !important;
-    padding-left:6px;
+.external-link {
+    white-space: nowrap;
+    > svg:last-child {
+        display: inline-block;
+        font-size: 1rem;
+        vertical-align: top !important;
+        padding-left:6px;
+    }
 }
 
 .even_section, .odd_section {
@@ -402,6 +405,20 @@ footer a {
 .op_card_right {
     padding:0px !important;
     max-width:580px;
+}
+
+.op_card_container_info {
+    display: flex;
+    > div:nth-child(2) {
+        margin-left: 4rem;
+        padding:0px !important;
+        max-width:580px !important;
+        tr:not(:first-child) {
+            td {
+                border-top: 1px solid $op_grey;
+            }
+        }
+    }
 }
 
 .font-bold {
@@ -717,9 +734,11 @@ ul.key_val_line {
 
 /* Other */
 .platform_accordion {
+    vertical-align: middle;
     > div {
         display:inline-block !important;
         width:200px !important;
+        vertical-align: middle;
     }
 }
 

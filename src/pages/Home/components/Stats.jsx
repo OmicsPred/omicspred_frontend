@@ -41,10 +41,6 @@ const Stats = (props) => {
     }
 
     const fetchOmicsChartData = async () => {
-        // const platform_data = await restApiCall('platform/additional/summary');
-        // if (platform_data.results) {
-        //     setOmicsChartData(build_omics_data(platform_data.results));
-        // }
         if (props.data) {
             setOmicsChartData(build_omics_data(props.data))
         }

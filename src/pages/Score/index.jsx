@@ -110,9 +110,9 @@ function Score() {
     }
 
     const fetchDownloadUrls = async (platform, pmid) => {
-        const platform_additional_data = await restApiCall('platform/additional/'+platform+'?pmid='+pmid);
-        if (platform_additional_data.results && platform_additional_data.results.length) {
-            const scoring_files_urls = platform_additional_data.results[0].scoring_files_urls;
+        const dataset_data = await restApiCall('dataset/'+platform+'?pmid='+pmid);
+        if (dataset_data.results && dataset_data.results.length) {
+            const scoring_files_urls = dataset_data.results[0].scoring_files_urls;
             if (scoring_files_urls) {
                 const urls = get_download_list(scoring_files_urls)
                 setPlatformDownloads(urls);

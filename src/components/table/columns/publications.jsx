@@ -56,16 +56,26 @@ export const publications_columns = [
         headerName: 'Platform(s)', 
         width: 200,
         renderCell: (params) => {
-            const platforms_list = params.row.platforms.map((platform) => omicspred_platform_omics_type(platform.platform.name,platform.platform.type))
+            // Identify and list distinct platforms
+            var unique_platforms = [];
+            var platforms_types = {};
+            params.row.datasets.forEach(function (x) {
+                const platform_name = x.platform.name;
+                if (!unique_platforms.includes(platform_name)) {
+                    platforms_types[platform_name] = x.platform.type;
+                    unique_platforms.push(platform_name);
+                }
+            });
+            const platforms_list = unique_platforms.sort().map((platform_name) => omicspred_platform_omics_type(platform_name,platforms_types[platform_name]))
             return (
                 <div className="d-flex flex-column">
                 {
-                    platforms_list.sort().map((platform) => platform)
+                    platforms_list.map((platform) => platform)
                 }
                 </div>
             )
         },
-        valueGetter: (value, row) => { return row.platforms.map((platform) => platform.name) }
+        valueGetter: (value, row) => { return row.datasets.map((dataset) => dataset.platform.name) }
     },
     {
         field: 'scores_count',
@@ -75,10 +85,9 @@ export const publications_columns = [
         align: 'right',
         renderCell: (params) => {
             let counts = 0;
-            const platforms = params.row.platforms;
-            // const counts = params.row.platforms.map((platform) => platform.scores_count);
-            for (let i = 0; i < platforms.length; i++ ) {
-                counts += platforms[i].scores_count;
+            const datasets = params.row.datasets;
+            for (let i = 0; i < datasets.length; i++ ) {
+                counts += datasets[i].scores_count;
             }
             return thousandifyNumber(counts);
         }

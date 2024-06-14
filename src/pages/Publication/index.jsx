@@ -4,7 +4,6 @@ import { ChevronRight } from 'react-bootstrap-icons';
 import restApiCall from '../../components/RestAPI';
 import Href from "../../components/Href";
 import PlatformTable from './components/PlatformTable';
-import { publication_platform_columns } from "../../components/table/columns/platforms";
 import { op_subtitle_no_asso, publication_ref, display_information } from '../../components/Common';
 import { numberBadge } from '../../components/Generic';
 
@@ -13,11 +12,7 @@ function Publication() {
     let { pubmed_id } = useParams();
     const [publicationData, setPublicationData] = useState([])
     const [publicationYear, setPublicationYear] = useState([])
-    const [platformsData, setPlatformsData] = useState([])
-
-    const url_endpoint = 'score/search?pmid='+pubmed_id;
-
-    const columns = publication_platform_columns;
+    const [datasetsData, setDatasetsData] = useState([])
 
 
     const fetchPublicationData = async () => {
@@ -25,7 +20,8 @@ function Publication() {
         console.log(publication_data);
         setPublicationData(publication_data);
         buildPublicationYear(publication_data.date_publication);
-        setPlatformsData(publication_data.platforms);
+        publication_data.datasets.sort((a, b) => a.platform.name.localeCompare(b.platform.name))
+        setDatasetsData(publication_data.datasets);
     }
 
     const buildPublicationYear = (date_publication) => {
@@ -43,8 +39,8 @@ function Publication() {
 
     const get_scores_count = () => {
         let scores_count = 0;
-        for (let i=0; i< platformsData.length; i++) {
-            scores_count += platformsData[i].scores_count;
+        for (let i=0; i< datasetsData.length; i++) {
+            scores_count += datasetsData[i].scores_count;
         }
         return numberBadge(scores_count);
     }
@@ -57,7 +53,7 @@ function Publication() {
                 { publicationData.doi ? <tr><td>doi</td><td><Href href={process.env.URL_ROOT_DOI+publicationData.doi} text={publicationData.doi}/></td></tr>:''}
                 { publicationData.date_publication ? <tr><td>Publication Date</td><td>{convertPublicationDate()}</td></tr>:''}
                 { publicationData.journal ? <tr><td>Journal</td><td>{publicationData.journal}</td></tr>:''}
-                { platformsData ?  <tr><td>Number of scores</td><td>{get_scores_count()}</td></tr>:''}
+                { datasetsData ? <tr><td>Number of scores</td><td>{get_scores_count()}</td></tr>:''}
             </>
         )
     }
@@ -74,11 +70,14 @@ function Publication() {
 
             {/* Scores by Platform */}
             {op_subtitle_no_asso('hl','List of Scores by Platform')}
-            <div className='d-flex mt-3'>
-                <div>
-                    { platformsData && publicationData.pmid ? platformsData.map((platform) => <PlatformTable key={platform.platform.name+"_platform_table"} data={platform} pmid={publicationData.pmid} />):''}
+            { datasetsData ?
+                <div className='d-flex mt-3'>
+                    <div>
+                        { datasetsData && publicationData.pmid ? datasetsData.map((dataset, index) => <PlatformTable key={index+'_'+dataset.name+'_'+dataset.platform.name+"_platform_table"} data={dataset} pmid={publicationData.pmid} />):''}
+                    </div>
                 </div>
-            </div>
+                : <div className='mt-3'>No platform data</div>
+            }
         </>
     )
 }

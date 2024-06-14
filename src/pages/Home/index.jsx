@@ -12,23 +12,23 @@ import Supports from "./components/Supports"
 
 function Home() {
 
-  const [platformData, setPlatformData] = useState([])
+  const [datasetData, setDatasetData] = useState([])
 
-  const fetchPlatformAdditionalData = async () => {
-    const platform_data = await restApiCallPaginated('platform/additional/all');
-    setPlatformData(platform_data);
+  const fetchDatasetData = async () => {
+    const dataset_data = await restApiCallPaginated('dataset/all');
+    setDatasetData(dataset_data);
   }
 
   useEffect(() => {
-    fetchPlatformAdditionalData();
+    fetchDatasetData();
   },[])
 
   return (
     <>
       <Header/>
-      { platformData && platformData.length > 0 ? <Stats data={platformData}/> : ''}
+      { datasetData && datasetData.length > 0 ? <Stats data={datasetData}/> : ''}
       <About/>
-      { platformData && platformData.length > 0 ? <Platforms data={platformData}/> : ''}
+      { datasetData && datasetData.length > 0 ? <Platforms data={datasetData}/> : ''}
       <Applications/>
       <Citation/>
       <Feedback/>
