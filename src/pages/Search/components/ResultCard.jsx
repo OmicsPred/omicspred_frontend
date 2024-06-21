@@ -34,7 +34,7 @@ export default function ResultCard(props) {
     const url = '/'+index2url[props.type]+'/'+url_id;
 
     return (
-        <div className="result_card mb-3" key={key+"_res"} data-omics={data.omics_type} data-platform={data.platform_name}>
+        <div className="result_card mb-3" key={key+"_res"} data-omics={data.omics_type} data-platform={data.platform_name} data-type={props.type}>
             <div className="card-deck" key={key+"_card"}>
                 <div className="card ms-2 me-2" style={{padding:"0px", width:"100%"}}>
                     <div className="card-body">

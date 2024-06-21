@@ -72,7 +72,7 @@ const PlatformSampleCohorts = (props) => {
             else {
                 cohorts_obj[cohort_name] = {
                     // 'url': <Href text='External link' href={cohort_url}/>,
-                    'url': cohort_url,
+                    'url': '/cohort/'+cohort_name,
                     'ancestry': {}
                 }
                 cohorts_obj[cohort_name]['ancestry'][ancestry] = 0;

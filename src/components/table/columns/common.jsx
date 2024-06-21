@@ -8,10 +8,13 @@ const default_cell_value = process.env.DEFAULT_CELL_VALUE;
 const data_separator = ', ';
 const display_threshold = 10;
 
-export const cohort_valueGetter = function(row,cohort,method) {
+export const cohort_valueGetter = function(row,cohort,method,is_training) {
     let result = '';
     let cohort_label = cohort+'_'+method;
     if (row.performance_data) {
+        if (is_training) {
+            cohort_label += '__training';
+        }
         if (row.performance_data[cohort_label]) {
             result = row.performance_data[cohort_label].estimate;
         }
@@ -178,6 +181,20 @@ export const common_cols = {
         align: 'right',
         renderCell: (params) => {
             return thousandifyNumber(params.row.variants_number);
+        }
+    },
+    'dataset_name': {
+        field: 'dataset_name',
+        headerName: 'Dataset name',
+        minWidth: 150,
+        flex: 1,
+        valueGetter: (value, row) => {
+            if (row.dataset_name) {
+                return row.dataset_name;
+            }
+            else {
+                return default_cell_value;
+            }
         }
     },
     'platform_type': {
@@ -881,93 +898,93 @@ export const cohort_cols = {
             }
         }
     },
-    'MEC-CN': {
+    'MEC_CN': {
         'R2': {
-            field: 'MEC-CN_R2',
+            field: 'MEC_CN_R2',
             headerName: 'R2',
             headerClassName: 'col_border_left',
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'MEC-CN','R2');
+                return cohort_valueGetter(row,'MEC_CN','R2');
             }
         },
         'Rho': {
-            field: 'MEC-CN_Rho',
+            field: 'MEC_CN_Rho',
             headerName: 'Rho',
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'MEC-CN','Rho');
+                return cohort_valueGetter(row,'MEC_CN','Rho');
             }
         },
         'Missing Rate': {
-            field: 'MEC-CN_Missing Rate',
+            field: 'MEC_CN_Missing Rate',
             headerName: 'Missing Rate',
             minWidth: 100,
             flex: 0.5,
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'MEC-CN','Missing Rate');
+                return cohort_valueGetter(row,'MEC_CN','Missing Rate');
             }
         }
     },
-    'MEC-IN': {
+    'MEC_IN': {
         'R2': {
-            field: 'MEC-IN_R2',
+            field: 'MEC_IN_R2',
             headerName: 'R2',
             headerClassName: 'col_border_left',
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'MEC-IN','R2');
+                return cohort_valueGetter(row,'MEC_IN','R2');
             }
         },
         'Rho': {
-            field: 'MEC-IN_Rho',
+            field: 'MEC_IN_Rho',
             headerName: 'Rho',
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'MEC-IN','Rho');
+                return cohort_valueGetter(row,'MEC_IN','Rho');
             }
         },
         'Missing Rate': {
-            field: 'MEC-IN_Missing Rate',
+            field: 'MEC_IN_Missing Rate',
             headerName: 'Missing Rate',
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'MEC-IN','Missing Rate');
+                return cohort_valueGetter(row,'MEC_IN','Missing Rate');
             }
         }
     },
-    'MEC-MA': {
+    'MEC_MA': {
         'R2': {
-            field: 'MEC-MA_R2',
+            field: 'MEC_MA_R2',
             headerName: 'R2',
             headerClassName: 'col_border_left',
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'MEC-MA','R2');
+                return cohort_valueGetter(row,'MEC_MA','R2');
             }
         },
         'Rho': {
-            field: 'MEC-MA_Rho',
+            field: 'MEC_MA_Rho',
             headerName: 'Rho',
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'MEC-MA','Rho');
+                return cohort_valueGetter(row,'MEC_MA','Rho');
             }
         },
         'Missing Rate': {
-            field: 'MEC-MA_Missing Rate',
+            field: 'MEC_MA_Missing Rate',
             headerName: 'Missing Rate',
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'MEC-MA','Missing Rate');
+                return cohort_valueGetter(row,'MEC_MA','Missing Rate');
             }
         }
     },
@@ -1286,19 +1303,19 @@ export const common_column_groups = {
         headerClassName: 'col_border_left'
 
     },
-    'MEC-CN': {
+    'MEC_CN': {
         groupId: 'MEC CN',
-        children: [{ field: 'MEC-CN_R2' }, { field: 'MEC-CN_Rho' }, { field: 'MEC-CN_Missing Rate' }],
+        children: [{ field: 'MEC_CN_R2' }, { field: 'MEC_CN_Rho' }, { field: 'MEC_CN_Missing Rate' }],
         headerClassName: 'col_border_left'
     },
-    'MEC-IN': {
+    'MEC_IN': {
         groupId: 'MEC IN',
-        children: [{ field: 'MEC-IN_R2' }, { field: 'MEC-IN_Rho' }, { field: 'MEC-IN_Missing Rate' }],
+        children: [{ field: 'MEC_IN_R2' }, { field: 'MEC_IN_Rho' }, { field: 'MEC_IN_Missing Rate' }],
         headerClassName: 'col_border_left'
     },
-    'MEC-MA': {
+    'MEC_MA': {
         groupId: 'MEC MA',
-        children: [{ field: 'MEC-MA_R2' }, { field: 'MEC-MA_Rho' }, { field: 'MEC-MA_Missing Rate' }],
+        children: [{ field: 'MEC_MA_R2' }, { field: 'MEC_MA_Rho' }, { field: 'MEC_MA_Missing Rate' }],
         headerClassName: 'col_border_left'
     },
     'JHS': {

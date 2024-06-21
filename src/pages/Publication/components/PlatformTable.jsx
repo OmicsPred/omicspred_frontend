@@ -8,7 +8,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Href from "../../../components/Href";
 import { numberBadge, ToogleDiv } from '../../../components/Generic';
 import { get_cohorts_cols_list, get_cohorts_col_groups_list, omicspred_omics_type } from '../../../components/Common';
-import {cohort_cols, common_column_groups} from '../../../components/table/columns/common';
+import {cohort_cols, common_column_groups, cohort_valueGetter} from '../../../components/table/columns/common';
 import { metabolomics_columns,metabolomics_column_groups } from '../../../components/table/columns/metabolomics';
 import { proteomics_columns, proteomics_column_groups } from '../../../components/table/columns/proteomics';
 import { transcriptomics_columns, transcriptomics_column_groups } from '../../../components/table/columns/transcriptomics';
@@ -41,6 +41,7 @@ const PlatformTable = (props) => {
         plot_url += '?dataset='+dataset.name;
     }
 
+    const training_suffix = '__training';
 
     const get_url_endpoint = (type, pmid, dataset) => {
         let endpoint_suffix = platform_name+"?pmid="+pmid;
@@ -107,12 +108,15 @@ const PlatformTable = (props) => {
                     const metric = metric_cols[j];
                     if (cohort_cols[cohort][metric]) {
                         // Use a different display for the training cohorts
+                        // And redefine the column object to adapt the "training" status
                         if (cohorts_training.includes(cohort)) {
                             let training_header_class = 'training_col'
                             if (cohort_cols[cohort][metric].headerClassName == 'col_border_left') {
                                 training_header_class = ['training_col','col_border_left']
                             }
-                            const cohort_metric_col = {...cohort_cols[cohort][metric], headerClassName: training_header_class, sortable: false}
+                            const training_field = cohort_cols[cohort][metric].field+training_suffix;
+                            console.log('- '+training_field);
+                            const cohort_metric_col = {...cohort_cols[cohort][metric], field: training_field, headerClassName: training_header_class, valueGetter: (value, row) => {return cohort_valueGetter(row,cohort,metric,true);}, sortable: false}
                             columns.push(cohort_metric_col)
                         }
                         else {
@@ -176,8 +180,15 @@ const PlatformTable = (props) => {
         for (let i=0; i< cohorts.length; i++) {
             const cohort = cohorts[i];
             if (common_column_groups[cohort]) {
+                // Redefine the column group object to adapt the "training" status of the child columns
                 if (cohorts_training.includes(cohort)) {
-                    col_groups.push({...common_column_groups[cohort], headerClassName: ['training_col','col_border_left']})
+                    const training_group_id = common_column_groups[cohort].groupId+' (training)';
+                    let training_field_children = []
+                    for (let j=0; j<common_column_groups[cohort].children.length; j++) {
+                        const child_field= common_column_groups[cohort].children[j].field
+                        training_field_children.push({field: child_field+training_suffix})
+                    }
+                    col_groups.push({...common_column_groups[cohort], groupId: training_group_id, children: training_field_children, headerClassName: ['training_col','col_border_left']})
                 }
                 else {
                     col_groups.push(common_column_groups[cohort])

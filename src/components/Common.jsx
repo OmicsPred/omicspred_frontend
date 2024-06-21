@@ -104,6 +104,47 @@ export const display_information = (type, content) => {
     )
 }
 
+export const display_information_2_cards = (type_left, content_left, type_right, content_right) => {
+    const type_left_uc = type_left.charAt(0).toUpperCase() + type_left.slice(1);
+    let type_right_uc = '';
+    if (type_right && type_right != '') {
+        type_right_uc = type_right.charAt(0).toUpperCase() + type_right.slice(1);
+    }
+    return (
+        <div className='d-flex'>
+            <div className="card-deck d-lg-flex flex-lg-row justify-content-center d-md-flex flex-md-row d-sm-flex flex-sm-column">
+                <div className="card op_card_left mb-3">
+                    <div className="card-header"><h5 className="mb-0">{type_left_uc} information</h5></div>
+                    <div className="card-body">
+                        <div className="card-text">
+                            <table className='table_card table_card_col_centered'>
+                                <tbody>
+                                    {content_left}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            { content_right && content_right != '' ?
+                <>
+                    <div className='me-5 d-none d-lg-inline-block'></div>
+                    <div className="card op_card_right mb-3">
+                        <div className="card-header"><h5 className="mb-0">{type_right_uc}</h5></div>
+                        <div className="card-body">
+                            <div className="card-text">
+                                <table className='table_card'>
+                                    <tbody>{content_right}</tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </> : ''
+            }
+        </div>
+    )
+}
+
 
 export const publication_ref = (publication,display_year) => {
     let year = undefined;
