@@ -56,6 +56,18 @@ export const display_proteins = (proteins_list) => {
     return display_list;
 }
 
+export const display_pathways = (pathways_list) => {
+    return (
+        <tr key='pathways'><td><span className="bg_pathway left_mark"></span>Pathway{pathways_list.length > 1 && 's'}</td><td>
+            {
+                pathways_list.length > 1 ?
+                    <ToogleDiv key={'toggle_pathways'} title={<><span className='font-bold'>{pathways_list.length}</span> associated pathways</>} content={<ul className="ps-3">{pathways_list.map((data, index) => display_pathway_link(data,index,pathways_list.length))}</ul>}/>
+                    : pathways_list.map((data, index) => display_pathway_link(data,index,pathways_list.length))
+            }
+        </td></tr>
+    )
+}
+
 
 export const display_synonyms = (synonyms) => {
     if (synonyms.length == 1) {
@@ -79,4 +91,9 @@ export const display_superpathways = (superpathways) => {
         return (<>{superpathway.name} (<Href key={superpathway.external_id} href={process.env.URL_REACTOME_ENTRY+superpathway.external_id} text={superpathway.external_id}/>)</>);
     }
     return (<ToogleDiv key={'toggle_superpathwayss'} title={<><span className='font-bold'>{superpathways.length}</span> super pathways</>} content={<ul className='mb-2'>{superpathways.map((superpathway) => <li key={superpathway.name}>{superpathway.name} (<Href key={superpathway.external_id} href={process.env.URL_REACTOME_ENTRY+superpathway.external_id} text={superpathway.external_id}/>)</li>)}</ul>}/>)
+}
+
+
+export const sort_data = (data) => {
+    return data.sort((a, b) => (a.name > b.name) ? 1 : -1)
 }

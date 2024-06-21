@@ -5,7 +5,7 @@ import { FileEarmarkArrowDown } from 'react-bootstrap-icons';
 export const download_labels = {
     "scoring_files": {"label": "Scoring files"},
     "scoring_files_pgsc_calc": {"label": "Scoring files", "sub_label": "pgsc_calc compatible"},
-    "validation_results": {"label": "Validation Results"},
+    "validation_results": {"label": "Validation results"},
     "score_variant_info": {"label": "Variants info"},
     "gwas_sumstats": {"label": "GWAS summary stats"}
 }
@@ -47,20 +47,16 @@ export const DownloadList = (props) => {
     return (
         <>
             { props.urls ? 
-                <table className='table op_dwnld_table'>
-                    <tbody>
-                        { Object.keys(props.urls).map((entry) =>
-                            <tr key={'download_'+entry}>
-                                <td>{props.urls[entry]['label']}{props.urls[entry]['sub_label'] ? <small> ({props.urls[entry]['sub_label']})</small>:''}</td>
-                                <td className="p-0">
-                                    <a href={props.urls[entry]['url']} title={'Download '+props.urls[entry]['label']} target="_blank">
-                                        <div className="p-2" style={{width:div_size+"px",height:div_size+"px"}}><FileEarmarkArrowDown className="hl_color" size={icon_size}/></div>
-                                    </a>
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
+                <div className='op_dwnld_container'>
+                    { Object.keys(props.urls).map((entry) =>
+                        <div key={entry}>
+                            <a href={props.urls[entry]['url']} title={'Download '+props.urls[entry]['label']} target="_blank">
+                                <div className="px-2"><FileEarmarkArrowDown className="hl_color" size={icon_size}/></div>
+                                <div className="px-2">{props.urls[entry]['label']}{props.urls[entry]['sub_label'] ? <small> ({props.urls[entry]['sub_label']})</small>:''}</div>
+                            </a>
+                       </div>
+                    )}
+                </div>
                 :''
             }
         </>

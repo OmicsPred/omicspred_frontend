@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { FileEarmarkArrowDown } from 'react-bootstrap-icons';
 import Href from "../../components/Href";
-import { internal_publication_link, op_title, op_subtitle_no_asso } from '../../components/Common';
+import { internal_publication_link, op_title, op_subtitle_no_asso, display_information_2_cards } from '../../components/Common';
 import DataTable from "../../components/table/DataTable";
 import { score_columns } from '../../components/table/columns/score'
 import { score_phecode_columns } from '../../components/table/columns/phecode'
 import restApiCall from '../../components/RestAPI';
 import restApiCallPaginated from '../../components/RestAPIPaginated';
 import { ToogleDiv, numberBadge } from '../../components/Generic';
-import { display_gene_link, display_protein_link, display_metabolite_link, display_pathway_link } from '../MolecularTrait/components/links';
+import { display_gene_link, display_protein_link, display_metabolite_link, display_pathways } from '../MolecularTrait/components/links';
 import { DownloadList, get_download_list } from '../../components/Downloads';
 
 
@@ -96,7 +96,7 @@ function Score() {
             setPlatformData(platform);
             const publication = score_data.publication;
             console.log(']] platform.name: '+platform.name)
-            fetchDownloadUrls(platform.name,publication.pmid)
+            fetchDownloadUrls(score_data.dataset_name,platform.name,publication.pmid)
         }
         setGenesData(score_data.genes);
         setTranscriptsData(score_data.transcripts);
@@ -109,8 +109,13 @@ function Score() {
         setPathwayData(get_pathways(score_data));
     }
 
-    const fetchDownloadUrls = async (platform, pmid) => {
-        const dataset_data = await restApiCall('dataset/'+platform+'?pmid='+pmid);
+    const fetchDownloadUrls = async (dataset_name,platform, pmid) => {
+        let rest_url = 'dataset/search?platform='+platform+'&pmid='+pmid;
+        if (dataset_name) {
+            rest_url = 'dataset/'+dataset_name+'?platform='+platform+'&pmid='+pmid;
+        }
+
+        const dataset_data = await restApiCall(rest_url);
         if (dataset_data.results && dataset_data.results.length) {
             const scoring_files_urls = dataset_data.results[0].scoring_files_urls;
             if (scoring_files_urls) {
@@ -159,13 +164,7 @@ function Score() {
                         </td></tr> : ''
                 }
                 {
-                    pathwayData && pathwayData.length > 0 ? <tr key='pathways'><td><span className="bg_pathway left_mark"></span>Pathway{pathwayData.length > 1 && 's'}</td><td>
-                        {
-                            pathwayData.length > 1 ?
-                                <ToogleDiv key={'toggle_pathways'} title={<><span className='font-bold'>{pathwayData.length}</span> associated pathways</>} content={<ul>{pathwayData.map((data, index) => display_pathway_link(data,index,pathwayData.length))}</ul>}/>
-                                : pathwayData.map((data, index) => display_pathway_link(data,index,pathwayData.length))
-                        }
-                        </td></tr> : ''
+                    pathwayData && pathwayData.length > 0 ? display_pathways(pathwayData) : ''
                 }
             </>
         )
@@ -183,31 +182,9 @@ function Score() {
             <>
                 {op_title('score', scoreData, score, 'id')}
                 <div>
-                    <div className='d-flex'>
-                        <div className="card-deck justify-content-center d-flex flex-lg-row flex-column">
-                            <div className="card op_card_left mb-3">
-                                <div className="card-header"><h5 className="mb-0">Score information</h5></div>
-                                <div className="card-body">
-                                    <div className="card-text">
-                                        <table className='table_card table_card_col_centered'>
-                                            <tbody>{get_information_left_content()}</tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='me-5 d-none d-lg-inline-block'></div>
-                            <div className="card op_card_right mb-3">
-                                <div className="card-header"><h5 className="mb-0">Associated data</h5></div>
-                                <div className="card-body">
-                                    <div className="card-text">
-                                        <table className='table_card'>
-                                            <tbody>{get_information_right_content()}</tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {/* Summary data */}
+                    { display_information_2_cards('score',get_information_left_content(),'Associated data',get_information_right_content()) }
+
                     {/* Download buttons */}
                     { platformData && platformDownloads ?
                         <div>

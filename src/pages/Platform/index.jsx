@@ -176,7 +176,7 @@ function Platform() {
         }
     }
 
-    const fetchPlatformAdditionalData = async () => {
+    const fetchDatasetData = async () => {
         const dataset_data = await restApiCall('dataset/'+platform);
         console.log(dataset_data['results']);
         const dataset_results = dataset_data['results']
@@ -225,7 +225,7 @@ function Platform() {
 
     useEffect(() => {
         fetchPlatformSumData();
-        fetchPlatformAdditionalData();
+        fetchDatasetData();
     },[]);
 
     useEffect(() => {

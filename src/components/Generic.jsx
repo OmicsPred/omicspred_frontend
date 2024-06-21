@@ -21,7 +21,7 @@ export const numberBadge = function(number,title) {
 
 
 export const participantsBadge = function(number) {
-    return <span className="badge rounded-pill text-bg-primary" title="# of Participants"><People className='me-1' style={{fontSize:'12px',verticalAlign:'top'}}/>{thousandifyNumber(number)}</span>
+    return <span className="badge rounded-pill text-bg-primary" style={{fontSize:'12px'}} title="# of Participants"><People className='me-1' style={{fontSize:'12px',verticalAlign:'top'}}/>{thousandifyNumber(number)}</span>
 }
 
 
