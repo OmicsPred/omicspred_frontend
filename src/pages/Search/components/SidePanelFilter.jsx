@@ -8,7 +8,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 // import FormHelperText from '@mui/material/FormHelperText';
 import Checkbox from '@mui/material/Checkbox';
 
-export default function SidePanelFilter(props) {
+export const SidePanelFilter = (props) => {
 
     const filter = props.filter;
     const key = 'filter_'+filter.type;
@@ -18,9 +18,9 @@ export default function SidePanelFilter(props) {
             <FormControl sx={{ m: 3 }} component="fieldset" variant="standard">
                 <FormLabel component="legend">{filter.header}</FormLabel>
                 <FormGroup>
-                { filter.list && filter.list.length > 0 ? 
-                    filter.list.map((data) => 
-                    <FormControlLabel 
+                { filter.list && filter.list.length > 0 ?
+                    filter.list.map((data) =>
+                    <FormControlLabel
                         control={<Checkbox onChange={props.handleChange} name={filter.type} value={data} />}
                         label={data+' ('+filter.counts[data]+')'}
                         key={key+"_"+data}

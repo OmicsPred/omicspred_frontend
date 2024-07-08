@@ -73,7 +73,7 @@ const ReactomeDiagram = (props) => {
 
     return (
         <>
-            <div className="btn btn-primary shadow mt-2" onClick={(e) => {hideShowDiagram(e)}}><Diagram3 className='me-2' size="16"/>{showDiagram ? 'Hide' : 'Show'} Reactome Diagram</div>
+            <div className="btn btn-op shadow mt-2" onClick={(e) => {hideShowDiagram(e)}}><Diagram3 className='me-2' size="16"/>{showDiagram ? 'Hide' : 'Show'} Reactome Diagram</div>
             {showDiagram ? 
                 <div>
                     {state === "loading" && <p>Loading...</p>}

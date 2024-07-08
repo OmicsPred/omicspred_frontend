@@ -25,7 +25,7 @@ const PlatformCohort = (props) => {
             Object.keys(cohorts_obj_list).sort().map((cohort_name, index) => {
                 const cohort = cohorts_obj_list[cohort_name];
                 if (cohort.url) {
-                    return (<span key={cohort.name_short}>{index ? ', ': ''}<Href text={cohort.name_short} href={cohort.url}/></span>)
+                    return (<span key={cohort.name_short}>{index ? ', ': ''}<Href text={cohort.name_short} href={'/cohort/'+cohort.name_short}/></span>)
                 }
                 else {
                     return (<span key={cohort.name_short}>{index ? ', ': ''}{cohort.name_short}</span>)

@@ -12,8 +12,8 @@ function Protein() {
     const [elementData, setElementData] = useState([])
     const [scoreData, setScoreData] = useState([])
     const [performanceMetricData, setPerformanceMetricData] = useState([])
-    const [geneData, setGeneData] = useState([])
-    const [pathwayData, setPathwayData] = useState([])
+    const [geneData, setGeneData] = useState()
+    const [pathwayData, setPathwayData] = useState()
 
 
     const element = 'protein';
@@ -47,7 +47,7 @@ function Protein() {
 
     const fetchPerformanceMetrics = async () => {
         const score_metric_data = await restApiCall('performance/search/'+element+'/'+protein);
-        console.log(score_metric_data);
+        // console.log(score_metric_data);
         setPerformanceMetricData(score_metric_data.results);
     }
 

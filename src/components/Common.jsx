@@ -1,5 +1,5 @@
 import Href from "./Href";
-import { ChevronRight } from 'react-bootstrap-icons';
+import { ArrowBarRight, ArrowRightSquareFill, Bezier, Bezier2, Book, ChevronBarRight, ChevronDoubleRight, ChevronRight, Clipboard2Data, Clipboard2DataFill, ClipboardData, ClipboardDataFill, Database, DatabaseFill, SlashSquare, SlashSquareFill, SquareFill, Stack } from 'react-bootstrap-icons';
 import { cohort_cols, common_column_groups } from './table/columns/common';
 import { ToogleDiv, ToogleText } from './Generic';
 
@@ -34,7 +34,29 @@ export const page_title = (type, category, label) => {
         label = type+'s';
     }
     const label_uc = label.charAt(0).toUpperCase() + label.slice(1);
-    return <h2 className='page_title'>{category}<ChevronRight className={'op_title_separator color_'+type}/><span>{label_uc}</span></h2>
+
+    let color_class = 'color_'+type;
+    let prefix = '';
+
+    if (category == 'Browse') {
+        if (label == 'scores') {
+            // prefix = <Clipboard2Data size="26px" className={'me-3 '+color_class}/>
+            prefix = <ClipboardDataFill size="26px" className={'me-3 '+color_class}/>
+        }
+        else if (label == 'pathways') {
+            prefix = <>
+            <Bezier2 size="26px" className={'me-3 '+color_class}/>
+            {/* <Bezier size="26px" className={'me-3 '+color_class}/> */}
+            </>
+        }
+        else if (label == 'platforms') {
+            prefix = <Stack size="26px" className={'me-3 '+color_class}/>
+        }
+        else if (label == 'publications') {
+            prefix = <Book size="26px" className={'me-3 '+color_class}/>
+        }
+    }
+    return <h2 className='page_title'>{category}<ChevronRight className={'op_title_separator '+color_class}/><span>{prefix}{label_uc}</span></h2>
 }
 
 export const browse_title = (type, label) => {
@@ -45,10 +67,32 @@ export const browse_title = (type, label) => {
 export const op_title = (type, data, label, force_use_label) => {
     const type_uc = (type == 'phecode') ? 'PheWAS' : type.charAt(0).toUpperCase() + type.slice(1);
     let value = label;
+    let color_class = 'color_'+type;
+    // let prefix = ''
+    let prefix = <SlashSquareFill size="26px" className={'me-3 '+color_class}/>
     if (!force_use_label) {
         value = (data && data.name) ? data.name : label;
     }
-    return <h2 className='page_title'><span className={'bg_'+type}>{type_uc}</span><ChevronRight className={'op_title_separator color_'+type}/><span>{value}</span></h2>
+    if (type == 'score') {
+        // prefix = <Clipboard2Data size="26px" className={'me-3 '+color_class}/>
+        prefix = <ClipboardDataFill size="26px" className={'me-3 '+color_class}/>
+    }
+    else if (type == 'pathway') {
+        prefix = <>
+        <Bezier2 size="26px" className={'me-3 '+color_class}/>
+        {/* <Bezier size="26px" className={'me-3 '+color_class}/> */}
+        </>
+    }
+    else if (type == 'platform') {
+        color_class = 'color_'+data.type;
+        prefix = <Stack size="26px" className={'me-3 '+color_class}/>
+    }
+    else if (type == 'publication') {
+        color_class = 'color_hl';
+        prefix = <Book size="26px" className={'me-3 '+color_class}/>
+    }
+    // return <h2 className='page_title'><span className={'bg_'+type}>{type_uc}</span><ChevronRight className={'op_title_separator color_'+type}/><span>{value}</span></h2>
+    return <h2 className='page_title'>{prefix}{type_uc}<ChevronRight className={'op_title_separator '+color_class}/><span>{value}</span></h2>
 }
 
 
@@ -126,7 +170,7 @@ export const display_information_2_cards = (type_left, content_left, type_right,
                     </div>
                 </div>
             </div>
-            { content_right && content_right != '' ?
+            { content_right != undefined && content_right != '' ?
                 <>
                     <div className='me-5 d-none d-lg-inline-block'></div>
                     <div className="card op_card_right mb-3">

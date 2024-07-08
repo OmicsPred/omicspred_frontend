@@ -1,11 +1,11 @@
 import Container from "./components/Container";
 import Href from "../../components/Href"
 
-import p2 from "../../assets/cohorts/Fenland_study_logo.png";
-import p1 from "../../assets/cohorts/interval-logo.png";
-import p4 from "../../assets/cohorts/UKB_largeFeature.png";
-import p3 from "../../assets/cohorts/Viking_logo.png";
-import p5 from "../../assets/cohorts/Viking_logo2.png";
+import p2 from "../../assets/cohorts/FENLAND.png";
+import p1 from "../../assets/cohorts/INTERVAL.png";
+import p4 from "../../assets/cohorts/UKB.png";
+import p3 from "../../assets/cohorts/ORCADES.png";
+import p5 from "../../assets/cohorts/VIKING.png";
 
 
 const cohorts_list = [

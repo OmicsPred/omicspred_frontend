@@ -1,8 +1,9 @@
-import {common_cols, common_column_groups, omicspred_internal_link} from "./common";
+import { common_cols, common_column_groups } from "./common";
 // import {common_cols, cohort_cols, common_column_groups, omicspred_internal_link} from "./common";
 
 const trait_reported_id_col = {...common_cols['trait_reported_id'], headerName: 'ID'}
 const trait_reported_col = {...common_cols['trait_reported'], headerName: 'Name'}
+// const dataset_name_col = {...common_cols['dataset_name'], field: 'dataset__name'}
 
 // Export Metabolomics columns
 export const metabolomics_columns = {
@@ -14,6 +15,7 @@ export const metabolomics_columns = {
         common_cols['metabolite_name'],
         common_cols['pathway_group'],
         common_cols['pathway_subgroup'],
+        // dataset_name_col,
         common_cols['variants_number'],
         // Cohorts columns
         // cohort_cols['INTERVAL']['R2'],

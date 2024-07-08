@@ -39,8 +39,8 @@ export default function FAQs() {
                           aria-controls="panel1bh-content"
                           id="panel1bh-header"
                         >
-                          <div sx={{ width: "90%", flexShrink: 0 }} className="d-flex font-bold">
-                            <LightbulbFill className="hl_color me-3"/><span>{d.title}</span>
+                          <div sx={{ width: "90%", flexShrink: 0 }} className="d-flex font-bold faq_box">
+                            <LightbulbFill className="me-3"/><span>{d.title}</span>
                           </div>
                         </AccordionSummary>
                         <AccordionDetails>

@@ -26,7 +26,7 @@ const SearchBar = (props) => {
                     aria-label="Search"
                     onChange={e => setSearchInput(e.target.value)}
                 />
-                <Button variant="primary">Search</Button>
+                <button type="submit" className="btn btn-search">Search</button>
             </Form.Group>
         </Form>
     )

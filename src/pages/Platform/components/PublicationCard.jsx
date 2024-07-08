@@ -14,6 +14,7 @@ const PublicationCard = (props) => {
     const dataset_name = dataset.name;
     const publication = dataset.publication;
     const platform_name = dataset.platform.name;
+    const platform_version = dataset.platform.version;
     const samples_training = dataset.samples_training;
     const samples_validation = dataset.samples_validation;
     const key = publication.pmid
@@ -42,7 +43,14 @@ const PublicationCard = (props) => {
                         <div>
                             <ChevronRight className="hl_color me-2"/><span className="font-bold">{publication.title}</span>
                         </div>
-                        {dataset_name ? <div className="ms-4">Dataset: <b>{dataset_name}</b></div>:''}
+                        { dataset_name || platform_version ?
+                            <div className="ms-4 my-1">
+                                {dataset_name ? <span>Dataset: <b>{dataset_name}</b></span>:''}
+                                { dataset_name && platform_version ? <span className='px-2'>|</span>:''}
+                                {platform_version ? <span>Platform version: <b>{platform_version}</b></span>:''}
+                            </div>
+                            : ''
+                        }
                         <div className="ms-4">
                             <span >{[publication.firstauthor," ",<i key={key+'_i'}>et al.</i>," - ",publication.journal," (",pub_year,")"]}</span>
                             <span className='ms-4'>

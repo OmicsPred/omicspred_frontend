@@ -1,5 +1,6 @@
-import {common_cols, common_column_groups} from "./common";
-// import {common_cols, cohort_cols, common_column_groups} from "./common";
+import { common_cols, common_column_groups } from "./common";
+
+const dataset_name_col = {...common_cols['dataset_name'], field: 'dataset__name'}
 
 // Export Proteomics columns
 export const proteomics_columns = {
@@ -8,6 +9,7 @@ export const proteomics_columns = {
         common_cols['protein_id'],
         common_cols['gene_name'],
         common_cols['protein_name'],
+        dataset_name_col,
         common_cols['variants_number']//,
         // Cohorts columns
         // cohort_cols['INTERVAL']['R2'],

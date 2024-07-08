@@ -1,10 +1,10 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { ChevronRight } from 'react-bootstrap-icons';
-// import restApiCallWithData from '../../../components/RestAPIWithData';
+import { ChevronRight, Search as SearchIcon} from 'react-bootstrap-icons';
 import restApiCall from '../../components/RestAPI';
 import ResultCard from './components/ResultCard';
-import SidePanelFilter from './components/SidePanelFilter';
+import { SidePanelFilter } from './components/SidePanelFilter';
+
 
 function Search() {
     // Get search query
@@ -22,26 +22,12 @@ function Search() {
         }
     }
 
-    // const indexes = ['gene','metabolite','phecode','protein','score'];
-
-    // const es_url = process.env.OMICSPRED_ES_URL+indexes.join(',')+'/_search?pretty=true';
     const es_url = process.env.OMICSPRED_ES_URL+'?q='+query;
 
-    // const query_content = {
-    //     "size": 20,
-    //     "query": { "query_string": {"query": query} }
-    // };
-
     const fetchESResults = async () => {
-        // let credentials = undefined;
-        // if (process.env.OMICSPRED_ES_USERNAME && process.env.OMICSPRED_ES_PASSWORD) {
-        //     credentials = `Basic ${btoa(process.env.OMICSPRED_ES_USERNAME + ':' + process.env.OMICSPRED_ES_PASSWORD)}`;
-        // }
-        // const results = await restApiCallWithData(es_url,query_content,credentials);
         const results = await restApiCall(es_url);
 
         console.log(">>> results for "+query+":");
-        // const results_list = results.hits.hits;
         const results_list = results;
 
         console.log(results_list);
@@ -79,20 +65,19 @@ function Search() {
         const omics = Object.keys(omics_counts).sort();
         const platforms = Object.keys(platform_counts).sort();
 
-        // setEsResults(results.hits.hits);
         setEsResults(results);
         options.push({header:'Omics', type:'omics', list: omics.sort(), counts: omics_counts})
         options.push({header:'Platform', type:'platform', list: platforms.sort(), counts: platform_counts})
         setEsOptions(options);
         console.log(">>> options");
         console.log(options);
-        // filter_result_types(results.hits.hits);
         filter_result_types(results);
     }
 
 
     function handleChange(e) {
         if (e.target.name == 'omics') {
+            console.log(">> handleChange: omics");
             if (e.target.checked) {
                 setOmicsChecked([...omicsChecked, e.target.value]);
             } else {
@@ -100,21 +85,21 @@ function Search() {
             }
         }
         else if (e.target.name == 'platform') {
+            console.log(">> handleChange: platform");
             if (e.target.checked) {
                 setPlatformChecked([...platformChecked, e.target.value]);
             } else {
                 setPlatformChecked(platformChecked.filter((item) => item !== e.target.value));
             }
         }
-        console.log('platformChecked:');
-        console.log(platformChecked);
     }
 
 
     function isFiltered(result) {
         let filter_count = 0;
+        const result_source = result._source;
         // Omics filter
-        const omics = result.omics_type;
+        const omics = result_source.omics_type;
         if (omicsChecked && omicsChecked.length > 0) {
             for (let i=0; i < omics.length; i++) {
                 if (omicsChecked.includes(omics[i])) {
@@ -128,7 +113,7 @@ function Search() {
         }
 
         // Platforms filter
-        const platforms = result.platform_name;
+        const platforms = result_source.platform_name;
         if (platformChecked && platformChecked.length > 0) {
             for (let i=0; i < platforms.length; i++) {
                 if (platformChecked.includes(platforms[i])) {
@@ -149,7 +134,7 @@ function Search() {
         let result_types_count = {}
         for (let i=0; i < results.length; i++) {
             const data = results[i];
-            if (isFiltered(data._source)) {
+            if (isFiltered(data)) {
                 const data_type = data._index;
                 if (!result_types.includes(data_type)) {
                     result_types.push(data_type)
@@ -165,7 +150,7 @@ function Search() {
 
 
     function display_result_card(data) {
-        if (isFiltered(data._source)) {
+        if (isFiltered(data)) {
             let result_key = data._index;
             result_key += (data._source.id) ? data._source.id : data._source.name;
             return <ResultCard data={data._source} type={data._index} key={result_key}/>
@@ -185,8 +170,8 @@ function Search() {
     return (
         <>
             <div className='d-flex'>
-                <h2 className='page_title'>Search results<ChevronRight className={'op_title_separator color_hl'}/><span>{query}</span></h2>
-                <div className='mt-4 ms-3'><span className="badge rounded-pill text-bg-primary">{esResults ? esResults.length: 0 } hits</span></div>
+                <h2 className='page_title'><SearchIcon size="0.9em" className="color_hl me-3"/>Search results<ChevronRight className={'op_title_separator color_hl'}/><span>{query}</span></h2>
+                <div className='mt-4 ms-3'><span className="badge rounded-pill badge-op">{esResults ? esResults.length: 0 } hits</span></div>
             </div>
             <div className='d-flex'>
                 <Suspense fallback={<div>Loading results ...</div>}>

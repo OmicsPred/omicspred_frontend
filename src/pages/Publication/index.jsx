@@ -4,7 +4,7 @@ import { ChevronRight } from 'react-bootstrap-icons';
 import restApiCall from '../../components/RestAPI';
 import Href from "../../components/Href";
 import PlatformTable from './components/PlatformTable';
-import { op_subtitle_no_asso, publication_ref, display_information } from '../../components/Common';
+import { op_subtitle_no_asso, op_title, publication_ref, display_information } from '../../components/Common';
 import { numberBadge } from '../../components/Generic';
 
 
@@ -64,8 +64,13 @@ function Publication() {
 
     return (
         <>
-            <h2 className='page_title'>Publication<ChevronRight className={'op_title_separator color_hl'}/>{publication_ref(publicationData, true)}</h2>
-            { publicationData ? display_information('publication', get_information_content()):'' }
+            {  publicationData ?
+                <>
+                    {op_title('publication', publicationData, publication_ref(publicationData, true))}
+                    {display_information('publication', get_information_content())}
+                </>
+                :''
+            }
             <div className='mt-5'></div>
 
             {/* Scores by Platform */}

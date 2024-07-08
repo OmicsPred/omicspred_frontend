@@ -34,7 +34,7 @@ export default function ChartDoughnut(props) {
         },
         title: {
           display: true,
-          text: props.name_1,
+          text: props.name_2,
           align: "center",
         },
       },
@@ -52,26 +52,26 @@ export default function ChartDoughnut(props) {
         formatter: function (value, context) {
           return value;
         },
-        color: "#ffff",
+        color: "#fff",
       },
-      doughnutlabel: {
-        labels: [
-          {
-            text: "getTotal",
-            font: {
-              size: "40",
-            },
-            color: "black",
-          },
-          {
-            text: "Due ≤ 60 Days",
-            font: {
-              size: "25",
-            },
-            color: "grey",
-          },
-        ],
-      },
+      // doughnutlabel: {
+      //   labels: [
+      //     {
+      //       text: "getTotal",
+      //       font: {
+      //         size: "40",
+      //       },
+      //       color: "black",
+      //     },
+      //     {
+      //       text: "Due ≤ 60 Days",
+      //       font: {
+      //         size: "25",
+      //       },
+      //       color: "grey",
+      //     },
+      //   ],
+      // },
     },
   };
 
@@ -81,16 +81,28 @@ export default function ChartDoughnut(props) {
   var odata2 = Object.values(props.study_2);
   var odata1 = Object.values(props.study_1);
 
-  var data2 = Object.values(props.study_2);
-  var data1 = Object.values(props.study_1);
+  // var data2 = Object.values(props.study_2);
+  // var data1 = Object.values(props.study_1);
 
-  var counter = 0;
+  // var counter = 0;
 
+  // for (let i = 0; i < odata1.length; i++) {
+  //   if (odata2[i] === null || odata1[i] === null) {
+  //     counter++;
+  //     data2.splice(i - counter, 1);
+  //     data1.splice(i - counter, 1);
+  //   }
+  // }
+
+  var data2 = [];
+  var data1 = [];
+
+  // Store data points for each study as a dictionary to keep the couple index/values.
   for (let i = 0; i < odata1.length; i++) {
-    if (odata2[i] === null || odata1[i] === null) {
-      counter++;
-      data2.splice(i - counter, 1);
-      data1.splice(i - counter, 1);
+    if (odata2[i] != null && odata2[i] != 'undefined'
+      && odata1[i] != null && odata1[i] != 'undefined') {
+      data2[i] = odata2[i];
+      data1[i] = odata1[i];
     }
   }
 
@@ -221,8 +233,8 @@ export default function ChartDoughnut(props) {
   return (
     <>
         <div className="mt-5">
-            <div className="d-flex mx-5" style={{justifyContent:'center'}}>
-                <div style={{position:'relative', height:'45vh', width:'30vw'}}>
+            <div className="d-flex justify-content-center mx-5">
+                <div style={{height:'40vh', width:'40vh'}}>
                 <Doughnut
                     // className="relative"
                     ref={ChartRef}
@@ -232,7 +244,7 @@ export default function ChartDoughnut(props) {
                 />
                 </div>
             </div>
-            <div className="d-flex ms-5 mt-3" style={{justifyContent:'start'}} >
+            <div className="d-flex justify-content-center mt-3">
                 <button className="btn btn-primary shadow" onClick={DownloadAsImage}>
                     <Download size={20} /> <span>Export as image</span>
                 </button>

@@ -19,8 +19,8 @@ const Plot = (props) => {
     const [plotData, setPlotData] = useState([])
     const [scoreData, setScoreData] = useState([])
     const [datasetNames, setDatasetNames] = useState([])
-    const [plotFile, setPlotFile] = useState([])
-    const [plotScoreFile, setPlotScoreFile] = useState([])
+    // const [plotFile, setPlotFile] = useState([])
+    // const [plotScoreFile, setPlotScoreFile] = useState([])
     const [platformName, setPlatformName] = useState([])
     const [defaultCohort, setDefaultCohort] = useState([])
 
@@ -69,30 +69,44 @@ const Plot = (props) => {
                     setData(selectedDataset);
                 }
             }
-            else {
-                setPlotFile(data_file_prefix+'_plot.json');
-                setPlotScoreFile(data_file_prefix+'_plot_score.json');
-            }
+            // else {
+            //     setPlotFile(data_file_prefix+'_plot.json');
+            //     setPlotScoreFile(data_file_prefix+'_plot_score.json');
+            // }
         }
     }
 
-    const fetchPlotData = async () => {
-        if (plotFile != '') {
-            const platform_plot_data = await fetch(plotFile)
-                .then(response => {
-                    return response.json()
-                })
-                setPlotData(platform_plot_data);
-        }
-    }
+    // const fetchPlotData = async () => {
+    //     if (plotFile != '') {
+    //         const platform_plot_data = await fetch(plotFile)
+    //             .then(response => {
+    //                 return response.json()
+    //             })
+    //             setPlotData(platform_plot_data);
+    //     }
+    // }
 
-    const fetchScoreData = async () => {
-        if (plotScoreFile != '') {
-            const platform_plot_score_data = await fetch(plotScoreFile)
-                .then(response => {
-                    return response.json()
-                })
-                setScoreData(platform_plot_score_data);
+    // const fetchScoreData = async () => {
+    //     if (plotScoreFile != '') {
+    //         const platform_plot_score_data = await fetch(plotScoreFile)
+    //             .then(response => {
+    //                 return response.json()
+    //             })
+    //             setScoreData(platform_plot_score_data);
+    //     }
+    // }
+
+    const fetchData = async () => {
+        let url = 'plot/search?pmid='+pmid+'&platform='+platform;
+        if (selectedDataset) {
+            url += '&dataset='+selectedDataset
+        }
+        const plot_data = await restApiCall(url);
+        if (plot_data.results) {
+            const results = plot_data.results;
+            const result = results[0];
+            setPlotData(result.plot_data);
+            setScoreData(result.score_data);
         }
     }
 
@@ -103,21 +117,24 @@ const Plot = (props) => {
     const setData = (dataset) => {
         setSelectedDataset(dataset);
         const file_prefix = data_file_prefix+'_'+dataset.replace(" ", "_");
-        setPlotFile(file_prefix+'_plot.json');
-        setPlotScoreFile(file_prefix+'_plot_score.json');
+        // setPlotFile(file_prefix+'_plot.json');
+        // setPlotScoreFile(file_prefix+'_plot_score.json');
     }
 
     useEffect(() => {
         fetchDatasetData();
-        fetchPlotData();
-        fetchScoreData();
+        // fetchPlotData();
+        // fetchScoreData();
+        fetchData();
     },[])
 
     // Re-render form and charts when a different dataset is selected
     useEffect(() => {
-        fetchPlotData();
-        fetchScoreData();
-    },[plotFile,plotScoreFile,selectedDataset])
+        // fetchPlotData();
+        // fetchScoreData();
+        fetchData();
+    },[selectedDataset])
+    // },[plotFile,plotScoreFile,selectedDataset])
 
     return (
         <>
@@ -143,7 +160,8 @@ const Plot = (props) => {
                 </div> : ''
             }
             <div>
-                { plotFile != '' && plotScoreFile != '' && plotData.length && scoreData.length ?
+                {/* { plotFile != '' && plotScoreFile != '' && plotData.length && scoreData.length ? */}
+                { platformName != '' && plotData.length && scoreData.length ?
                     <div key={selectedDataset+'_plot'}>
                         <Suspense fallback={<div>Data is coming !</div>}>
                             <Charts key={selectedDataset+'_chart'} dataset={selectedDataset} pagename={platformName} tdata={scoreData} data={plotData} default_cohort={defaultCohort}/>

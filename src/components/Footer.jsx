@@ -4,7 +4,7 @@ import { Envelope, TwitterX, Building, CCircle } from 'react-bootstrap-icons';
 
 function Footer() {
     return (
-        <footer className="d-flex flex-wrap justify-content-between align-items-center px-5 py-4 mt-auto border-top bg-light">
+        <footer className="d-flex flex-wrap justify-content-between align-items-center px-5 py-4 mt-auto border-top">
 
             <div className="col-3 d-flex align-items-center" style={{verticalAlign:'middle'}}>
                 <Href icon={<Building />} text="Lab's website" href={process.env.URL_INOUYE_LAB} no_external_icon="1" />

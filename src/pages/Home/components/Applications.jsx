@@ -1,6 +1,7 @@
 import Href from "../../../components/Href"
-import ukb_img from "../../../assets/ukb.png";
+import ukb_img from "../../../assets/cohorts/UKB.png";
 import reactome_img from "../../../assets/Reactome.png";
+import { Bezier2 } from "react-bootstrap-icons";
 
 
 function Applications() {
@@ -18,7 +19,7 @@ function Applications() {
               <Href text="UK biobank" href={process.env.URL_UKB}/>{" "}
               to test for associations with complex phenotypes.
             </p>
-            <a href="/applications/phecode/sum" className="btn btn-primary">PheWAS page</a>
+            <a href="/applications/phecode/sum" className="btn btn-op shadow">PheWAS page</a>
           </div>
           <div className="card-footer">
             <img src={ukb_img} alt="UKB"/>
@@ -32,7 +33,7 @@ function Applications() {
             <p className="card-text">Genetic scores for proteomics were applied to assess the extent to which biological pathways are genetically controlled using data at{" "}
               <Href text="Reactome" href={process.env.URL_REACTOME}/>{"."}
             </p>
-            <a href="/pathways" className="btn btn-primary">Browse Pathways</a>
+            <a href="/pathways" className="btn btn-op shadow"><Bezier2 size="0.9em" className="me-2"/>Browse Pathways</a>
           </div>
           <div className="card-footer">
             <img src={reactome_img} alt="Reactome"/>

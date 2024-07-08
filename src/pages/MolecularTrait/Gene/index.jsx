@@ -37,7 +37,7 @@ function Gene() {
 
 	const fetchPerformanceMetrics = async () => {
 		const score_metric_data = await restApiCall('performance/search/'+element+'/'+gene);
-        console.log(score_metric_data);
+        // console.log(score_metric_data);
         setPerformanceMetricData(score_metric_data.results);
     }
 

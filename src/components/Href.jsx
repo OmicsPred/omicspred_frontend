@@ -4,8 +4,8 @@ const Href = (props) => {
 
     let extra_classes = '';
     let title = '';
-    const button_classes = ' btn btn-primary shadow'
-    const button_small_classes = ' btn-sm btn-primary shadow'
+    const button_classes = ' btn btn-op shadow'
+    const button_small_classes = ' btn-sm btn-op shadow'
 
     if (props.title) {
         title = props.title;

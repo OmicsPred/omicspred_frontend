@@ -12,16 +12,16 @@ export const thousandifyNumber = function(number) {
 
 export const numberBadge = function(number,title) {
     if (title) {
-        return <span className="badge rounded-pill text-bg-primary" title={title}>{thousandifyNumber(number)}</span>
+        return <span className="badge rounded-pill badge-op" title={title}>{thousandifyNumber(number)}</span>
     }
     else {
-        return <span className="badge rounded-pill text-bg-primary">{thousandifyNumber(number)}</span>
+        return <span className="badge rounded-pill badge-op">{thousandifyNumber(number)}</span>
     }
 }
 
 
 export const participantsBadge = function(number) {
-    return <span className="badge rounded-pill text-bg-primary" style={{fontSize:'12px'}} title="# of Participants"><People className='me-1' style={{fontSize:'12px',verticalAlign:'top'}}/>{thousandifyNumber(number)}</span>
+    return <span className="badge rounded-pill badge-op" style={{fontSize:'12px'}} title="# of Participants"><People className='me-1' style={{fontSize:'12px',verticalAlign:'top'}}/>{thousandifyNumber(number)}</span>
 }
 
 
@@ -44,7 +44,7 @@ export const ToogleDiv = (props) => {
         toogle_class = 'btn shadow op_toogle_btn';
     }
     else if (props.type == 'button_blue') {
-        toogle_class = 'btn btn-primary shadow op_toogle_btn_blue';
+        toogle_class = 'btn btn-op shadow op_toogle_btn_blue';
     }
 
     return (
