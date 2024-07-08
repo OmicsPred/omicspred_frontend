@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { page_title, display_information } from '../../components/Common';
 import Href from '../../components/Href';
@@ -10,18 +10,39 @@ import DataTableServer from '../../components/table/DataTableServer';
 import { ToogleDiv } from '../../components/Generic';
 
 
-
 function Cohort() {
     const { cohort } = useParams();
 
-    const [cohortData, setCohortData] = useState()
-    const [scoreData, setScoreData] = useState([])
+    const [cohortData, setCohortData] = useState();
+    const [scoreData, setScoreData] = useState([]);
+    const [cohortImageSource, setCohortImageSource] = useState();
 
     const url_endpoint = 'score/search?cohort='+cohort;
 
     const fetchCohortData = async () => {
         const cohort_data = await restApiCall('cohort/'+cohort);
         setCohortData(cohort_data);
+        getImageSource(cohort);
+    }
+
+    const getImageSource = async (cohort_name) => {
+        try {
+            console.log('IMAGE: ../../assets/cohorts/'+cohort_name.toUpperCase()+'.png')
+            // // import p from ('../../assets/cohorts/'+cohort_name.toUpperCase()+'.png');
+            // import img_src from '../../assets/cohorts/'+cohort_name.toUpperCase()+'.png')
+            //     .then((img_src) => {
+            //         // Do something with the module.
+            //         setCohortImageSource(img_src);
+            //     });
+            // const src = require('../../assets/cohorts/'+cohort_name.toUpperCase()+'.png')
+            const src = await import(`../../assets/cohorts/${cohort_name.toUpperCase()}.png`)
+            if (src) {
+                setCohortImageSource(src.default);
+            }
+        }
+        catch(err){
+            // Image not found
+        }
     }
 
     const get_information_content = () => {
@@ -52,11 +73,14 @@ function Cohort() {
             { page_title('hl', 'Cohort', cohort) }
             { cohortData && cohortData.name_short ?
                 <div>
-                    <div className='op_card_container_info'>
+                    <div className='d-flex justify-content-between'>
                         {/* Summary data */}
-                        { display_information('cohort',get_information_content()) }
+                        <div className='op_card_container_info'>
+                            { display_information('cohort',get_information_content()) }
+                        </div>
+                        { cohortImageSource ? <div className='ms-2 me-5'><img className="img-cohort p-2" src={cohortImageSource} /></div> : ''}
                     </div>
-                
+
                     {/* Associated scores */}
                     <div className="mt-4">
                         <DataTableServer url_suffix={url_endpoint} columns={scores_columns} groups={[common_column_groups['molecular_trait_id']]}/>

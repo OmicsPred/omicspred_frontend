@@ -54,14 +54,12 @@ export default function ChartPlot(props) {
     // console.log(
     //   "circle the lenghts are : " + data1.length + " second " + data2.length
     // );
-    var counter = 0;
   
     // Store data points for each study as a dictionary to keep the couple index/values.
     // The index is used to retrieve the metadata from the "tdata" variable.
     for (let i = 0; i < odata1.length; i++) {
       if (odata2[i] != null && odata2[i] != 'undefined'
         && odata1[i] != null && odata1[i] != 'undefined') {
-        counter++;
         data2[i] = odata2[i];
         data1[i] = odata1[i];
         // Simple array of the data1 subset in order to draw the chart
@@ -74,7 +72,7 @@ export default function ChartPlot(props) {
     }
 
     const data1_max = Math.max(...data1_array);
-    const data2_max = Math.max(...data2_array);
+    // const data2_max = Math.max(...data2_array);
   
     const [colors, setColors] = useState([]);
   
@@ -123,7 +121,7 @@ export default function ChartPlot(props) {
         const data_id = props.tdata[i].num;
         if (data_id == score_id) {
           metadata.push({
-              name: 'OMICSPRED ID',
+              name: 'OmicsPred ID',
               value: props.tdata[i].id
           });
           metadata.push({
@@ -131,7 +129,7 @@ export default function ChartPlot(props) {
             value: props.tdata[i].variants_number
           });
           // Genes
-          if (props.tdata[i].genes.length) {
+          if (props.tdata[i].genes && props.tdata[i].genes.length) {
             const genes = props.tdata[i].genes.map((g) => {
                 if (g.name) {
                     return g.name;
@@ -146,7 +144,7 @@ export default function ChartPlot(props) {
             });
           }
           // Transcripts
-          if (props.tdata[i].transcripts.length) {
+          if (props.tdata[i].transcripts && props.tdata[i].transcripts.length) {
             const transcripts = props.tdata[i].transcripts.map((t) => {
                 if (t.name) {
                     return t.name;
@@ -161,7 +159,7 @@ export default function ChartPlot(props) {
             });
           }
           // Proteins
-          if (props.tdata[i].proteins.length) {
+          if (props.tdata[i].proteins && props.tdata[i].proteins.length) {
             const proteins = props.tdata[i].proteins.map((p) => {
                 if (p.name) {
                     if (p.external_id) {
@@ -181,7 +179,7 @@ export default function ChartPlot(props) {
             });
           }
           // Metabolites
-          if (props.tdata[i].metabolites.length) {
+          if (props.tdata[i].metabolites && props.tdata[i].metabolites.length) {
             const metabolites = props.tdata[i].metabolites.map((m) => {
                 if (m.name) {
                     return m.name;
@@ -201,9 +199,9 @@ export default function ChartPlot(props) {
       return [
         props.name_2 + " : " + study1,
         props.name_1 + " : " + study2,
-        props.name_2 +"_MissingRate : " +
+        "Missing Rate ("+props.name_2+") : "+
           Object.values(props.missed)[tooltipItems[0].dataIndex],
-        // ...[].map((e) => {}),
+        '----------------------------------',
         ...metadata.map((e) => {
           return e.name + " : " + e.value;
         }),
@@ -226,13 +224,15 @@ export default function ChartPlot(props) {
             {
               type: "box",
               drawTime: "beforeDatasetsDraw",
-              yScaleID: "y-axis-0",
+              // yScaleID: "y-axis-0",
+              yScaleID: 'y1',
             //   yMin: 0.4,
             //   yMax: 0.5,
               yMin: 0,
-              yMax: data2_max + 0.01, //1,
+              yMax: 1,//data2_max + 0.01,
               xMin: data1_max + 0.01,
               xMax: data1_max + 0.01 + (data1_max * 100) / 5000,
+
             //   yMax: Math.max(...data2_array) + 0.01, //1,
             //   xMin: Math.max(...data1_array) + 0.01,
             //   xMax: Math.max(...data1_array) + 0.01 + (Math.max(...data1_array) * 100) / 5000,
@@ -264,7 +264,6 @@ export default function ChartPlot(props) {
         },
         tooltip: {
           yAlign: "bottom",
-  
           callbacks: {
             footer: footer,
             title: () => {
@@ -309,7 +308,7 @@ export default function ChartPlot(props) {
         x: {
           suggestedMax: 1.05,
           max: data1_max + 0.01 + (data1_max * 100) / 5000,
-        //   max: Math.max(...data1_array) + 0.01 + (Math.max(...data1_array) * 100) / 5000,
+          // max: Math.max(...data1_array) + 0.01 + (Math.max(...data1_array) * 100) / 5000,
           title: {
             display: true,
             text: props.matrix.substring(1) + " in " + props.name_1,

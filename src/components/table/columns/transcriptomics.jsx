@@ -1,10 +1,14 @@
-import {common_cols, cohort_cols, common_column_groups} from "./common";
+import { common_cols, common_column_groups } from "./common";
+
+// const dataset_name_col = {...common_cols['dataset_name'], field: 'dataset__name'}
+
 
 export const transcriptomics_columns = {
     'Illumina RNAseq': [
         common_cols['omicspred_id'],
         common_cols['gene_id'],
         common_cols['gene_name'],
+        // dataset_name_col,
         common_cols['variants_number'],
         // Cohorts columns
         // cohort_cols['INTERVAL']['R2'],

@@ -155,7 +155,7 @@ const DataTableServer = (props) => {
 
     const onFilterModelChange = useCallback((filterModel) => {
         // Here you save the data you need from the filter model
-        const q = filterModel.quickFilterValues[0];
+        const q = filterModel.quickFilterValues.join(' ');
         if (!q || (q && q.length >= 3)) {
             setQueryParam(old => ({ ...old, filter: q }))
         }

@@ -45,7 +45,7 @@ function Metabolite() {
 
     const fetchPerformanceMetrics = async () => {
         const score_metric_data = await restApiCall('performance/search/'+element+'/'+metabolite);
-        console.log(score_metric_data);
+        // console.log(score_metric_data);
         setPerformanceMetricData(score_metric_data.results);
     }
 
@@ -53,7 +53,9 @@ function Metabolite() {
 		return (
 			<>
                 { elementData.external_id ? <tr><td>Identifier</td><td>{external_id_link()}</td></tr>:''}
-                { elementData.descriptions ? <tr><td>Description{elementData.descriptions.length > 1 ? 's' : ''}</td><td>{display_description(elementData.descriptions)}</td></tr>:''}
+                { elementData.descriptions && elementData.descriptions.length ?
+                    <tr><td>Description{elementData.descriptions.length > 1 ? 's' : ''}</td><td>{display_description(elementData.descriptions)}</td></tr>:''
+                }
                 { elementData.synonyms ? <tr><td>Synonym{elementData.synonyms.length > 1 ? 's' : ''}</td><td>{display_synonyms(elementData.synonyms)}</td></tr>:''}
                 { elementData.xrefs ? <tr><td>External reference{elementData.xrefs.length > 1 ? 's' : ''}</td><td>{display_xrefs(elementData.xrefs)}</td></tr>:''}
             </>

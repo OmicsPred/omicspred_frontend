@@ -9,6 +9,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import ChartPlot from "./ChartPlot";
 import ChartDoughnut from "./ChartDoughnut";
+import ChartBar from "./ChartBar";
 
 
 export default function Charts(props) {
@@ -245,7 +246,7 @@ export default function Charts(props) {
       </div>
       {/* Data Plot */}
       <Suspense fallback={<div>Data is coming !</div>}>
-        <h3 key={study1+"_"+study2} className="mt-3"><span style={{color:'blue'}}>{study1}</span> <small>VS</small> <span style={{color:'blue'}}>{study2}</span></h3>
+        <h3 key={study1+"_"+study2} className="mt-3"><span className="op_color_2">{study1}</span> <small>VS</small> <span className="op_color_2">{study2}</span></h3>
         <ChartPlot
           data_1={datastudy1}
           data_2={datastudy2}
@@ -266,6 +267,14 @@ export default function Charts(props) {
           name_2={study2}
           study_2={datastudy2}
           missed_name={missed}
+          matrix={matrix}
+        />
+        {/* Vertical Bar Plot */}
+        <ChartBar
+          study_1={datastudy1}
+          name_1={study1}
+          name_2={study2}
+          study_2={datastudy2}
           matrix={matrix}
         />
       </Suspense>

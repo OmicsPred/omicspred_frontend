@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ChevronRight, GraphUp, People, FileEarmarkArrowDown } from 'react-bootstrap-icons';
+import { GraphUp, People, FileEarmarkArrowDown, Stack } from 'react-bootstrap-icons';
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -252,7 +252,7 @@ const PlatformTable = (props) => {
                 <div className='platform_accordion'>
                     <div className='d-flex flex-column'>
                         <div>
-                            <ChevronRight className={"color_"+platform_type+" me-2"}/>
+                            <Stack className={"color_"+platform_type+" me-2"}/>
                             <span className="font-bold">{platform_name}</span>
                         </div>
                         {datasetName ? <div style={{marginLeft: "24px"}} title='Dataset name'><small>{datasetName}</small></div>:''}
@@ -263,7 +263,7 @@ const PlatformTable = (props) => {
                         <Href key={platformName+'_plot_link'} role="button" text="Go to Plots" href={plot_url} icon={<GraphUp/>} />
                     </div>
                     <div>
-                        <Href key={platformName+'_platform_link'} role="button" text="Platform page" href={"/platform/"+platformName}/>
+                        <Href key={platformName+'_platform_link'} role="button" text="Platform page" href={"/platform/"+platformName} icon={<Stack/>}/>
                     </div>
                 </div>
             </AccordionSummary>

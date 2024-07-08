@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { DashLg} from 'react-bootstrap-icons';
-
+import { DashLg, Stack } from 'react-bootstrap-icons';
 import { thousandifyNumber } from "../../../components/Generic";
 import PlatformCohort from './PlatformCohort';
 
@@ -87,7 +86,7 @@ const Platforms = (props) => {
 
     return (
         <div className="odd_section">
-            <div className="op_section_title" id='platforms'>Platforms with Genetic Scores</div>
+            <div className="op_section_title" id='platforms'><Stack size="0.9em" className='me-3'/>Platforms with Genetic Scores</div>
             {
                 Object.keys(categorizedPlatform).sort().map((key) => {
                     return(
@@ -111,7 +110,7 @@ const Platforms = (props) => {
                                                 <span className={'badge bg_'+item.o_type+' me-2'}>{item.o_type}</span>{item.tissues.map((tissue) => <span key={item.name+'-'+tissue} className='badge text-bg-dark'>{tissue}</span>)}
                                             </div>
                                         </div>
-                                        <a href={"/platform/"+item.name} className="btn btn-primary shadow">Platform page</a>
+                                        <a href={"/platform/"+item.name} className="btn btn-op shadow"><Stack size='0.9em' className='me-2'/>Platform page</a>
                                     </div>
                                 </div>
                             )}

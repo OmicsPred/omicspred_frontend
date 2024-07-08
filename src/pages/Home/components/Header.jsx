@@ -16,12 +16,11 @@ const Header = () => {
         <div>
             {/* Title & subtitle */}
             <div style={{textAlign:"center"}}>
-                <h1 className="op_color_1">{project_name}</h1>
+                <h1 className="op_title">{project_name}</h1>
                 <h4>An atlas of genetic scores for prediction of multi-omics data</h4>
             </div>
 
             {/* Search bar */}
-            {/* <div id='home_search_bar' className="large_search_bar col-12 col-sm-12 offset-sm-0 col-md-10 offset-md-1 col-xl-8 offset-xl-2"> */}
             <div id='home_search_bar' className="large_search_bar mt-3">
                 <div className='col-12 col-sm-12 offset-sm-0 col-md-10 offset-md-1 col-xl-8 offset-xl-2'>
                     <SearchBar/>

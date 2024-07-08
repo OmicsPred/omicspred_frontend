@@ -662,10 +662,22 @@ export const common_cols = {
         }
     },
     'description': {
-        field: 'description',
+        field: 'descriptions',
         headerName: 'Description',
-        minWidth: 200,
-        flex: 0.8
+        minWidth: 250,
+        flex: 1,
+        renderCell: (params) => {
+            let desc_list = [];
+            if (params.row.descriptions) {
+                desc_list = display_description(params.row.descriptions)
+            }
+            return desc_list;
+        },
+        valueGetter: (value, row) => {
+            if (row.descriptions) {
+                return row.descriptions.join(data_separator);
+            }
+        }
     },
     'scores_count':{
         field: 'scores_count',
