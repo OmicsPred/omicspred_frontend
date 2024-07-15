@@ -4,13 +4,15 @@ import Href from '../../../components/Href';
 import {score_metabolite_columns}  from "../../../components/table/columns/scores";
 import restApiCall from '../../../components/RestAPI';
 import { display_synonyms, display_xrefs, display_pathways, sort_data } from '../components/links';
-import { op_title, display_description, display_information_2_cards } from '../../../components/Common';
+import { op_title, display_description, display_information_2_cards, no_entry_found } from '../../../components/Common';
+import { loading_data } from '../../../components/Generic';
 import { ScoresTable, PerformanceMetricsTable } from '../components/tables';
 
 
 function Metabolite() {
     let { metabolite } = useParams();
-    const [elementData, setElementData] = useState([])
+    const [elementData, setElementData] = useState()
+    const [noEntry, setNoEntry] = useState(false)
     const [scoreData, setScoreData] = useState([])
     const [performanceMetricData, setPerformanceMetricData] = useState([])
     const [pathwayData, setPathwayData] = useState([])
@@ -29,10 +31,14 @@ function Metabolite() {
 
     const fetchSummaryData = async () => {
         const data = await restApiCall(element+'/'+metabolite);
-        console.log(data);
-        setElementData(data);
-        if (data.pathways) {
-            setPathwayData(sort_data(data.pathways))
+        if (data && Object.keys(data).length) {
+            setElementData(data);
+            if (data.pathways) {
+                setPathwayData(sort_data(data.pathways))
+            }
+        }
+        else {
+            setNoEntry(true);
         }
     }
 
@@ -77,19 +83,25 @@ function Metabolite() {
 
     return (
         <div>
-            {/* Summary Data */}
-            {op_title('metabolite', elementData, metabolite)}
-            <div className='op_card_container_info'>
-				{
-					elementData ? display_information_2_cards('metabolite',get_information_left_content(),'Associated data',get_information_right_content()) : ''
-				}
-			</div>
+            { elementData ?
+                <>
+                    {/* Summary Data */}
+                    {op_title(element, elementData, metabolite)}
+                    <div className='op_card_container_info'>
+                        {
+                            elementData ? display_information_2_cards(element,get_information_left_content(),'Associated data',get_information_right_content()) : ''
+                        }
+                    </div>
 
-            {/* Associated scores */}
-            { scoreData && scoreData.length ? <ScoresTable data={scoreData} columns={score_metabolite_columns}/>:'' }
+                    {/* Associated scores */}
+                    { scoreData && scoreData.length ? <ScoresTable data={scoreData} columns={score_metabolite_columns}/>:'' }
 
-            {/* Performance metrics table */}
-			{ performanceMetricData && performanceMetricData.length ? <PerformanceMetricsTable data={performanceMetricData}/>:'' }
+                    {/* Performance metrics table */}
+                    { performanceMetricData && performanceMetricData.length ? <PerformanceMetricsTable data={performanceMetricData}/>:'' }
+                </>
+                : noEntry ?
+					<>{ no_entry_found(element,metabolite) }</> : loading_data()
+            }
         </div>
     );
 }

@@ -51,7 +51,7 @@ export const omicspred_internal_link = function(op_entry,type,index) {
     const op_title = (op_entry['desc']) ? op_entry['desc'] : undefined
     let op_url = "/"+type+"/"+op_id
     op_url = op_url.replace('.','_');
-    if (op_id) {
+    if (op_id && op_label != default_cell_value) {
         return (
             <span key={op_id+'_'+type+'_span'} title={op_title ? op_title:''}>
                 {index ? ', ': ''}<Href key={op_id+'_'+type} href={op_url} text={op_label}/>
@@ -200,7 +200,7 @@ export const common_cols = {
     'platform_type': {
         field: 'platform__platform_master__type',
         headerName: 'Omics',
-        minWidth: 130,
+        minWidth: 140,
         flex: 1,
         renderCell: (params) => {
             return omicspred_omics_type(params.row.platform.type);
@@ -344,15 +344,18 @@ export const common_cols = {
         renderCell: (params) => {
             let gene_names = [];
             if (params.row.genes) {
-                gene_names = params.row.genes.map((gene) => ({'id': (gene.external_id ? gene.external_id : gene.name),'label': gene.name, 'desc': gene.description}))
+                gene_names = params.row.genes.map((gene) => ({'id': (gene.external_id ? gene.external_id : gene.name),'label': gene.name ? gene.name : '-', 'desc': gene.description}))
             }
             gene_names = sort_objects(gene_names,'label');
 
             if (gene_names.length>display_threshold) {
                 return <ToogleDiv content={omicspred_internal_links(gene_names, 'Gene')} title={gene_names.length+' genes'}/>;
             }
-            else {
+            else if (gene_names.length > 0) {
                 return omicspred_internal_links(gene_names, 'Gene');
+            }
+            else {
+                return default_cell_value;
             }
         },
         valueGetter: (value, row) => {

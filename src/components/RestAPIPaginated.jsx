@@ -1,4 +1,4 @@
-const rest_url = process.env.OMICSPRED_REST_API_URL;
+const rest_url = process.env.REST_API_URL;
 
 const getData = async (url) => {
     var data = [];

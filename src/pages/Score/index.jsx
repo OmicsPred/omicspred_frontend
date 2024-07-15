@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { FileEarmarkArrowDown } from 'react-bootstrap-icons';
 import Href from "../../components/Href";
-import { internal_publication_link, op_title, op_subtitle_no_asso, display_information_2_cards } from '../../components/Common';
+import { internal_publication_link, op_title, op_subtitle_no_asso, display_information_2_cards, no_entry_found } from '../../components/Common';
 import DataTable from "../../components/table/DataTable";
 import { score_columns } from '../../components/table/columns/score'
 import { score_phecode_columns } from '../../components/table/columns/phecode'
 import restApiCall from '../../components/RestAPI';
 import restApiCallPaginated from '../../components/RestAPIPaginated';
-import { ToogleDiv, numberBadge } from '../../components/Generic';
+import { ToogleDiv, loading_data, numberBadge } from '../../components/Generic';
 import { display_gene_link, display_protein_link, display_metabolite_link, display_pathways } from '../MolecularTrait/components/links';
 import { DownloadList, get_download_list } from '../../components/Downloads';
 
@@ -16,7 +16,8 @@ import { DownloadList, get_download_list } from '../../components/Downloads';
 function Score() {
     const { score } = useParams();
 
-    const [scoreData, setScoreData] = useState([])
+    const [scoreData, setScoreData] = useState()
+    const [noEntry, setNoEntry] = useState(false)
     const [platformData, setPlatformData] = useState([])
     const [genesData, setGenesData] = useState([])
     const [transcriptsData, setTranscriptsData] = useState([])
@@ -90,23 +91,28 @@ function Score() {
     const fetchScoreData = async () => {
         const score_data = await restApiCall('score/'+score+'?include_pathway=1');
         console.log(score_data);
-        setScoreData(score_data);
-        if (score_data.platform) {
-            const platform = score_data.platform;
-            setPlatformData(platform);
-            const publication = score_data.publication;
-            console.log(']] platform.name: '+platform.name)
-            fetchDownloadUrls(score_data.dataset_name,platform.name,publication.pmid)
+        if (score_data && Object.keys(score_data).length) {
+            setScoreData(score_data);
+            if (score_data.platform) {
+                const platform = score_data.platform;
+                setPlatformData(platform);
+                const publication = score_data.publication;
+                console.log(']] platform.name: '+platform.name)
+                fetchDownloadUrls(score_data.dataset_name,platform.name,publication.pmid)
+            }
+            setGenesData(score_data.genes);
+            setTranscriptsData(score_data.transcripts);
+            setProteinsData(score_data.proteins);
+            setMetabolitesData(score_data.metabolites);
+            const score_app_data = await restApiCallPaginated('applications_score/'+score);
+            score_app_data.sort((a, b) => (a.phecode.name > b.phecode.name) ? 1 : -1)
+            setScorePhecodeData(score_app_data);
+            setPhecodeData(get_phecodes(score_app_data));
+            setPathwayData(get_pathways(score_data));
         }
-        setGenesData(score_data.genes);
-        setTranscriptsData(score_data.transcripts);
-        setProteinsData(score_data.proteins);
-        setMetabolitesData(score_data.metabolites);
-        const score_app_data = await restApiCallPaginated('applications_score/'+score);
-        score_app_data.sort((a, b) => (a.phecode.name > b.phecode.name) ? 1 : -1)
-        setScorePhecodeData(score_app_data);
-        setPhecodeData(get_phecodes(score_app_data));
-        setPathwayData(get_pathways(score_data));
+        else {
+            setNoEntry(true);
+        }
     }
 
     const fetchDownloadUrls = async (dataset_name,platform, pmid) => {
@@ -210,7 +216,9 @@ function Score() {
                         </div>:''
                     }
                 </div>
-            </> :''
+            </>
+            : noEntry ?
+                <>{ no_entry_found('score',score) }</> : loading_data()
         }
         </>
     );

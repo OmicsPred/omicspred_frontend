@@ -4,15 +4,16 @@ import DataTableFromRestApi from '../../../components/table/DataTableFromRestApi
 import DataTable from '../../../components/table/DataTable';
 import { common_cols, common_data_cols, applications_cols } from '../../../components/table/columns/common';
 import restApiCall from '../../../components/RestAPI';
-import { numberBadge } from '../../../components/Generic';
-import { op_title, op_subtitle, op_subtitle_no_asso, display_information } from '../../../components/Common';
+import { numberBadge, loading_data } from '../../../components/Generic';
+import { op_title, op_subtitle_no_asso, display_information, no_entry_found } from '../../../components/Common';
 
 
 function Phecode() {
     const { phecode } = useParams();
+    const [phecodeData, setPhecodeData] = useState()
+    const [noEntry, setNoEntry] = useState(false)
+
     const phecode_id = phecode.replace('_','.');
-    const [phecodeData, setPhecodeData] = useState([])
-    //phecode = phecode.replace('_', '.')
     const url_suffix = "applications_score/search?phecode_id="+phecode_id;
     const columns = [
         common_cols['omicspred_id'],
@@ -36,9 +37,13 @@ function Phecode() {
     const column_keys = ['score_id'];
 
     const fetchSummaryData = async () => {
-      const data = await restApiCall('phecode/'+phecode_id+'?include_children=1');
-      console.log(data);
-      setPhecodeData(data);
+        const data = await restApiCall('phecode/'+phecode_id+'?include_children=1');
+        if (data && Object.keys(data).length) {
+            setPhecodeData(data);
+        }
+        else {
+            setNoEntry(true);
+        }
     }
 
     const get_information_content = () => {
@@ -57,26 +62,32 @@ function Phecode() {
 
     return (
         <div>
-            {/* Phecode Summary data */}
-            {op_title('phecode', phecodeData, phecode_id)}
-            { phecodeData ? display_information('PheCode', get_information_content()):'' }
+            { phecodeData ?
+                <>
+                    {/* Phecode Summary data */}
+                    {op_title('phecode', phecodeData, phecode_id)}
+                    { phecodeData ? display_information('PheCode', get_information_content()):'' }
 
-            <div className='mt-5'></div>
+                    <div className='mt-5'></div>
 
-            {/* Score association */}
-            <div className='d-flex' style={{flexDirection:'column'}}>
-                <DataTableFromRestApi table_key="phecode" title='score' type='score' url_suffix={url_suffix} columns={columns} col_for_ids={column_keys}/>
-            </div>
+                    {/* Score association */}
+                    <div className='d-flex' style={{flexDirection:'column'}}>
+                        <DataTableFromRestApi table_key="phecode" title='score' type='score' url_suffix={url_suffix} columns={columns} col_for_ids={column_keys}/>
+                    </div>
 
-            {/* PheCode child terms */}
-            { 
-                phecodeData.child_phecode && phecodeData.child_phecode.length ?
-                <div className='mt-5'>
-                    {op_subtitle_no_asso('hl','Children Phecode entries',phecodeData.child_phecode.length)}
-                    {/* <div className='d-flex'> */}
-                        <DataTable data={phecodeData.child_phecode} columns={child_columns}/>
-                    {/* </div> */}
-                </div> : ''
+                    {/* PheCode child terms */}
+                    {
+                        phecodeData.child_phecode && phecodeData.child_phecode.length ?
+                        <div className='mt-5'>
+                            {op_subtitle_no_asso('hl','Children Phecode entries',phecodeData.child_phecode.length)}
+                            {/* <div className='d-flex'> */}
+                                <DataTable data={phecodeData.child_phecode} columns={child_columns}/>
+                            {/* </div> */}
+                        </div> : ''
+                    }
+                </>
+                : noEntry ?
+                    <>{ no_entry_found('phecode',phecode_id) }</> : loading_data()
             }
         </div>
     );

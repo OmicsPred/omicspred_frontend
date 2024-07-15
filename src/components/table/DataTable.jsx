@@ -1,6 +1,7 @@
 // import React, { useState, useEffect } from 'react'
 import { DataGrid, GridToolbar } from '@mui/x-data-grid'
 
+
 const DataTable = (props) => {
 
     const default_page_size = 25;
@@ -61,32 +62,32 @@ const DataTable = (props) => {
     // }, [rowCount, setRowCountState])
 
     return (
-      <div className="d-flex" >
-        <div className="table-responsive">
-          <DataGrid
-            autoHeight
-            columnGroupingModel={props.groups}
-            columns={props.columns}
-            rows={props.data}
-            getRowId={(row) => getRowId(row)}
-            getRowHeight={() => row_height_settings}
-            // rowCount={rowCountState}
-            // paginationMode="server"
-            sx={{ '--DataGrid-overlayHeight': '200px' }}
-            initialState={{
-              pagination: { paginationModel: { pageSize: default_page_size } }
-            }}
-            slots={{ 
-              toolbar: GridToolbar
-            }}
-            slotProps={{
-              toolbar: {
-                showQuickFilter: true
-              }
-            }}
-          />
+        <div className="d-flex" >
+            <div className="table-responsive">
+                <DataGrid
+                    autoHeight
+                    columnGroupingModel={props.groups}
+                    columns={props.columns}
+                    rows={props.data}
+                    getRowId={(row) => getRowId(row)}
+                    getRowHeight={() => row_height_settings}
+                    // rowCount={rowCountState}
+                    // paginationMode="server"
+                    sx={{ '--DataGrid-overlayHeight': '200px' }}
+                    initialState={{
+                        pagination: { paginationModel: { pageSize: default_page_size } }
+                    }}
+                    slots={{
+                        toolbar: GridToolbar
+                    }}
+                    slotProps={{
+                        toolbar: {
+                            showQuickFilter: true
+                        }
+                    }}
+                />
+            </div>
         </div>
-      </div>
     )
 
 }

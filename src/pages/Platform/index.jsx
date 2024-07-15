@@ -1,18 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { ChevronRight } from 'react-bootstrap-icons';
 
-import {cohort_cols, common_column_groups} from '../../components/table/columns/common';
 import { metabolomics_columns,metabolomics_column_groups } from '../../components/table/columns/metabolomics';
 import { proteomics_columns, proteomics_column_groups } from '../../components/table/columns/proteomics';
 import { transcriptomics_columns, transcriptomics_column_groups } from '../../components/table/columns/transcriptomics';
 import restApiCall from '../../components/RestAPI';
 import DataTableServer from '../../components/table/DataTableServer';
-// import PlatformDataTable from './components/PlatformDataTable';
-// import { numberBadge } from "../../components/Generic";
 import PlatformSummary from './components/PlatformSummary';
 import PublicationCard from './components/PublicationCard';
-import { op_subtitle, op_title, get_data_type, get_cohorts_cols_list, get_cohorts_col_groups_list } from '../../components/Common'
+import { op_subtitle, op_title } from '../../components/Common'
+import { loading_data } from '../../components/Generic';
 import _ from 'underscore';
 
 
@@ -199,8 +196,7 @@ function Platform() {
                 <div className="mt-2">
                    <DataTableServer key={platformDataEndpoint} url_suffix={platformDataEndpoint} columns={platformTableColumns} groups={platformTableColumnGroups}/>
                 </div>
-                :
-                <div>Loading ...</div>
+                : loading_data()
             }
         </>
     );

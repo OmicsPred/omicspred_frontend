@@ -3,14 +3,16 @@ import { useParams } from 'react-router-dom';
 import Href from '../../../components/Href';
 import restApiCall from '../../../components/RestAPI';
 import restApiCallPaginated from '../../../components/RestAPIPaginated';
-import { op_title, display_description, display_information_2_cards } from '../../../components/Common';
+import { op_title, display_description, display_information_2_cards, no_entry_found } from '../../../components/Common';
+import { loading_data } from '../../../components/Generic';
 import { display_synonyms, display_protein_link, display_pathways, sort_data } from '../components/links';
 import { ScoresTable, PerformanceMetricsTable } from '../components/tables';
 
 
 function Gene() {
 	let { gene } = useParams();
-	const [elementData, setElementData] = useState([])
+	const [elementData, setElementData] = useState()
+	const [noEntry, setNoEntry] = useState(false)
 	const [scoreData, setScoreData] = useState([])
 	const [performanceMetricData, setPerformanceMetricData] = useState([])
 	const [proteinsData, setProteinsData] = useState([])
@@ -21,10 +23,14 @@ function Gene() {
 
 	const fetchSummaryData = async () => {
 		const data = await restApiCall(element+'/'+gene);
-		console.log(data);
-		setElementData(data);
-		if (data.pathways) {
-			setPathwayData(sort_data(data.pathways))
+		if (data && Object.keys(data).length) {
+			setElementData(data);
+			if (data.pathways) {
+				setPathwayData(sort_data(data.pathways))
+			}
+		}
+		else {
+			setNoEntry(true);
 		}
 	}
 
@@ -84,20 +90,26 @@ function Gene() {
 
 	return (
 		<div>
-			{/* Summary Data */}
-			{op_title('gene', elementData, gene)}
-			<div className='op_card_container_info'>
-				{
-					elementData ? display_information_2_cards('gene',get_information_left_content(),'Associated data',get_information_right_content()) : ''
-				}
-			</div>
+			{ elementData ?
+				<>
+					{/* Summary Data */}
+					{op_title(element, elementData, gene)}
+					<div className='op_card_container_info'>
+						{
+							elementData ? display_information_2_cards(element,get_information_left_content(),'Associated data',get_information_right_content()) : ''
+						}
+					</div>
 
-			{/* Associated scores */}
-			{ scoreData && scoreData.length ? <ScoresTable data={scoreData}/>:'' }
+					{/* Associated scores */}
+					{ scoreData && scoreData.length ? <ScoresTable data={scoreData}/>:'' }
 
-			{/* Performance metrics table */}
-			{ performanceMetricData && performanceMetricData.length ? <PerformanceMetricsTable data={performanceMetricData}/>:'' }
-		</div>
+					{/* Performance metrics table */}
+					{ performanceMetricData && performanceMetricData.length ? <PerformanceMetricsTable data={performanceMetricData}/>:'' }
+				</>
+				: noEntry ?
+					<>{ no_entry_found(element,gene) }</> : loading_data()
+            }
+        </div>
 	);
 }
 
