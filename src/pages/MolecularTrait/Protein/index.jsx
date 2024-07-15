@@ -3,13 +3,15 @@ import { useParams } from 'react-router-dom';
 import restApiCall from '../../../components/RestAPI';
 import Href from '../../../components/Href';
 import { display_gene_link, display_pathways, sort_data } from '../components/links';
-import { op_title, display_information_2_cards, display_description } from '../../../components/Common';
+import { op_title, display_information_2_cards, display_description, no_entry_found } from '../../../components/Common';
+import { loading_data } from '../../../components/Generic';
 import { ScoresTable, PerformanceMetricsTable } from '../components/tables';
 
 
 function Protein() {
     let { protein } = useParams();
-    const [elementData, setElementData] = useState([])
+    const [elementData, setElementData] = useState()
+    const [noEntry, setNoEntry] = useState(false)
     const [scoreData, setScoreData] = useState([])
     const [performanceMetricData, setPerformanceMetricData] = useState([])
     const [geneData, setGeneData] = useState()
@@ -30,12 +32,16 @@ function Protein() {
 
     const fetchSummaryData = async () => {
         const data = await restApiCall(element+'/'+protein+'?extend_schema=1');
-        console.log(data);
-        setElementData(data);
-        if (data.gene) {
-            setGeneData(data.gene);
+        if (data && Object.keys(data).length) {
+            setElementData(data);
+            if (data.gene) {
+                setGeneData(data.gene);
+            }
+            setPathwayData(sort_data(data.pathways))
         }
-        setPathwayData(sort_data(data.pathways))
+        else {
+            setNoEntry(true);
+        }
     }
 
     const fetchScoreData = async () => {
@@ -82,19 +88,25 @@ function Protein() {
 
     return (
         <div>
-            {/* Summary Data */}
-            {op_title('protein', elementData, protein)}
-            <div className='op_card_container_info'>
-				{
-					elementData ? display_information_2_cards('protein',get_information_left_content(),'Associated data',get_information_right_content()) : ''
-				}
-			</div>
+            { elementData ?
+                <>
+                    {/* Summary Data */}
+                    {op_title(element, elementData, protein)}
+                    <div className='op_card_container_info'>
+                        {
+                            elementData ? display_information_2_cards(element,get_information_left_content(),'Associated data',get_information_right_content()) : ''
+                        }
+                    </div>
 
-            {/* Associated scores */}
-            { scoreData && scoreData.length ? <ScoresTable data={scoreData}/>:'' }
+                    {/* Associated scores */}
+                    { scoreData && scoreData.length ? <ScoresTable data={scoreData}/>:'' }
 
-            {/* Performance metrics table */}
-			{ performanceMetricData && performanceMetricData.length ? <PerformanceMetricsTable data={performanceMetricData}/>:'' }
+                    {/* Performance metrics table */}
+                    { performanceMetricData && performanceMetricData.length ? <PerformanceMetricsTable data={performanceMetricData}/>:'' }
+                </>
+                : noEntry ?
+                    <>{ no_entry_found(element,protein) }</> : loading_data()
+            }
         </div>
     );
 }

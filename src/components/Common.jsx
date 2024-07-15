@@ -126,6 +126,16 @@ export const op_subtitle_no_asso = (type,label,count) => {
 }
 
 
+export const no_entry_found = (type, name) => {
+    return (
+        <>
+            {op_title(type, {"name": name}, name)}
+            <div>No {type} entry found for <i>{name}</i> in {process.env.PROJECT_NAME}.</div>
+        </>
+    );
+}
+
+
 export const display_information = (type, content) => {
     const type_uc = type.charAt(0).toUpperCase() + type.slice(1)
     return (

@@ -9,6 +9,7 @@ import { ChevronRight, Book } from 'react-bootstrap-icons';
 import restApiCall from '../../../components/RestAPI';
 import Charts from "./components/Chart";
 import { get_data_type, publication_ref } from '../../../components/Common';
+import { loading_data } from '../../../components/Generic';
 
 
 const Plot = (props) => {
@@ -166,7 +167,7 @@ const Plot = (props) => {
                         <Suspense fallback={<div>Data is coming !</div>}>
                             <Charts key={selectedDataset+'_chart'} dataset={selectedDataset} pagename={platformName} tdata={scoreData} data={plotData} default_cohort={defaultCohort}/>
                         </Suspense>
-                    </div> : 'Loading chart data ...'
+                    </div> : loading_data()
                 }
             </div>
         </>

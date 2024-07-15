@@ -1,12 +1,8 @@
 import DataTableFromRestApi from "../../components/table/DataTableFromRestApi";
-import {omicspred_internal_link} from "../../components/table/columns/common";
-import { browse_title, omicspred_omics_type } from '../../components/Common';
-import { common_cols } from '../../components/table/columns/common';
+import { browse_title } from '../../components/Common';
 import { platforms_columns } from "../../components/table/columns/platforms";
 
 function Platforms() {
-
-    // const [platformData, setPlatformData] = useState([])
 
     const url_suffix = 'platform/all';
 

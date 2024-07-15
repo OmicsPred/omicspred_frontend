@@ -1,28 +1,33 @@
 import React, { Component, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { page_title, display_information } from '../../components/Common';
+import { page_title, display_information, no_entry_found } from '../../components/Common';
 import Href from '../../components/Href';
 import restApiCall from '../../components/RestAPI';
 // import { ScoresTable } from '../MolecularTrait/components/tables';
 import { scores_columns } from '../../components/table/columns/scores';
 import { common_column_groups } from '../../components/table/columns/common';
 import DataTableServer from '../../components/table/DataTableServer';
-import { ToogleDiv } from '../../components/Generic';
+import { ToogleDiv, loading_data } from '../../components/Generic';
 
 
 function Cohort() {
     const { cohort } = useParams();
 
     const [cohortData, setCohortData] = useState();
-    const [scoreData, setScoreData] = useState([]);
+    const [noEntry, setNoEntry] = useState(false)
     const [cohortImageSource, setCohortImageSource] = useState();
 
     const url_endpoint = 'score/search?cohort='+cohort;
 
     const fetchCohortData = async () => {
         const cohort_data = await restApiCall('cohort/'+cohort);
-        setCohortData(cohort_data);
-        getImageSource(cohort);
+        if (cohort_data && Object.keys(cohort_data).length) {
+            setCohortData(cohort_data);
+            getImageSource(cohort);
+        }
+        else {
+            setNoEntry(true);
+        }
     }
 
     const getImageSource = async (cohort_name) => {
@@ -85,7 +90,9 @@ function Cohort() {
                     <div className="mt-4">
                         <DataTableServer url_suffix={url_endpoint} columns={scores_columns} groups={[common_column_groups['molecular_trait_id']]}/>
                     </div>
-                </div> : <div>Cohort not found</div>
+                </div>
+                : noEntry ?
+                    <>{ no_entry_found('cohort',cohort) }</> : loading_data()
             }
         </>
     )

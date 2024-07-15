@@ -10,9 +10,9 @@
 // $op_color_1: #0066b2; //Bayern Blue
 // $op_color_1_alt: #005A9C;// Dodgers Blue
 $op_color_1: #192E5B;
-$op_color_2: #1D65A6;
-$op_color_3: #7C9FBF;//#72A2C0;
-$op_color_4: #00a75b; // #00743F;
+$op_color_2: #1D65A6; // Denim
+$op_color_3: #2581d1;//#709DC2;//#7C9FBF; // Glacier
+$op_color_4: #00A75B; // #00743F;
 $op_color_5: #F2A104;
 $op_color_1_alt: #005A9C;// Dodgers Blue
 $ge_color: #0A0;
@@ -53,6 +53,13 @@ $type_colors: (
     'pathway': $pa_color
 );
 
+/* Mixins */
+@mixin op_dark_bg {
+    background-color: $op_color_2 !important;
+}
+@mixin op_light_bg {
+    background-color: $op_light_bg_color !important;
+}
 
 /********************/
 /**  SCSS Content  **/
@@ -77,11 +84,19 @@ header {
 }
 
 footer {
+    @include op_dark_bg;
     min-width: 100% !important;
-    a > svg {
-        vertical-align: top !important;
-        margin-top:1px;
-        font-size: 22px;
+    a {
+        // color: $op_color_1;
+        color: $op_white !important;
+        &:hover {
+            color: $op_color_5 !important;
+        }
+        > svg {
+            vertical-align: top !important;
+            margin-top:1px;
+            font-size: 22px;
+        }
     }
     .op_copyright {
         text-align:center;
@@ -128,7 +143,7 @@ a {
 }
 
 #home_search_bar {
-    background-color: $op_light_bg_color;
+    @include op_light_bg;
     // background-color: $op_color_3;
     // color: $op_white;
     // a {
@@ -156,18 +171,18 @@ a {
         margin-bottom: 0px !important ;
     }
     .home_stats_box {
+        @include op_light_bg;
         margin-bottom: 1rem !important;
         display:flex;
         justify-content: space-between;
         border:none !important;
-        background-color: $op_light_bg_color;
         // background-color: $op_color_3;
         // color: $op_white;
         svg {
             color: $op_color_2;
         }
         &:hover {
-            background-color: $op_color_2;
+            @include op_dark_bg;
             color: $op_white;
             // background-color: $op_light_grey_3;
             svg {
@@ -244,7 +259,7 @@ a {
 //     position: relative;
 //     z-index: 1;
 //     // background-color: #ebf5fb;
-//     background-color: $op_light_bg_color; //rgb(248, 249, 250);
+//     @include op_light_bg; //rgb(248, 249, 250);
 //     max-height: 765px;
 //     .home_header_search {
 //         margin-top:10px;
@@ -378,22 +393,6 @@ a {
     margin-right: 0.5rem;
 }
 
-footer {
-    background-color: $op_color_2 !important;
-    a {
-        // color: $op_color_1;
-        color: $op_white !important;
-        &:hover {
-            color: $op_color_5 !important;
-        }
-        > svg {
-            vertical-align: top !important;
-            margin-top:1px;
-            font-size: 22px;
-        }
-    }
-}
-
 .external-link {
     white-space: nowrap;
     > svg:last-child {
@@ -413,12 +412,12 @@ footer {
         margin-bottom: 2rem;
     }
     .op_subsection_header {
-        background-color: $op_light_bg_color;
+        @include op_light_bg;
     }
 }
 .even_section {
     padding: 1rem 2rem 2rem;
-    background-color: $op_light_bg_color;
+    @include op_light_bg;
 }
 
 .relative {
@@ -433,12 +432,12 @@ footer {
 }
 
 .card-header {
-    background-color: $op_color_2 !important;
+    @include op_dark_bg;
     color: $op_white !important;
 }
 
 .card-footer {
-    background-color: $op_light_bg_color !important;
+    @include op_light_bg;
 }
 
 .op_card {
@@ -517,7 +516,7 @@ ul.key_val_line {
 
 .btn-op {
     color: $op_white !important;
-    background-color: $op_color_2 !important;
+    @include op_dark_bg;
     &:hover {
         color: $op_white !important;
         // background-color: $op_color_3 !important;
@@ -538,7 +537,7 @@ ul.key_val_line {
 
 .btn-search {
     color: $op_white !important;
-    background-color: $op_color_2 !important;
+    @include op_dark_bg;
     border: 1px solid $op_white !important;
     &:hover {
         color: $op_white !important;
@@ -550,10 +549,34 @@ ul.key_val_line {
 
 .badge-op {
     color: $op_white !important;
-    background-color: $op_color_2 !important;
+    @include op_dark_bg;
 }
 
+
 /* MUI overwriting */
+.MuiDataGrid-toolbarContainer {
+    background-color: $op_color_3;
+    button {
+        color: $op_white;
+    }
+}
+.MuiDataGrid-columnHeadersInner {
+    background-color: $op_light_grey_3;
+}
+
+.MuiDataGrid-columnHeaderTitle {
+    font-weight: bold !important;
+}
+
+.MuiBox-root {
+    flex: 0 0 2% !important;
+}
+
+.MuiDataGrid-root .MuiInputBase-root {
+    background-color: #FAFAFA !important;
+    padding-left: 4px;
+}
+
 .MuiFormLabel-root {
     font-weight: bold !important;
 }
@@ -577,6 +600,12 @@ ul.key_val_line {
 }
 .MuiAccordionSummary-root:hover {
     background-color: $op_hover_grey;
+}
+button.MuiButton-root:hover {
+    color: $op_color_5 !important;
+}
+.MuiInput-root:hover::before {
+    border-color: $op_color_5 !important;
 }
 
 
@@ -613,12 +642,12 @@ ul.key_val_line {
         a {
             &:hover  {
                 color: $op_white !important;
-                background-color: $op_color_2 !important;
+                @include op_dark_bg;
             }
             &:active {
                 
                 color: $op_color_5 !important;
-                background-color: $op_color_2 !important;
+                @include op_dark_bg;
             }
         }
     }
@@ -662,6 +691,9 @@ a.navbar-brand {
 .dropdown-menu {
     margin-top: 0px !important;
 }
+.spinner-border {
+    color: $op_color_2 !important;
+}
 
 
 
@@ -676,30 +708,6 @@ a.navbar-brand {
 .table-responsive {
     width: 100%;
     flex-basis: fit-content;
-}
-.MuiDataGrid-toolbarContainer {
-    // background-color: #222;
-    background-color: $op_color_3;
-    button {
-        // color: #4e9cea;//#5e9fdf;//#1976D2;
-        color: $op_white;
-    }
-}
-.MuiDataGrid-columnHeadersInner {
-    background-color: $op_light_grey_3;
-}
-
-.MuiDataGrid-columnHeaderTitle {
-    font-weight: bold !important;
-}
-
-.MuiBox-root {
-    flex: 0 0 2% !important;
-}
-
-.MuiDataGrid-root .MuiInputBase-root {
-    background-color: #FAFAFA !important;
-    padding-left: 4px;
 }
 
 .table_card {
@@ -890,6 +898,18 @@ a.navbar-brand {
         text-transform: uppercase;
     }
 }
+
+.spinner-container {
+    display: flex;
+    justify-content: center !important;
+    margin: 5rem 1rem;
+    .spinner-label {
+        >span {
+            vertical-align: middle !important;
+        }
+    }
+}
+
 
 /* Search */
 .search_selection_panel {

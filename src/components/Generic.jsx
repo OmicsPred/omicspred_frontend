@@ -132,4 +132,16 @@ export const useExternalScript = (url) => {
     }, [url]);
 
     return state;
-  };
+};
+
+
+export const loading_data = () => {
+    return (
+        <div className="spinner-container">
+            <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading data ...</span>
+            </div>
+            <div className='spinner-label ms-3'><span>Loading data ...</span></div>
+        </div>
+    )
+}

@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import FAQs from "../pages/FAQs";
 import Cohorts from "../pages/Cohorts";
 import About from "../pages/About";
+import Downloads from "../pages/Downloads";
 import Pathways from "../pages/Pathways";
 import Publications from "../pages/Publications";
 import Platforms from "../pages/Platforms";
@@ -33,6 +34,7 @@ function OpRouters() {
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/downloads" element={<Downloads />} />
                 <Route path="/faqs" element={<FAQs />} />
                 <Route path="/cohorts" element={<Cohorts />} />
                 <Route path="/about" element={<About />} />

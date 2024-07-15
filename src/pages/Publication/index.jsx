@@ -5,7 +5,7 @@ import restApiCall from '../../components/RestAPI';
 import Href from "../../components/Href";
 import PlatformTable from './components/PlatformTable';
 import { op_subtitle_no_asso, op_title, publication_ref, display_information } from '../../components/Common';
-import { numberBadge } from '../../components/Generic';
+import { loading_data, numberBadge } from '../../components/Generic';
 
 
 function Publication() {
@@ -81,7 +81,7 @@ function Publication() {
                         { datasetsData && publicationData.pmid ? datasetsData.map((dataset, index) => <PlatformTable key={index+'_'+dataset.name+'_'+dataset.platform.name+"_platform_table"} data={dataset} pmid={publicationData.pmid} />):''}
                     </div>
                 </div>
-                : <div className='mt-3'>No platform data</div>
+                : loading_data()
             }
         </>
     )

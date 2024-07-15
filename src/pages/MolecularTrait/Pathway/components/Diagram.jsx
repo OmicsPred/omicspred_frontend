@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 // import { useParams } from 'react-router-dom';
 // import { ChevronRight } from 'react-bootstrap-icons';
 import { Diagram3 } from 'react-bootstrap-icons';
-import { useExternalScript } from '../../../../components/Generic';
+import { useExternalScript, loading_data } from '../../../../components/Generic';
 
 const ReactomeDiagram = (props) => {
     const reactome_id = props.reactome_id;
@@ -76,7 +76,7 @@ const ReactomeDiagram = (props) => {
             <div className="btn btn-op shadow mt-2" onClick={(e) => {hideShowDiagram(e)}}><Diagram3 className='me-2' size="16"/>{showDiagram ? 'Hide' : 'Show'} Reactome Diagram</div>
             {showDiagram ? 
                 <div>
-                    {state === "loading" && <p>Loading...</p>}
+                    {state === "loading" && loading_data()}
                     {state === "ready" && <div><div key="diagram" className='d-inline-flex mt-2' style={{border:'1px solid #DDD'}}><div id="diagramHolder"></div></div></div>}
                     {state === "error" && <p>Error while loading the Reactome Diagram!</p>}
                 </div>: ''

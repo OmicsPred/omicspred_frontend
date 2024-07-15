@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Diagram3 } from 'react-bootstrap-icons';
 import Href from '../../../components/Href';
 import DataTable from '../../../components/table/DataTable';
 import { common_cols } from '../../../components/table/columns/common';
 import restApiCall from '../../../components/RestAPI';
-import { op_title, op_subtitle, display_information } from '../../../components/Common';
+import { op_title, op_subtitle, display_information, no_entry_found } from '../../../components/Common';
+import { loading_data } from '../../../components/Generic';
 import ReactomeDiagram from './components/Diagram';
 import { display_superpathways } from '../components/links';
 
 
 function Pathway() {
 	let { pathway } = useParams();
-	const [elementData, setElementData] = useState([])
+	const [elementData, setElementData] = useState()
+	const [noEntry, setNoEntry] = useState(false)
 	const [geneData, setGeneData] = useState([])
 	const [metaboliteData, setMetaboliteData] = useState([])
 	const [superpathwayData, setSuperpathwayData] = useState([])
@@ -40,16 +41,20 @@ function Pathway() {
 
     const fetchData = async () => {
 		const data = await restApiCall(element+'/'+pathway);
-		console.log(data);
-		setElementData(data);
-		if (data.genes) {
-			setGeneData(data.genes)
+		if (data && Object.keys(data).length) {
+			setElementData(data);
+			if (data.genes) {
+				setGeneData(data.genes)
+			}
+			if (data.metabolites) {
+				setMetaboliteData(data.metabolites)
+			}
+			if (data.superpathways) {
+				setSuperpathwayData(data.superpathways)
+			}
 		}
-		if (data.metabolites) {
-			setMetaboliteData(data.metabolites)
-		}
-		if (data.superpathways) {
-			setSuperpathwayData(data.superpathways)
+		else {
+			setNoEntry(true);
 		}
 	}
 
@@ -74,7 +79,7 @@ function Pathway() {
 			{ elementData ?
 				<>
 					{/* Summary Data */}
-					{op_title('pathway', elementData, pathway)}
+					{op_title(element, elementData, pathway)}
 					{ elementData ? display_information(element, get_information_content()):'' }
 
 					{/* Reactome Diagram */}
@@ -90,7 +95,8 @@ function Pathway() {
 						metaboliteData.length ? <div key="metabolite_table" className="mt-4">{op_subtitle('metabolite')}<DataTable key="metabolite" data={metaboliteData} columns={metabolite_columns} col_for_ids={key_cols}/></div> : ''
 					}
 				</>
-				: <div>Loading data ...</div>
+				: noEntry ?
+					<>{ no_entry_found(element,pathway) }</> : loading_data()
 			}
 		</div>
 	);

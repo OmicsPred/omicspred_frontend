@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react'
-// import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid'
-// import { DataGrid, GridToolbar } from '@mui/x-data-grid'
 import { DataGrid, GridToolbarContainer, GridToolbarColumnsButton, GridToolbarFilterButton, GridToolbarQuickFilter } from '@mui/x-data-grid'
-const rest_url = process.env.OMICSPRED_REST_API_URL;
+import { loading_data } from '../Generic';
+
+
+const rest_url = process.env.REST_API_URL;
 
 function CustomToolbar() {
   return (
@@ -40,6 +41,7 @@ const DataTableServer = (props) => {
         sort: ''
     });
     const [isLoading, setIsLoading] = useState(false);
+    const [noEntry, setNoEntry] = useState(false);
     const [paginationModel, setPaginationModel] = useState({
         total: 0,
         page: 0,
@@ -138,19 +140,25 @@ const DataTableServer = (props) => {
     }
 
     const fetchData = async () => {
-      setIsLoading(true)
-      const offset = paginationModel.page * paginationModel.pageSize;
+        setIsLoading(true)
+        const offset = paginationModel.page * paginationModel.pageSize;
 
-      const url = rest_api_url(props.url_suffix, offset, paginationModel.pageSize)
-      console.log("URL: "+url);
-      console.log("PAGE: "+paginationModel.page);
-      console.log("offset: "+offset);
-      const response = await fetch(url)
-      const json = await response.json()
-      setData(json.results)
-      setRowCountState(json.count)
-      setPaginationModel(old => ({ ...old, total: json.count}))
-      setIsLoading(false)
+        const url = rest_api_url(props.url_suffix, offset, paginationModel.pageSize)
+        console.log("URL: "+url);
+        console.log("PAGE: "+paginationModel.page);
+        console.log("offset: "+offset);
+        const response = await fetch(url);
+        const json = await response.json();
+        const results = json.results;
+        if (results && results.length > 0) {
+            setData(results);
+            setRowCountState(json.count);
+            setPaginationModel(old => ({ ...old, total: json.count}))
+        }
+        else {
+            setNoEntry(true);
+        }
+        setIsLoading(false);
     }
 
     const onFilterModelChange = useCallback((filterModel) => {
@@ -177,46 +185,52 @@ const DataTableServer = (props) => {
     }, [paginationModel.page, paginationModel.pageSize, queryParam.filter, queryParam.sort_field, queryParam.sort])
 
     return (
-        <div className='d-flex'>
-            <div className="table-responsive" style={{flexBasis: "fit-content"}}>
-                <DataGrid
-                key="server-side"
-                autoHeight
-                columnGroupingModel={props.groups}
-                columns={props.columns}
-                rows={data}
-                getRowId={(row) => getRowId(row)}
-                getRowHeight={() => row_height_settings}
-                // getRowId={(row) => row.id}
-                rowCount={rowCountState}
-                loading={isLoading}
-                pageSizeOptions={[10, 25, 50, 75, 100]}
-                paginationModel={paginationModel}
-                paginationMode="server"
-                onPaginationModelChange={setPaginationModel}
-                initialState={{
-                    pagination: {
-                    paginationModel: paginationModel
-                    }
-                }}
-                sortingOrder={['asc','desc']}
-                onSortModelChange={onSortModelChange}
-                filterMode="server"
-                onFilterModelChange={onFilterModelChange}
-                slots={{
-                    toolbar: CustomToolbar
-                }}
-                // slotProps={{
-                //   toolbar: {
-                //     showQuickFilter: true
-                //   }
-                // }}
-                // slots={{
-                //   toolbar: GridToolbarQuickFilter
-                // }}
-                />
+        <>
+        { data && data.length > 0 ?
+            <div className='d-flex'>
+                <div className="table-responsive" style={{flexBasis: "fit-content"}}>
+                    <DataGrid
+                    key="server-side"
+                    autoHeight
+                    columnGroupingModel={props.groups}
+                    columns={props.columns}
+                    rows={data}
+                    getRowId={(row) => getRowId(row)}
+                    getRowHeight={() => row_height_settings}
+                    // getRowId={(row) => row.id}
+                    rowCount={rowCountState}
+                    loading={isLoading}
+                    pageSizeOptions={[10, 25, 50, 75, 100]}
+                    paginationModel={paginationModel}
+                    paginationMode="server"
+                    onPaginationModelChange={setPaginationModel}
+                    initialState={{
+                        pagination: {
+                        paginationModel: paginationModel
+                        }
+                    }}
+                    sortingOrder={['asc','desc']}
+                    onSortModelChange={onSortModelChange}
+                    filterMode="server"
+                    onFilterModelChange={onFilterModelChange}
+                    slots={{
+                        toolbar: CustomToolbar
+                    }}
+                    // slotProps={{
+                    //   toolbar: {
+                    //     showQuickFilter: true
+                    //   }
+                    // }}
+                    // slots={{
+                    //   toolbar: GridToolbarQuickFilter
+                    // }}
+                    />
+                </div>
             </div>
-        </div>
+            : noEntry ?
+                <div>Error: no data found or there is an issue to fetch the data</div> : loading_data()
+        }
+        </>
     )
 }
 
