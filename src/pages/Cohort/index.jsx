@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { page_title, display_information, no_entry_found } from '../../components/Common';
+import { page_title, HeaderCard, no_entry_found } from '../../components/Common';
 import Href from '../../components/Href';
 import restApiCall from '../../components/RestAPI';
 // import { ScoresTable } from '../MolecularTrait/components/tables';
@@ -81,7 +81,7 @@ function Cohort() {
                     <div className='d-flex justify-content-between'>
                         {/* Summary data */}
                         <div className='op_card_container_info'>
-                            { display_information('cohort',get_information_content()) }
+                            <HeaderCard type='cohort' content={get_information_content()} />
                         </div>
                         { cohortImageSource ? <div className='ms-2 me-5'><img className="img-cohort p-2" src={cohortImageSource} /></div> : ''}
                     </div>

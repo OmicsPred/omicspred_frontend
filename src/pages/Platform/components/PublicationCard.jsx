@@ -1,4 +1,4 @@
-import { ChevronRight, Book, GraphUp } from 'react-bootstrap-icons';
+import { ChevronRight, Book, GraphUp, FileEarmarkArrowDown } from 'react-bootstrap-icons';
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -6,7 +6,9 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { People } from 'react-bootstrap-icons';
 
 import Href from "../../../components/Href";
+import { ToogleDiv } from '../../../components/Generic';
 import { SampleTable } from '../../../components/Sample';
+import { ExpandableDownloadButton, get_download_list } from '../../../components/Downloads';
 
 
 const PublicationCard = (props) => {
@@ -18,6 +20,11 @@ const PublicationCard = (props) => {
     const samples_training = dataset.samples_training;
     const samples_validation = dataset.samples_validation;
     const key = publication.pmid
+
+    let download_urls = undefined
+    if (dataset.scoring_files_urls) {
+        download_urls = get_download_list(dataset.scoring_files_urls)
+    }
 
     const pub_year = publication.date_publication.split('-')[0]
 
@@ -64,6 +71,12 @@ const PublicationCard = (props) => {
                 </div>
             </AccordionSummary>
             <AccordionDetails>
+                {/* Download buttons */}
+                { download_urls ?
+                    <div className='mb-3'>
+                        <ExpandableDownloadButton download_urls={download_urls}/>
+                    </div >: ''
+                }
                 <h5 className='mt-1'><People className='me-2 op_subtitle color_hl' style={{fontSize:'10px',verticalAlign:'top'}}/>{samples_label}</h5>
                 <SampleTable table_name={key} samples_training={samples_training} samples_validation={samples_validation}/>
             </AccordionDetails>

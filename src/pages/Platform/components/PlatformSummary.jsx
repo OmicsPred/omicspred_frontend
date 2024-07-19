@@ -1,4 +1,4 @@
-import { display_information } from '../../../components/Common';
+import { HeaderCard } from '../../../components/Common';
 
 import { numberBadge } from "../../../components/Generic";
 
@@ -19,6 +19,6 @@ const PlatformSummary = (props) => {
         )
     }
 
-    return display_information('platform', get_information_content());
+    return (<HeaderCard type='platform' content={get_information_content()} />);
 }
 export default PlatformSummary

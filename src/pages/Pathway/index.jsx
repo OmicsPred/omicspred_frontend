@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Href from '../../../components/Href';
-import DataTable from '../../../components/table/DataTable';
-import { common_cols } from '../../../components/table/columns/common';
-import restApiCall from '../../../components/RestAPI';
-import { op_title, op_subtitle, display_information, no_entry_found } from '../../../components/Common';
-import { loading_data } from '../../../components/Generic';
+import Href from '../../components/Href';
+import DataTable from '../../components/table/DataTable';
+import { common_cols } from '../../components/table/columns/common';
+import restApiCall from '../../components/RestAPI';
+import { op_title, op_subtitle, HeaderCard, no_entry_found } from '../../components/Common';
+import { loading_data } from '../../components/Generic';
 import ReactomeDiagram from './components/Diagram';
-import { display_superpathways } from '../components/links';
+import { display_superpathways } from '../MolecularTrait/components/links';
 
 
 function Pathway() {
@@ -80,7 +80,7 @@ function Pathway() {
 				<>
 					{/* Summary Data */}
 					{op_title(element, elementData, pathway)}
-					{ elementData ? display_information(element, get_information_content()):'' }
+					{ elementData ? <HeaderCard type={element} content={get_information_content()} />:'' }
 
 					{/* Reactome Diagram */}
 					<ReactomeDiagram reactome_id={elementData.external_id} />

@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { FileEarmarkArrowDown } from 'react-bootstrap-icons';
-import Href from "../../components/Href";
-import { internal_publication_link, op_title, op_subtitle_no_asso, display_information_2_cards, no_entry_found } from '../../components/Common';
+import { internal_publication_link, op_title, op_subtitle_no_asso, no_entry_found, Header2Cards } from '../../components/Common';
 import DataTable from "../../components/table/DataTable";
 import { score_columns } from '../../components/table/columns/score'
 import { score_phecode_columns } from '../../components/table/columns/phecode'
 import restApiCall from '../../components/RestAPI';
 import restApiCallPaginated from '../../components/RestAPIPaginated';
 import { ToogleDiv, loading_data, numberBadge } from '../../components/Generic';
-import { display_gene_link, display_protein_link, display_metabolite_link, display_pathways } from '../MolecularTrait/components/links';
 import { DownloadList, get_download_list } from '../../components/Downloads';
+import { MolecularTraitAssociation } from '../MolecularTrait/components/Content';
 
 
 function Score() {
@@ -29,16 +28,6 @@ function Score() {
     const [metricData, setMetricData] = useState([])
     const [platformDownloads, setPlatformDownloads] = useState([])
 
-    const display_phecode_link = (phecode, data_size) => {
-        let id = phecode.id;
-        id = id.replace('.','_');
-        if (data_size > 1) {
-            return <li key={phecode.id}><small><span key={phecode.id}>{phecode.name} (<Href href={'/phecode/'+id} text={phecode.id}/>)</span></small></li>
-        }
-        else {
-            return <span key={phecode.id}>{phecode.name} (<Href href={'/phecode/'+id} text={phecode.id}/>)</span>
-        }
-    }
 
     const get_pathways = (data) => {
         let pathways = []
@@ -72,20 +61,6 @@ function Score() {
             }
         }
         return phecodes;
-    }
-
-    const display_phecode_data = () => {
-        if (phecodeData.length>1) {
-            return(<ul>{phecode_data_list()}</ul>)
-        }
-        else {
-            return(<>{phecode_data_list()}</>)
-        }
-    }
-
-    const phecode_data_list = (is_multiple) => {
-
-        return (phecodeData.map((data) => display_phecode_link(data,phecodeData.length)))
     }
 
     const fetchScoreData = async () => {
@@ -156,22 +131,14 @@ function Score() {
     const get_information_right_content = () => {
 		return (
 			<>
-                { genesData.length > 0 ? <tr><td><span className="bg_gene left_mark"></span>Gene{genesData.length > 1 && 's'}</td><td key='genes_data'>{genesData.map((data,index) => display_gene_link(data,index))}</td></tr> : '' }
-                { transcriptsData.length > 0 ? <tr key='transcripts'><td><span className="bg_transcript left_mark"></span>Transcript{transcriptsData.length > 1 && 's'}</td><td>{transcriptsData.map((data, index) => <span key={'trans_'+data.name}>{index ? ', ': ''}<span key={data.name}>{data.name}</span></span>)}</td></tr> : '' }
-                { proteinsData.length > 0 ? <tr key='proteins'><td><span className="bg_protein left_mark"></span>Protein{proteinsData.length > 1 && 's'}</td><td>{proteinsData.map((data, index) => display_protein_link(data,index))}</td></tr> : '' }
-                { metabolitesData.length > 0 ? <tr key='metabolites'><td><span className="bg_metabolite left_mark"></span>Metabolite{metabolitesData.length > 1 && 's'}</td><td>{metabolitesData.map((data, index) => display_metabolite_link(data,index))}</td></tr> : '' }
-                {
-                    phecodeData && phecodeData.length ? <tr key='phenotypes'><td><span className="bg_phecode left_mark"></span>PheWAS</td><td>
-                        {
-                            phecodeData.length > 1 ?
-                                <ToogleDiv key={'toggle_phecodes'} title={<><span className='font-bold'>{phecodeData.length}</span> associated PheCode entries</>} content={display_phecode_data()}/>
-                                : <>{display_phecode_data()}</>
-                        }
-                        </td></tr> : ''
-                }
-                {
-                    pathwayData && pathwayData.length > 0 ? display_pathways(pathwayData) : ''
-                }
+                <MolecularTraitAssociation
+                    genes={genesData}
+                    transcripts={transcriptsData}
+                    proteins={proteinsData}
+                    metabolites={metabolitesData}
+                    phecodes={phecodeData}
+                    pathways={pathwayData}
+                />
             </>
         )
     }
@@ -189,8 +156,7 @@ function Score() {
                 {op_title('score', scoreData, score, 'id')}
                 <div>
                     {/* Summary data */}
-                    { display_information_2_cards('score',get_information_left_content(),'Associated data',get_information_right_content()) }
-
+                    <Header2Cards type_left='score' content_left={get_information_left_content()} content_right={get_information_right_content()} />
                     {/* Download buttons */}
                     { platformData && platformDownloads ?
                         <div>

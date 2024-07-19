@@ -1,5 +1,5 @@
 import Href from "./Href";
-import { ArrowBarRight, ArrowRightSquareFill, Bezier, Bezier2, Book, ChevronBarRight, ChevronDoubleRight, ChevronRight, Clipboard2Data, Clipboard2DataFill, ClipboardData, ClipboardDataFill, Database, DatabaseFill, SlashSquare, SlashSquareFill, SquareFill, Stack } from 'react-bootstrap-icons';
+import { Bezier2, Book, ChevronRight, ClipboardDataFill, SlashSquareFill, Stack } from 'react-bootstrap-icons';
 import { cohort_cols, common_column_groups } from './table/columns/common';
 import { ToogleDiv, ToogleText } from './Generic';
 
@@ -68,31 +68,30 @@ export const op_title = (type, data, label, force_use_label) => {
     const type_uc = (type == 'phecode') ? 'PheWAS' : type.charAt(0).toUpperCase() + type.slice(1);
     let value = label;
     let color_class = 'color_'+type;
-    // let prefix = ''
-    let prefix = <SlashSquareFill size="26px" className={'me-3 '+color_class}/>
+    let prefix = <SlashSquareFill size="26px" className={'me-3 '+color_class} style={{verticalAlign:'middle'}}/>
     if (!force_use_label) {
         value = (data && data.name) ? data.name : label;
     }
     if (type == 'score') {
         // prefix = <Clipboard2Data size="26px" className={'me-3 '+color_class}/>
-        prefix = <ClipboardDataFill size="26px" className={'me-3 '+color_class}/>
+        prefix = <ClipboardDataFill size="26px" className={'me-3 '+color_class} style={{verticalAlign:'middle'}}/>
     }
     else if (type == 'pathway') {
         prefix = <>
-        <Bezier2 size="26px" className={'me-3 '+color_class}/>
+        <Bezier2 size="26px" className={'me-3 '+color_class} style={{verticalAlign:'middle'}}/>
         {/* <Bezier size="26px" className={'me-3 '+color_class}/> */}
         </>
     }
     else if (type == 'platform') {
         color_class = 'color_'+data.type;
-        prefix = <Stack size="26px" className={'me-3 '+color_class}/>
+        prefix = <Stack size="26px" className={'me-3 '+color_class} style={{verticalAlign:'middle'}}/>
     }
     else if (type == 'publication') {
         color_class = 'color_hl';
-        prefix = <Book size="26px" className={'me-3 '+color_class}/>
+        prefix = <Book size="26px" className={'me-3 '+color_class} style={{verticalAlign:'middle'}}/>
     }
     // return <h2 className='page_title'><span className={'bg_'+type}>{type_uc}</span><ChevronRight className={'op_title_separator color_'+type}/><span>{value}</span></h2>
-    return <h2 className='page_title'>{prefix}{type_uc}<ChevronRight className={'op_title_separator '+color_class}/><span>{value}</span></h2>
+    return <h2 className='page_title'>{prefix}<span style={{verticalAlign:'middle'}}>{type_uc}</span><ChevronRight className={'op_title_separator '+color_class} style={{verticalAlign:'middle'}}/><span style={{verticalAlign:'middle'}}>{value}</span></h2>
 }
 
 
@@ -136,7 +135,11 @@ export const no_entry_found = (type, name) => {
 }
 
 
-export const display_information = (type, content) => {
+// export const display_information = (type, content) => {
+
+export const HeaderCard = (props) => {
+    const type = props.type;
+    const content = props.content;
     const type_uc = type.charAt(0).toUpperCase() + type.slice(1)
     return (
         <div className='d-flex'>
@@ -158,7 +161,14 @@ export const display_information = (type, content) => {
     )
 }
 
-export const display_information_2_cards = (type_left, content_left, type_right, content_right) => {
+
+// export const display_information_2_cards = (type_left, content_left, type_right, content_right) => {
+export const Header2Cards = (props) => {
+    const type_left = props.type_left;
+    const content_left = props.content_left;
+    const type_right = props.type_right ? props.type_right : 'Associated data';
+    const content_right = props.content_right;
+
     const type_left_uc = type_left.charAt(0).toUpperCase() + type_left.slice(1);
     let type_right_uc = '';
     if (type_right && type_right != '') {
@@ -269,4 +279,9 @@ export const display_description = (description_list) => {
     else {
         return (<ToogleDiv key={'toggle_description'} title={<><span className='font-bold'>{description_list.length}</span> descriptions</>} content={<ul className='mb-2'>{description_list.map((description,index) => <li key={'description_'+index}><ToogleText text={description}/></li>)}</ul>}/>)
     }
+}
+
+
+export const element_icon = (type) => {
+    return (<SlashSquareFill className={'color_'+type+' element_icon'} />);
 }
