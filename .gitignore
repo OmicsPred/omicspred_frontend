@@ -34,5 +34,9 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
+# Env files
+.env.development
+.env.production
+
 # Google Cloud config file
 app.yaml
