@@ -14,7 +14,7 @@ import { proteomics_columns, proteomics_column_groups } from '../../../component
 import { transcriptomics_columns, transcriptomics_column_groups } from '../../../components/table/columns/transcriptomics';
 import DataTableServer from '../../../components/table/DataTableServer';
 import { SampleTable } from '../../../components/Sample';
-import { DownloadList, get_download_list } from '../../../components/Downloads';
+import { ExpandableDownloadButton, get_download_list } from '../../../components/Downloads';
 
 
 const PlatformTable = (props) => {
@@ -284,7 +284,7 @@ const PlatformTable = (props) => {
                             {/* Download buttons */}
                             { platformDownloads ?
                                 <div className='me-3'>
-                                    <ToogleDiv key={'toggle_dowloads_'+platformName} type='button' class_name='card px-2 py-1' title={<><FileEarmarkArrowDown className='me-1'/>Downloads</>} content={<DownloadList urls={platformDownloads}/>}/>
+                                    <ExpandableDownloadButton download_urls={platformDownloads}/>
                                 </div>:''
                             }
                         </div>

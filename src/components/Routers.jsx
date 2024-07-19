@@ -17,8 +17,8 @@ import Score from "../pages/Score";
 import Gene from "../pages/MolecularTrait/Gene";
 import Protein from "../pages/MolecularTrait/Protein";
 import Metabolite from "../pages/MolecularTrait/Metabolite";
-import Pathway from "../pages/MolecularTrait/Pathway";
 import Phecode from "../pages/Applications/Phecode";
+import Pathway from "../pages/Pathway";
 import Cohort from "../pages/Cohort";
 // Tests
 import Search from "../pages/Search";

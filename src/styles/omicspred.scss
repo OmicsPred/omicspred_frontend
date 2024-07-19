@@ -488,7 +488,7 @@ ul.key_val_line {
         margin-bottom: 0.25rem;
     }
 }
-.key_val_line {
+.key_val_line, ul.expanded {
     .line_key {
         font-weight: bold;
         &:after {
@@ -496,6 +496,13 @@ ul.key_val_line {
             margin-right: 0.5rem;
         }
     }
+}
+
+ul.expanded {
+    li:not(:last-child) {
+        margin-bottom: 0.5rem;
+    }
+    margin-bottom: 2rem;
 }
 
 .omics_header {
@@ -730,6 +737,7 @@ a.navbar-brand {
 }
 
 .table_op {
+    border: 1px solid; // Use default border color from Bootstrap
     thead > tr > th {
         // background-color: $op_light_grey_3;
         background-color: $op_color_3;
@@ -754,7 +762,7 @@ a.navbar-brand {
 }
 
 .training_col {
-    color: $op_color_1;
+    color: $op_color_3;
 }
 .col_border_left {
     border-left: 1px solid;
@@ -899,17 +907,6 @@ a.navbar-brand {
     }
 }
 
-.spinner-container {
-    display: flex;
-    justify-content: center !important;
-    margin: 5rem 1rem;
-    .spinner-label {
-        >span {
-            vertical-align: middle !important;
-        }
-    }
-}
-
 
 /* Search */
 .search_selection_panel {
@@ -939,6 +936,51 @@ a.navbar-brand {
         width:200px !important;
         vertical-align: middle;
     }
+}
+
+.spinner-container {
+    display: flex;
+    justify-content: center !important;
+    margin: 5rem 1rem;
+    .spinner-label {
+        >span {
+            vertical-align: middle !important;
+        }
+    }
+}
+
+.note_container {
+    border-left: 4px solid $op_color_4;
+    background-color: $op_light_grey;
+    padding: 0.5rem 1rem;
+    > div:first-child {
+        margin-bottom: 0.5rem;
+        color: $op_color_4;
+        font-weight: bold;
+        // vertical-align: middle;
+        svg {
+            font-size: 18px;
+            vertical-align: middle !important;
+        }
+        span {
+            padding-left: 0.5rem;
+            vertical-align: middle !important;
+        }
+    }
+    .btn-op {
+        background-color: $op_color_4 !important;
+        &:hover {
+            background-color: $op_color_5 !important;
+        }
+    }
+}
+
+
+.element_icon {
+    font-size: 1em;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    margin-top:-2px;
 }
 
 /* Colour classes */

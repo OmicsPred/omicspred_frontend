@@ -80,7 +80,7 @@ const build_columns = () => {
                             platform_count = params.row.platform_counts[platform];
                         }
                     }
-                    return platform_count
+                    return platform_count > 0 ? <b>{platform_count}</b> : <span style={{fontWeight:'200'}}>{platform_count}</span>
                 }
             },
         )

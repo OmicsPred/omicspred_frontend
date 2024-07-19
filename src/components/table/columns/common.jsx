@@ -217,13 +217,28 @@ export const common_cols = {
         },
         valueGetter: (value, row) => { return row.platform.name }
     },
+    'platform_version': {
+        field: 'platform__version',
+        headerName: 'Platform version',
+        minWidth: 150,
+        flex: 0.6,
+        renderCell: (params) => {
+            if (params.row.platform_version) {
+                return params.row.platform_version;
+            }
+            else {
+                return default_cell_value;
+            }
+        },
+        valueGetter: (value, row) => { return row.platform_version }
+    },
     'publication': {
         field: 'publication__firstauthor',
         headerName: 'Publication',
         minWidth: 280,
         // flex: 0.8,
         renderCell: (params) => {
-            return internal_publication_link (params.row.publication);
+            return internal_publication_link(params.row.publication);
         },
         valueGetter: (value, row) => { return row.publication.firstauthor }
     },

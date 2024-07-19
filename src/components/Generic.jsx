@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { PlusCircleFill, DashCircleFill, People } from 'react-bootstrap-icons';
+import { PlusCircleFill, DashCircleFill, People, InfoCircle, InfoCircleFill } from 'react-bootstrap-icons';
 
 
 export const thousandifyNumber = function(number) {
@@ -139,9 +139,19 @@ export const loading_data = () => {
     return (
         <div className="spinner-container">
             <div className="spinner-border" role="status">
-                <span className="visually-hidden">Loading data ...</span>
+                <span className="visually-hidden">Loading data</span>
             </div>
-            <div className='spinner-label ms-3'><span>Loading data ...</span></div>
+            <div className='spinner-label ms-3'><span>Loading data</span></div>
         </div>
+    )
+}
+
+
+export const Note = (props) => {
+    return (
+    <div className='note_container'>
+        <div><InfoCircle/><span>Note</span></div>
+        <div>{props.msg}</div>
+    </div>
     )
 }

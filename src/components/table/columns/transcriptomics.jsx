@@ -8,6 +8,8 @@ export const transcriptomics_columns = {
         common_cols['omicspred_id'],
         common_cols['gene_id'],
         common_cols['gene_name'],
+        // common_cols['publication'],
+        // common_cols['platform_version'],
         // dataset_name_col,
         common_cols['variants_number'],
         // Cohorts columns

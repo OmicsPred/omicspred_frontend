@@ -1,5 +1,6 @@
 import Href from '../../../components/Href';
 import { ToogleDiv, ToogleText } from '../../../components/Generic';
+import { element_icon } from '../../../components/Common';
 
 
 const display_omics_link = (data, type, index) => {
@@ -58,7 +59,8 @@ export const display_proteins = (proteins_list) => {
 
 export const display_pathways = (pathways_list) => {
     return (
-        <tr key='pathways'><td><span className="bg_pathway left_mark"></span>Pathway{pathways_list.length > 1 && 's'}</td><td>
+        <tr key='pathways'><td>{element_icon('pathway')}<span>Pathway{pathways_list.length > 1 && 's'}</span></td><td>
+        {/*<tr key='pathways'><td><span className="bg_pathway left_mark"></span>Pathway{pathways_list.length > 1 && 's'}</td><td>*/}
             {
                 pathways_list.length > 1 ?
                     <ToogleDiv key={'toggle_pathways'} title={<><span className='font-bold'>{pathways_list.length}</span> associated pathways</>} content={<ul className="ps-3">{pathways_list.map((data, index) => display_pathway_link(data,index,pathways_list.length))}</ul>}/>
@@ -91,6 +93,22 @@ export const display_superpathways = (superpathways) => {
         return (<>{superpathway.name} (<Href key={superpathway.external_id} href={process.env.URL_REACTOME_ENTRY+superpathway.external_id} text={superpathway.external_id}/>)</>);
     }
     return (<ToogleDiv key={'toggle_superpathwayss'} title={<><span className='font-bold'>{superpathways.length}</span> super pathways</>} content={<ul className='mb-2'>{superpathways.map((superpathway) => <li key={superpathway.name}>{superpathway.name} (<Href key={superpathway.external_id} href={process.env.URL_REACTOME_ENTRY+superpathway.external_id} text={superpathway.external_id}/>)</li>)}</ul>}/>)
+}
+
+
+export const display_phecode_link = (phecode, data_size) => {
+    let id = phecode.id;
+    id = id.replace('.','_');
+    if (data_size > 1) {
+        return <li key={phecode.id}><small><span key={phecode.id}>{phecode.name} (<Href href={'/phecode/'+id} text={phecode.id}/>)</span></small></li>
+    }
+    else {
+        return <span key={phecode.id}>{phecode.name} (<Href href={'/phecode/'+id} text={phecode.id}/>)</span>
+    }
+}
+
+export const phecode_data_list = (phecode_data) => {
+    return (phecode_data.map((data) => display_phecode_link(data,phecode_data.length)))
 }
 
 

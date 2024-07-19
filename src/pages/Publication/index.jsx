@@ -4,7 +4,7 @@ import { ChevronRight } from 'react-bootstrap-icons';
 import restApiCall from '../../components/RestAPI';
 import Href from "../../components/Href";
 import PlatformTable from './components/PlatformTable';
-import { op_subtitle_no_asso, op_title, publication_ref, display_information } from '../../components/Common';
+import { op_subtitle_no_asso, op_title, publication_ref, HeaderCard } from '../../components/Common';
 import { loading_data, numberBadge } from '../../components/Generic';
 
 
@@ -67,7 +67,7 @@ function Publication() {
             {  publicationData ?
                 <>
                     {op_title('publication', publicationData, publication_ref(publicationData, true))}
-                    {display_information('publication', get_information_content())}
+                    <HeaderCard type='publication' content={get_information_content()} />
                 </>
                 :''
             }

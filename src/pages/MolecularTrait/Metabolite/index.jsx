@@ -3,22 +3,19 @@ import { useParams } from 'react-router-dom';
 import Href from '../../../components/Href';
 import {score_metabolite_columns}  from "../../../components/table/columns/scores";
 import restApiCall from '../../../components/RestAPI';
-import { display_synonyms, display_xrefs, display_pathways, sort_data } from '../components/links';
-import { op_title, display_description, display_information_2_cards, no_entry_found } from '../../../components/Common';
+import { display_synonyms, display_xrefs, sort_data } from '../components/links';
+import { display_description, no_entry_found } from '../../../components/Common';
 import { loading_data } from '../../../components/Generic';
-import { ScoresTable, PerformanceMetricsTable } from '../components/tables';
+import { MolecularTraitContent, MolecularTraitAssociation } from '../components/Content';
 
 
 function Metabolite() {
     let { metabolite } = useParams();
     const [elementData, setElementData] = useState()
     const [noEntry, setNoEntry] = useState(false)
-    const [scoreData, setScoreData] = useState([])
-    const [performanceMetricData, setPerformanceMetricData] = useState([])
     const [pathwayData, setPathwayData] = useState([])
 
     const element = 'metabolite';
-    const url_score = "score/search/"+element+"/"+metabolite;
 
     const external_id_link = () => {
         if (elementData.external_id_source == 'ChEBI') {
@@ -42,19 +39,6 @@ function Metabolite() {
         }
     }
 
-    const fetchScoreData = async () => {
-		const data = await restApiCall(url_score);
-		if (data.results) {
-			setScoreData(data.results)
-		}
-	}
-
-    const fetchPerformanceMetrics = async () => {
-        const score_metric_data = await restApiCall('performance/search/'+element+'/'+metabolite);
-        // console.log(score_metric_data);
-        setPerformanceMetricData(score_metric_data.results);
-    }
-
     const get_information_left_content = () => {
 		return (
 			<>
@@ -70,34 +54,27 @@ function Metabolite() {
 
     const get_information_right_content = () => {
 		if (pathwayData && pathwayData.length > 0) {
-			return ( display_pathways(pathwayData) );
+            return (<MolecularTraitAssociation pathways={pathwayData}/>)
 		}
 		return undefined;
     }
 
     useEffect(() => {
       fetchSummaryData();
-      fetchScoreData();
-      fetchPerformanceMetrics();
     },[])
 
     return (
         <div>
             { elementData ?
                 <>
-                    {/* Summary Data */}
-                    {op_title(element, elementData, metabolite)}
-                    <div className='op_card_container_info'>
-                        {
-                            elementData ? display_information_2_cards(element,get_information_left_content(),'Associated data',get_information_right_content()) : ''
-                        }
-                    </div>
-
-                    {/* Associated scores */}
-                    { scoreData && scoreData.length ? <ScoresTable data={scoreData} columns={score_metabolite_columns}/>:'' }
-
-                    {/* Performance metrics table */}
-                    { performanceMetricData && performanceMetricData.length ? <PerformanceMetricsTable data={performanceMetricData}/>:'' }
+                    <MolecularTraitContent
+                        type={element}
+                        id={metabolite}
+                        sum_data={elementData}
+                        sum_display_left={get_information_left_content()}
+                        sum_display_right={get_information_right_content()}
+                        scores_columns={score_metabolite_columns}
+                    />
                 </>
                 : noEntry ?
 					<>{ no_entry_found(element,metabolite) }</> : loading_data()
@@ -105,6 +82,5 @@ function Metabolite() {
         </div>
     );
 }
-
 
 export default Metabolite

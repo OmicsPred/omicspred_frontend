@@ -80,10 +80,15 @@ const DataTable = (props) => {
                     slots={{
                         toolbar: GridToolbar
                     }}
+                    // loading
                     slotProps={{
                         toolbar: {
                             showQuickFilter: true
-                        }
+                        },
+                        loadingOverlay: {
+                            variant: 'linear-progress',
+                            noRowsVariant: 'skeleton',
+                        },
                     }}
                 />
             </div>

@@ -15,6 +15,8 @@ export const metabolomics_columns = {
         common_cols['metabolite_name'],
         common_cols['pathway_group'],
         common_cols['pathway_subgroup'],
+        // common_cols['publication'],
+        // common_cols['platform_version'],
         // dataset_name_col,
         common_cols['variants_number'],
         // Cohorts columns
@@ -33,6 +35,9 @@ export const metabolomics_columns = {
         common_cols['metabolite_name'],
         common_cols['pathway_group'],
         common_cols['pathway_subgroup'],
+        // common_cols['publication'],
+        // common_cols['platform_version'],
+        // dataset_name_col,
         common_cols['variants_number'],
         // Cohorts columns
         // cohort_cols['INTERVAL']['R2'],

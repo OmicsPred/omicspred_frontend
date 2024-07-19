@@ -5,7 +5,7 @@ import DataTable from '../../../components/table/DataTable';
 import { common_cols, common_data_cols, applications_cols } from '../../../components/table/columns/common';
 import restApiCall from '../../../components/RestAPI';
 import { numberBadge, loading_data } from '../../../components/Generic';
-import { op_title, op_subtitle_no_asso, display_information, no_entry_found } from '../../../components/Common';
+import { op_title, op_subtitle_no_asso, HeaderCard, no_entry_found } from '../../../components/Common';
 
 
 function Phecode() {
@@ -66,23 +66,22 @@ function Phecode() {
                 <>
                     {/* Phecode Summary data */}
                     {op_title('phecode', phecodeData, phecode_id)}
-                    { phecodeData ? display_information('PheCode', get_information_content()):'' }
+                    <HeaderCard type='PheCode' content={get_information_content()} />
 
                     <div className='mt-5'></div>
 
                     {/* Score association */}
-                    <div className='d-flex' style={{flexDirection:'column'}}>
-                        <DataTableFromRestApi table_key="phecode" title='score' type='score' url_suffix={url_suffix} columns={columns} col_for_ids={column_keys}/>
-                    </div>
-
+                    { phecodeData.scores_count > 0 ?
+                        <div className='d-flex' style={{flexDirection:'column'}}>
+                            <DataTableFromRestApi table_key="phecode" title='score' type='score' url_suffix={url_suffix} columns={columns} col_for_ids={column_keys}/>
+                        </div> : ''
+                    }
                     {/* PheCode child terms */}
                     {
                         phecodeData.child_phecode && phecodeData.child_phecode.length ?
                         <div className='mt-5'>
                             {op_subtitle_no_asso('hl','Children Phecode entries',phecodeData.child_phecode.length)}
-                            {/* <div className='d-flex'> */}
-                                <DataTable data={phecodeData.child_phecode} columns={child_columns}/>
-                            {/* </div> */}
+                            <DataTable data={phecodeData.child_phecode} columns={child_columns}/>
                         </div> : ''
                     }
                 </>

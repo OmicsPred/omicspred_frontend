@@ -9,6 +9,8 @@ export const proteomics_columns = {
         common_cols['protein_id'],
         common_cols['gene_name'],
         common_cols['protein_name'],
+        common_cols['publication'],
+        common_cols['platform_version'],
         dataset_name_col,
         common_cols['variants_number']//,
         // Cohorts columns
@@ -26,6 +28,9 @@ export const proteomics_columns = {
         common_cols['protein_id'],
         common_cols['gene_name'],
         common_cols['protein_name'],
+        // common_cols['publication'],
+        // common_cols['platform_version'],
+        // dataset_name_col,
         common_cols['variants_number']//,
         // Cohorts columns
         // cohort_cols['INTERVAL']['R2'],

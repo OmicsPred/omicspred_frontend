@@ -2,7 +2,7 @@
 import { FileEarmarkArrowDown, FileEarmarkZip, Folder2, FiletypeCsv } from 'react-bootstrap-icons';
 import { thousandifyNumber } from '../../Generic';
 import { common_cols } from './common';
-import { omicspred_omics_type } from '../../Common';
+import { download_labels } from '../../Downloads';
 
 
 const default_cell_value = process.env.DEFAULT_CELL_VALUE;
@@ -12,18 +12,22 @@ const download_link = (url,type=undefined) => {
     // return (<Href href={url} icon={<FileEarmarkArrowDownFill/>}/>)
     let icon = <FileEarmarkArrowDown className="hl_color" size="20"/>
     let link_title = 'Download data file';
-    if (type == 'zip') {
-        icon = <FileEarmarkZip className="hl_color" size="20"/>
-        link_title = 'Download zipped file(s)'
+    if (type && download_labels[type]) {
+        icon = download_labels[type]['icon']
+        link_title = download_labels[type]['title']
     }
-    else if (type == 'csv') {
-        icon = <FiletypeCsv className="hl_color" size="20"/>
-        link_title = 'Download CSV file'
-    }
-    else if (type == 'folder') {
-        icon = <Folder2 className="hl_color" size="20"/>
-        link_title = 'Browse data files'
-    }
+    // if (type == 'zip') {
+    //     icon = <FileEarmarkZip className="hl_color" size="20"/>
+    //     link_title = 'Download zipped file(s)'
+    // }
+    // else if (type == 'csv') {
+    //     icon = <FiletypeCsv className="hl_color" size="20"/>
+    //     link_title = 'Download CSV file'
+    // }
+    // else if (type == 'folder') {
+    //     icon = <Folder2 className="hl_color" size="20"/>
+    //     link_title = 'Browse data files'
+    // }
     return (
         <a href={url} title={link_title} target="_blank">
             <div>{icon}</div>
@@ -91,7 +95,7 @@ export const datasets_columns = [
         renderCell: (params) => {
             const files_urls = params.row.scoring_files_urls
             if (files_urls.scoring_files_pgsc_calc) {
-                return download_link(files_urls.scoring_files_pgsc_calc,'zip');
+                return download_link(files_urls.scoring_files_pgsc_calc,'scoring_files_pgsc_calc');
             }
             else {
                 return default_cell_value
@@ -108,7 +112,7 @@ export const datasets_columns = [
         renderCell: (params) => {
             const files_urls = params.row.scoring_files_urls
             if (files_urls.validation_results) {
-                return download_link(files_urls.validation_results,'csv');
+                return download_link(files_urls.validation_results,'validation_results');
             }
             else {
                 return default_cell_value
@@ -125,7 +129,7 @@ export const datasets_columns = [
         renderCell: (params) => {
             const files_urls = params.row.scoring_files_urls
             if (files_urls.score_variant_info) {
-                return download_link(files_urls.score_variant_info,'csv');
+                return download_link(files_urls.score_variant_info,'score_variant_info');
             }
             else {
                 return default_cell_value
@@ -142,7 +146,7 @@ export const datasets_columns = [
         renderCell: (params) => {
             const files_urls = params.row.scoring_files_urls
             if (files_urls.gwas_sumstats) {
-                return download_link(files_urls.gwas_sumstats,'folder');
+                return download_link(files_urls.gwas_sumstats,'gwas_sumstats');
             }
             else {
                 return default_cell_value

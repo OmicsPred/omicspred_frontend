@@ -209,12 +209,19 @@ const DataTableServer = (props) => {
                         paginationModel: paginationModel
                         }
                     }}
+                    sortingMode="server"
                     sortingOrder={['asc','desc']}
                     onSortModelChange={onSortModelChange}
                     filterMode="server"
                     onFilterModelChange={onFilterModelChange}
                     slots={{
                         toolbar: CustomToolbar
+                    }}
+                    slotProps={{
+                        loadingOverlay: {
+                        variant: 'linear-progress',
+                        noRowsVariant: 'skeleton',
+                        },
                     }}
                     // slotProps={{
                     //   toolbar: {

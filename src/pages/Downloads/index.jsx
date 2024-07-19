@@ -1,45 +1,70 @@
 // import { useState, useEffect } from 'react';
-import { CodeSlash, FileEarmarkArrowDown } from 'react-bootstrap-icons';
+import { ChevronRight, CodeSlash, FileEarmarkZip, FiletypeCsv, Folder2 } from 'react-bootstrap-icons';
 import DataTableFromRestApi from "../../components/table/DataTableFromRestApi";
 import {datasets_columns} from "../../components/table/columns/datasets";
 import Href from '../../components/Href';
+import { op_subtitle_no_asso } from '../../components/Common';
+import { Note } from '../../components/Generic';
+import { download_labels, download_applications_labels } from '../../components/Downloads';
 
 
 function Downloads() {
 
     const url_suffix = 'dataset/all';
+
+
+    const rest_api_doc = () => {
+        return (
+            <>
+                Programmatic access to the {process.env.PROJECT_NAME} metadata is also available via a REST API.
+                <div className='mt-2'>
+                    <a href={process.env.REST_API_URL_PUBLIC} className="btn btn-op btn-sm shadow"><CodeSlash size='0.9em' className='me-2'/>REST API documentation</a>
+                </div>
+            </>
+        )
+    }
     
     return(
         <div>
             <h2 className='page_title'>Downloads</h2>
 
-            <h5 className='op_subtitle mb-3'><CodeSlash className='op_color_2' size="0.9em"/> REST API</h5>
             <div>
-                Programmatic access to the {process.env.PROJECT_NAME} metadata via a REST API.
-                <div className='mt-2'>
-                    <a href={process.env.REST_API_URL} className="btn btn-op shadow"><CodeSlash size='0.9em' className='me-2'/>REST API documentation</a>
+                <div className='mb-5'>
+                    {process.env.PROJECT_NAME} metadata and data files downloads.
                 </div>
-            </div>
 
+                {op_subtitle_no_asso('hl','Genetic scores')}
 
-            <h5 className='op_subtitle mt-5 mb-3'><FileEarmarkArrowDown className='op_color_2' size="0.9em"/> File downloads</h5>
-            <div>
-                Metadata and data files available for each dataset:
+                <h6 className='mt-4 mb-3'><b>The list of the different data files is listed below:</b></h6>
+                <ul className='expanded'>
+                    <li><span className='line_key'>{download_labels['scoring_files_pgsc_calc']['icon']} Scoring files</span>Collection of tab-delimited text files containing the list of variant information and effect alleles/weights of each genetic score. See more information about the file format in the <Href text='PGS Catalog' href='https://www.pgscatalog.org/downloads/#dl_ftp_scoring'/> documentation.</li>
+                    <li><span className='line_key'>{download_labels['validation_results']['icon']} Validation results</span>CSV file containing the metadata information and performance metrics associated with each genetic score.</li>
+                    <li><span className='line_key'>{download_labels['score_variant_info']['icon']} Score variant information</span>CSV file containing information (rsID, location, alleles) about each variant retained in the dataset.</li>
+                    <li><span className='line_key'>{download_labels['gwas_sumstats']['icon']} GWAS summary stats</span>List of GWAS summary stats files used to build the genetic score models.</li>
+                </ul>
+
+                <h6 className='mt-4 mb-3'><b>Data files availability by dataset:</b></h6>
                 <div className='mt-2'>
                     <DataTableFromRestApi table_key="datasets" url_suffix={url_suffix} columns={datasets_columns}/>
                 </div>
             </div>
-            <div>
-                <h6 className='mt-4 mb-3'><b>Description of the data files:</b></h6>
-                <ul className='key_val_line'>
-                    <li><span className='line_key'>Scoring files</span>Collection of tab-delimited text files containing the list of variant information and effect alleles/weights of each genetic score. See more information about the file format in the <Href text='PGS Catalog' href='https://www.pgscatalog.org/downloads/#dl_ftp_scoring'/> documentation.</li>
-                    <li><span className='line_key'>Validation results</span>CSV file containing the metadata information associated with each genetic score.</li>
-                    <li><span className='line_key'>Score variant information</span>CSV file containing information (rsID, location, alleles) about each variant retained in the dataset.</li>
-                    <li><span className='line_key'>GWAS summary stats</span>List of GWAS summary stats files used to build the genetic score models.</li>
+
+            <div className='my-5'>
+               {op_subtitle_no_asso('hl','PheWAS associations')}
+                <ul className='expanded mt-3'>
+                    { Object.keys(download_applications_labels).map((type) =>
+                        <li key={type}>
+                            <a href={download_applications_labels[type]['url']} title={download_applications_labels[type]['title']} target="_blank">
+                                {download_applications_labels[type]['icon']} <span className='align-middle'>{download_applications_labels[type]['label']}</span>
+                            </a><span className='align-middle'>: {download_applications_labels[type]['desc']}</span>
+                        </li>)
+                    }
                 </ul>
             </div>
-            
 
+            <div className='mt-4'>
+                <Note msg={rest_api_doc()}/>
+            </div>
         </div>
     )
 

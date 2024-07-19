@@ -2,24 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import restApiCall from '../../../components/RestAPI';
 import Href from '../../../components/Href';
-import { display_gene_link, display_pathways, sort_data } from '../components/links';
-import { op_title, display_information_2_cards, display_description, no_entry_found } from '../../../components/Common';
+import { display_description, no_entry_found } from '../../../components/Common';
 import { loading_data } from '../../../components/Generic';
-import { ScoresTable, PerformanceMetricsTable } from '../components/tables';
+import { MolecularTraitContent, MolecularTraitAssociation } from '../components/Content';
 
 
 function Protein() {
     let { protein } = useParams();
     const [elementData, setElementData] = useState()
     const [noEntry, setNoEntry] = useState(false)
-    const [scoreData, setScoreData] = useState([])
-    const [performanceMetricData, setPerformanceMetricData] = useState([])
     const [geneData, setGeneData] = useState()
     const [pathwayData, setPathwayData] = useState()
 
 
     const element = 'protein';
-    const url_score = "score/search/"+element+"/"+protein;
 
     const external_id_link = () => {
         if (elementData.external_id_source == 'UniProt') {
@@ -37,24 +33,11 @@ function Protein() {
             if (data.gene) {
                 setGeneData(data.gene);
             }
-            setPathwayData(sort_data(data.pathways))
+            setPathwayData(data.pathways)
         }
         else {
             setNoEntry(true);
         }
-    }
-
-    const fetchScoreData = async () => {
-		const data = await restApiCall(url_score);
-		if (data.results) {
-			setScoreData(data.results)
-		}
-	}
-
-    const fetchPerformanceMetrics = async () => {
-        const score_metric_data = await restApiCall('performance/search/'+element+'/'+protein);
-        // console.log(score_metric_data);
-        setPerformanceMetricData(score_metric_data.results);
     }
 
     const get_information_left_content = () => {
@@ -71,38 +54,30 @@ function Protein() {
     const get_information_right_content = () => {
 		if ((geneData) || (pathwayData && pathwayData.length > 0)) {
 			return (
-				<>
-					{ geneData ? <tr key='gene'><td><span className="bg_gene left_mark"></span>Gene</td><td>{display_gene_link(geneData)}</td></tr> : '' }
-					{ pathwayData && pathwayData.length > 0 ? display_pathways(pathwayData) : '' }
-				</>
-			)
+                <MolecularTraitAssociation
+                    genes={[geneData]}
+                    pathways={pathwayData}
+                />
+            )
 		}
 		return undefined;
     }
 
     useEffect(() => {
         fetchSummaryData();
-        fetchScoreData();
-        fetchPerformanceMetrics();
     },[])
 
     return (
         <div>
             { elementData ?
                 <>
-                    {/* Summary Data */}
-                    {op_title(element, elementData, protein)}
-                    <div className='op_card_container_info'>
-                        {
-                            elementData ? display_information_2_cards(element,get_information_left_content(),'Associated data',get_information_right_content()) : ''
-                        }
-                    </div>
-
-                    {/* Associated scores */}
-                    { scoreData && scoreData.length ? <ScoresTable data={scoreData}/>:'' }
-
-                    {/* Performance metrics table */}
-                    { performanceMetricData && performanceMetricData.length ? <PerformanceMetricsTable data={performanceMetricData}/>:'' }
+                    <MolecularTraitContent
+                        type={element}
+                        id={protein}
+                        sum_data={elementData}
+                        sum_display_left={get_information_left_content()}
+                        sum_display_right={get_information_right_content()}
+                    />
                 </>
                 : noEntry ?
                     <>{ no_entry_found(element,protein) }</> : loading_data()
