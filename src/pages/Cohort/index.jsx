@@ -1,6 +1,6 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { page_title, HeaderCard, no_entry_found } from '../../components/Common';
+import { PageTitle, HeaderCard, no_entry_found, op_subtitle } from '../../components/Common';
 import Href from '../../components/Href';
 import restApiCall from '../../components/RestAPI';
 // import { ScoresTable } from '../MolecularTrait/components/tables';
@@ -75,7 +75,7 @@ function Cohort() {
 
     return (
         <>
-            { page_title('hl', 'Cohort', cohort) }
+            <PageTitle type='hl' category='Cohort' label={cohort} title={'Cohort '+cohort}/>
             { cohortData && cohortData.name_short ?
                 <div>
                     <div className='d-flex justify-content-between'>
@@ -88,6 +88,7 @@ function Cohort() {
 
                     {/* Associated scores */}
                     <div className="mt-4">
+                        {op_subtitle('score',undefined)}
                         <DataTableServer url_suffix={url_endpoint} columns={scores_columns} groups={[common_column_groups['molecular_trait_id']]}/>
                     </div>
                 </div>

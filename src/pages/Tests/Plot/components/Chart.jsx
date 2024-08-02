@@ -186,7 +186,7 @@ export default function Charts(props) {
     <>{ study1 != '' && study2 != '' && matrix != '' ?
     <div key={props.dataset} className="h-full">
       <div className="w-full h-[50px] flex">
-        <FormControl key="select_study_1" sx={{ m: 1, minWidth: 100 }}>
+        <FormControl key="select_study_1" sx={{ m: 1, minWidth: 100 }} size="small">
           <InputLabel id="select-label-1" className="bg-white pr-2">
             Cohort 1{" "}
           </InputLabel>
@@ -205,7 +205,7 @@ export default function Charts(props) {
             })}
           </Select>
         </FormControl>
-        <FormControl key="select_study_2" sx={{ m: 1, minWidth: 100 }}>
+        <FormControl key="select_study_2" sx={{ m: 1, minWidth: 100 }} size="small">
           <InputLabel id="select-label-2" className="bg-white pr-2">
             Cohort 2{" "}
           </InputLabel>
@@ -224,7 +224,7 @@ export default function Charts(props) {
             })}
           </Select>
         </FormControl>
-        <FormControl sx={{ m: 1, minWidth: 100 }}>
+        <FormControl sx={{ m: 1, minWidth: 100 }} size="small">
           <InputLabel id="test-select-label">Metric </InputLabel>
           <Select
             value={matrix}

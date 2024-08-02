@@ -1,6 +1,6 @@
 import DataTableServer from '../../../components/table/DataTableServer';
 import { phecode_columns } from '../../../components/table/columns/phecode'
-import { page_title, HeaderCard } from '../../../components/Common';
+import { PageTitle, HeaderCard } from '../../../components/Common';
 import { get_information_content, PheWASDownloadButton } from '../components/components';
 
 
@@ -14,7 +14,8 @@ function PhecodesFull() {
 
     return (
         <>
-            {page_title('phecode', 'PheWAS', 'Summary')}
+            <PageTitle type='phecode' category='PheWAS' label='Summary' title='PheWAS - Summary'/>
+
             <h4 className='page_title'>Identified associations by PheCode</h4>
             {/* Summary data */}
             <div className='op_card_container_info'>

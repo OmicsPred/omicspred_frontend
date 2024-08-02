@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef } from "react";
+// import React, { useEffect, useLayoutEffect, useRef } from "react";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -10,7 +10,7 @@ import {
   } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
-import { Download } from 'react-bootstrap-icons';
+import { Download, FiletypePng } from 'react-bootstrap-icons';
 import { saveAs } from "file-saver";
 
 
@@ -53,9 +53,9 @@ export default function ChartBar(props) {
 
     const options = {
         plugins: {
-            customCanvasBackgroundColor: {
-                color: 'red',
-            },
+            // customCanvasBackgroundColor: {
+            //     color: 'red',
+            // },
             legend: {
                 display: true,
                 labels: {
@@ -142,18 +142,18 @@ export default function ChartBar(props) {
         ],
     };
 
-    const convertBase64ToFile = (base64String, fileName) => {
-        let arr = base64String.split(",");
-        let mime = arr[0].match(/:(.*?);/)[1];
-        let bstr = atob(arr[1]);
-        let n = bstr.length;
-        let uint8Array = new Uint8Array(n);
-        while (n--) {
-          uint8Array[n] = bstr.charCodeAt(n);
-        }
-        let file = new File([uint8Array], fileName, { type: mime });
-        return file;
-    };
+    // const convertBase64ToFile = (base64String, fileName) => {
+    //     let arr = base64String.split(",");
+    //     let mime = arr[0].match(/:(.*?);/)[1];
+    //     let bstr = atob(arr[1]);
+    //     let n = bstr.length;
+    //     let uint8Array = new Uint8Array(n);
+    //     while (n--) {
+    //       uint8Array[n] = bstr.charCodeAt(n);
+    //     }
+    //     let file = new File([uint8Array], fileName, { type: mime });
+    //     return file;
+    // };
 
     // const ChartRef = useRef(null);
 
@@ -191,8 +191,8 @@ export default function ChartBar(props) {
                     {/* <button className="btn btn-primary shadow" onClick={DownloadAsImage}>
                         <Download size={20} /> <span>Export as image</span>
                     </button> */}
-                    <button className="btn btn-primary shadow" onClick={DownloadAsImage}>
-                        <Download size={20} /> <span>Export as image <small>(PNG)</small></span>
+                    <button className="btn btn-op shadow" onClick={DownloadAsImage}>
+                        <Download size={20} /><span className="px-2">Export as image</span><span className='extra_icon'><FiletypePng/></span>
                     </button>
                 </div>
             </div>

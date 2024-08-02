@@ -3,6 +3,7 @@ import { Stack } from 'react-bootstrap-icons';
 import restApiCall from '../../../../components/RestAPI';
 import OPDoughnut from "../../../Tests/Doughnut";
 import { thousandifyNumber } from '../../../../components/Generic';
+import Href from '../../../../components/Href';
 
 
 const PlatformsDistribution = (props) => {
@@ -107,7 +108,7 @@ const PlatformsDistribution = (props) => {
                             <OPDoughnut data={platformChartData} width="180" display_legend="false"/>
                             {/* Legend */}
                             <div>
-                                {Object.keys(scoresPlatformCount).map((platform) => <div className="d-flex justify-content-between" key={platform}><span className='me-3'><Stack size="0.9em" className="me-2" style={{color:platformColours[platform]}}/><span>{platform}</span></span><span style={{fontWeight:'bold'}}>{thousandifyNumber(scoresPlatformCount[platform])}</span></div>)}
+                                {Object.keys(scoresPlatformCount).map((platform) => <div className="d-flex justify-content-between" key={platform}><span className='me-3'><Stack size="0.9em" className="me-2" style={{color:platformColours[platform]}}/><Href href={"/platform/"+platform} text={platform}/></span><span style={{fontWeight:'bold'}}>{thousandifyNumber(scoresPlatformCount[platform])}</span></div>)}
                             </div>
                         </div>
                     </div>

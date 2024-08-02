@@ -80,8 +80,8 @@ export const MolecularTraitAssociation = (props) => {
 				phecodes && phecodes.length > 0 ? <tr key='phenotypes'><td>{element_icon('phecode')}<span>PheWAS</span></td><td>
 					{
 						phecodes.length > 1 ?
-							<ToogleDiv key={'toggle_phecodes'} title={<><span className='font-bold'>{phecodes.length}</span> associated PheCode entries</>} content={<ul className="ps-3">{phecodes.map((data, index) => display_phecode_link(data,index,phecodes.length))}</ul>}/>
-							: phecodes.map((data, index) => display_phecode_link(data,index,phecodes.length))
+							<ToogleDiv key={'toggle_phecodes'} title={<><span className='font-bold'>{phecodes.length}</span> associated PheCode entries</>} content={<ul className="ps-3">{phecodes.map((data) => display_phecode_link(data,phecodes.length))}</ul>}/>
+							: phecodes.map((data, index) => display_phecode_link(data,phecodes.length))
 					}
 					</td></tr> : ''
 			}
@@ -89,8 +89,8 @@ export const MolecularTraitAssociation = (props) => {
 				pathways && pathways.length > 0 ? <tr key='pathways'><td>{element_icon('pathway')}<span>Pathway{pathways.length > 1 && 's'}</span></td><td>
 					{
 						pathways.length > 1 ?
-							<ToogleDiv key={'toggle_pathways'} title={<><span className='font-bold'>{pathways.length}</span> associated pathways</>} content={<ul className="ps-3">{pathways.map((data, index) => display_pathway_link(data,index,pathways.length))}</ul>}/>
-							: pathways.map((data, index) => display_pathway_link(data,index,pathways.length))
+							<ToogleDiv key={'toggle_pathways'} title={<><span className='font-bold'>{pathways.length}</span> associated pathways</>} content={<ul className="ps-3">{pathways.map((data) => display_pathway_link(data,pathways.length))}</ul>}/>
+							: pathways.map((data, index) => display_pathway_link(data,pathways.length))
 					}
 				</td></tr> : ''
 			}

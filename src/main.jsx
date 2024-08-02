@@ -10,6 +10,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //     <App />
 //   </React.StrictMode>
 // )
+
+// Default title
+document.title = process.env.PROJECT_NAME;
+
 ReactDOM.createRoot(document.getElementById('content')).render(
   <App />
 )

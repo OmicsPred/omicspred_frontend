@@ -1,4 +1,4 @@
-import { FileEarmarkArrowDown, FileEarmarkZip, FiletypeCsv, FiletypeXlsx, Folder2 } from 'react-bootstrap-icons';
+import { Download, FileEarmarkArrowDown, FileEarmarkZip, FiletypeCsv, FiletypeXlsx, Folder2 } from 'react-bootstrap-icons';
 
 import { ToogleDiv } from './Generic';
 
@@ -44,7 +44,7 @@ export const download_applications_labels = {
         "title": "Download CSV file",
         "icon": <FiletypeCsv className="align-middle" size={icon_size}/>,
         "url": "https://app.box.com/s/e0t5v55ul588z7ls0qk5slo9lmp8yync",
-        'desc': "List the number of OmicsPred genetic scores associated with each PheCode entry."
+        'desc': "List the number of OmicsPred genetic scores by Platform, for each PheCode."
     },
     'phewas_associations': {
         "label": "PheWAS associations",
@@ -116,7 +116,7 @@ export const ExpandableDownloadButton = (props) => {
 
     return (
         <div className='mb-3'>
-            <ToogleDiv key='toggle_downloads_button' type='button' class_name='card px-2 py-1' title={<><FileEarmarkArrowDown className='me-1'/>Downloads</>} content={<DownloadList urls={download_urls}/>}/>
+            <ToogleDiv key='toggle_downloads_button' type='button' class_name='card px-2 py-1' title={<><Download className='me-2'/>Downloads</>} content={<DownloadList urls={download_urls}/>}/>
         </div>
     )
 }

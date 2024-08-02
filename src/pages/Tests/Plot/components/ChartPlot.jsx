@@ -16,13 +16,12 @@ import {
     registerables,
 } from "chart.js";
 
-import { Download } from 'react-bootstrap-icons';
+import { Download, FiletypePng } from 'react-bootstrap-icons';
 import { saveAs } from "file-saver";
 
 import { Chart } from "react-chartjs-2";
 import annotationPlugin from "chartjs-plugin-annotation";
 
-import _ from "underscore";
 
 ChartJS.register(
     CategoryScale,
@@ -400,8 +399,8 @@ export default function ChartPlot(props) {
                 </div>
             </div>
             <div className="d-flex ms-5 mt-3" style={{justifyContent:'start'}}>
-                <button className="btn btn-primary shadow mb-3" onClick={DownloadAsImage}>
-                    <Download size={20} /> <span>Export as image</span>
+                <button className="btn btn-op shadow mb-3" onClick={DownloadAsImage}>
+                  <Download size={20} /><span className="px-2">Export as image</span><span className='extra_icon'><FiletypePng/></span>
                 </button>
             </div>
         </>

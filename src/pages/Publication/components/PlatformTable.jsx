@@ -288,7 +288,9 @@ const PlatformTable = (props) => {
                                 </div>:''
                             }
                         </div>
-                        <DataTableServer key={datasetName+'_'+platformName+'_table'} url_suffix={platformDataEndpoint} columns={platformTableColumns} groups={platformTableColumnGroups}/>
+                        <div className='table_container'>
+                            <DataTableServer key={datasetName+'_'+platformName+'_table'} url_suffix={platformDataEndpoint} columns={platformTableColumns} groups={platformTableColumnGroups}/>
+                        </div>
                     </>:''
                 }
             </AccordionDetails>

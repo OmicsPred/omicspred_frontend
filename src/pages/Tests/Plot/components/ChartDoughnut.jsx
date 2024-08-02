@@ -10,7 +10,7 @@ import { Doughnut } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 //import  'chartjs-plugin-doughnutlabel';
 
-import { Download } from 'react-bootstrap-icons';
+import { Download, FiletypePng } from 'react-bootstrap-icons';
 import { saveAs } from "file-saver";
 
 
@@ -245,8 +245,8 @@ export default function ChartDoughnut(props) {
                 </div>
             </div>
             <div className="d-flex justify-content-center mt-3">
-                <button className="btn btn-primary shadow" onClick={DownloadAsImage}>
-                    <Download size={20} /> <span>Export as image</span>
+                <button className="btn btn-op shadow" onClick={DownloadAsImage}>
+                  <Download size={20} /><span className="px-2">Export as image</span><span className='extra_icon'><FiletypePng/></span>
                 </button>
             </div>
         </div>

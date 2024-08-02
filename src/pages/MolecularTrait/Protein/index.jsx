@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import DocumentTitle from '../../../components/DocumentTitle';
 import restApiCall from '../../../components/RestAPI';
 import Href from '../../../components/Href';
 import { display_description, no_entry_found } from '../../../components/Common';
@@ -9,6 +10,7 @@ import { MolecularTraitContent, MolecularTraitAssociation } from '../components/
 
 function Protein() {
     let { protein } = useParams();
+    DocumentTitle('Protein '+protein);
     const [elementData, setElementData] = useState()
     const [noEntry, setNoEntry] = useState(false)
     const [geneData, setGeneData] = useState()

@@ -16,22 +16,11 @@ const download_link = (url,type=undefined) => {
         icon = download_labels[type]['icon']
         link_title = download_labels[type]['title']
     }
-    // if (type == 'zip') {
-    //     icon = <FileEarmarkZip className="hl_color" size="20"/>
-    //     link_title = 'Download zipped file(s)'
-    // }
-    // else if (type == 'csv') {
-    //     icon = <FiletypeCsv className="hl_color" size="20"/>
-    //     link_title = 'Download CSV file'
-    // }
-    // else if (type == 'folder') {
-    //     icon = <Folder2 className="hl_color" size="20"/>
-    //     link_title = 'Browse data files'
-    // }
     return (
-        <a href={url} title={link_title} target="_blank">
-            <div>{icon}</div>
-        </a>);
+        <a className="op_icon_link" href={url} title={link_title} target="_blank">
+            {icon}
+        </a>
+    );
 }
 
 export const datasets_columns = [
