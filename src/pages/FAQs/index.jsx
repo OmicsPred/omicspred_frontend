@@ -5,6 +5,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { LightbulbFill } from "react-bootstrap-icons";
 
+import { PageTitleSimple } from '../../components/Common';
 import { faqs_list, faqs_categories } from "./FAQsList";
 
 
@@ -18,7 +19,7 @@ export default function FAQs() {
 
   return (
     <div>
-      <h2 className='page_title'>FAQs</h2>
+      <PageTitleSimple title='FAQs'/>
     
       <div className="w-full grid place-items-center ">
         <div className="w-[90%]">
@@ -38,6 +39,7 @@ export default function FAQs() {
                           expandIcon={<ExpandMoreIcon />}
                           aria-controls="panel1bh-content"
                           id="panel1bh-header"
+                          key={d.title+'sum'}
                         >
                           <div sx={{ width: "90%", flexShrink: 0 }} className="d-flex font-bold faq_box">
                             <LightbulbFill className="me-3"/><span>{d.title}</span>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { ChevronRight } from 'react-bootstrap-icons';
+import DocumentTitle from '../../components/DocumentTitle';
 import restApiCall from '../../components/RestAPI';
 import Href from "../../components/Href";
 import PlatformTable from './components/PlatformTable';
@@ -11,7 +11,8 @@ import { loading_data, numberBadge } from '../../components/Generic';
 function Publication() {
     let { pubmed_id } = useParams();
     const [publicationData, setPublicationData] = useState([])
-    const [publicationYear, setPublicationYear] = useState([])
+    const [publicationTitle, setPublicationTitle] = useState('')
+    // const [publicationYear, setPublicationYear] = useState([])
     const [datasetsData, setDatasetsData] = useState([])
 
 
@@ -19,15 +20,17 @@ function Publication() {
         const publication_data = await restApiCall('publication/'+pubmed_id);
         console.log(publication_data);
         setPublicationData(publication_data);
-        buildPublicationYear(publication_data.date_publication);
+        const year = publication_data.date_publication ? ' ('+publication_data.date_publication.split('-')[0]+')' : undefined
+        setPublicationTitle("Publication: "+publication_data.firstauthor+year)
+        // buildPublicationYear(publication_data.date_publication);
         publication_data.datasets.sort((a, b) => a.platform.name.localeCompare(b.platform.name))
         setDatasetsData(publication_data.datasets);
     }
 
-    const buildPublicationYear = (date_publication) => {
-        const year = date_publication.split('-')[0]
-        setPublicationYear(year);
-    }
+    // const buildPublicationYear = (date_publication) => {
+    //     const year = date_publication.split('-')[0]
+    //     setPublicationYear(year);
+    // }
 
     // Convert date into DD/MM/YYYY format
     const convertPublicationDate = () => {
@@ -66,6 +69,7 @@ function Publication() {
         <>
             {  publicationData ?
                 <>
+                    { DocumentTitle(publicationTitle) }
                     {op_title('publication', publicationData, publication_ref(publicationData, true))}
                     <HeaderCard type='publication' content={get_information_content()} />
                 </>

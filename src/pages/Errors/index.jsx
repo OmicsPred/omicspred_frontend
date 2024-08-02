@@ -1,7 +1,9 @@
 import { ExclamationOctagonFill } from "react-bootstrap-icons"
+import DocumentTitle from '../../components/DocumentTitle';
 
 
 export const Error404 = () => {
+    DocumentTitle('Error 404');
     return (
         <div className="d-flex justify-content-center">
             <div className="mt-5">

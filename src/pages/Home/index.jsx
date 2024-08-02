@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import DocumentTitle from '../../components/DocumentTitle';
 import restApiCallPaginated from '../../components/RestAPIPaginated';
 import Header from "./components/Header"
 import Stats from "./components/Stats"
@@ -11,7 +12,7 @@ import Supports from "./components/Supports"
 
 
 function Home() {
-
+  DocumentTitle('Homepage');
   const [datasetData, setDatasetData] = useState([])
 
   const fetchDatasetData = async () => {

@@ -1,3 +1,4 @@
+import Href from "../../components/Href";
 
 export const faqs_categories = ["General questions", "Genetic score development", "Contribute to OmicsPred"]
 
@@ -11,7 +12,15 @@ export const faqs_list = [
     {
       title: "How can I download model files of these genetic scores?",
       type: "General questions",
-      text: "You can find a download link (named 'Download model files') on the Score page of each platform. Following the link, you will be directed to a cloud drive page where we hosted model files of all the considerred traits for the platform. There is a \"Download\" bottom at right-top corner of the page, which will allow you to download all the model files in bulk.",
+      text: [
+        "You can find a download links on the Score, Platform and Publication pages. You can also find the links on the ",
+        <Href href='/downloads' text='Downloads page'/>,
+        ". The genetic scores are under the categories ",
+        <b>Scoring files</b>,
+        ' and ',
+        <b>Scoring files<small> (pgsc_calc compatible)</small></b>,
+        '. Each of these zipped files contains all the scoring files associated with a dataset/platform.'
+      ],
     },
     {
       title: " What method was used for genetic score development and why?",

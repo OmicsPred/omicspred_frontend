@@ -60,6 +60,12 @@ $type_colors: (
 @mixin op_light_bg {
     background-color: $op_light_bg_color !important;
 }
+@mixin link_default_color {
+    color: $op_color_2 !important;
+}
+@mixin link_hover_color {
+    color: $op_color_5 !important;
+}
 
 /********************/
 /**  SCSS Content  **/
@@ -90,7 +96,7 @@ footer {
         // color: $op_color_1;
         color: $op_white !important;
         &:hover {
-            color: $op_color_5 !important;
+            @include link_hover_color();
         }
         > svg {
             vertical-align: top !important;
@@ -111,13 +117,12 @@ h1 {
 a {
     font-weight: 500;
     // color: $op_blue_2;
-    color: $op_color_2 !important;
+    @include link_default_color;
     text-decoration: none !important;
     /* color: #222;
     border-bottom: 1px dotted #646cff; */
     &:hover {
-        // color: $op_blue_3 !important;
-        color: $op_color_5 !important;
+       @include link_hover_color;
     }
 }
 
@@ -352,15 +357,19 @@ a {
 .page_title {
     margin: 1rem 0rem 2rem;
     font-weight: 200;
-    > span:first-child {
-        // background-color: #007C82;
-        padding:2px 10px;
-        color:$op_white;
-        border-top-left-radius: 20px;
-        border-bottom-right-radius: 20px;
-        border-top-right-radius: 4px;
-        border-bottom-left-radius: 4px;
+    vertical-align: middle !important;
+    span {
+        vertical-align: middle !important;
     }
+    // > span:first-child {
+    //     // background-color: #007C82;
+    //     padding:2px 10px;
+    //     // color:$op_white;
+    //     border-top-left-radius: 20px;
+    //     border-bottom-right-radius: 20px;
+    //     border-top-right-radius: 4px;
+    //     border-bottom-left-radius: 4px;
+    // }
     > span:last-child {
         font-weight: bold;
     }
@@ -375,11 +384,18 @@ a {
     }
 }
 
-.op_title_separator {
+
+.op_title_prefix, .op_title_separator {
     height:38px;
     font-size: 26px;
     vertical-align:top;
     margin-top:2px;
+    vertical-align: middle;
+}
+.op_title_prefix {
+    margin-right: 1rem;
+}
+.op_title_separator {
     margin-left: 0.5rem;
     margin-right: 0.5rem;
 }
@@ -470,6 +486,14 @@ a {
     }
 }
 
+.op_icon_link {
+    &:hover {
+        svg {
+            @include link_hover_color;
+        }
+    }
+}
+
 .font-bold {
     font-weight: bold;
 }
@@ -499,10 +523,10 @@ ul.key_val_line {
 }
 
 ul.expanded {
+    margin-bottom: 2rem;
     li:not(:last-child) {
         margin-bottom: 0.5rem;
     }
-    margin-bottom: 2rem;
 }
 
 .omics_header {
@@ -512,11 +536,11 @@ ul.expanded {
 
 .faq_box {
     svg {
-        color: $op_color_2;
+        @include link_default_color;
     }
     &:hover {
         svg {
-            color: $op_color_5;
+            @include link_hover_color;
         }
     }
 }
@@ -528,10 +552,22 @@ ul.expanded {
         color: $op_white !important;
         // background-color: $op_color_3 !important;
         background-color: $op_color_5 !important;
+        .extra_icon > svg {
+            @include link_hover_color;
+        }
+    }
+    .extra_icon {
+        background-color: $op_white;
+        padding: 4px 3px 5px;
+        border-radius: 4px;
+        > svg {
+            size: 0.9em;
+            @include link_default_color;
+        }
     }
 }
 .btn-outline-op {
-    color: $op_color_2 !important;
+    @include link_default_color;
     background-color: $op_white !important;
     border: 1px solid $op_color_2 !important;
     &:hover {
@@ -558,6 +594,17 @@ ul.expanded {
     color: $op_white !important;
     @include op_dark_bg;
 }
+
+.badge-op-table {
+    font-size:12px !important;
+}
+
+.badge-op-sm {
+    color: $op_white !important;
+    font-size:14px !important;
+    @include op_dark_bg;
+}
+
 
 
 /* MUI overwriting */
@@ -609,10 +656,13 @@ ul.expanded {
     background-color: $op_hover_grey;
 }
 button.MuiButton-root:hover {
-    color: $op_color_5 !important;
+    @include link_hover_color;
 }
 .MuiInput-root:hover::before {
     border-color: $op_color_5 !important;
+}
+.MuiAccordionDetails-root > .table_container {
+    width:94vw;
 }
 
 
@@ -641,7 +691,7 @@ button.MuiButton-root:hover {
         >a , .nav-item>a {
             color: $op_white !important;
             &:hover {
-                color: $op_color_5 !important;
+                @include link_hover_color;
             }
         }
     }
@@ -653,15 +703,14 @@ button.MuiButton-root:hover {
             }
             &:active {
                 
-                color: $op_color_5 !important;
+                @include link_hover_color;
                 @include op_dark_bg;
             }
         }
     }
 }
 a.navbar-brand {
-    color: $op_color_5 !important;
-    // color: $op_color_1 !important;
+    @include link_hover_color;
     &:hover {
         color: $op_white !important;
     }
@@ -782,20 +831,16 @@ a.navbar-brand {
     // border-bottom: 1px dotted $op_blue_2;
     border-bottom: 1px dotted $op_color_2;
     svg {
-        // color: $op_blue_2 !important;
-        color: $op_color_2 !important;
+        @include link_default_color;
         vertical-align: top;
         margin-top:4px;
     }
     &:hover {
-        // color: $op_blue_3 !important;
-        // border-bottom: 1px dotted #222;
-        color: $op_color_2 !important;
+       @include link_default_color;
         border-bottom: 1px dotted $op_color_5;
         cursor: pointer;
         svg {
-            // color: $op_blue_3 !important;
-            color: $op_color_5 !important;
+            @include link_hover_color;
         }
     }
 }
@@ -804,8 +849,7 @@ a.navbar-brand {
     overflow: hidden;
     // border: 1px solid $op_blue_2 !important;
     svg {
-        // color: $op_blue_2 !important;
-        color: $op_color_2 !important;
+        @include link_default_color;
         vertical-align: top;
         margin-top:4px;
         // &:hover {
@@ -814,8 +858,7 @@ a.navbar-brand {
         // }
     }
     &:hover {
-        // color: $op_blue_3 !important;
-        color: $op_color_5 !important;
+        @include link_hover_color;
         cursor: pointer;
         // svg {
         //     color: $op_color_5 !important;
@@ -854,7 +897,11 @@ a.navbar-brand {
         }
         div:first-child {
             width: 40px;
-            background-color: $op_light_grey;
+            // background-color: $op_light_grey;
+            background-color: $op_color_2;
+            svg {
+                color: $op_white;
+            }
         }
         div:last-child {
             width: 100%;
@@ -890,6 +937,14 @@ a.navbar-brand {
         height:26px;
         margin-top:1px;
         vertical-align:top
+    }
+}
+
+.op_search_card_content {
+    > div:not(:first-child) {
+        border-left: 1px solid $op_grey !important;
+        padding-left: 1rem;
+        margin-left: 1rem;
     }
 }
 
@@ -1067,6 +1122,14 @@ a.navbar-brand {
 
     .border_color_#{$type_key} {
         border-color: $type_color !important;
+    }
+}
+
+@media screen and (max-width: 1170px) {
+    .platform_accordion {
+        > div {
+            width:175px !important;
+        }
     }
 }
 

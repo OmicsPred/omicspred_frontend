@@ -1,6 +1,6 @@
-import { FileEarmarkText, Hr } from 'react-bootstrap-icons';
+import { BarChart, FileEarmarkText, Hr } from 'react-bootstrap-icons';
 import { internal_publication_link, omicspred_omics_type, display_description } from '../../Common';
-import { thousandifyNumber, ToogleDiv, ToogleText } from '../../Generic';
+import { thousandifyNumber, ToogleDiv, ToogleText, scoresBadge } from '../../Generic';
 import Href from '../../Href';
 
 const default_cell_value = process.env.DEFAULT_CELL_VALUE;
@@ -180,7 +180,7 @@ export const common_cols = {
         // flex: 0.5,
         align: 'right',
         renderCell: (params) => {
-            return thousandifyNumber(params.row.variants_number);
+            return <span className="badge rounded-pill badge-op" style={{fontSize:'12px'}} title="# of variants">{thousandifyNumber(params.row.variants_number)}</span>;
         }
     },
     'dataset_name': {
@@ -701,11 +701,34 @@ export const common_cols = {
         field: 'scores_count',
         headerName: '#Scores',
         type: 'number',
-        minWidth: 80, 
+        minWidth: 100,
         flex: 0.5,
         align: 'right',
         renderCell: (params) => {
-            return thousandifyNumber(params.row.scores_count);
+            let counts = 0;
+            if (params.row.scores_count) {
+                counts = params.row.scores_count;
+            }
+            else if (params.row.datasets) {
+                const datasets = params.row.datasets;
+                for (let i = 0; i < datasets.length; i++ ) {
+                    counts += datasets[i].scores_count;
+                }
+            }
+            return scoresBadge(counts, true);
+        },
+        valueGetter: (value, row) => {
+            let counts = 0;
+            if (row.scores_count) {
+                counts = row.scores_count;
+            }
+            else if (row.datasets) {
+                const datasets = row.datasets;
+                for (let i = 0; i < datasets.length; i++ ) {
+                    counts += datasets[i].scores_count;
+                }
+            }
+            return counts;
         }
     }
 }

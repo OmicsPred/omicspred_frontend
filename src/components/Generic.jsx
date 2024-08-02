@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { PlusCircleFill, DashCircleFill, People, InfoCircle, InfoCircleFill } from 'react-bootstrap-icons';
+import { PlusCircleFill, DashCircleFill, People, InfoCircle, InfoCircleFill, BarChart } from 'react-bootstrap-icons';
 
 
 export const thousandifyNumber = function(number) {
@@ -19,9 +19,17 @@ export const numberBadge = function(number,title) {
     }
 }
 
+export const scoresBadge = function(number,in_table) {
+    let class_names = "badge rounded-pill badge-op"
+    if (in_table) {
+        class_names += ' badge-op-table';
+    }
+    return <span className={class_names} title="# of Scores"><BarChart className='me-1' style={{verticalAlign:'top'}}/>{thousandifyNumber(number)}</span>
+}
+
 
 export const participantsBadge = function(number) {
-    return <span className="badge rounded-pill badge-op" style={{fontSize:'12px'}} title="# of Participants"><People className='me-1' style={{fontSize:'12px',verticalAlign:'top'}}/>{thousandifyNumber(number)}</span>
+    return <span className="badge rounded-pill badge-op badge-op-table" title="# of Participants"><People className='me-1' style={{verticalAlign:'top'}}/>{thousandifyNumber(number)}</span>
 }
 
 

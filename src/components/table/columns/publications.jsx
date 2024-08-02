@@ -1,6 +1,6 @@
 import Href from '../../Href';
 import { thousandifyNumber } from '../../Generic';
-import { omicspred_platform_omics_type } from "./common";
+import { common_cols, omicspred_platform_omics_type } from "./common";
 
 
 export const publications_columns = [
@@ -35,7 +35,7 @@ export const publications_columns = [
     },
     
     { field: 'title', headerName: 'Title', minWidth: 450 },
-    { field: 'journal', headerName: 'Journal', minWidth: 150 },
+    { field: 'journal', headerName: 'Journal', minWidth: 120 },
     { 
         field: 'date_publication', 
         headerName: 'Publication Date', 
@@ -54,7 +54,7 @@ export const publications_columns = [
     { 
         field: 'platforms', 
         headerName: 'Platform(s)', 
-        width: 200,
+        width: 150,
         renderCell: (params) => {
             // Identify and list distinct platforms
             var unique_platforms = [];
@@ -77,19 +77,5 @@ export const publications_columns = [
         },
         valueGetter: (value, row) => { return row.datasets.map((dataset) => dataset.platform.name) }
     },
-    {
-        field: 'scores_count',
-        headerName: '#Scores',
-        minWidth: 75,
-        flex: 0.5,
-        align: 'right',
-        renderCell: (params) => {
-            let counts = 0;
-            const datasets = params.row.datasets;
-            for (let i = 0; i < datasets.length; i++ ) {
-                counts += datasets[i].scores_count;
-            }
-            return thousandifyNumber(counts);
-        }
-    }
+    common_cols['scores_count']
 ]

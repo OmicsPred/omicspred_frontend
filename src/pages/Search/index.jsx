@@ -1,9 +1,12 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ChevronRight, Search as SearchIcon} from 'react-bootstrap-icons';
+import DocumentTitle from '../../components/DocumentTitle';
 import restApiCall from '../../components/RestAPI';
 import ResultCard from './components/ResultCard';
 import { SidePanelFilter } from './components/SidePanelFilter';
+import { loading_data } from '../../components/Generic';
+
 
 
 function Search() {
@@ -11,6 +14,7 @@ function Search() {
     const [searchParams, setSearchParams] = useSearchParams();
     const [esResults, setEsResults] = useState([])
     const [esOptions, setEsOptions] = useState([])
+    const [resultsReturned, setResultsReturned] = useState(false)
     const [omicsChecked, setOmicsChecked] = useState([]);
     const [platformChecked, setPlatformChecked] = useState([]);
     const [resultTypes, setResultTypes] = useState([]);
@@ -21,13 +25,14 @@ function Search() {
             query = value;
         }
     }
+    DocumentTitle('Search "'+query+'"');
 
     const es_url = process.env.OMICSPRED_ES_URL+'?q='+query;
 
     const fetchESResults = async () => {
         const results = await restApiCall(es_url);
 
-        console.log(">>> results for "+query+":");
+        // console.log(">>> results for "+query+":");
         const results_list = results;
 
         console.log(results_list);
@@ -66,11 +71,12 @@ function Search() {
         const platforms = Object.keys(platform_counts).sort();
 
         setEsResults(results);
+        setResultsReturned(true);
         options.push({header:'Omics', type:'omics', list: omics.sort(), counts: omics_counts})
         options.push({header:'Platform', type:'platform', list: platforms.sort(), counts: platform_counts})
         setEsOptions(options);
-        console.log(">>> options");
-        console.log(options);
+        // console.log(">>> options");
+        // console.log(options);
         filter_result_types(results);
     }
 
@@ -176,28 +182,30 @@ function Search() {
             <div className='d-flex'>
                 <Suspense fallback={<div>Loading results ...</div>}>
                 {
-                    esResults && esResults.length > 0 ?
-                    <>
-                        {/* Selection Panel */}
-                        <div className='search_selection_panel'>
-                            { esOptions && esOptions.length > 0 ? esOptions.map((data) => <SidePanelFilter handleChange={handleChange} filter={data} key={data.type+'_side'}/>) : <div>No data</div>}
+                    resultsReturned == true ?
+                        esResults && esResults.length > 0 ?
+                        <>
+                            {/* Selection Panel */}
+                            <div className='search_selection_panel'>
+                                { esOptions && esOptions.length > 0 ? esOptions.map((data) => <SidePanelFilter handleChange={handleChange} filter={data} key={data.type+'_side'}/>) : <div>No data</div>}
 
-                            {/* Legend of feature type in the results */}
-                            <div className="MuiBox-root search_selection_block">
-                                <fieldset>
-                                    <legend className="mb-3">Result types</legend>
-                                    { resultTypes && Object.keys(resultTypes).length > 0 ? Object.keys(resultTypes).map((data) => <div key={'legend_'+data} className="op_search_feature_legend mb-1" >
-                                        <span className={'px-2 py-2 me-3 mb-1 bg_'+data}></span>
-                                        <span>{data} ({resultTypes[data]})</span>
-                                    </div>): ''}
-                                </fieldset>
+                                {/* Legend of feature type in the results */}
+                                <div className="MuiBox-root search_selection_block">
+                                    <fieldset>
+                                        <legend className="mb-3">Result types</legend>
+                                        { resultTypes && Object.keys(resultTypes).length > 0 ? Object.keys(resultTypes).map((data) => <div key={'legend_'+data} className="op_search_feature_legend mb-1" >
+                                            <span className={'px-2 py-2 me-3 mb-1 bg_'+data}></span>
+                                            <span>{data} ({resultTypes[data]})</span>
+                                        </div>): ''}
+                                    </fieldset>
+                                </div>
                             </div>
-                        </div>
-                        {/* Result panel */}
-                        <div>
-                            { esResults.map((data) => display_result_card(data))}
-                        </div>
-                    </>: <h4>No result found</h4>
+                            {/* Result panel */}
+                            <div>
+                                { esResults.map((data) => display_result_card(data))}
+                            </div>
+                        </>: <h4>No result found</h4>
+                    : loading_data()
                 }
                 </Suspense>
             </div>

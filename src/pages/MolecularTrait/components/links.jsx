@@ -28,12 +28,12 @@ export const display_metabolite_link = (metabolite, index) => {
     return display_omics_link(metabolite,'metabolite',index)
 }
 
-export const display_pathway_link = (pathway, index, data_size) => {
+export const display_pathway_link = (pathway, data_size) => {
     if (data_size > 1) {
         return <li key={pathway.external_id}><small>{display_omics_link(pathway,'pathway')}</small></li>
     }
     else {
-        return display_omics_link(pathway,'pathway',index)
+        return display_omics_link(pathway,'pathway')
     }
 }
 
@@ -60,11 +60,10 @@ export const display_proteins = (proteins_list) => {
 export const display_pathways = (pathways_list) => {
     return (
         <tr key='pathways'><td>{element_icon('pathway')}<span>Pathway{pathways_list.length > 1 && 's'}</span></td><td>
-        {/*<tr key='pathways'><td><span className="bg_pathway left_mark"></span>Pathway{pathways_list.length > 1 && 's'}</td><td>*/}
             {
                 pathways_list.length > 1 ?
-                    <ToogleDiv key={'toggle_pathways'} title={<><span className='font-bold'>{pathways_list.length}</span> associated pathways</>} content={<ul className="ps-3">{pathways_list.map((data, index) => display_pathway_link(data,index,pathways_list.length))}</ul>}/>
-                    : pathways_list.map((data, index) => display_pathway_link(data,index,pathways_list.length))
+                    <ToogleDiv key={'toggle_pathways'} title={<><span className='font-bold'>{pathways_list.length}</span> associated pathways</>} content={<ul className="ps-3">{pathways_list.map((data) => display_pathway_link(data,pathways_list.length))}</ul>}/>
+                    : pathways_list.map((data) => display_pathway_link(data,pathways_list.length))
             }
         </td></tr>
     )
@@ -106,6 +105,7 @@ export const display_phecode_link = (phecode, data_size) => {
         return <span key={phecode.id}>{phecode.name} (<Href href={'/phecode/'+id} text={phecode.id}/>)</span>
     }
 }
+
 
 export const phecode_data_list = (phecode_data) => {
     return (phecode_data.map((data) => display_phecode_link(data,phecode_data.length)))

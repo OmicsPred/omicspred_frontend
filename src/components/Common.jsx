@@ -1,7 +1,8 @@
 import Href from "./Href";
-import { Bezier2, Book, ChevronRight, ClipboardDataFill, SlashSquareFill, Stack } from 'react-bootstrap-icons';
+import { Bezier2, Book, ChevronRight, ClipboardDataFill, People, SlashSquareFill, Stack } from 'react-bootstrap-icons';
 import { cohort_cols, common_column_groups } from './table/columns/common';
-import { ToogleDiv, ToogleText } from './Generic';
+import { ToogleDiv, ToogleText, thousandifyNumber } from './Generic';
+import DocumentTitle from './DocumentTitle';
 
 export const internal_publication_link = (publication) => {
     let firstauthor = publication.firstauthor;
@@ -29,10 +30,16 @@ export const get_data_type = (omics_type) => {
 }
 
 
-export const page_title = (type, category, label) => {
-    if (!label) {
-        label = type+'s';
+export const PageTitle = (props) => {
+    const type = props.type;
+    const category = props.category;
+    const label = props.label ? props.label : type+'s';
+    const count = props.count;
+
+    if (props.title) {
+        DocumentTitle(props.title);
     }
+
     const label_uc = label.charAt(0).toUpperCase() + label.slice(1);
 
     let color_class = 'color_'+type;
@@ -41,26 +48,46 @@ export const page_title = (type, category, label) => {
     if (category == 'Browse') {
         if (label == 'scores') {
             // prefix = <Clipboard2Data size="26px" className={'me-3 '+color_class}/>
-            prefix = <ClipboardDataFill size="26px" className={'me-3 '+color_class}/>
+            prefix = <ClipboardDataFill className={'op_title_prefix '+color_class}/>
         }
         else if (label == 'pathways') {
             prefix = <>
-            <Bezier2 size="26px" className={'me-3 '+color_class}/>
+            <Bezier2 className={'op_title_prefix '+color_class}/>
             {/* <Bezier size="26px" className={'me-3 '+color_class}/> */}
             </>
         }
         else if (label == 'platforms') {
-            prefix = <Stack size="26px" className={'me-3 '+color_class}/>
+            prefix = <Stack className={'op_title_prefix '+color_class}/>
         }
         else if (label == 'publications') {
-            prefix = <Book size="26px" className={'me-3 '+color_class}/>
+            prefix = <Book className={'op_title_prefix '+color_class}/>
         }
     }
-    return <h2 className='page_title'>{category}<ChevronRight className={'op_title_separator '+color_class}/><span>{prefix}{label_uc}</span></h2>
+    else if (category == 'Cohort') {
+        prefix = <People className={'op_title_prefix '+color_class}/>
+    }
+    return (
+        <h2 className='page_title'>
+            {prefix}<span>{category}</span>
+            <ChevronRight className={'op_title_separator '+color_class}/>
+            <span>{label_uc}{count ? <span className="badge rounded-pill badge-op-sm ms-3">{thousandifyNumber(count)}</span>:''}</span>
+        </h2>
+    )
 }
 
-export const browse_title = (type, label) => {
-    return page_title(type, 'Browse', label);
+export const BrowseTitle = (props) => {
+    const type = props.type;
+    const label = props.label;
+    const count = props.count;
+    const title = props.title;
+
+    return <PageTitle type={type} category='Browse' label={label} count={count} title={title}/>;
+}
+
+
+export const PageTitleSimple = (props) => {
+    DocumentTitle(props.title);
+    return <h2 className='page_title'>{props.title}</h2>
 }
 
 
@@ -68,30 +95,26 @@ export const op_title = (type, data, label, force_use_label) => {
     const type_uc = (type == 'phecode') ? 'PheWAS' : type.charAt(0).toUpperCase() + type.slice(1);
     let value = label;
     let color_class = 'color_'+type;
-    let prefix = <SlashSquareFill size="26px" className={'me-3 '+color_class} style={{verticalAlign:'middle'}}/>
+    let prefix = <SlashSquareFill className={'op_title_prefix '+color_class}/>
     if (!force_use_label) {
         value = (data && data.name) ? data.name : label;
     }
     if (type == 'score') {
-        // prefix = <Clipboard2Data size="26px" className={'me-3 '+color_class}/>
-        prefix = <ClipboardDataFill size="26px" className={'me-3 '+color_class} style={{verticalAlign:'middle'}}/>
+        // prefix = <Clipboard2Data className={'op_title_prefix '+color_class}/>
+        prefix = <ClipboardDataFill className={'op_title_prefix '+color_class}/>
     }
     else if (type == 'pathway') {
-        prefix = <>
-        <Bezier2 size="26px" className={'me-3 '+color_class} style={{verticalAlign:'middle'}}/>
-        {/* <Bezier size="26px" className={'me-3 '+color_class}/> */}
-        </>
+        prefix = <Bezier2 className={'op_title_prefix '+color_class}/>
     }
     else if (type == 'platform') {
         color_class = 'color_'+data.type;
-        prefix = <Stack size="26px" className={'me-3 '+color_class} style={{verticalAlign:'middle'}}/>
+        prefix = <Stack className={'op_title_prefix '+color_class}/>
     }
     else if (type == 'publication') {
         color_class = 'color_hl';
-        prefix = <Book size="26px" className={'me-3 '+color_class} style={{verticalAlign:'middle'}}/>
+        prefix = <Book className={'op_title_prefix '+color_class}/>
     }
-    // return <h2 className='page_title'><span className={'bg_'+type}>{type_uc}</span><ChevronRight className={'op_title_separator color_'+type}/><span>{value}</span></h2>
-    return <h2 className='page_title'>{prefix}<span style={{verticalAlign:'middle'}}>{type_uc}</span><ChevronRight className={'op_title_separator '+color_class} style={{verticalAlign:'middle'}}/><span style={{verticalAlign:'middle'}}>{value}</span></h2>
+    return <h2 className='page_title'>{prefix}<span>{type_uc}</span><ChevronRight className={'op_title_separator '+color_class}/><span>{value}</span></h2>
 }
 
 

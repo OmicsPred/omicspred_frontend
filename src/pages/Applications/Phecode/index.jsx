@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import DocumentTitle from '../../../components/DocumentTitle';
 import DataTableFromRestApi from '../../../components/table/DataTableFromRestApi';
 import DataTable from '../../../components/table/DataTable';
 import { common_cols, common_data_cols, applications_cols } from '../../../components/table/columns/common';
 import restApiCall from '../../../components/RestAPI';
-import { numberBadge, loading_data } from '../../../components/Generic';
+import { scoresBadge, loading_data } from '../../../components/Generic';
 import { op_title, op_subtitle_no_asso, HeaderCard, no_entry_found } from '../../../components/Common';
 
 
@@ -14,6 +15,7 @@ function Phecode() {
     const [noEntry, setNoEntry] = useState(false)
 
     const phecode_id = phecode.replace('_','.');
+    DocumentTitle('PheCode '+phecode_id);
     const url_suffix = "applications_score/search?phecode_id="+phecode_id;
     const columns = [
         common_cols['omicspred_id'],
@@ -51,7 +53,7 @@ function Phecode() {
 			<>
                 <tr><td>Identifier</td><td>{phecodeData.id}</td></tr>
                 <tr><td>Category</td><td>{phecodeData.category}</td></tr>
-                <tr><td># Score{phecodeData.scores_count > 1 ? 's' : ''}</td><td>{numberBadge(phecodeData.scores_count)}</td></tr>
+                <tr><td># Score{phecodeData.scores_count > 1 ? 's' : ''}</td><td>{scoresBadge(phecodeData.scores_count)}</td></tr>
             </>
         )
     }

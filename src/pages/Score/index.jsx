@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { FileEarmarkArrowDown } from 'react-bootstrap-icons';
+import { Download } from 'react-bootstrap-icons';
+import DocumentTitle from '../../components/DocumentTitle';
 import { internal_publication_link, op_title, op_subtitle_no_asso, no_entry_found, Header2Cards } from '../../components/Common';
 import DataTable from "../../components/table/DataTable";
 import { score_columns } from '../../components/table/columns/score'
@@ -14,9 +15,10 @@ import { MolecularTraitAssociation } from '../MolecularTrait/components/Content'
 
 function Score() {
     const { score } = useParams();
-
+    DocumentTitle('Score '+score);
     const [scoreData, setScoreData] = useState()
     const [noEntry, setNoEntry] = useState(false)
+    const [datasetName, setDatasetName] = useState()
     const [platformData, setPlatformData] = useState([])
     const [genesData, setGenesData] = useState([])
     const [transcriptsData, setTranscriptsData] = useState([])
@@ -75,6 +77,9 @@ function Score() {
                 console.log(']] platform.name: '+platform.name)
                 fetchDownloadUrls(score_data.dataset_name,platform.name,publication.pmid)
             }
+            if (score_data.dataset_name) {
+                setDatasetName(score_data.dataset_name)
+            }
             setGenesData(score_data.genes);
             setTranscriptsData(score_data.transcripts);
             setProteinsData(score_data.proteins);
@@ -118,6 +123,7 @@ function Score() {
                 { scoreData.name ? <tr><td>Score Name</td><td>{scoreData.name}</td></tr>:''}
                 { scoreData.publication ? <tr><td>Publication</td><td>{internal_publication_link(scoreData.publication)}</td></tr>:''}
                 <tr><td>Platform</td><td><a href={'/platform/'+platformData.name}>{platformData.name}</a>{platformData.version ? <span className='ms-1'>{platformData.version}</span> : ''}<span className={'ms-2 badge badge_'+platformData.type}>{platformData.type}</span></td></tr>
+                { datasetName ? <tr><td>Dataset</td><td>{datasetName}</td></tr> : ''}
                 <tr><td>Method Name</td><td>{scoreData.method_name}</td></tr>
                 { scoreData.trait_reported ? <tr><td>Reported Trait</td><td>{scoreData.trait_reported}</td></tr>:''}
                 <tr><td>Number of Variants</td><td>{numberBadge(scoreData.variants_number)}</td></tr>
@@ -160,7 +166,7 @@ function Score() {
                     {/* Download buttons */}
                     { platformData && platformDownloads ?
                         <div>
-                            <ToogleDiv key={'toggle_dowloads'} type='button_blue' class_name='card px-2 py-1' title={<><FileEarmarkArrowDown className='me-1'/>Downloads <small>(at platform level)</small></>} content={<DownloadList urls={platformDownloads}/>}/>
+                            <ToogleDiv key={'toggle_dowloads'} type='button_blue' class_name='card px-2 py-1' title={<><Download className='me-2'/>Downloads <small>(at platform/dataset level)</small></>} content={<DownloadList urls={platformDownloads}/>}/>
                         </div>:''
                     }
                     {/* Performance metrics table */}

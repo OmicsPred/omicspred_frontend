@@ -1,14 +1,14 @@
 import Container from "./components/Container";
 import Href from "../../components/Href";
 import CitationCard from "../../components/CitationCard";
-
-
+import { PageTitleSimple } from "../../components/Common";
 
 
 function About() {
+
   return (
     <>
-      <h2 className='page_title'>About</h2>
+      <PageTitleSimple title="About"/>
       <div className="mb-5">The OmicsPred Atlas development was led by <Href text="Yu Xu" href="mailto:yx322@medschl.cam.ac.uk"></Href>, under the supervison of <Href text="Michael Inouye" href="https://www.inouyelab.org/home/people" /> at the Department of Public Health and Primary Care, University of Cambridge.</div>
       
       <Container

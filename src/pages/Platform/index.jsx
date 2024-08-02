@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
+import DocumentTitle from '../../components/DocumentTitle';
 import { metabolomics_columns,metabolomics_column_groups } from '../../components/table/columns/metabolomics';
 import { proteomics_columns, proteomics_column_groups } from '../../components/table/columns/proteomics';
 import { transcriptomics_columns, transcriptomics_column_groups } from '../../components/table/columns/transcriptomics';
@@ -10,11 +11,11 @@ import PlatformSummary from './components/PlatformSummary';
 import PublicationCard from './components/PublicationCard';
 import { op_subtitle, op_title } from '../../components/Common'
 import { loading_data } from '../../components/Generic';
-import _ from 'underscore';
 
 
 function Platform() {
     let { platform } = useParams();
+    DocumentTitle('Platform '+platform);
     const [platformSumData, setPlatformSumData] = useState([])
     const [datasetData, setDatasetData] = useState([])
     const [platformScoresCount, setPlatformScoresCount] = useState(0)
@@ -189,7 +190,13 @@ function Platform() {
                 }
             </div>
             <div className="mt-4 me-4 mb-4 sm:mt-0 sm:ml-3">
-                { platformVersionsList.length > 0 && platformVersionsSelection.length > 0 ? platformVersionsList.map((version) => <button className="btn btn-op shadow btn-sm me-2"  data-version={version} key={platform+'_'+version} onClick={handleVersionSelectionClick}>{platform} {version}</button>):''}
+                { platformVersionsList.length > 1 && platformVersionsSelection.length > 0 ?
+                    <>
+                        <span className='pe-2'>Filter version(s):</span>
+                        {platformVersionsList.map((version) => <button className="btn btn-op shadow btn-sm me-2"  data-version={version} key={platform+'_'+version} onClick={handleVersionSelectionClick}>{platform} {version}</button>)}
+                    </>
+                    :''
+                }
             </div>
             {op_subtitle('score')}
             { platformTableColumns && platformDataEndpoint && platformDataEndpoint.includes(platform) ?

@@ -1,3 +1,4 @@
+import { PageTitleSimple } from '../../components/Common';
 import Container from "./components/Container";
 import Href from "../../components/Href"
 
@@ -66,10 +67,10 @@ const cohorts_list = [
 function Cohorts() {
     return (
       <>
-      <h2 className='page_title'>Cohorts</h2>
-      {
-        cohorts_list.map((cohort) => <Container key={cohort.title} data={cohort}/>)
-      }
+        <PageTitleSimple title='Cohorts'/>
+        {
+          cohorts_list.map((cohort) => <Container key={cohort.title} data={cohort}/>)
+        }
       </>
     );
 };

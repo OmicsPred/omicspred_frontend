@@ -1,15 +1,13 @@
-// import { useState, useEffect } from 'react';
-import { ChevronRight, CodeSlash, FileEarmarkZip, FiletypeCsv, Folder2 } from 'react-bootstrap-icons';
+import { CodeSlash } from 'react-bootstrap-icons';
 import DataTableFromRestApi from "../../components/table/DataTableFromRestApi";
 import {datasets_columns} from "../../components/table/columns/datasets";
 import Href from '../../components/Href';
-import { op_subtitle_no_asso } from '../../components/Common';
+import { PageTitleSimple, op_subtitle_no_asso } from '../../components/Common';
 import { Note } from '../../components/Generic';
 import { download_labels, download_applications_labels } from '../../components/Downloads';
 
 
 function Downloads() {
-
     const url_suffix = 'dataset/all';
 
 
@@ -26,8 +24,7 @@ function Downloads() {
     
     return(
         <div>
-            <h2 className='page_title'>Downloads</h2>
-
+            <PageTitleSimple title='Downloads'/>
             <div>
                 <div className='mb-5'>
                     {process.env.PROJECT_NAME} metadata and data files downloads.

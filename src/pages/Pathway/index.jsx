@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import DocumentTitle from '../../components/DocumentTitle';
 import Href from '../../components/Href';
 import DataTable from '../../components/table/DataTable';
 import { common_cols } from '../../components/table/columns/common';
@@ -12,6 +13,7 @@ import { display_superpathways } from '../MolecularTrait/components/links';
 
 function Pathway() {
 	let { pathway } = useParams();
+	DocumentTitle('Pathway '+pathway);
 	const [elementData, setElementData] = useState()
 	const [noEntry, setNoEntry] = useState(false)
 	const [geneData, setGeneData] = useState([])
