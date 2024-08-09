@@ -31,9 +31,12 @@ $op_light_grey_3: #EFEFEF;
 $op_hover_grey: rgba(0, 0, 0, 0.04);
 $op_black: #000;
 $op_dark: rgba(0, 0, 0, 0.6);
+$op_dark2: #212529; // Default boostrap font color
 $op_blue_2: #0d6efd;
 $op_blue_3: #0a58ca;
 $op_light_bg_color: $op_light_grey_2;
+$default_font_color: $op_dark2;
+
 
 /* Omics colours */
 $omics_colors: (
@@ -66,6 +69,7 @@ $type_colors: (
 @mixin link_hover_color {
     color: $op_color_5 !important;
 }
+
 
 /********************/
 /**  SCSS Content  **/
@@ -452,9 +456,9 @@ a {
     color: $op_white !important;
 }
 
-.card-footer {
-    @include op_light_bg;
-}
+// .card-footer {
+//     @include op_light_bg;
+// }
 
 .op_card {
     padding:0px;
@@ -605,6 +609,12 @@ ul.expanded {
     @include op_dark_bg;
 }
 
+.badge-sq-op-sm {
+    font-size:12px !important;
+    // border:1px solid $op_dark !important;
+    border:1px solid $op_grey !important;
+    vertical-align: middle !important;
+}
 
 
 /* MUI overwriting */
@@ -629,6 +639,10 @@ ul.expanded {
 .MuiDataGrid-root .MuiInputBase-root {
     background-color: #FAFAFA !important;
     padding-left: 4px;
+}
+
+.MuiTablePagination-toolbar p {
+    margin-bottom: 0px;
 }
 
 .MuiFormLabel-root {
@@ -931,13 +945,18 @@ a.navbar-brand {
 .op_search_card {
     div {
         display:inline-block;
-        vertical-align:top;
+        // vertical-align:top;
+        vertical-align:middle;
     }
-    div:first-child {
-        height:26px;
-        margin-top:1px;
-        vertical-align:top
+    svg {
+        margin-top: -4px;
+        vertical-align: middle;
     }
+    // div:first-child {
+    //     height:26px;
+    //     margin-top:1px;
+    //     vertical-align:top
+    // }
 }
 
 .op_search_card_content {
@@ -948,16 +967,18 @@ a.navbar-brand {
     }
 }
 
+fieldset {
+    .op_search_feature_legend:not(:first-child) {
+        margin-top:0.5rem;
+    }
+}
+
 .op_search_feature_legend {
     span {
         display:inline-block;
         vertical-align:top;
     }
-    span:first-child {
-        border-radius:2px;
-        margin-top:5px;
-    }
-    span:last-child:first-letter {
+    .op_legend_label:first-letter {
         text-transform: uppercase;
     }
 }
@@ -1038,10 +1059,6 @@ a.navbar-brand {
     margin-top:-2px;
 }
 
-/* Colour classes */
-.hl_color, .color_hl {
-    color: $hl_color;
-}
 
 /* Colour classes */
 .op_color_1 {
@@ -1050,10 +1067,24 @@ a.navbar-brand {
 .op_color_2 {
     color: $op_color_2;
 }
+.op_color_default_font {
+    color: $default_font_color !important;
+}
+
+.hl_color {
+    color: $hl_color;
+}
+.color_hl {
+    color: $hl_color !important;
+}
 
 .hl_grey_box {
     background-color: $op_light_grey;
     border: 1px solid $op_grey;
+}
+
+.bg_white {
+    background-color: $op_white !important;
 }
 
 .ge_color {

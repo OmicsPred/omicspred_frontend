@@ -82,7 +82,7 @@ function Phecode() {
                     {
                         phecodeData.child_phecode && phecodeData.child_phecode.length ?
                         <div className='mt-5'>
-                            {op_subtitle_no_asso('hl','Children Phecode entries',phecodeData.child_phecode.length)}
+                            {op_subtitle_no_asso('phecode','Children Phecode entries',phecodeData.child_phecode.length)}
                             <DataTable data={phecodeData.child_phecode} columns={child_columns}/>
                         </div> : ''
                     }

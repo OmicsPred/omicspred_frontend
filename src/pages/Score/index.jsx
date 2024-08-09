@@ -183,7 +183,7 @@ function Score() {
                         <div className='mt-5'>
                             {op_subtitle_no_asso('phecode','Associated PheWAS', scorePhecodeData.length)}
                             <div className='d-flex'>
-                                <DataTable key="phecode" data={scorePhecodeData} columns={score_phecode_columns}/>
+                                <DataTable key="phecode" data={scorePhecodeData} columns={score_phecode_columns} sorting='phecode_name'/>
                             </div>
                         </div>:''
                     }

@@ -71,6 +71,7 @@ const build_columns = () => {
             {
                 field: platform_idx,
                 headerName: platform,
+                description: 'Number of scores associated with '+platform,
                 width: 100,
                 sortable: false,
                 renderCell: (params) => {

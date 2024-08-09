@@ -136,7 +136,8 @@ export const op_subtitle = (type,label,count) => {
     else {
         suffix += '(s)'
     }
-    return <h5><ChevronRight className={'op_subtitle color_'+type}/>Associated {label}{suffix}{count ? <> (<span className={'color_'+type}>{count}</span>)</> : ''}</h5>
+    // return <h5><ChevronRight className={'op_subtitle color_'+type}/>Associated {label}{suffix}{count ? <> (<span className={'color_'+type}>{count}</span>)</> : ''}</h5>
+    return <h5><ChevronRight className={'op_subtitle color_'+type}/>Associated {label}{suffix}{count ? <span className={'badge badge-sq-op-sm ms-2 color_'+type}>{count}</span> : ''}</h5>
 }
 
 
@@ -144,7 +145,8 @@ export const op_subtitle_no_asso = (type,label,count) => {
     if (!label) {
         label = type;
     }
-    return <h5><ChevronRight className={'op_subtitle color_'+type}/>{label}{count ? <> (<span className={'color_'+type}>{count}</span>)</> : ''}</h5>
+    // return <h5><ChevronRight className={'op_subtitle color_'+type}/>{label}{count ? <> (<span className={'color_'+type}>{count}</span>)</> : ''}</h5>
+    return <h5><ChevronRight className={'op_subtitle color_'+type}/>{label}{count ? <span className={'badge badge-sq-op-sm ms-2 color_'+type}>{count}</span> : ''}</h5>
 }
 
 

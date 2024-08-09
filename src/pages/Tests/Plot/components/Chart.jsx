@@ -20,6 +20,7 @@ export default function Charts(props) {
   // const [cd, setcd] = useState(d);
   // const [names, setNames] = useState(_.uniq(cd, "name"));
   const names = _.uniq(d, "name");
+  names.sort((a, b) => a.name.localeCompare(b.name));
 
   const n = props.data.map((e) => {
     return { type: e.type };

@@ -14,6 +14,11 @@ const DataTable = (props) => {
       display_groups = true;
     }
 
+    let initial_sorting = {};
+    if (props.sorting) {
+        initial_sorting = { field: props.sorting, sort: 'asc' }
+    }
+
     const row_height_settings = 'auto';
 
     // const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_';
@@ -75,7 +80,10 @@ const DataTable = (props) => {
                     // paginationMode="server"
                     sx={{ '--DataGrid-overlayHeight': '200px' }}
                     initialState={{
-                        pagination: { paginationModel: { pageSize: default_page_size } }
+                        pagination: { paginationModel: { pageSize: default_page_size } },
+                        sorting: {
+                            sortModel: [initial_sorting],
+                        },
                     }}
                     slots={{
                         toolbar: GridToolbar

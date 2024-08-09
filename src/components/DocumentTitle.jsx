@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 function DocumentTitle(title) {
 
-    let cleaned_title = ''
+    let cleaned_title = '';
     const regex = /(<([^>]+)>)/gi;
     if (title) {
         cleaned_title = title.replace(regex, "");
