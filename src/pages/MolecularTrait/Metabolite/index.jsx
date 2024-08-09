@@ -44,7 +44,10 @@ function Metabolite() {
     const get_information_left_content = () => {
 		return (
 			<>
-                { elementData.external_id ? <tr><td>Identifier</td><td>{external_id_link()}</td></tr>:''}
+                <tr>
+                    <td>Identifier</td>
+                    { elementData.external_id ? <td>{external_id_link()}</td>:<td><i>NA</i></td>}
+                </tr>
                 { elementData.descriptions && elementData.descriptions.length ?
                     <tr><td>Description{elementData.descriptions.length > 1 ? 's' : ''}</td><td>{display_description(elementData.descriptions)}</td></tr>:''
                 }

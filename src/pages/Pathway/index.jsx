@@ -5,7 +5,7 @@ import Href from '../../components/Href';
 import DataTable from '../../components/table/DataTable';
 import { common_cols } from '../../components/table/columns/common';
 import restApiCall from '../../components/RestAPI';
-import { op_title, op_subtitle, HeaderCard, no_entry_found } from '../../components/Common';
+import { op_title, op_subtitle_no_asso, HeaderCard, no_entry_found } from '../../components/Common';
 import { loading_data } from '../../components/Generic';
 import ReactomeDiagram from './components/Diagram';
 import { display_superpathways } from '../MolecularTrait/components/links';
@@ -89,12 +89,12 @@ function Pathway() {
 
 					{/* Associated genes */}
 					{
-						geneData.length ? <div key="gene_table" className="mt-4">{op_subtitle('gene')}<DataTable key="gene" data={geneData} columns={gene_columns} col_for_ids={key_cols}/></div> : ''
+						geneData.length ? <div key="gene_table" className="mt-4">{op_subtitle_no_asso('gene','Mapped genes',geneData.length)}<DataTable key="gene" data={geneData} columns={gene_columns} col_for_ids={key_cols}/></div> : ''
 					}
 
 					{/* Associated metabolites */}
 					{
-						metaboliteData.length ? <div key="metabolite_table" className="mt-4">{op_subtitle('metabolite')}<DataTable key="metabolite" data={metaboliteData} columns={metabolite_columns} col_for_ids={key_cols}/></div> : ''
+						metaboliteData.length ? <div key="metabolite_table" className="mt-4">{op_subtitle_no_asso('metabolite','Mapped metabolites',metaboliteData.length)}<DataTable key="metabolite" data={metaboliteData} columns={metabolite_columns} col_for_ids={key_cols}/></div> : ''
 					}
 				</>
 				: noEntry ?

@@ -1,4 +1,4 @@
-import { BarChart, FileEarmarkText, Hr } from 'react-bootstrap-icons';
+import { BarChart, FileEarmarkText, Stack } from 'react-bootstrap-icons';
 import { internal_publication_link, omicspred_omics_type, display_description } from '../../Common';
 import { thousandifyNumber, ToogleDiv, ToogleText, scoresBadge } from '../../Generic';
 import Href from '../../Href';
@@ -116,8 +116,11 @@ export const omicspred_external_links = function(op_data) {
 
 export const omicspred_platform_omics_type = function(platform,type) {
     return (
-        <a key={platform+'-'+type} href={"/platform/"+platform}><span className={"border_left_mark border_color_"+type}>{platform}</span></a>
+        <a key={platform+'-'+type} href={"/platform/"+platform}><span><Stack size="0.9em" className={"me-2 color_"+type}/>{platform}</span></a>
     )
+    // return (
+    //     <a key={platform+'-'+type} href={"/platform/"+platform}><span className={"border_left_mark border_color_"+type}>{platform}</span></a>
+    // )
 }
 
 const sort_objects = function(objects, key) {

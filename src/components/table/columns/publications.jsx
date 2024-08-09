@@ -54,7 +54,7 @@ export const publications_columns = [
     { 
         field: 'platforms', 
         headerName: 'Platform(s)', 
-        width: 150,
+        width: 175,
         renderCell: (params) => {
             // Identify and list distinct platforms
             var unique_platforms = [];

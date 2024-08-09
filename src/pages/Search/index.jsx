@@ -1,11 +1,12 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { ChevronRight, Search as SearchIcon} from 'react-bootstrap-icons';
+import { ChevronRight, Search as SearchIcon, Stack} from 'react-bootstrap-icons';
 import DocumentTitle from '../../components/DocumentTitle';
 import restApiCall from '../../components/RestAPI';
 import ResultCard from './components/ResultCard';
 import { SidePanelFilter } from './components/SidePanelFilter';
 import { loading_data } from '../../components/Generic';
+import { element_icon } from '../../components/Common';
 
 
 
@@ -194,8 +195,10 @@ function Search() {
                                     <fieldset>
                                         <legend className="mb-3">Result types</legend>
                                         { resultTypes && Object.keys(resultTypes).length > 0 ? Object.keys(resultTypes).map((data) => <div key={'legend_'+data} className="op_search_feature_legend mb-1" >
-                                            <span className={'px-2 py-2 me-3 mb-1 bg_'+data}></span>
-                                            <span>{data} ({resultTypes[data]})</span>
+                                            {/* <span className={'px-2 py-2 me-3 mb-1 bg_'+data}></span> */}
+                                            { element_icon(data.toLowerCase()) }
+                                            <span className='op_legend_label'>{data}</span>
+                                            <span className='badge badge-sq-op-sm op_color_default_font bg_white ms-2'>{resultTypes[data]}</span>
                                         </div>): ''}
                                     </fieldset>
                                 </div>
