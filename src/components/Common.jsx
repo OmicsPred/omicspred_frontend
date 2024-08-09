@@ -150,10 +150,11 @@ export const op_subtitle_no_asso = (type,label,count) => {
 }
 
 
-export const no_entry_found = (type, name) => {
+export const no_entry_found = (type, name, no_title) => {
+    console.log("no title: "+no_title);
     return (
         <>
-            {op_title(type, {"name": name}, name)}
+            { no_title ? '' : op_title(type, {"name": name}, name) }
             <div>No {type} entry found for <i>{name}</i> in {process.env.PROJECT_NAME}.</div>
         </>
     );

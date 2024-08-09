@@ -17,8 +17,6 @@ function Cohort() {
     const [noEntry, setNoEntry] = useState(false)
     const [cohortImageSource, setCohortImageSource] = useState();
 
-    const url_endpoint = 'score/search?cohort='+cohort;
-
     const fetchCohortData = async () => {
         const cohort_data = await restApiCall('cohort/'+cohort);
         if (cohort_data && Object.keys(cohort_data).length) {
@@ -28,6 +26,11 @@ function Cohort() {
         else {
             setNoEntry(true);
         }
+    }
+
+    const getUrlEndpoint = () => {
+        const cohort_name = cohortData.name_short ? cohortData.name_short : cohortData.name_full;
+        return 'score/search?cohort='+cohort_name;
     }
 
     const getImageSource = async (cohort_name) => {
@@ -53,8 +56,8 @@ function Cohort() {
     const get_information_content = () => {
 		return (
 			<>
-                { cohortData.name_short.toUpperCase() != cohort.toUpperCase() ? <tr><td>Short name</td><td>{cohortData.name_short}</td></tr>:''}
-                { cohortData.name_full ? <tr><td>Long name</td><td>{cohortData.name_full}</td></tr>:''}
+                { cohortData.name_full && cohortData.name_short ? <tr><td>Short name</td><td>{cohortData.name_short}</td></tr> : ''}
+                { cohortData.name_full && cohortData.name_short ? '' : <tr><td>Long name</td><td>{cohortData.name_full}</td></tr>}
                 { cohortData.url ? <tr><td>Website</td><td><Href text={cohortData.url} href={cohortData.url}/></td></tr>:''}
                 { cohortData.ancestries ? <tr><td>Ancestr{cohortData.ancestries.length > 1 ? 'ies' : 'y'}</td><td>{display_ancestries(cohortData.ancestries)}</td></tr>:''}
             </>
@@ -75,25 +78,31 @@ function Cohort() {
 
     return (
         <>
-            <PageTitle type='hl' category='Cohort' label={cohort} title={'Cohort '+cohort}/>
             { cohortData && cohortData.name_short ?
-                <div>
-                    <div className='d-flex justify-content-between'>
-                        {/* Summary data */}
-                        <div className='op_card_container_info'>
-                            <HeaderCard type='cohort' content={get_information_content()} />
+                <>
+                    <PageTitle type='hl' category='Cohort' label={cohortData.name_full ? cohortData.name_full : cohortData.name_short} title={'Cohort '+cohortData.name_full ? cohortData.name_full : cohortData.name_short}/>
+                    <div>
+                        <div className='d-flex justify-content-between'>
+                            {/* Summary data */}
+                            <div className='op_card_container_info'>
+                                <HeaderCard type='cohort' content={get_information_content()} />
+                            </div>
+                            { cohortImageSource ? <div className='ms-2 me-5'><img className="img-cohort p-2" src={cohortImageSource} /></div> : ''}
                         </div>
-                        { cohortImageSource ? <div className='ms-2 me-5'><img className="img-cohort p-2" src={cohortImageSource} /></div> : ''}
-                    </div>
 
-                    {/* Associated scores */}
-                    <div className="mt-4">
-                        {op_subtitle('score',undefined)}
-                        <DataTableServer url_suffix={url_endpoint} columns={scores_columns} groups={[common_column_groups['molecular_trait_id']]}/>
+                        {/* Associated scores */}
+                        <div className="mt-4">
+                            {op_subtitle('score',undefined)}
+                            <DataTableServer url_suffix={getUrlEndpoint()} columns={scores_columns} groups={[common_column_groups['molecular_trait_id']]}/>
+                        </div>
                     </div>
-                </div>
+                </>
                 : noEntry ?
-                    <>{ no_entry_found('cohort',cohort) }</> : loading_data()
+                    <>
+                        <PageTitle type='hl' category='Cohort' label={cohort} title={'Cohort '+cohort}/>
+                        { no_entry_found('cohort',cohort,1) }
+                    </>
+                    : loading_data()
             }
         </>
     )
