@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { GraphUp, People, FileEarmarkArrowDown, Stack } from 'react-bootstrap-icons';
+import { GraphUp, People, Stack } from 'react-bootstrap-icons';
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";

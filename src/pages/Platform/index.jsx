@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { ChevronDoubleRight } from 'react-bootstrap-icons';
 
 import DocumentTitle from '../../components/DocumentTitle';
 import { metabolomics_columns,metabolomics_column_groups } from '../../components/table/columns/metabolomics';
@@ -9,7 +10,7 @@ import restApiCall from '../../components/RestAPI';
 import DataTableServer from '../../components/table/DataTableServer';
 import PlatformSummary from './components/PlatformSummary';
 import PublicationCard from './components/PublicationCard';
-import { op_subtitle, op_title } from '../../components/Common'
+import { op_subtitle, op_title, count_badge } from '../../components/Common'
 import { loading_data } from '../../components/Generic';
 
 
@@ -182,7 +183,7 @@ function Platform() {
                 <div className='pt-3 d-lg-none'></div>
                 { datasetData.length > 0 ?
                     <div>
-                        <h5>Dataset{datasetData.length > 1 ? 's': ''} ({datasetData.length})</h5>
+                        <h5><ChevronDoubleRight className="me-2 color_hl" size="0.9rem"/>Dataset{datasetData.length > 1 ? 's': ''}{count_badge(datasetData.length)}</h5>
                         <div className="d-flex flex-column">
                             { datasetData.map((dataset) => <PublicationCard data={dataset} key={dataset.publication.doi+'_'+dataset.name} />)}
                         </div>

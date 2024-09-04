@@ -46,6 +46,9 @@ export const score_columns = [
         width: 200,
         renderCell: (params) => {
             return params.row.sample.ancestry_broad;
+        },
+        valueGetter: (value, row) => {
+            return row.sample.ancestry_broad;
         }
     },
     {
