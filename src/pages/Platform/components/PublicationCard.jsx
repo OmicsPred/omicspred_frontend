@@ -1,4 +1,4 @@
-import { ChevronRight, Book, GraphUp, FileEarmarkArrowDown } from 'react-bootstrap-icons';
+import { ChevronDoubleRight, Book, GraphUp } from 'react-bootstrap-icons';
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -48,7 +48,7 @@ const PublicationCard = (props) => {
                 <div style={{display:'block'}}>
                     <div>
                         <div>
-                            <ChevronRight className="hl_color me-2"/><span className="font-bold">{publication.title}</span>
+                            <ChevronDoubleRight className="hl_color me-2" size="0.9rem"/><span className="font-bold">{publication.title}</span>
                         </div>
                         { dataset_name || platform_version ?
                             <div className="ms-4 my-1">
