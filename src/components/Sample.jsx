@@ -52,8 +52,8 @@ const PlatformSampleCohorts = (props) => {
             sample_obj['cohorts'] = get_cohorts_list(sample);
             samples_list_obj.push(sample_obj);
         }
-        console.log('samples_list_obj:');
-        console.log(samples_list_obj);
+        // console.log('samples_list_obj:');
+        // console.log(samples_list_obj);
         return samples_list_obj;
     }
 

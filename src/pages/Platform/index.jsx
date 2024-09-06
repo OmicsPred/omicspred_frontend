@@ -10,7 +10,7 @@ import restApiCall from '../../components/RestAPI';
 import DataTableServer from '../../components/table/DataTableServer';
 import PlatformSummary from './components/PlatformSummary';
 import PublicationCard from './components/PublicationCard';
-import { op_subtitle, op_title, count_badge } from '../../components/Common'
+import { op_subtitle, op_title, op_count_badge } from '../../components/Common'
 import { loading_data } from '../../components/Generic';
 
 
@@ -97,7 +97,7 @@ function Platform() {
 
     const get_table_column_groups = (platforms) => {
         const type = platforms[0].platform.type;
-        console.log('get_table_column_groups: |'+type+'|')
+        // console.log('get_table_column_groups: |'+type+'|')
         let col_groups = get_metadata_column_groups(type);
         return col_groups;
     }
@@ -118,7 +118,7 @@ function Platform() {
 
     const fetchDatasetData = async () => {
         const dataset_data = await restApiCall('dataset/search?platform='+platform);
-        console.log(dataset_data['results']);
+        // console.log(dataset_data['results']);
         const dataset_results = dataset_data['results']
         setDatasetData(dataset_results);
         const table_cols = get_table_columns(dataset_results);
@@ -142,9 +142,12 @@ function Platform() {
         if (e.target.classList.contains(class_selected)) {
             if (platformVersionsSelection.includes(version_val) && platformVersionsSelection.length > 1) {
                 e.target.classList.replace(class_selected,class_unselected);
+                e.target.querySelector('input').checked = false;
                 selected_versions = platformVersionsSelection.filter(function (version) {
                     return version !== version_val;
                 });
+                setPlatformVersionsSelection(selected_versions);
+                updatePlatformDataEndpoint();
             }
         }
         else {
@@ -152,10 +155,11 @@ function Platform() {
             if (!platformVersionsSelection.includes(version_val)) {
                 selected_versions = platformVersionsSelection;
                 selected_versions.push(version_val);
+                e.target.querySelector('input').checked = true;
+                setPlatformVersionsSelection(selected_versions);
+                updatePlatformDataEndpoint();
             }
         }
-        setPlatformVersionsSelection(selected_versions);
-        updatePlatformDataEndpoint();
     }
 
     const updatePlatformDataEndpoint = () => {
@@ -169,7 +173,6 @@ function Platform() {
     },[]);
 
     useEffect(() => {
-        console.log("=> Update Enpoint in useEffect");
         updatePlatformDataEndpoint();
     },[platformVersionsSelection]);
 
@@ -177,29 +180,26 @@ function Platform() {
     return (
         <>
             {op_title('platform', platformSumData, platformSumData.name)}
-            <div className='d-flex justify-content-start d-flex flex-lg-row flex-column'>
+            <div className='d-flex justify-content-start d-flex flex-lg-row flex-column mb-5'>
                 {platformSumData && platformVersions && platformScoresCount ? <PlatformSummary metadata={platformSumData} scores_count={platformScoresCount} versions={platformVersions}/>: ''}
                 <div className='me-5 d-none d-lg-inline-block'></div>
                 <div className='pt-3 d-lg-none'></div>
                 { datasetData.length > 0 ?
                     <div>
-                        <h5><ChevronDoubleRight className="me-2 color_hl" size="0.9rem"/>Dataset{datasetData.length > 1 ? 's': ''}{count_badge(datasetData.length)}</h5>
+                        <h5><ChevronDoubleRight className="me-2 color_hl" size="0.9rem"/>Dataset{datasetData.length > 1 ? 's': ''}{op_count_badge(datasetData.length)}</h5>
                         <div className="d-flex flex-column">
                             { datasetData.map((dataset) => <PublicationCard data={dataset} key={dataset.publication.doi+'_'+dataset.name} />)}
                         </div>
                     </div> : ''
                 }
             </div>
-            <div className="mt-4 me-4 mb-4 sm:mt-0 sm:ml-3">
-                { platformVersionsList.length > 1 && platformVersionsSelection.length > 0 ?
-                    <>
-                        <span className='pe-2'>Filter version(s):</span>
-                        {platformVersionsList.map((version) => <button className="btn btn-op shadow btn-sm me-2"  data-version={version} key={platform+'_'+version} onClick={handleVersionSelectionClick}>{platform} {version}</button>)}
-                    </>
-                    :''
-                }
-            </div>
             {op_subtitle('score')}
+            { platformVersionsList.length > 1 ?
+                <div className="mt-4 me-4 mb-3 sm:mt-0 sm:ml-3">
+                    <span className='pe-2'>Filter platform versions:</span>
+                    {platformVersionsList.map((version) => <button className="btn btn-op shadow btn-sm me-2"  data-version={version} key={platform+'_'+version} onClick={handleVersionSelectionClick}><input type="checkbox" id="scales" name={version} defaultChecked/> {platform} {version}</button>)}
+                </div> :''
+            }
             { platformTableColumns && platformDataEndpoint && platformDataEndpoint.includes(platform) ?
                 <div className="mt-2">
                    <DataTableServer key={platformDataEndpoint} url_suffix={platformDataEndpoint} columns={platformTableColumns} groups={platformTableColumnGroups}/>

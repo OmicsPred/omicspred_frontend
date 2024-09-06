@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { PlusCircleFill, DashCircleFill, People, InfoCircle, InfoCircleFill, BarChart } from 'react-bootstrap-icons';
+import { PlusCircleFill, DashCircleFill, People, InfoCircle, BarChart } from 'react-bootstrap-icons';
 
 
 export const thousandifyNumber = function(number) {
@@ -9,13 +9,26 @@ export const thousandifyNumber = function(number) {
     return ''
 }
 
+export const thousandifyNumberShort = function(number) {
+    if (number !== undefined) {
+        if (9999 < number && number < 1000000) {
+            return ((Math.abs(number)/1000).toFixed(1)) + 'k'
+        }
+        else {
+            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+    }
+    return ''
+}
 
 export const numberBadge = function(number,title) {
+    const num_val = thousandifyNumber(number)
+    const num_val_label = thousandifyNumberShort(number)
     if (title) {
-        return <span className="badge rounded-pill badge-op" title={title}>{thousandifyNumber(number)}</span>
+        return <span className="badge rounded-pill badge-op" title={num_val+' '+title}>{num_val_label}</span>
     }
     else {
-        return <span className="badge rounded-pill badge-op">{thousandifyNumber(number)}</span>
+        return <span className="badge rounded-pill badge-op" title={num_val}>{num_val_label}</span>
     }
 }
 
@@ -24,12 +37,13 @@ export const scoresBadge = function(number,in_table) {
     if (in_table) {
         class_names += ' badge-op-table';
     }
-    return <span className={class_names} title="# of Scores"><BarChart className='me-1' style={{verticalAlign:'top'}}/>{thousandifyNumber(number)}</span>
+    return <span className={class_names} title={thousandifyNumber(number)+" Scores"}><BarChart className='me-1' style={{verticalAlign:'top'}}/>{thousandifyNumberShort(number)}</span>
 }
 
 
 export const participantsBadge = function(number) {
-    return <span className="badge rounded-pill badge-op badge-op-table" title="# of Participants"><People className='me-1' style={{verticalAlign:'top'}}/>{thousandifyNumber(number)}</span>
+    const participants_number = thousandifyNumber(number);
+    return <span className="badge rounded-pill badge-op badge-op-table" title={participants_number+" Participants"}><People className='me-1' style={{verticalAlign:'top'}}/>{participants_number}</span>
 }
 
 
