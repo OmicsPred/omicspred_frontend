@@ -6,7 +6,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import Href from "../../../components/Href";
-import { numberBadge, ToogleDiv } from '../../../components/Generic';
+import { scoresBadge, ToogleDiv } from '../../../components/Generic';
 import { get_cohorts_cols_list, get_cohorts_col_groups_list, omicspred_omics_type } from '../../../components/Common';
 import {cohort_cols, common_column_groups, cohort_valueGetter} from '../../../components/table/columns/common';
 import { metabolomics_columns,metabolomics_column_groups } from '../../../components/table/columns/metabolomics';
@@ -33,7 +33,7 @@ const PlatformTable = (props) => {
     const samples_training = props.data.samples_training;
     const samples_validation = props.data.samples_validation;
     const p_key = platform_name;
-    const scores_count = numberBadge(dataset.scores_count)
+    const scores_count = scoresBadge(dataset.scores_count)
     const pmid = props.pmid;
 
     let plot_url = "/plot/"+platformName+"/"+pmid;

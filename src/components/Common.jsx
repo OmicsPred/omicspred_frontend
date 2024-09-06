@@ -123,6 +123,12 @@ export const op_title2 = (type, prefix, label) => {
 }
 
 
+export const op_count_badge = (count, type) => {
+    const hl_type = (type) ? type : 'hl';
+    return <span className={'badge badge-sq-op-sm ms-2 color_'+hl_type}>{count}</span>
+}
+
+
 export const op_subtitle = (type,label,count) => {
     if (!label) {
         label = type;
@@ -137,7 +143,7 @@ export const op_subtitle = (type,label,count) => {
         suffix += '(s)'
     }
     // return <h5><ChevronRight className={'op_subtitle color_'+type}/>Associated {label}{suffix}{count ? <> (<span className={'color_'+type}>{count}</span>)</> : ''}</h5>
-    return <h5><ChevronRight className={'op_subtitle color_'+type}/>Associated {label}{suffix}{count ? count_badge(count,type) : ''}</h5>
+    return <h5><ChevronRight className={'op_subtitle color_'+type}/>Associated {label}{suffix}{count ? op_count_badge(count,type) : ''}</h5>
 }
 
 
@@ -146,14 +152,9 @@ export const op_subtitle_no_asso = (type,label,count) => {
         label = type;
     }
     // return <h5><ChevronRight className={'op_subtitle color_'+type}/>{label}{count ? <> (<span className={'color_'+type}>{count}</span>)</> : ''}</h5>
-    return <h5><ChevronRight className={'op_subtitle color_'+type}/>{label}{count ? count_badge(count,type) : ''}</h5>
+    return <h5><ChevronRight className={'op_subtitle color_'+type}/>{label}{count ? op_count_badge(count,type) : ''}</h5>
 }
 
-
-export const count_badge = (count, type) => {
-    const hl_type = (type) ? type : 'hl';
-    return <span className={'badge badge-sq-op-sm ms-2 color_'+hl_type}>{count}</span>
-}
 
 export const no_entry_found = (type, name, no_title) => {
     console.log("no title: "+no_title);

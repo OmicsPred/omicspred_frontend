@@ -6,7 +6,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { People } from 'react-bootstrap-icons';
 
 import Href from "../../../components/Href";
-import { ToogleDiv } from '../../../components/Generic';
+import { scoresBadge } from '../../../components/Generic';
 import { SampleTable } from '../../../components/Sample';
 import { ExpandableDownloadButton, get_download_list } from '../../../components/Downloads';
 
@@ -52,9 +52,10 @@ const PublicationCard = (props) => {
                         </div>
                         { dataset_name || platform_version ?
                             <div className="ms-4 my-1">
+                                <span>Scores count: {scoresBadge(dataset.scores_count)}</span>
+                                <span className='px-2 hl_color'>|</span>
                                 {dataset_name ? <span>Dataset: <b>{dataset_name}</b></span>:''}
-                                { dataset_name && platform_version ? <span className='px-2'>|</span>:''}
-                                {platform_version ? <span>Platform version: <b>{platform_version}</b></span>:''}
+                                {platform_version ? <><span className='px-2 hl_color'>|</span><span>Platform version: <b>{platform_version}</b></span></>:''}
                             </div>
                             : ''
                         }
