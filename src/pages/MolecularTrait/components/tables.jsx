@@ -19,9 +19,7 @@ export const PerformanceMetricsTable = (props) => {
     return (
         <div className='mt-5'>
             {op_subtitle_no_asso('hl','Performance Metrics',props.data.length)}
-            <div className='d-flex'>
-                <DataTable key="score" data={props.data} columns={score_columns_ext}/>
-            </div>
+            <DataTable key="score" data={props.data} columns={score_columns_ext}/>
         </div>
     )
 }

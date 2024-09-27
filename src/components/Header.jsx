@@ -44,9 +44,6 @@ function Header() {
                                 <NavDropdown.Item href="/downloads">Data files</NavDropdown.Item>
                                 <NavDropdown.Item href={process.env.REST_API_URL_PUBLIC}>REST API</NavDropdown.Item>
                             </NavDropdown>
-                            {/* <Nav.Link href="/faqs">FAQs</Nav.Link>
-                            <Nav.Link href="/cohorts">Cohorts</Nav.Link>
-                            <Nav.Link href="/about">About</Nav.Link> */}
                             <NavDropdown title="About" id="about-nav-dropdown" renderMenuOnMount={true}>
                                 <NavDropdown.Item href="/about">About {process.env.PROJECT_NAME}</NavDropdown.Item>
                                 <NavDropdown.Item href="/cohorts">Cohorts</NavDropdown.Item>
@@ -59,7 +56,7 @@ function Header() {
             </Navbar>
             {/* Only displayed in small screens */}
             <div className='bg-light search_box_2'>
-                <div className='large_search_bar col-10 offset-1'>
+                <div className='large_search_bar'>
                     <SearchBar/>
                     <div className='op_examples mt-1'>Examples: {search_examples.map((example_term, index) => <span key={'search_'+example_term}>{index > 0 ? ', ': ''}<Href text={example_term} href={'/search?q='+example_term}/></span>)}</div>
                 </div>

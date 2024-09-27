@@ -1,5 +1,5 @@
 
-import { FileEarmarkArrowDown, FileEarmarkZip, Folder2, FiletypeCsv } from 'react-bootstrap-icons';
+import { FileEarmarkArrowDown } from 'react-bootstrap-icons';
 import { thousandifyNumber } from '../../Generic';
 import { common_cols } from './common';
 import { download_labels } from '../../Downloads';

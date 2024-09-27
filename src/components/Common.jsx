@@ -207,8 +207,8 @@ export const Header2Cards = (props) => {
         type_right_uc = type_right.charAt(0).toUpperCase() + type_right.slice(1);
     }
     return (
-        <div className='d-flex'>
-            <div className="card-deck d-lg-flex flex-lg-row justify-content-center d-md-flex flex-md-row d-sm-flex flex-sm-column">
+        <div className='op_card_row'>
+            <div className="card-deck d-flex">
                 <div className="card op_card_left mb-3">
                     <div className="card-header"><h5 className="mb-0">{type_left_uc} information</h5></div>
                     <div className="card-body">
@@ -303,7 +303,7 @@ export const get_cohorts_col_groups_list = (sample_cohorts, cohorts_list) => {
     return cohorts_list;
 }
 
-{/* Format the list of descriptions for the molecular traits */}
+/* Format the list of descriptions for the molecular traits */
 export const display_description = (description_list) => {
     if (description_list.length == 1) {
         return <ToogleText text={description_list[0]} limit='200'/>;
@@ -316,4 +316,60 @@ export const display_description = (description_list) => {
 
 export const element_icon = (type) => {
     return (<SlashSquareFill className={'color_'+type+' element_icon'} />);
+}
+
+
+export const ancestry_labels = {
+    // 'MAE': 'Multi-ancestry (including European)',
+    // 'MAO': 'Multi-ancestry (excluding European)',
+    'AFR': 'African',
+    'EAS': 'East Asian',
+    'SAS': 'South Asian',
+    'ASN': 'Additional Asian Ancestries',
+    'EUR': 'European',
+    'GME': 'Greater Middle Eastern',
+    'AMR': 'Hispanic or Latin American',
+    'OTH': 'Additional Diverse Ancestries',
+    'NR' : 'Not Reported',
+    'MAO': 'Multi-ancestry'
+};
+
+export const ancestry_names = {
+    // 'Multi-ancestry (including European)': 'MAE',
+    // 'Multi-ancestry (excluding European)': 'MAO',
+    'African': 'AFR',
+    'East Asian': 'EAS',
+    'South Asian': 'SAS',
+    'Additional Asian Ancestries': 'ASN',
+    'European': 'EUR',
+    'Greater Middle Eastern': 'GME',
+    'Hispanic or Latin American': 'AMR',
+    'Ad Mixed American': 'AMR', // Not sure
+    'Additional Diverse Ancestries': 'OTH',
+    'Not Reported': 'NR',
+    'Multi-ancestry': 'MAO'
+};
+
+export const get_ancestry_name = (anc_name) => {
+
+    if (ancestry_names[anc_name]) {
+        return ancestry_names[anc_name];
+    }
+    else {
+        if (anc_name.includes(',')) {
+            return 'MAO';
+        }
+        else {
+            return anc_name;
+        }
+    }
+}
+
+export const ancestry_label = (anc) => {
+    if (ancestry_labels[anc]) {
+        return ancestry_labels[anc];
+    }
+    else {
+        return anc;
+    }
 }

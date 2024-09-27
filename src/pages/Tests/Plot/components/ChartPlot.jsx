@@ -1,8 +1,4 @@
-import React, {
-    useEffect,
-    useState,
-    useRef,
-} from "react";
+import React, { useEffect, useState, useRef } from "react";
   
 import {
     Chart as ChartJS,
@@ -15,12 +11,11 @@ import {
     Legend,
     registerables,
 } from "chart.js";
+import { Chart } from "react-chartjs-2";
+import annotationPlugin from "chartjs-plugin-annotation";
 
 import { Download, FiletypePng } from 'react-bootstrap-icons';
 import { saveAs } from "file-saver";
-
-import { Chart } from "react-chartjs-2";
-import annotationPlugin from "chartjs-plugin-annotation";
 
 
 ChartJS.register(
@@ -48,7 +43,7 @@ export default function ChartPlot(props) {
     var data2_array = [];
     var ids_data1_array = [];
   
-    const tdata = props.tdata;
+    // const tdata = props.tdata;
   
     // console.log(
     //   "circle the lenghts are : " + data1.length + " second " + data2.length
@@ -208,8 +203,6 @@ export default function ChartPlot(props) {
     };
 
     const options = {
-      responsive: true,
-  
       plugins: {
         legend: {
           //position: "top",
@@ -315,6 +308,7 @@ export default function ChartPlot(props) {
           },
         },
       },
+      responsive: true
     };
   
     const labels = data1;
@@ -364,6 +358,14 @@ export default function ChartPlot(props) {
       ],
     };
   
+
+    useEffect(() => {
+      const chart = ChartRef.current;
+      chart.update();
+      // Resize chart when the window size change (i.e. getting bigger)
+      window.addEventListener('resize', function () { chart.resize() })
+    }, []);
+
     useEffect(() => {
       updatecolors();
       const chart = ChartRef.current;
@@ -393,10 +395,11 @@ export default function ChartPlot(props) {
   
     return (
         <>
-            <div className="d-flex mx-5" style={{justifyContent:'center'}}>
-                <div style={{position:'relative', height:'65vh', width:'80vw'}}>
+            <div className="d-flex justify-content-center">
+              <Chart className="op_plot" ref={ChartRef} options={options} data={data} />
+                {/* <div style={{position:'relative', height:'65vh', width:'80vw'}}>
                     <Chart ref={ChartRef} options={options} data={data} />
-                </div>
+                </div> */}
             </div>
             <div className="d-flex ms-5 mt-3" style={{justifyContent:'start'}}>
                 <button className="btn btn-op shadow mb-3" onClick={DownloadAsImage}>

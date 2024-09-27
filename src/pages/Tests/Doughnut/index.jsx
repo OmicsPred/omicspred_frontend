@@ -12,8 +12,9 @@ const OPDoughnut = (props) => {
     const default_options = {
         responsive: true,
         aspectRatio: 1.6,
+        borderWidth: 1,
         plugins: {
-          legend: {
+            legend: {
                 position: 'right',
                 labels: {
                     'boxWidth' : 20
@@ -42,8 +43,8 @@ const OPDoughnut = (props) => {
         else {
             const dataset_data = await restApiCall('dataset/all');
             if (dataset_data.results) {
-                console.log('# dataset_data:');
-                console.log(dataset_data);
+                // console.log('# dataset_data:');
+                // console.log(dataset_data);
                 setDoughnutData(build_omics_distribution(dataset_data.results));
             }
         }
@@ -65,7 +66,19 @@ const OPDoughnut = (props) => {
         }
 
         const new_options = { ...default_options, plugins:new_plugins }
-        setDoughnutOptions(new_options)
+
+        // Add external tooltip
+        if (props.tooltip) {
+            let new_plugins = {...new_options.plugins}
+            new_plugins.tooltip=props.tooltip
+            const new_options_tooltip = { ...new_options, plugins:new_plugins}
+            // console.log(new_options_tooltip.plugins);
+            setDoughnutOptions(new_options_tooltip)
+        }
+        else {
+            setDoughnutOptions(new_options)
+        }
+
     }
 
 

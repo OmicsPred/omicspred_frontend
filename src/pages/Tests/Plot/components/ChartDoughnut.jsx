@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -76,7 +76,7 @@ export default function ChartDoughnut(props) {
   };
 
   const lbel =
-    props.matrix.substring(1) == "R2" ? "R²" : props.matrix.substring(1);
+    props.matrix.substring(1) === "R2" ? "R²" : props.matrix.substring(1);
 
   var odata2 = Object.values(props.study_2);
   var odata1 = Object.values(props.study_1);
@@ -99,8 +99,8 @@ export default function ChartDoughnut(props) {
 
   // Store data points for each study as a dictionary to keep the couple index/values.
   for (let i = 0; i < odata1.length; i++) {
-    if (odata2[i] != null && odata2[i] != 'undefined'
-      && odata1[i] != null && odata1[i] != 'undefined') {
+    if (odata2[i] !== null && odata2[i] !== 'undefined'
+      && odata1[i] !== null && odata1[i] !== 'undefined') {
       data2[i] = odata2[i];
       data1[i] = odata1[i];
     }

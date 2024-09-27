@@ -1,20 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { DataGrid, GridToolbarContainer, GridToolbarColumnsButton, GridToolbarFilterButton, GridToolbarQuickFilter } from '@mui/x-data-grid'
+import { DataGrid, GridToolbar } from '@mui/x-data-grid'
 import { loading_data } from '../Generic';
 
 
 const rest_url = process.env.REST_API_URL;
-
-function CustomToolbar() {
-  return (
-    <GridToolbarContainer>
-      <GridToolbarColumnsButton />
-      <GridToolbarFilterButton />
-      <GridToolbarQuickFilter />
-    </GridToolbarContainer>
-  );
-}
-
 
 const DataTableServer = (props) => {
 
@@ -48,10 +37,10 @@ const DataTableServer = (props) => {
         pageSize: page_size
     });
 
-    let display_groups = false;
-    if (props.groups) {
-      display_groups = true;
-    }
+    // let display_groups = false;
+    // if (props.groups) {
+    //   display_groups = true;
+    // }
 
     const row_height_settings = 'auto';
 
@@ -190,47 +179,50 @@ const DataTableServer = (props) => {
             <div className='d-flex'>
                 <div className="table-responsive" style={{flexBasis: "fit-content"}}>
                     <DataGrid
-                    key="server-side"
-                    autoHeight
-                    columnGroupingModel={props.groups}
-                    columns={props.columns}
-                    rows={data}
-                    getRowId={(row) => getRowId(row)}
-                    getRowHeight={() => row_height_settings}
-                    // getRowId={(row) => row.id}
-                    rowCount={rowCountState}
-                    loading={isLoading}
-                    pageSizeOptions={[10, 25, 50, 75, 100]}
-                    paginationModel={paginationModel}
-                    paginationMode="server"
-                    onPaginationModelChange={setPaginationModel}
-                    initialState={{
-                        pagination: {
-                        paginationModel: paginationModel
-                        }
-                    }}
-                    sortingMode="server"
-                    sortingOrder={['asc','desc']}
-                    onSortModelChange={onSortModelChange}
-                    filterMode="server"
-                    onFilterModelChange={onFilterModelChange}
-                    slots={{
-                        toolbar: CustomToolbar
-                    }}
-                    slotProps={{
-                        loadingOverlay: {
-                        variant: 'linear-progress',
-                        noRowsVariant: 'skeleton',
-                        },
-                    }}
-                    // slotProps={{
-                    //   toolbar: {
-                    //     showQuickFilter: true
-                    //   }
-                    // }}
-                    // slots={{
-                    //   toolbar: GridToolbarQuickFilter
-                    // }}
+                        key="server-side"
+                        autoHeight
+                        columnGroupingModel={props.groups}
+                        columns={props.columns}
+                        rows={data}
+                        getRowId={(row) => getRowId(row)}
+                        getRowHeight={() => row_height_settings}
+                        // getRowId={(row) => row.id}
+                        rowCount={rowCountState}
+                        loading={isLoading}
+                        pageSizeOptions={[10, 25, 50, 75, 100]}
+                        paginationModel={paginationModel}
+                        paginationMode="server"
+                        onPaginationModelChange={setPaginationModel}
+                        initialState={{
+                            pagination: {
+                                paginationModel: paginationModel
+                            }
+                        }}
+                        sortingMode="server"
+                        sortingOrder={['asc','desc']}
+                        onSortModelChange={onSortModelChange}
+                        filterMode="server"
+                        onFilterModelChange={onFilterModelChange}
+                        slots={{
+                            toolbar: GridToolbar
+                        }}
+                        slotProps={{
+                            toolbar: {
+                                showQuickFilter: true
+                            },
+                            loadingOverlay: {
+                                variant: 'linear-progress',
+                                noRowsVariant: 'skeleton',
+                            },
+                        }}
+                        // slotProps={{
+                        //   toolbar: {
+                        //     showQuickFilter: true
+                        //   }
+                        // }}
+                        // slots={{
+                        //   toolbar: GridToolbarQuickFilter
+                        // }}
                     />
                 </div>
             </div>

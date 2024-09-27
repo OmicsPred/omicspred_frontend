@@ -20,9 +20,6 @@ const get_cohorts_list = (sample_data) => {
     return cohorts.sort().join(', ');
 }
 
-const common_platform_columns = [
-    { field: 'full_name', headerName: 'Full Name', minWidth: 200 },
-]
 
 export const platforms_columns = [
     { 

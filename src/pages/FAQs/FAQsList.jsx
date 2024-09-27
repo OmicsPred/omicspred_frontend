@@ -45,7 +45,7 @@ export const faqs_list = [
     {
       title: "How can I contribute omic genetic scores from our study to OmicsPred?",
       type: "Contribute to OmicsPred",
-      text: "You can submit your omic scores via the \“Submit Score\” page (www.omicspred.org/SubmitScores) by using the templates we provided. Note that OmicsPred is still under active development, and synergising infrastructure and user interface/experience with other world-leading resources (e.g GWAS catalog and PGS catalog) to allow us to better host omic genetic scores from various types of studies for the community.",
+      text: 'You can submit your omic scores via the "Submit Score" page (www.omicspred.org/SubmitScores) by using the templates we provided. Note that OmicsPred is still under active development, and synergising infrastructure and user interface/experience with other world-leading resources (e.g GWAS catalog and PGS catalog) to allow us to better host omic genetic scores from various types of studies for the community.',
     },
     {
       title: "What are the inclusion criteria for scores in OmicsPred?",

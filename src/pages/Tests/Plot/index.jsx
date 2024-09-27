@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useParams } from 'react-router-dom';
-import { ChevronRight, Book, GraphUp } from 'react-bootstrap-icons';
+import { ChevronRight, GraphUp } from 'react-bootstrap-icons';
 import DocumentTitle from '../../../components/DocumentTitle';
 import restApiCall from '../../../components/RestAPI';
 import Charts from "./components/Chart";
@@ -16,7 +16,7 @@ import { loading_data } from '../../../components/Generic';
 const Plot = (props) => {
     let { platform, pmid } = useParams();
     DocumentTitle('Plot | PMID:'+pmid+' / '+platform);
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
     const [platformSumData, setPlatformSumData] = useState([])
     const [publicationSumData, setPublicationSumData] = useState([])
     const [plotData, setPlotData] = useState([])
@@ -41,10 +41,10 @@ const Plot = (props) => {
         '12345' : 'UKB (internal validation)'
     };
 
-    const platform_file_name = platform.replace(" ", "_");
+    // const platform_file_name = platform.replace(" ", "_");
 
-    const data_dir = process.env.PROJECT_DATA_DIR+pmid+'/';
-    const data_file_prefix = data_dir+platform_file_name;
+    // const data_dir = process.env.PROJECT_DATA_DIR+pmid+'/';
+    // const data_file_prefix = data_dir+platform_file_name;
 
     const fetchDatasetData = async () => {
         const dataset_data = await restApiCall('dataset/search?pmid='+pmid+'&platform='+platform);
@@ -119,7 +119,7 @@ const Plot = (props) => {
 
     const setData = (dataset) => {
         setSelectedDataset(dataset);
-        const file_prefix = data_file_prefix+'_'+dataset.replace(" ", "_");
+        // const file_prefix = data_file_prefix+'_'+dataset.replace(" ", "_");
         // setPlotFile(file_prefix+'_plot.json');
         // setPlotScoreFile(file_prefix+'_plot_score.json');
     }

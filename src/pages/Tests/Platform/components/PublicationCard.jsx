@@ -5,10 +5,10 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { People } from 'react-bootstrap-icons';
 
-import Href from "../../../components/Href";
-import { scoresBadge } from '../../../components/Generic';
-import { SampleTable } from '../../../components/Sample';
-import { ExpandableDownloadButton, get_download_list } from '../../../components/Downloads';
+import Href from "../../../../components/Href";
+import { scoresBadge } from '../../../../components/Generic';
+import { SampleTable } from '../../../../components/Sample';
+import { ExpandableDownloadButton, get_download_list } from '../../../../components/Downloads';
 
 
 const PublicationCard = (props) => {
@@ -44,7 +44,6 @@ const PublicationCard = (props) => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls={key+'_panel_content'}
             id={key+'_panel_header'}
-            title='Click to see the Sample details and available downloads of the study'
             >
                 <div style={{display:'block'}}>
                     <div>

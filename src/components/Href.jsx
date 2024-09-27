@@ -5,7 +5,7 @@ const Href = (props) => {
     let extra_classes = '';
     let title = '';
     const button_classes = ' btn btn-op shadow'
-    const button_small_classes = ' btn-sm btn-op shadow'
+    // const button_small_classes = ' btn-sm btn-op shadow'
 
     if (props.title) {
         title = props.title;
@@ -31,7 +31,7 @@ const Href = (props) => {
         // Without external link icon
         if (props.no_external_icon) {
             return(
-                <a href={props.href} className={extra_classes} title={title} target="_blank">
+                <a href={props.href} className={extra_classes} title={title} target="_blank" rel="noreferrer">
                     {props.icon}{props.icon && ' '}{props.text}
                 </a>
             );
@@ -39,7 +39,7 @@ const Href = (props) => {
         // With external link icon
         else {
             return(
-                <a href={props.href} className={"external-link"+extra_classes} title={title} target="_blank">
+                <a href={props.href} className={"external-link"+extra_classes} title={title} target="_blank" rel="noreferrer">
                     {props.icon}{props.icon && ' '}{props.text}<BoxArrowUpRight/>
                 </a>
             );

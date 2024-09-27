@@ -1,0 +1,77 @@
+/* Ancestry colours */
+:root {
+  --AFR_color: #FFD900; // gold(ish)
+	--AMR_color: #E41A1C; // red
+	--ASN_color: #B15928; // brown
+	--EAS_color: #4DAF4A; // green
+	--EUR_color: #377EB8; // blue
+	--GME_color: #00CED1; // turquoise
+	--SAS_color: #984EA3; // purple
+	--MAE_color: #F781BF; // pink
+	--MAO_color: #FF7F00; // orange
+	--NR_color:  #BBB;    // lighter grey
+	--OTH_color: #999;    // grey
+} 
+
+$ancestry_labels: (
+  'MAE': 'Multi-ancestry (including European)',
+  'MAO': 'Multi-ancestry (excluding European)',
+  'AFR': 'African',
+  'EAS': 'East Asian',
+  'SAS': 'South Asian',
+  'ASN': 'Additional Asian Ancestries',
+  'EUR': 'European',
+  'GME': 'Greater Middle Eastern',
+  'AMR': 'Hispanic or Latin American',
+  'OTH': 'Additional Diverse Ancestries',
+  'NR' : 'Not Reported'
+);
+
+@each $anc_key, $anc_label in $ancestry_labels {
+  .anc_#{$anc_key} {
+    background-color: var(--#{$anc_key}_color);
+  }
+  .anc_colour_#{$anc_key} {
+    color: var(--#{$anc_key}_color);
+    &:before {
+      color: var(--#{$anc_key}_color);
+      font-family: "Font Awesome 6 Free";
+      content: "\f0c8";
+      font-weight:900;
+    }
+  }
+  .anc_bd_#{$anc_key} {
+    border-left: 8px solid var(--#{$anc_key}_color);
+    padding-left:5px;
+  }
+
+  .anc_bd_#{$anc_key}:before {
+    content: $anc_label+": ";
+  }
+}
+
+.anc_label {
+  border-radius: 2px;
+  display:inline-block;
+  height: 12px;
+  width: 12px;
+}
+
+.ancestry_container {
+  > div:first-child {
+      margin-right: 2rem;
+  }
+}
+
+
+@media screen and (max-width: 766px) {
+  .ancestry_container {
+      flex-direction: column;
+      > div:first-child {
+          margin-right: 0rem;
+      }
+      > div {
+          margin-bottom: 1rem;
+      }
+  }
+}

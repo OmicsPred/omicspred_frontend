@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { ChevronRight, Search as SearchIcon, Stack} from 'react-bootstrap-icons';
+import { ChevronRight, Search as SearchIcon } from 'react-bootstrap-icons';
 import DocumentTitle from '../../components/DocumentTitle';
 import restApiCall from '../../components/RestAPI';
 import ResultCard from './components/ResultCard';
@@ -12,7 +12,7 @@ import { element_icon } from '../../components/Common';
 
 function Search() {
     // Get search query
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
     const [esResults, setEsResults] = useState([])
     const [esOptions, setEsOptions] = useState([])
     const [resultsReturned, setResultsReturned] = useState(false)
@@ -217,13 +217,3 @@ function Search() {
 }
 
 export default Search;
-
-function LegendItem(props) {
-    const item = props.item;
-    return (
-        <div key={'legend_'+item} className="op_search_feature_legend mb-1" >
-            <span className={'px-2 py-2 me-3 mb-1 bg_'+item}></span>
-            <span>{item}</span>
-        </div>
-    );
-}
