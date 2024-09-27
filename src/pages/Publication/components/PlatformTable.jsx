@@ -10,8 +10,8 @@ import { scoresBadge, ToogleDiv } from '../../../components/Generic';
 import { get_cohorts_cols_list, get_cohorts_col_groups_list, omicspred_omics_type } from '../../../components/Common';
 import {cohort_cols, common_column_groups, cohort_valueGetter} from '../../../components/table/columns/common';
 import { metabolomics_columns,metabolomics_column_groups } from '../../../components/table/columns/metabolomics';
-import { proteomics_columns, proteomics_column_groups } from '../../../components/table/columns/proteomics';
-import { transcriptomics_columns, transcriptomics_column_groups } from '../../../components/table/columns/transcriptomics';
+import { proteomics_columns } from '../../../components/table/columns/proteomics';
+import { transcriptomics_columns } from '../../../components/table/columns/transcriptomics';
 import DataTableServer from '../../../components/table/DataTableServer';
 import { SampleTable } from '../../../components/Sample';
 import { ExpandableDownloadButton, get_download_list } from '../../../components/Downloads';
@@ -55,6 +55,8 @@ const PlatformTable = (props) => {
                 return "proteomics/"+endpoint_suffix;
             case 'Transcriptomics':
                 return "transcriptomics/"+endpoint_suffix;
+            default:
+                return ''
         }
     }
 
@@ -65,14 +67,17 @@ const PlatformTable = (props) => {
                 if (platform_name in metabolomics_columns) {
                     return metabolomics_columns[platform_name].map(object => ({ ...object }));
                 }
+                break;
             case 'Proteomics':
                 if (platform_name in proteomics_columns) {
                     return proteomics_columns[platform_name].map(object => ({ ...object }));
                 }
+                break;
             case 'Transcriptomics':
                 if (platform_name in transcriptomics_columns) {
                     return transcriptomics_columns[platform_name].map(object => ({ ...object }));
                 }
+                break;
             default:
                 return [];
         }
@@ -137,14 +142,17 @@ const PlatformTable = (props) => {
                 if (platform_name in metabolomics_column_groups) {
                     return metabolomics_column_groups[platform_name];
                 }
+                break;
             // case 'Proteomics':
             //     if (platform in proteomics_column_groups) {
             //         return proteomics_column_groups[platform];
             //     }
+            //     break;
             // case 'Transcriptomics':
             //     if (platform in transcriptomics_column_groups) {
             //         return transcriptomics_column_groups[platform];
             //     }
+            //     break;
             default:
                 return [];
         }

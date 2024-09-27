@@ -13,7 +13,7 @@ $op_color_1: #192E5B;
 $op_color_2: #1D65A6; // Denim
 $op_color_3: #2581d1;//#709DC2;//#7C9FBF; // Glacier
 $op_color_4: #00A75B; // #00743F;
-$op_color_5: #F2A104;
+$op_color_5: #93C4F0; //#abcff0; // #F2A104;
 $op_color_1_alt: #005A9C;// Dodgers Blue
 $ge_color: #0A0;
 $tr_color: #800080; // #975ebe
@@ -459,6 +459,10 @@ a {
 // .card-footer {
 //     @include op_light_bg;
 // }
+.op_card_row {
+    display: flex;
+    flex-direction: row;
+}
 
 .op_card {
     padding:0px;
@@ -695,6 +699,43 @@ button.MuiButton-root:hover {
     border-radius: 6px;
 }
 
+/* Charts */
+.op_barchart {
+    max-width:800px;
+    min-height:250px;
+}
+.op_plot {
+    max-width:1000px;
+    max-height:500px;
+}
+
+.op_chart_tooltip {
+    border-radius: 6px;
+    background-color:rgba(0, 0, 0, 0.8);
+    color:#FFF;
+    font-size: 12px;
+    th {
+        text-align: center;
+        border-bottom:1px solid #FFF;
+        padding: 0.5rem 0.25rem;
+        span {
+            vertical-align: middle;
+        }
+    }
+    .tooltip_extra {
+        border-bottom:1px solid #FFF;
+    }
+    .tooltip_data {
+        text-align: center;
+        padding: 0.5rem 0.25rem;
+    }
+    ul {
+        padding-left: 1.5rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+}
+
 
 
 /* Bootstrap overwrite */
@@ -778,6 +819,7 @@ a.navbar-brand {
 .table-responsive {
     width: 100%;
     flex-basis: fit-content;
+    min-width: 750px;
 }
 
 .table_card {
@@ -940,6 +982,12 @@ a.navbar-brand {
 .op_toogle_text {
     cursor: pointer;
     font-size: 12px;
+    font-weight: 500;
+    @include link_default_color;
+    text-decoration: none !important;
+    &:hover {
+        @include link_hover_color;
+    }
 }
 
 .op_search_card {
@@ -1175,8 +1223,10 @@ fieldset {
     .search_box_2 {
         width:auto;
         display:flex !important;
+        justify-content: center;
         .large_search_bar {
             margin-top: 0px !important;
+            width: 80%;
         }
     }
     .op_stats_container {
@@ -1202,6 +1252,9 @@ fieldset {
         .card-deck {
             justify-content: flex-start !important;
         }
+    }
+    .op_card_row {
+        flex-direction: column;
     }
 }
 
@@ -1231,6 +1284,10 @@ fieldset {
             margin-right:1rem !important;
         }
     }
+    .table-responsive {
+        min-width: auto !important;
+    }
+
     // .home_header_left {
     //     width: 100%;
     //     margin-left: auto;
@@ -1282,6 +1339,14 @@ fieldset {
 }
 
 @media screen and (max-width: 499px) {
+    .search_box_2 {
+        .large_search_bar {
+            width: 90%;
+        }
+    }
+    .op_card {
+        min-width: auto !important;
+    }
     .op_examples {
         font-size: 14px;
     }

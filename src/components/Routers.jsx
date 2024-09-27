@@ -23,6 +23,7 @@ import Cohort from "../pages/Cohort";
 // Tests
 import Search from "../pages/Search";
 import Plot from "../pages/Tests/Plot";
+import PlatformAlt from "../pages/Tests/Platform";
 // import MuiDoughnut from "../pages/Tests/MuiDoughnut";
 // import OPDoughnut from "../pages/Tests/Doughnut";
 // import PublicationOld from "../pages/Tests/PublicationOld";
@@ -68,6 +69,7 @@ function OpRouters() {
                 {/* <Route path="/doughnut/" element={<OPDoughnut />} /> */}
                 {/* <Route path="/doughnut/" element={<MuiDoughnut />} /> */}
                 {/* <Route path="/test/reactome/:reactome_id" element={<ReactomeDiagram />} /> */}
+                <Route path="/test/platform/:platform" element={<PlatformAlt />} />
 
                 {/* Errors */}
                 <Route path="*" element={<Error404 />} />

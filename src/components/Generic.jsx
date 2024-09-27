@@ -109,9 +109,9 @@ export const ToogleText = (props) => {
             <p className='mb-0'>
                 <span>{displayed_text}</span>
                 {show ? hidden_text: '...'}
-                <a className={toogle_class} onClick={(e) => {hideShowDiv(e)}}>
+                <span className={toogle_class} onClick={(e) => {hideShowDiv(e)}}>
                     {show ? ' [less]':' [more]'}
-                </a>
+                </span>
             </p>
         )
     }

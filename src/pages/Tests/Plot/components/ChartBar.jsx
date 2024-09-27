@@ -53,9 +53,6 @@ export default function ChartBar(props) {
 
     const options = {
         plugins: {
-            // customCanvasBackgroundColor: {
-            //     color: 'red',
-            // },
             legend: {
                 display: true,
                 labels: {
@@ -65,16 +62,6 @@ export default function ChartBar(props) {
                 }
             },
             datalabels: {
-                // formatter: function (value) {
-                // //custom money icon
-                //     return value);
-                // },
-                // color: "white",
-                // font: {
-                //     // weight: 'bold',
-                //     // size:14,
-                //     // family: 'poppins'
-                // },
                 display: true,
                 color: "black",
                 anchor: "end",
@@ -82,6 +69,8 @@ export default function ChartBar(props) {
                 align: "start"
             },
         },
+        maintainAspectRatio: false,
+        responsive: true
     };
     // The following colors will be used sequentially for the chart bars
     // const backgroundColors = ["#53D9D9", "#002B49", "#0067A0"];
@@ -182,10 +171,8 @@ export default function ChartBar(props) {
     return(
         <>
             <div className="mt-5">
-                <div className="d-flex justify-content-center mx-5">
-                    <div style={{position:'relative', height:'40vh', width:'50vw'}}>
-                        <Bar id="barchart" data={data} options={options} plugins={[legendMarginBottom]}/>
-                    </div>
+                <div className="d-flex justify-content-center">
+                    <Bar className="op_barchart" id="barchart" data={data} options={options} plugins={[legendMarginBottom]}/>
                 </div>
                 <div className="d-flex justify-content-center mt-3">
                     {/* <button className="btn btn-primary shadow" onClick={DownloadAsImage}>

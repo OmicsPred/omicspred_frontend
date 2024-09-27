@@ -8,7 +8,7 @@ import restApiCall from '../../components/RestAPI';
 import { op_title, op_subtitle_no_asso, HeaderCard, no_entry_found } from '../../components/Common';
 import { loading_data } from '../../components/Generic';
 import ReactomeDiagram from './components/Diagram';
-import { display_superpathways } from '../MolecularTrait/components/links';
+import { display_superpathways, display_synonyms } from '../MolecularTrait/components/links';
 
 
 function Pathway() {

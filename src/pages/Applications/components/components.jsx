@@ -2,7 +2,7 @@ import { Download } from 'react-bootstrap-icons';
 import { download_applications_labels } from '../../../../src/components/Downloads';
 
 
-{/* /!\ Hard coded information /!\ */}
+// /!\ Hard coded information /!\
 export const get_information_content = () => {
     return (
         <>
@@ -18,7 +18,7 @@ export const PheWASDownloadButton = (props) => {
     const type = props.type;
     return (
         <div className='mb-5'>
-            <a className="btn btn-op shadow" href={download_applications_labels[type]['url']} title={download_applications_labels[type]['title']} target="_blank">
+            <a className="btn btn-op shadow" href={download_applications_labels[type]['url']} title={download_applications_labels[type]['title']} target="_blank" rel="noreferrer">
                 <Download className='align-middle me-2' size="20"/><span className='align-middle pe-2'>{download_applications_labels[type]['label']}</span><span className='extra_icon'>{download_applications_labels[type]['icon']}</span>
             </a>
         </div>

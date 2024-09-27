@@ -38,7 +38,6 @@ const PlatformSampleCohorts = (props) => {
         for (let i=0; i < samples_list.length; i++) {
             let sample_obj = {}
             const sample = samples_list[i];
-            const participants = sample.sample_number;
             sample_obj['participants'] = sample.sample_number;
             if (sample.sample_percent_male) {
                 sample_obj['sample_percent_male'] = sample.sample_percent_male;
@@ -63,7 +62,6 @@ const PlatformSampleCohorts = (props) => {
         const ancestry = sample.ancestry_broad;
         for (let j=0; j < sample.cohorts.length; j++) {
             const cohort_name = sample.cohorts[0].name_short;
-            const cohort_url = sample.cohorts[0].url;
             if (cohorts_obj[cohort_name]) {
                 if (!cohorts_obj[cohort_name]['ancestry'][ancestry]) {
                     cohorts_obj[cohort_name]['ancestry'][ancestry] = 0;
@@ -98,10 +96,11 @@ const PlatformSampleCohorts = (props) => {
         <>
             { samples_list.map((sample,index) =>
                 <tr key={sample_type+sample.participants+'_tr'}>
-                    { index == 0 ? <td scope="row" rowSpan={samples_list.length}>{sample_type == 'Training'? <span className='training_col font-bold'>{sample_type}</span>:<span className='font-bold'>{sample_type}</span>}</td> : '' }
+                    {/* { index == 0 ? <td scope="row" rowSpan={samples_list.length}>{sample_type == 'Training'? <span className='training_col font-bold'>{sample_type}</span>:<span className='font-bold'>{sample_type}</span>}</td> : '' } */}
+                    { index == 0 ? <td rowSpan={samples_list.length}>{sample_type == 'Training'? <span className='training_col font-bold'>{sample_type}</span>:<span className='font-bold'>{sample_type}</span>}</td> : '' }
                     <td>
                         { sample.cohorts.length > 1 ?
-                                <ul key={'ul_'+cohort_name}className="mb-0">
+                                <ul key={'ul_samples'} className="mb-0">
                                 {
                                     Object.keys(sample.cohorts).map((cohort_name) => {
                                         return (

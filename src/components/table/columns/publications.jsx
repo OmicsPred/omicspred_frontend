@@ -1,5 +1,4 @@
 import Href from '../../Href';
-import { thousandifyNumber } from '../../Generic';
 import { common_cols, omicspred_platform_omics_type } from "./common";
 
 

@@ -41,7 +41,7 @@ export default function FAQs() {
                           id="panel1bh-header"
                           key={d.title+'sum'}
                         >
-                          <div sx={{ width: "90%", flexShrink: 0 }} className="d-flex font-bold faq_box">
+                          <div style={{ width:"90%", flexShrink:2 }} className="d-flex font-bold faq_box">
                             <LightbulbFill className="me-3"/><span>{d.title}</span>
                           </div>
                         </AccordionSummary>

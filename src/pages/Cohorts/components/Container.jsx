@@ -16,7 +16,7 @@ const Container = (props) => {
                 </div>
                 <div className="ps-3">
                     {
-                        cohort.src ? (<img style={{maxHeight:"150px", maxWidth:"150px"}} src={cohort.src} />) : ''
+                        cohort.src ? (<img style={{maxHeight:"150px", maxWidth:"150px"}} src={cohort.src} alt={cohort.title}/>) : ''
                     }
                 </div>
             </div>

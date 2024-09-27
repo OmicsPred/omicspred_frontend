@@ -9,10 +9,10 @@ const DataTable = (props) => {
     // const rowCount = 0;
     // const [rowCountState, setRowCountState] = useState(rowCount);
 
-    let display_groups = false;
-    if (props.groups) {
-      display_groups = true;
-    }
+    // let display_groups = false;
+    // if (props.groups) {
+    //   display_groups = true;
+    // }
 
     let initial_sorting = {};
     if (props.sorting) {
@@ -68,7 +68,7 @@ const DataTable = (props) => {
 
     return (
         <div className="d-flex" >
-            <div className="table-responsive">
+            <div className="table-responsive" style={{flexBasis: "fit-content"}}>
                 <DataGrid
                     autoHeight
                     columnGroupingModel={props.groups}
@@ -76,13 +76,11 @@ const DataTable = (props) => {
                     rows={props.data}
                     getRowId={(row) => getRowId(row)}
                     getRowHeight={() => row_height_settings}
-                    // rowCount={rowCountState}
-                    // paginationMode="server"
                     sx={{ '--DataGrid-overlayHeight': '200px' }}
                     initialState={{
                         pagination: { paginationModel: { pageSize: default_page_size } },
                         sorting: {
-                            sortModel: [initial_sorting],
+                            sortModel: [initial_sorting]
                         },
                     }}
                     slots={{

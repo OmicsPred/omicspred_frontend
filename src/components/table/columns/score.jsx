@@ -1,6 +1,7 @@
 import { participantsBadge } from '../../Generic';
 import Href from '../../Href';
 import { omicspred_internal_link } from './common';
+import { ancestry_cols } from './ancestry';
 
 
 const default_cell_value = process.env.DEFAULT_CELL_VALUE;
@@ -40,17 +41,7 @@ export const score_columns = [
             }
         }
     },
-    {
-        field: 'ancestry',
-        headerName: 'Ancestry',
-        width: 200,
-        renderCell: (params) => {
-            return params.row.sample.ancestry_broad;
-        },
-        valueGetter: (value, row) => {
-            return row.sample.ancestry_broad;
-        }
-    },
+    ancestry_cols['ancestry'],
     {
         field: 'individuals',
         headerName: 'Sample size',
@@ -81,7 +72,7 @@ export const score_columns = [
     },
     {
         field: 'r2',
-        headerName: 'R2',
+        headerName: <>R<sup>2</sup></>,
         width: 100,
         valueGetter: (value, row) => {
             return metric_valueGetter(row.performance_metrics,'R2');
@@ -98,7 +89,7 @@ export const score_columns = [
     {
         field: 'missing_rate',
         headerName: 'Missing Rate',
-        width: 100,
+        width: 120,
         valueGetter: (value, row) => {
             return metric_valueGetter(row.performance_metrics,'Missing Rate');
         }

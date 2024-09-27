@@ -1,4 +1,3 @@
-import { Book } from 'react-bootstrap-icons';
 import Href from "../../../components/Href"
 import SearchBar from "../../../components/SearchBar"
 // import Stats from "./Stats"

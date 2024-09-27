@@ -1,6 +1,5 @@
+/* eslint-disable */
 import React, { useState, useEffect } from 'react';
-// import { useParams } from 'react-router-dom';
-// import { ChevronRight } from 'react-bootstrap-icons';
 import { Diagram3 } from 'react-bootstrap-icons';
 import { useExternalScript, loading_data } from '../../../components/Generic';
 

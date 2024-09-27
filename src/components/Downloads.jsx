@@ -1,9 +1,5 @@
-import { Download, FileEarmarkArrowDown, FileEarmarkZip, FiletypeCsv, FiletypeXlsx, Folder2 } from 'react-bootstrap-icons';
-
+import { Download, FileEarmarkZip, FiletypeCsv, FiletypeXlsx, Folder2 } from 'react-bootstrap-icons';
 import { ToogleDiv } from './Generic';
-
-
-{/* <tr><td>Scoring file</td><td><FileEarmarkText className="hl_color" size={24}/></td></tr> */}
 
 
 const icon_size = 20;
@@ -68,26 +64,10 @@ export const get_download_list = (scoring_files_urls) => {
     return urls
 }
 
-
-export const DownloadButtons = (props) => {
-
-    return (
-        <>
-            { props.urls ? 
-                <div className="d-grid gap-3 d-md-block">
-                    { Object.keys(props.urls).map((label) => <DownloadButton key={label} label={label} url={props.urls[label]} />)}
-                </div>
-                :''
-            }
-        </>
-    )
-}
-
-
 export const DownloadList = (props) => {
 
     // const icon_size = 24;
-    const div_size = icon_size + (8 * 2); // 40
+    // const div_size = icon_size + (8 * 2); // 40
 
     return (
         <>
@@ -95,8 +75,7 @@ export const DownloadList = (props) => {
                 <div className='op_dwnld_container'>
                     { Object.keys(props.urls).map((entry) =>
                         <div key={entry}>
-                            <a href={props.urls[entry]['url']} title={download_labels[entry]['title']} target="_blank">
-                                {/* <div className="px-2"><FileEarmarkArrowDown className="hl_color" size={icon_size}/></div> */}
+                            <a href={props.urls[entry]['url']} title={download_labels[entry]['title']} target="_blank" rel="noreferrer">
                                 <div className="px-2">{download_labels[entry]['icon']}</div>
                                 <div className="px-2">{props.urls[entry]['label']}{props.urls[entry]['sub_label'] ? <small> ({props.urls[entry]['sub_label']})</small>:''}</div>
                             </a>

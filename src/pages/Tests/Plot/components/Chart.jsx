@@ -4,7 +4,6 @@ import _ from "underscore";
 
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import ChartPlot from "./ChartPlot";
@@ -257,7 +256,6 @@ export default function Charts(props) {
           missed={misseddata}
           missed_name={missed}
           matrix={matrix}
-          pagename={props.pagename}
         />
         <hr className="mt-5"/>
         {/* Doughnut Plot */}

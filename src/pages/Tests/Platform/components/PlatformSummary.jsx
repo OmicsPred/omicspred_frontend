@@ -1,5 +1,6 @@
-import { HeaderCard } from '../../../components/Common';
-import { scoresBadge } from "../../../components/Generic";
+import { HeaderCard } from '../../../../components/Common';
+
+import { scoresBadge } from "../../../../components/Generic";
 
 
 const PlatformSummary = (props) => {

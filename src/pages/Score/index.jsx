@@ -11,7 +11,9 @@ import restApiCallPaginated from '../../components/RestAPIPaginated';
 import { ToogleDiv, loading_data, numberBadge } from '../../components/Generic';
 import { DownloadList, get_download_list } from '../../components/Downloads';
 import { MolecularTraitAssociation } from '../MolecularTrait/components/Content';
-
+import AncestryDistribution from '../../components/ancestry/AncestryDistribution';
+import AncestryLegend from '../../components/ancestry/AncestryLegend';
+import { ancestry_label } from '../../components/Common';
 
 function Score() {
     const { score } = useParams();
@@ -149,6 +151,32 @@ function Score() {
         )
     }
 
+    const get_ancestry_dist = (type) => {
+        let ancestry_list = []
+        let ancestry_data = undefined;
+        if (type == 'dev') {
+            if (scoreData.ancestry.dev.anc) {
+                ancestry_data = scoreData.ancestry.dev.anc;
+            }
+        }
+        else {
+            if (scoreData.ancestry.eval.anc) {
+                ancestry_data = scoreData.ancestry.eval.anc;
+            }
+        }
+        if (ancestry_data) {
+            const ancestry_names = Object.keys(ancestry_data)
+            ancestry_list = ancestry_names.map((anc_name) => ({
+                "id": anc_name,
+                "name": ancestry_label(anc_name),
+                "count": ancestry_data[anc_name]['count'],
+                "percent": ancestry_data[anc_name]['dist'],
+                "list": ancestry_data[anc_name]['anc_list'] ? ancestry_data[anc_name]['anc_list'] : undefined
+            }));
+        }
+        return ancestry_list;
+    }
+
     useEffect(() => {
         fetchScoreData();
         fetchScoreMetrics();
@@ -173,18 +201,37 @@ function Score() {
                     { metricData && metricData.length ?
                         <div className='mt-5'>
                             {op_subtitle_no_asso('hl','Evaluations',metricData.length)}
-                            <div className='d-flex'>
-                                <DataTable key="score" data={metricData} columns={score_columns}/>
+                            {/* Ancestry distribution */}
+                            <div className='ancestry_container d-flex mb-3'>
+                                <div className="card p-0">
+                                    <div className="card-header"><h6 className="mb-0">Ancestry distribution</h6></div>
+                                    <div className="card-body p-2">
+                                        <div className='d-flex justify-content-center'>
+                                            { scoreData.ancestry.dev ?
+                                                <div>
+                                                    <div className="text-center mb-1">Training</div>
+                                                    <AncestryDistribution data={get_ancestry_dist('dev')}/>
+                                                </div> : ''
+                                            }
+                                            { scoreData.ancestry.eval ?
+                                                <div>
+                                                    <div className="text-center mb-1">Validation</div>
+                                                    <AncestryDistribution data={get_ancestry_dist('eval')}/>
+                                                </div> : ''
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <AncestryLegend/>
                             </div>
+                            <DataTable key="score" data={metricData} columns={score_columns}/>
                         </div>:''
                     }
                     {/* PheWAS association table */}
                     { scorePhecodeData && scorePhecodeData.length ?
                         <div className='mt-5'>
                             {op_subtitle_no_asso('phecode','Associated PheWAS', scorePhecodeData.length)}
-                            <div className='d-flex'>
-                                <DataTable key="phecode" data={scorePhecodeData} columns={score_phecode_columns} sorting='phecode_name'/>
-                            </div>
+                            <DataTable key="phecode" data={scorePhecodeData} columns={score_phecode_columns} sorting='phecode_name'/>
                         </div>:''
                     }
                 </div>

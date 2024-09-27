@@ -14,6 +14,7 @@ function Cohort() {
     const { cohort } = useParams();
 
     const [cohortData, setCohortData] = useState();
+    const [cohortName, setCohortName] = useState();
     const [noEntry, setNoEntry] = useState(false)
     const [cohortImageSource, setCohortImageSource] = useState();
 
@@ -22,6 +23,7 @@ function Cohort() {
         if (cohort_data && Object.keys(cohort_data).length) {
             setCohortData(cohort_data);
             getImageSource(cohort);
+            setCohortName(cohort_data.name_short ? cohort_data.name_short : cohort_data.name_full)
         }
         else {
             setNoEntry(true);
@@ -29,20 +31,12 @@ function Cohort() {
     }
 
     const getUrlEndpoint = () => {
-        const cohort_name = cohortData.name_short ? cohortData.name_short : cohortData.name_full;
-        return 'score/search?cohort='+cohort_name;
+        return 'score/search?cohort='+cohortName;
     }
 
     const getImageSource = async (cohort_name) => {
         try {
-            console.log('IMAGE: ../../assets/cohorts/'+cohort_name.toUpperCase()+'.png')
-            // // import p from ('../../assets/cohorts/'+cohort_name.toUpperCase()+'.png');
-            // import img_src from '../../assets/cohorts/'+cohort_name.toUpperCase()+'.png')
-            //     .then((img_src) => {
-            //         // Do something with the module.
-            //         setCohortImageSource(img_src);
-            //     });
-            // const src = require('../../assets/cohorts/'+cohort_name.toUpperCase()+'.png')
+            // console.log('IMAGE: ../../assets/cohorts/'+cohort_name.toUpperCase()+'.png')
             const src = await import(`../../assets/cohorts/${cohort_name.toUpperCase()}.png`)
             if (src) {
                 setCohortImageSource(src.default);
@@ -78,16 +72,16 @@ function Cohort() {
 
     return (
         <>
-            { cohortData && cohortData.name_short ?
+            { cohortName && cohortData && cohortData.name_short ?
                 <>
-                    <PageTitle type='hl' category='Cohort' label={cohortData.name_full ? cohortData.name_full : cohortData.name_short} title={'Cohort '+cohortData.name_full ? cohortData.name_full : cohortData.name_short}/>
+                    <PageTitle type='hl' category='Cohort' label={cohortName} title={'Cohort '+cohortName}/>
                     <div>
                         <div className='d-flex justify-content-between'>
                             {/* Summary data */}
                             <div className='op_card_container_info'>
                                 <HeaderCard type='cohort' content={get_information_content()} />
                             </div>
-                            { cohortImageSource ? <div className='ms-2 me-5'><img className="img-cohort p-2" src={cohortImageSource} /></div> : ''}
+                            { cohortImageSource ? <div className='ms-2 me-5'><img className="img-cohort p-2" src={cohortImageSource} alt={cohortName}/></div> : ''}
                         </div>
 
                         {/* Associated scores */}
