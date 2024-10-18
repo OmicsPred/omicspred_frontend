@@ -10,7 +10,7 @@ import Select from "@mui/material/Select";
 import DocumentTitle from '../../components/DocumentTitle';
 import { metabolomics_columns, metabolomics_column_groups } from '../../components/table/columns/metabolomics';
 import { proteomics_test_columns, proteomics_column_groups } from '../../components/table/columns/proteomics';
-import { transcriptomics_columns } from '../../components/table/columns/transcriptomics';
+import { transcriptomics_columns, transcriptomics_column_groups } from '../../components/table/columns/transcriptomics';
 import restApiCall from '../../components/RestAPI';
 import DataTableServer from '../../components/table/DataTableServer';
 import PlatformSummary from './components/PlatformSummary';
@@ -109,11 +109,11 @@ function Platform() {
                     return proteomics_column_groups[platform];
                 }
                 break;
-            // case 'Transcriptomics':
-            //     if (platform in transcriptomics_column_groups) {
-            //         return transcriptomics_column_groups[platform];
-            //     }
-            //     break;
+            case 'Transcriptomics':
+                if (platform in transcriptomics_column_groups) {
+                    return transcriptomics_column_groups[platform];
+                }
+                break;
             default:
                 return [];
         }
@@ -226,7 +226,6 @@ function Platform() {
     // }
 
     const updatePlatformDataEndpoint = () => {
-
         setPlatformDataEndpoint(get_url_endpoint(platformSumData.type));
     }
 
@@ -251,12 +250,16 @@ function Platform() {
     return (
         <>
             {op_title('platform', platformSumData, platformSumData.name)}
-            {/* Temp */}
-            <div style={{position:'relative',top:'-70px',left:'90%'}}>
+
+            {/* Temporary code - start */}
+            <div style={{position:'relative',top:'-70px',left:'90%',height:'0px'}}>
                 <Href role='button' text='Go to alt page' href={'/test/platform/'+platform} icon={<SignpostFill/>}/>
             </div>
+            {/* Temporary code - end */}
+
             <div className='d-flex justify-content-start d-flex flex-lg-row flex-column mb-5'>
-                {platformSumData && platformVersions && platformScoresCount ? <PlatformSummary metadata={platformSumData} scores_count={platformScoresCount} versions={platformVersions}/>: ''}
+                {/* {platformSumData && platformVersions && platformScoresCount ? <PlatformSummary metadata={platformSumData} scores_count={platformScoresCount} versions={platformVersions}/>: ''} */}
+                {platformSumData && platformScoresCount ? <div><PlatformSummary metadata={platformSumData} scores_count={platformScoresCount} versions={platformVersions}/></div>: ''}
                 <div className='me-5 d-none d-lg-inline-block'></div>
                 <div className='pt-3 d-lg-none'></div>
                 { datasetData.length > 0 ?

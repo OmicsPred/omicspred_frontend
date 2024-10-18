@@ -1,8 +1,12 @@
 import { common_cols, common_column_groups } from "./common";
+import { ancestry_cols } from "./ancestry";
 // import {common_cols, cohort_cols, common_column_groups, omicspred_internal_link} from "./common";
 
 const trait_reported_id_col = {...common_cols['trait_reported_id'], headerName: 'ID'}
 const trait_reported_col = {...common_cols['trait_reported'], headerName: 'Name'}
+
+const ancestry_training_cols = {...ancestry_cols['ancestry_training'], headerClassName: ['col_border_left']}
+const ancestry_validation_cols = {...ancestry_cols['ancestry_validation'], headerClassName: ['col_border_right']}
 // const dataset_name_col = {...common_cols['dataset_name'], field: 'dataset__name'}
 
 // Export Metabolomics columns
@@ -18,6 +22,8 @@ export const metabolomics_columns = {
         // common_cols['publication'],
         // common_cols['platform_version'],
         // dataset_name_col,
+        ancestry_training_cols,
+        ancestry_validation_cols,
         common_cols['variants_number'],
         // Cohorts columns
         // cohort_cols['INTERVAL']['R2'],
@@ -38,6 +44,8 @@ export const metabolomics_columns = {
         // common_cols['publication'],
         // common_cols['platform_version'],
         // dataset_name_col,
+        ancestry_training_cols,
+        ancestry_validation_cols,
         common_cols['variants_number'],
         // Cohorts columns
         // cohort_cols['INTERVAL']['R2'],
@@ -68,6 +76,7 @@ export const metabolomics_column_groups = {
         common_column_groups['reported_trait'],
         common_column_groups['metabolomic_mapped_trait'],
         common_column_groups['pathway'],
+        common_column_groups['ancestry']
         // common_column_groups['INTERVAL'],
         // common_column_groups['INTERVAL_withheld_subset'],
         // common_column_groups['ORCADES']
@@ -76,6 +85,7 @@ export const metabolomics_column_groups = {
         // common_column_groups['reported_trait'],
         common_column_groups['metabolomic_mapped_trait'],
         common_column_groups['pathway'],
+        common_column_groups['ancestry']
         // common_column_groups['INTERVAL'],
         // common_column_groups['UKB'],
         // common_column_groups['ORCADES'],

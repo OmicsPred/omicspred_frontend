@@ -1,4 +1,5 @@
 import DataTable from '../../../components/table/DataTable';
+import AncestryLegend from '../../../components/ancestry/AncestryLegend';
 import { score_columns_ext } from '../../../components/table/columns/score';
 import { score_molecular_trait_columns } from '../../../components/table/columns/scores';
 // import { pathway_molecular_trait_columns } from '../../../components/table/columns/pathways';
@@ -10,6 +11,9 @@ export const ScoresTable = (props) => {
     return (
         <div className="mt-5">
             {op_subtitle('score',undefined,props.data.length)}
+            <div className='d-flex mb-3'>
+                <AncestryLegend />
+            </div>
             <DataTable key="score" data={props.data} columns={columns}/>
 		</div>
     )

@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { PageTitle, HeaderCard, no_entry_found, op_subtitle } from '../../components/Common';
 import Href from '../../components/Href';
 import restApiCall from '../../components/RestAPI';
-// import { ScoresTable } from '../MolecularTrait/components/tables';
 import { scores_columns } from '../../components/table/columns/scores';
 import { common_column_groups } from '../../components/table/columns/common';
 import DataTableServer from '../../components/table/DataTableServer';
@@ -31,7 +30,7 @@ function Cohort() {
     }
 
     const getUrlEndpoint = () => {
-        return 'score/search?cohort='+cohortName;
+        return 'score/search?cohort='+cohortName+'&include_ancestry=0';
     }
 
     const getImageSource = async (cohort_name) => {
