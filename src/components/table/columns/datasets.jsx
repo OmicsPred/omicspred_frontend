@@ -1,6 +1,5 @@
 
 import { FileEarmarkArrowDown } from 'react-bootstrap-icons';
-import { thousandifyNumber } from '../../Generic';
 import { common_cols } from './common';
 import { download_labels } from '../../Downloads';
 
@@ -65,16 +64,7 @@ export const datasets_columns = [
             },
             valueGetter: (value, row) => { return row.name }
     },
-    {
-        field: 'scores_count',
-        headerName: '#Scores',
-        minWidth: 75,
-        flex: 0.5,
-        align: 'right',
-        renderCell: (params) => {
-            return thousandifyNumber(params.row.scores_count);
-        }
-    },
+    common_cols['scores_count'],
     {
         field: 'scoring_files',
         headerName: 'Scoring files',

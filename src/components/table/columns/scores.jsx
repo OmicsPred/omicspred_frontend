@@ -1,5 +1,5 @@
-import {common_cols} from "./common";
-
+import { common_cols } from "./common";
+import { ancestry_cols } from "./ancestry";
 
 // const metabolite_name_col = {...common_cols['metabolite_name'], field: 'metabolites__name'}
 const gene_id_col = {...common_cols['gene_name'], headerClassName: 'col_border_left'}
@@ -55,6 +55,8 @@ export const score_molecular_trait_columns = [
     common_cols['dataset_name'],
     common_cols['publication'],
     common_cols['variants_number'],
+    ancestry_cols['ancestry_training'],
+    ancestry_cols['ancestry_validation']
     // common_cols['scoring_file']
 ]
 
@@ -65,4 +67,6 @@ export const score_metabolite_columns = [
     common_cols['platform_name'],
     common_cols['publication'],
     common_cols['variants_number'],
+    ancestry_cols['ancestry_training'],
+    ancestry_cols['ancestry_validation']
 ]

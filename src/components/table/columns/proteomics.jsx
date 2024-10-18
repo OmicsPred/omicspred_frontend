@@ -3,6 +3,9 @@ import { common_cols, common_column_groups } from "./common";
 import { ancestry_cols } from "./ancestry";
 
 const dataset_name_col = {...common_cols['dataset_name'], field: 'dataset__name'}
+const ancestry_training_cols = {...ancestry_cols['ancestry_training'], headerClassName: ['col_border_left']}
+// const ancestry_validation_cols = {...ancestry_cols['ancestry_validation'], headerClassName: ['col_border_right']}
+
 
 // Export Proteomics columns
 export const proteomics_columns = {
@@ -65,8 +68,8 @@ export const proteomics_test_columns = {
         common_cols['platform_version'],
         dataset_name_col,
         common_cols['variants_number'],
-        ancestry_cols['ancestry_training'],
-        ancestry_cols['ancestry_validation']
+        ancestry_training_cols,
+        ancestry_cols['ancestry_validation'],
         // Cohorts columns
         // cohort_cols['INTERVAL']['R2'],
         // cohort_cols['INTERVAL']['Rho'],
@@ -86,8 +89,8 @@ export const proteomics_test_columns = {
         // common_cols['platform_version'],
         // dataset_name_col,
         common_cols['variants_number'],
-        ancestry_cols['ancestry_training'],
-        ancestry_cols['ancestry_validation']
+        ancestry_training_cols,
+        ancestry_cols['ancestry_validation'],
         // Cohorts columns
         // cohort_cols['INTERVAL']['R2'],
         // cohort_cols['INTERVAL']['Rho'],
