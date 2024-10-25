@@ -45,7 +45,7 @@ export const score_columns = [
     {
         field: 'individuals',
         headerName: 'Sample size',
-        width: 150,
+        width: 120,
         renderCell: (params) => {
             return participantsBadge(params.row.sample.sample_number);
         },
@@ -56,7 +56,7 @@ export const score_columns = [
     {
         field: 'type',
         headerName: 'Study stage',
-        width: 200,
+        width: 180,
         renderCell: (params) => {
             const stype = params.row.evaluation_type;
             if (stype == 'Training') {
@@ -73,7 +73,7 @@ export const score_columns = [
     {
         field: 'r2',
         headerName: <>R<sup>2</sup></>,
-        width: 100,
+        width: 90,
         valueGetter: (value, row) => {
             return metric_valueGetter(row.performance_metrics,'R2');
         }
@@ -81,7 +81,7 @@ export const score_columns = [
     {
         field: 'rho',
         headerName: 'Rho',
-        width: 100,
+        width: 90,
         valueGetter: (value, row) => {
             return metric_valueGetter(row.performance_metrics,'Rho');
         }

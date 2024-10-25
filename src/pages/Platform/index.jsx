@@ -45,6 +45,8 @@ function Platform() {
         'b': 'Both'
     }
 
+    const ancestry_labels_data = ancestry_labels();
+
     const get_url_endpoint = (type) => {
         let endpoint_suffix = platform+'?include_performance_metrics=0'
         if (selectedAncestry && selectedAncestry.length > 0) { //&& selectedAncestry != previousAncestrySelection) {
@@ -246,7 +248,6 @@ function Platform() {
         updatePlatformDataEndpoint();
     },[selectedAncestry, selectedStage]);
 
-
     return (
         <>
             {op_title('platform', platformSumData, platformSumData.name)}
@@ -303,7 +304,7 @@ function Platform() {
                                                 onChange={handleAncestryChange}
                                             >
                                                 <MenuItem key='none_sel' value=''>-</MenuItem>
-                                                {Object.keys(ancestry_labels).map((anc) => <MenuItem key={anc+'_sel'} value={anc}>{ancestry_labels[anc]}</MenuItem>)}
+                                                {Object.keys(ancestry_labels_data).map((anc) => <MenuItem key={anc+'_sel'} value={anc}>{ancestry_labels_data[anc]}</MenuItem>)}
                                             </Select>
                                         </FormControl>
                                     </div>

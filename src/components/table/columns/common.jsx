@@ -203,7 +203,7 @@ export const common_cols = {
     'platform_type': {
         field: 'platform__platform_master__type',
         headerName: 'Omics',
-        minWidth: 140,
+        minWidth: 150,
         flex: 1,
         renderCell: (params) => {
             return omicspred_omics_type(params.row.platform.type);

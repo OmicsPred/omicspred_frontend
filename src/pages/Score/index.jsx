@@ -13,7 +13,7 @@ import { DownloadList, get_download_list } from '../../components/Downloads';
 import { MolecularTraitAssociation } from '../MolecularTrait/components/Content';
 import AncestryDistribution from '../../components/ancestry/AncestryDistribution';
 import AncestryLegend from '../../components/ancestry/AncestryLegend';
-import { ancestry_label } from '../../components/Common';
+import { ancestry_label, omicspred_omics_type } from '../../components/Common';
 
 function Score() {
     const { score } = useParams();
@@ -124,7 +124,8 @@ function Score() {
 			<>
                 { scoreData.name ? <tr><td>Score Name</td><td>{scoreData.name}</td></tr>:''}
                 { scoreData.publication ? <tr><td>Publication</td><td>{internal_publication_link(scoreData.publication)}</td></tr>:''}
-                <tr><td>Platform</td><td><a href={'/platform/'+platformData.name}>{platformData.name}</a>{platformData.version ? <span className='ms-1'>{platformData.version}</span> : ''}<span className={'ms-2 badge badge_'+platformData.type}>{platformData.type}</span></td></tr>
+                {/* <tr><td>Platform</td><td><a href={'/platform/'+platformData.name}>{platformData.name}</a>{platformData.version ? <span className='ms-1'>({platformData.version})</span> : ''}<span className={'ms-2 badge badge_'+platformData.type}>{platformData.type}</span></td></tr> */}
+                <tr><td>Platform</td><td><a href={'/platform/'+platformData.name}>{platformData.name}</a>{platformData.version ? <span className='ms-1' title='Platform version'>({platformData.version})</span> : ''}<span className='mx-2'>-</span>{omicspred_omics_type(platformData.type)}</td></tr>
                 { datasetName ? <tr><td>Dataset</td><td>{datasetName}</td></tr> : ''}
                 <tr><td>Method Name</td><td>{scoreData.method_name}</td></tr>
                 { scoreData.trait_reported ? <tr><td>Reported Trait</td><td>{scoreData.trait_reported}</td></tr>:''}
@@ -209,13 +210,13 @@ function Score() {
                                         <div className='d-flex justify-content-center'>
                                             { scoreData.ancestry.dev ?
                                                 <div>
-                                                    <div className="text-center mb-1">Training</div>
+                                                    <div className="text-center small mb-1">Training</div>
                                                     <AncestryDistribution data={get_ancestry_dist('dev')}/>
                                                 </div> : ''
                                             }
                                             { scoreData.ancestry.eval ?
                                                 <div>
-                                                    <div className="text-center mb-1">Validation</div>
+                                                    <div className="text-center small mb-1">Validation</div>
                                                     <AncestryDistribution data={get_ancestry_dist('eval')}/>
                                                 </div> : ''
                                             }

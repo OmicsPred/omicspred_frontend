@@ -2,6 +2,7 @@
 import Href from "../components/Href";
 // import { ToogleDiv, participantsBadge } from "../components/Generic";
 import { participantsBadge } from "../components/Generic";
+import { display_ancestry } from "../components/Common";
 
 
 export const SampleTable = (props) => {
@@ -80,11 +81,11 @@ const PlatformSampleCohorts = (props) => {
         return cohorts_obj
     }
 
-    const render_ancestries = (cohort_name, data, sample_participants) => {
+    const render_ancestries = (cohort_name, data) => {
         return (
             <span key={'anc_'+cohort_name}>
                 { 
-                    Object.keys(data['ancestry']).map((key) => <div key={'sublist_'+key}>{key}{data['ancestry'][key] == sample_participants ? '': <>: {participantsBadge(data['ancestry'][key])}</>}</div>)
+                    Object.keys(data['ancestry']).map((key) => <div key={'sublist_'+key}>{display_ancestry(key)}</div>)
                 }
             </span>
         )
