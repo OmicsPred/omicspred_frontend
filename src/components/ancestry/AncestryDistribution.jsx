@@ -9,7 +9,7 @@ const AncestryDistribution = (props) => {
 
     // const title = 'Scores distribution by Omics type'
 
-    const chart_size = props.size ? props.size : 140;
+    const chart_size = props.size ? props.size : 100;
 
     const fetchchartData = async () => {
         if (props.data) {

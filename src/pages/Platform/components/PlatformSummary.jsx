@@ -1,4 +1,4 @@
-import { HeaderCard } from '../../../components/Common';
+import { HeaderCard, omicspred_omics_type } from '../../../components/Common';
 import { scoresBadge } from "../../../components/Generic";
 
 
@@ -9,7 +9,8 @@ const PlatformSummary = (props) => {
     const get_information_content = () => {
 		return (
 			<>
-                <tr><td>Omics type</td><td><span className={'badge badge_'+platform_sum.type}>{platform_sum.type}</span></td></tr>
+                {/* <tr><td>Omics type</td><td><span className={'badge badge_'+platform_sum.type}>{platform_sum.type}</span></td></tr> */}
+                <tr><td>Omics type</td><td>{omicspred_omics_type(platform_sum.type)}</td></tr>
                 <tr><td>Long Name</td><td>{platform_sum.full_name}</td></tr>
                 { platform_versions != '' ? <tr><td>Version{platform_versions.includes(',') ? 's':''}</td><td>{platform_versions}</td></tr> : ''}
                 <tr><td>Technic</td><td>{platform_sum.technic}</td></tr>

@@ -3,7 +3,7 @@ import { ancestry_labels } from '../Common';
 
 const AncestryLegend = (props) => {
 
-    const anc_list = Array.from(Object.keys(ancestry_labels));
+    const anc_list = Array.from(Object.keys(ancestry_labels()));
     const anc_length = anc_list.length;
     const grp_cutoff = Math.floor(anc_length/2 + 0.5);
     console.log('left_grp_idx: '+grp_cutoff)
@@ -21,9 +21,10 @@ const AncestryLegend = (props) => {
     }
 
     const ancestry_item = (anc) => {
+        const ancestry_labels_data = ancestry_labels();
         return(
             <div key={anc}>
-                <span className={'me-2 align-middle anc_label anc_'+anc}></span><span className='align-middle'>{ancestry_labels[anc]}</span>
+                <span className={'me-2 align-middle anc_label anc_'+anc}></span><span className='align-middle'>{ancestry_labels_data[anc]}</span>
             </div>
         )
     }

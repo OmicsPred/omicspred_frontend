@@ -1,5 +1,5 @@
 import Href from "./Href";
-import { Bezier2, Book, ChevronRight, ClipboardDataFill, People, SlashSquareFill, Stack } from 'react-bootstrap-icons';
+import { Bezier2, Book, ChevronRight, ClipboardDataFill, People, BoxFill, Stack, Hexagon, HexagonFill } from 'react-bootstrap-icons';
 import { cohort_cols, common_column_groups } from './table/columns/common';
 import { ToogleDiv, ToogleText, thousandifyNumber } from './Generic';
 import DocumentTitle from './DocumentTitle';
@@ -95,7 +95,8 @@ export const op_title = (type, data, label, force_use_label) => {
     const type_uc = (type == 'phecode') ? 'PheWAS' : type.charAt(0).toUpperCase() + type.slice(1);
     let value = label;
     let color_class = 'color_'+type;
-    let prefix = <SlashSquareFill className={'op_title_prefix '+color_class}/>
+    // let prefix = <SlashSquareFill className={'op_title_prefix '+color_class}/>
+    let prefix = <Hexagon className={'op_title_prefix '+color_class}/>
     if (!force_use_label) {
         value = (data && data.name) ? data.name : label;
     }
@@ -251,10 +252,27 @@ export const publication_ref = (publication,display_year) => {
 }
 
 
-export const omicspred_omics_type = (type) => {
-    return (
-        <span className={"border_left_mark border_color_"+type}>{type}</span>
-    )
+export const omicspred_omics_type = (type,use_alt) => {
+    if (use_alt) {
+        // return (
+        //     <span className={"border_left_mark border_color_"+type}>{type}</span>
+        // )
+        return (
+            <span key={'omics_'+type} className={'badge badge_border_'+type}>
+                <BoxFill className={"align-middle color_"+type}/>
+                <span className="align-middle ms-2">{type}</span>
+            </span>
+        )
+
+    }
+    else {
+        return (
+            <span className="text-nowrap">
+                <BoxFill className={"align-middle color_"+type}/>
+                <span className="align-middle ms-2">{type}</span>
+            </span>
+        )
+    }
 }
 
 
@@ -314,30 +332,43 @@ export const display_description = (description_list) => {
 }
 
 
-export const element_icon = (type) => {
-    return (<SlashSquareFill className={'color_'+type+' element_icon'} />);
+export const element_icon = (type,use_alt) => {
+    // return (<SlashSquareFill className={'color_'+type+' element_icon'} />);
+    // return (<HexagonFill className={'color_'+type+' element_icon'} />);
+    if (use_alt) {
+        return (<HexagonFill className={'color_'+type+' element_icon'} />);
+    }
+    else {
+        return (<Hexagon className={'color_'+type+' element_icon'} />);
+    }
+    // else {
+    //     return (<Hexagon className={'color_'+type+' element_icon'} />);
+    // }
 }
 
 
-export const ancestry_labels = {
-    // 'MAE': 'Multi-ancestry (including European)',
-    // 'MAO': 'Multi-ancestry (excluding European)',
-    'AFR': 'African',
-    'EAS': 'East Asian',
-    'SAS': 'South Asian',
-    'ASN': 'Additional Asian Ancestries',
-    'EUR': 'European',
-    'GME': 'Greater Middle Eastern',
-    'AMR': 'Hispanic or Latin American',
-    'OTH': 'Additional Diverse Ancestries',
-    'NR' : 'Not Reported',
-    'MAO': 'Multi-ancestry'
+export const ancestry_labels = () => {
+    return {
+        // 'MAE': 'Multi-ancestry (including European)',
+        // 'MAO': 'Multi-ancestry (excluding European)',
+        'AFR': 'African',
+        'EAS': 'East Asian',
+        'SAS': 'South Asian',
+        'ASN': 'Additional Asian Ancestries',
+        'EUR': 'European',
+        'GME': 'Greater Middle Eastern',
+        'AMR': 'Hispanic or Latin American',
+        'OTH': 'Additional Diverse Ancestries',
+        'NR' : 'Not Reported',
+        'MAO': 'Multi-ancestry'
+    }
 };
 
 export const ancestry_names = {
     // 'Multi-ancestry (including European)': 'MAE',
     // 'Multi-ancestry (excluding European)': 'MAO',
     'African': 'AFR',
+    'African American': 'AFR',
     'East Asian': 'EAS',
     'South Asian': 'SAS',
     'Additional Asian Ancestries': 'ASN',
@@ -366,10 +397,16 @@ export const get_ancestry_name = (anc_name) => {
 }
 
 export const ancestry_label = (anc) => {
-    if (ancestry_labels[anc]) {
-        return ancestry_labels[anc];
+    const ancestry_labels_data = ancestry_labels()
+    if (ancestry_labels_data[anc]) {
+        return ancestry_labels_data[anc];
     }
     else {
         return anc;
     }
+}
+
+export const display_ancestry = (ancestry) => {
+    const ancestry_label = get_ancestry_name(ancestry);
+    return <><span className={'me-2 align-middle anc_label anc_'+ancestry_label} title={ ancestry_label == 'MAO' &&  ancestry != 'Multi-ancestry' ? 'Multi-ancestry': ancestry} style={{lineHeight:"16px",marginBottom:"1px"}}></span><span className='align-middle'>{ancestry}</span></>
 }
