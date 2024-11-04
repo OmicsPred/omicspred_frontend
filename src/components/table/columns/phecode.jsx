@@ -23,7 +23,7 @@ let base_phecode_columns = {
         {
             field: 'sample_age',
             headerName: 'Mean Age',
-            width: 150,
+            width: 120,
             renderCell: (params) => {
                 if (params.row.sample_age) {
                     let value = params.row.sample_age;
@@ -51,7 +51,7 @@ let base_phecode_columns = {
         {
             field: 'sample_percent_female',
             headerName: '%Female',
-            width: 150,
+            width: 100,
             renderCell: (params) => {
                 if (params.row.sample_percent_female) {
                     return params.row.sample_percent_female+'%';
@@ -62,7 +62,7 @@ let base_phecode_columns = {
 }
 
 const build_columns = () => {
-    const platform_list = ["SomaScan","RNAseq","Metabolon","Olink","Nightingale"];
+    const platform_list = ["Somalogic","Olink","Metabolon","Nightingale","Illumina RNAseq"];
     for (let i=0; i< platform_list.length; i++) {
         const platform = platform_list[i];
         let platform_idx = platform.toLowerCase();
@@ -72,7 +72,7 @@ const build_columns = () => {
                 field: platform_idx,
                 headerName: platform,
                 description: 'Number of scores associated with '+platform,
-                width: 100,
+                width: 120,
                 sortable: false,
                 renderCell: (params) => {
                     let platform_count = 0;
