@@ -238,7 +238,7 @@ export const common_cols = {
     'publication': {
         field: 'publication__firstauthor',
         headerName: 'Publication',
-        minWidth: 280,
+        minWidth: 220,
         // flex: 0.8,
         renderCell: (params) => {
             return internal_publication_link(params.row.publication);
@@ -574,7 +574,7 @@ export const common_cols = {
     'phecode_category': {
         field: 'phecode__category',
         headerName: 'Category',
-        minWidth: 200,
+        minWidth: 180,
         // flex: 0.8,
         renderCell: (params) => {
             let phe_cat = params.row.category;
