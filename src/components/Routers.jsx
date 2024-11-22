@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from 'react-router';
 import { Error404 } from "../pages/Errors";
 import Home from "../pages/Home";
 import FAQs from "../pages/FAQs";
@@ -24,15 +24,16 @@ import Cohort from "../pages/Cohort";
 import Search from "../pages/Search";
 import Plot from "../pages/Tests/Plot";
 import PlatformAlt from "../pages/Tests/Platform";
-// import MuiDoughnut from "../pages/Tests/MuiDoughnut";
-// import OPDoughnut from "../pages/Tests/Doughnut";
-// import PublicationOld from "../pages/Tests/PublicationOld";
-// import ReactomeDiagram from "../pages/Tests/Reactome";
 
 
 function OpRouters() {
     return (
-        <Router>
+        <Router
+            future={{
+                v7_relativeSplatPath: true,
+                v7_startTransition: true
+            }}
+        >
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/downloads" element={<Downloads />} />

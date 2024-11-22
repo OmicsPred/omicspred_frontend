@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { PageTitle, HeaderCard, no_entry_found, op_subtitle } from '../../components/Common';
 import Href from '../../components/Href';
 import restApiCall from '../../components/RestAPI';

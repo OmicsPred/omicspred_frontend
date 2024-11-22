@@ -1,10 +1,9 @@
 import React, { useState, useEffect, Suspense } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useParams } from 'react-router';
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { useParams } from 'react-router-dom';
 import { ChevronRight, GraphUp } from 'react-bootstrap-icons';
 import DocumentTitle from '../../../components/DocumentTitle';
 import restApiCall from '../../../components/RestAPI';

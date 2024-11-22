@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { ChevronDoubleRight, SignpostFill } from 'react-bootstrap-icons';
 // import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
