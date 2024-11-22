@@ -1,4 +1,7 @@
+// import { GridColumnHeaderParams } from '@mui/x-data-grid';
+import { Stack } from "react-bootstrap-icons";
 import {common_cols,common_data_cols, applications_cols} from "./common";
+
 
 const omicspred_id_col = {...common_cols['omicspred_id'], field: 'score_id'}
 
@@ -9,6 +12,7 @@ let base_phecode_columns = {
         common_cols['phecode_category'],
         omicspred_id_col,
         common_data_cols['r2'],
+        common_cols['platform_type'],
         common_cols['platform_name'],
         applications_cols['gene'],
         applications_cols['protein'],
@@ -62,18 +66,31 @@ let base_phecode_columns = {
 }
 
 const build_columns = () => {
-    const platform_list = ["Somalogic","Olink","Metabolon","Nightingale","Illumina RNAseq"];
-    for (let i=0; i< platform_list.length; i++) {
-        const platform = platform_list[i];
+    // const platform_list = {"Somalogic": "Prote","Olink","Metabolon","Nightingale","Illumina RNAseq"];
+
+    const platform_list = {
+        "Somalogic": "Proteomics",
+        "Olink": "Proteomics",
+        "Metabolon": "Metabolomics",
+        "Nightingale": "Metabolomics",
+        "Illumina RNAseq": "Transcriptomics"
+    };
+    const platform_names = Object.keys(platform_list);
+    for (let i=0; i< platform_names.length; i++) {
+        const platform = platform_names[i];
+        const omics_type = platform_list[platform];
         let platform_idx = platform.toLowerCase();
         platform_idx = platform_idx.replace(' ','_');
         base_phecode_columns['Sum'].push(
             {
                 field: platform_idx,
-                headerName: platform,
+                // headerName: platform,
                 description: 'Number of scores associated with '+platform,
-                width: 120,
+                width: 150,
                 sortable: false,
+                renderHeader: (params) => {
+                    return (<span><Stack size="0.9em" className={"align-middle me-2 color_"+omics_type}/><span className="align-middle fw-bold">{platform}</span></span>)
+                },
                 renderCell: (params) => {
                     let platform_count = 0;
                     if (params.row.platform_counts) {

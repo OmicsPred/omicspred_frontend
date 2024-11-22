@@ -116,7 +116,7 @@ export const omicspred_external_links = function(op_data) {
 
 export const omicspred_platform_omics_type = function(platform,type) {
     return (
-        <a key={platform+'-'+type} href={"/platform/"+platform}><span><Stack size="0.9em" className={"me-2 color_"+type}/>{platform}</span></a>
+        <a className="align-middle" key={platform+'-'+type} href={"/platform/"+platform}><Stack size="0.9em" className={"align-middle me-2 color_"+type}/><span className='align-middle'>{platform}</span></a>
     )
     // return (
     //     <a key={platform+'-'+type} href={"/platform/"+platform}><span className={"border_left_mark border_color_"+type}>{platform}</span></a>
@@ -213,10 +213,20 @@ export const common_cols = {
     'platform_name': {
         field: 'platform__name',
         headerName: 'Platform',
-        minWidth: 150,
+        minWidth: 140,
         flex: 0.6,
         renderCell: (params) => {
             return omicspred_internal_link({'label': params.row.platform.name},'platform');
+        },
+        valueGetter: (value, row) => { return row.platform.name }
+    },
+    'platform_name_icon': {
+        field: 'platform__name',
+        headerName: 'Platform',
+        minWidth: 160,
+        flex: 0.6,
+        renderCell: (params) => {
+            return omicspred_platform_omics_type(params.row.platform.name,params.row.platform.type)
         },
         valueGetter: (value, row) => { return row.platform.name }
     },
@@ -741,7 +751,7 @@ export const common_data_cols = {
    'r2': {
         field: 'r2',
         headerName: <>R<sup>2</sup></>,
-        width: 100,
+        width: 90,
         valueGetter: (value, row) => {
             if (row.data_values) {
                 if (row.data_values.R2) {
@@ -753,7 +763,7 @@ export const common_data_cols = {
     'hazard_ratio': {
         field: 'hr',
         headerName: 'Hazard Ratio',
-        width: 150,
+        width: 140,
         valueGetter: (value, row) => {
             if (row.data_values) {
                 if (row.data_values.HR) {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { Download } from 'react-bootstrap-icons';
 import DocumentTitle from '../../components/DocumentTitle';
 import { internal_publication_link, op_title, op_subtitle_no_asso, no_entry_found, Header2Cards } from '../../components/Common';
