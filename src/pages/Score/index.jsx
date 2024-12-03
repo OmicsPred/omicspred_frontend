@@ -3,9 +3,9 @@ import { useParams } from 'react-router';
 import { Download } from 'react-bootstrap-icons';
 import DocumentTitle from '../../components/DocumentTitle';
 import { internal_publication_link, op_title, op_subtitle_no_asso, no_entry_found, Header2Cards } from '../../components/Common';
-import DataTable from "../../components/table/DataTable";
-import { score_columns } from '../../components/table/columns/score'
-import { score_phecode_columns } from '../../components/table/columns/phecode'
+import DataTable from '../../components/table/DataTable';
+import { score_columns } from '../../components/table/columns/score';
+import { score_phenotype_columns } from '../../components/table/columns/phenotype';
 import restApiCall from '../../components/RestAPI';
 import restApiCallPaginated from '../../components/RestAPIPaginated';
 import { ToogleDiv, loading_data, numberBadge } from '../../components/Generic';
@@ -26,8 +26,8 @@ function Score() {
     const [transcriptsData, setTranscriptsData] = useState([])
     const [metabolitesData, setMetabolitesData] = useState([])
     const [proteinsData, setProteinsData] = useState([])
-    const [scorePhecodeData, setScorePhecodeData] = useState([])
-    const [phecodeData, setPhecodeData] = useState([])
+    const [scorePhenotypeData, setScorePhenotypeData] = useState([])
+    const [phenotypeData, setPhenotypeData] = useState([])
     const [pathwayData, setPathwayData] = useState([])
     const [metricData, setMetricData] = useState([])
     const [platformDownloads, setPlatformDownloads] = useState([])
@@ -53,18 +53,18 @@ function Score() {
         return pathways.sort((a, b) => (a.name > b.name) ? 1 : -1)
     }
 
-    const get_phecodes = (data) => {
-        let phecodes = [];
-        let phecode_ids_list = [];
+    const get_phenotypes = (data) => {
+        let phenotypes = [];
+        let phenotype_ids_list = [];
         for (let i=0; i < data.length; i++) {
-            const phecode = data[i].phecode;
-            const phecode_id = phecode.id;
-            if (!phecode_ids_list.includes(phecode_id)) {
-                phecode_ids_list.push(phecode_id);
-                phecodes.push(phecode);
+            const phenotype = data[i].phenotype;
+            const phenotype_id = phenotype.id;
+            if (!phenotype_ids_list.includes(phenotype_id)) {
+                phenotype_ids_list.push(phenotype_id);
+                phenotypes.push(phenotype);
             }
         }
-        return phecodes;
+        return phenotypes;
     }
 
     const fetchScoreData = async () => {
@@ -87,9 +87,9 @@ function Score() {
             setProteinsData(score_data.proteins);
             setMetabolitesData(score_data.metabolites);
             const score_app_data = await restApiCallPaginated('applications_score/'+score);
-            score_app_data.sort((a, b) => (a.phecode.name > b.phecode.name) ? 1 : -1)
-            setScorePhecodeData(score_app_data);
-            setPhecodeData(get_phecodes(score_app_data));
+            score_app_data.sort((a, b) => (a.phenotype.name > b.phenotype.name) ? 1 : -1)
+            setScorePhenotypeData(score_app_data);
+            setPhenotypeData(get_phenotypes(score_app_data));
             setPathwayData(get_pathways(score_data));
         }
         else {
@@ -145,7 +145,7 @@ function Score() {
                     transcripts={transcriptsData}
                     proteins={proteinsData}
                     metabolites={metabolitesData}
-                    phecodes={phecodeData}
+                    phenotypes={phenotypeData}
                     pathways={pathwayData}
                 />
             </>
@@ -229,10 +229,10 @@ function Score() {
                         </div>:''
                     }
                     {/* PheWAS association table */}
-                    { scorePhecodeData && scorePhecodeData.length ?
-                        <div className='mt-5'>
-                            {op_subtitle_no_asso('phecode','Associated PheWAS', scorePhecodeData.length)}
-                            <DataTable key="phecode" data={scorePhecodeData} columns={score_phecode_columns} sorting='phecode_name'/>
+                    { scorePhenotypeData && scorePhenotypeData.length ?
+                        <div className='mt-5' id="phenotype_table">
+                            {op_subtitle_no_asso('phenotype','Associated PheWAS', scorePhenotypeData.length)}
+                            <DataTable key="phenotype" data={scorePhenotypeData} columns={score_phenotype_columns} sorting='phenotype_name'/>
                         </div>:''
                     }
                 </div>

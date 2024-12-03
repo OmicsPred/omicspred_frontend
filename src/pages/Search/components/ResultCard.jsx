@@ -32,6 +32,10 @@ export default function ResultCard(props) {
         result_id = data.id;
     }
 
+    if (props.type == 'phecode'){
+        url_id = url_id.replace('.','_');
+    }
+
     data.platform_name.sort();
 
     const key = result_id.replace(' ','_');

@@ -8,7 +8,7 @@ import restApiCall from '../../components/RestAPI';
 import { op_title, op_subtitle_no_asso, HeaderCard, no_entry_found } from '../../components/Common';
 import { loading_data } from '../../components/Generic';
 import ReactomeDiagram from './components/Diagram';
-import { display_superpathways, display_synonyms } from '../MolecularTrait/components/links';
+import { display_source, display_superpathways, display_synonyms } from '../MolecularTrait/components/links';
 
 
 function Pathway() {
@@ -63,11 +63,15 @@ function Pathway() {
 	const get_information_content = () => {
 		return (
 			<>
-				{
-					elementData.external_id_source=='Reactome' && elementData.name ? <tr><td>Reactome ID</td><td><Href href={process.env.URL_REACTOME_ENTRY+elementData.external_id} text={elementData.external_id}/></td></tr>:''
+				{ elementData.name ?
+					<tr><td>Identifier</td><td><Href href={process.env.URL_REACTOME_ENTRY+elementData.external_id} text={elementData.external_id}/>{display_source(elementData.external_id_source)}</td></tr>:''
 				}
-				{ elementData.synonyms ? <tr><td>Synonym{elementData.synonyms.length > 1 ? 's' : ''}</td><td>{display_synonyms(elementData.synonyms)}</td></tr>:''}
-				{ superpathwayData.length ? <tr><td>Top Level Pathway{superpathwayData.length > 1 ? 's' : ''}</td><td>{display_superpathways(superpathwayData)}</td></tr>:''}
+				{ elementData.synonyms && elementData.synonyms.lengh > 0 ?
+					<tr><td>Synonym{elementData.synonyms.length > 1 ? 's' : ''}</td><td>{display_synonyms(elementData.synonyms)}</td></tr>:''
+				}
+				{ superpathwayData.length ?
+					<tr><td>Top Level Pathway{superpathwayData.length > 1 ? 's' : ''}</td><td>{display_superpathways(superpathwayData)}</td></tr>:''
+				}
             </>
         )
     }

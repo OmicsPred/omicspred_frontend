@@ -51,7 +51,7 @@ $type_colors: (
     'transcript': $tr_color,
     'protein': $pr_color,
     'metabolite': $me_color,
-    'phecode': $ph_color,
+    'phenotype': $ph_color,
     'score': $score_color,
     'pathway': $pa_color
 );
@@ -76,8 +76,9 @@ $type_colors: (
 /********************/
 
 body {
-    // font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    font-family: "Helvetica","Helvetica Neue","Arial","sans-serif";
+    // font-family: "Inter", "system-ui", "Avenir", "Helvetica", "Arial", "sans-serif";
+    // font-family: "system-ui" !important;
+    font-family: "Helvetica","Helvetica Neue","Arial","sans-serif" !important;
     margin: 0;
     display: flex;
     place-items: center;
@@ -202,7 +203,7 @@ a {
             }
         }
         .home_stats_title {
-            width:220px;
+            width:225px;
             text-align:left;
             padding-bottom:0px !important;
             margin-bottom:0px !important;
@@ -220,20 +221,41 @@ a {
            margin-top:0px !important;
         }
     }
+    .home_chart_legend {
+        .home_chart_legend_category {
+            @include op_light_bg;
+            border:none !important;
+            border-radius: 6px;
+            padding: 0.5rem;
+            svg {
+                vertical-align: middle;
+                color: $op_color_2;
+            }
+            > div:first-child > span {
+                vertical-align: middle;
+            }
+            a {
+                vertical-align: middle;
+            }
+        }
+        .home_chart_legend_category:not(:last-child){
+            margin-bottom:1rem;
+        }
+    }
 }
 .op_stats_separator {
     border-left:1px solid $op_grey;
 }
 
-.op_stats_dist {
-    border:1px solid $op_grey;
-    border-radius:6px;
-    padding:1rem 1rem 1rem 0rem;
-    > div:last-child {
-        border-left: 1px solid $op_grey;
-        padding-left: 1rem;
-    }
-}
+// .op_stats_dist {
+//     // border:1px solid $op_grey;
+//     // border-radius:6px;
+//     // padding:1rem 1rem 1rem 0rem;
+//     // > div:last-child {
+//     //     border-left: 1px solid $op_grey;
+//     //     padding-left: 1rem;
+//     // }
+// }
 
 
 .home_stats_box {
@@ -252,7 +274,7 @@ a {
         padding-bottom:0.5rem;
         margin-bottom: 0.5rem;
         svg {
-            margin-top: 6px;
+            margin-top: 4px;
             vertical-align: top;
         }
     }
@@ -430,6 +452,9 @@ a {
     .op_section_title {
         font-size: 32px;
         margin-bottom: 2rem;
+        svg, span {
+            vertical-align: middle;
+        }
     }
     .op_subsection_header {
         @include op_light_bg;
@@ -511,7 +536,7 @@ h5 > .op_subtitle {
     height:24x;
     font-size: 18px !important;
     vertical-align:top;
-    margin-top:3px;
+    margin-top:2px;
 }
 
 ul.key_val_line {

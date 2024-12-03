@@ -9,15 +9,15 @@ import Pathways from "../pages/Pathways";
 import Publications from "../pages/Publications";
 import Platforms from "../pages/Platforms";
 import Scores from "../pages/Scores";
-import PhecodesFull from "../pages/Applications/PhecodesFull";
-import PhecodesSum from "../pages/Applications/PhecodesSum";
+import PhenotypesFull from "../pages/Applications/PhenotypesFull";
+import PhenotypesSum from "../pages/Applications/PhenotypesSum";
 import Publication from "../pages/Publication";
 import Platform from "../pages/Platform";
 import Score from "../pages/Score";
 import Gene from "../pages/MolecularTrait/Gene";
 import Protein from "../pages/MolecularTrait/Protein";
 import Metabolite from "../pages/MolecularTrait/Metabolite";
-import Phecode from "../pages/Applications/Phecode";
+import Phenotype from "../pages/Applications/Phenotype";
 import Pathway from "../pages/Pathway";
 import Cohort from "../pages/Cohort";
 // Tests
@@ -46,8 +46,8 @@ function OpRouters() {
                 <Route path="/publications" element={<Publications />} />
                 <Route path="/platforms" element={<Platforms />} />
                 <Route path="/scores" element={<Scores />} />
-                <Route path="/applications/phecode/full" element={<PhecodesFull />} />
-                <Route path="/applications/phecode/sum" element={<PhecodesSum />} />
+                <Route path="/applications/phenotype/full" element={<PhenotypesFull />} />
+                <Route path="/applications/phenotype/sum" element={<PhenotypesSum />} />
                 
                 {/* Individual pages */}
                 <Route path="/publication/:pubmed_id" element={<Publication />} />
@@ -57,7 +57,7 @@ function OpRouters() {
                 <Route path="/protein/:protein" element={<Protein />} />
                 <Route path="/metabolite/:metabolite" element={<Metabolite />} />
                 <Route path="/pathway/:pathway" element={<Pathway />} />
-                <Route path="/phecode/:phecode" element={<Phecode />} />
+                <Route path="/phenotype/:phenotype" element={<Phenotype />} />
                 <Route path="/cohort/:cohort" element={<Cohort />} />
                 
                 {/* Search page */}

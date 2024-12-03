@@ -3,8 +3,10 @@ import restApiCall from '../../../components/RestAPI';
 import { op_title, element_icon, Header2Cards } from '../../../components/Common';
 import { ToogleDiv }  from '../../../components/Generic';
 import { ScoresTable, PerformanceMetricsTable } from './tables';
-import { display_gene_link, display_protein_link, display_metabolite_link, display_phecode_link, display_pathway_link, sort_data } from './links';
-
+import { display_gene_link, display_protein_link, display_metabolite_link, display_phenotype_link, display_pathway_link, sort_data } from './links';
+import { Table } from 'react-bootstrap-icons';
+import Href from '../../../components/Href';
+import { Tooltip } from '@mui/material'
 
 export const MolecularTraitContent = (props) => {
 
@@ -67,7 +69,7 @@ export const MolecularTraitAssociation = (props) => {
 	const transcripts = props.transcripts;
 	const proteins = props.proteins;
 	const metabolites = props.metabolites;
-	const phecodes = props.phecodes ? sort_data(props.phecodes) : props.phecodes;
+	const phenotypes = props.phenotypes ? sort_data(props.phenotypes) : props.phenotypes;
 	const pathways = props.pathways ? sort_data(props.pathways) : props.pathways;
 
 	return (
@@ -77,12 +79,21 @@ export const MolecularTraitAssociation = (props) => {
 			{ proteins && proteins.length > 0 ? <tr key='proteins'><td>{element_icon('protein')}<span>Protein{proteins.length > 1 && 's'}</span></td><td>{proteins.map((data, index) => display_protein_link(data,index))}</td></tr> : '' }
 			{ metabolites && metabolites.length > 0 ? <tr key='metabolites'><td>{element_icon('metabolite')}<span>Metabolite{metabolites.length > 1 && 's'}</span></td><td>{metabolites.map((data, index) => display_metabolite_link(data,index))}</td></tr> : '' }
 			{
-				phecodes && phecodes.length > 0 ? <tr key='phenotypes'><td>{element_icon('phecode')}<span>PheWAS</span></td><td>
-					{
-						phecodes.length > 1 ?
-							<ToogleDiv key={'toggle_phecodes'} title={<><span className='font-bold'>{phecodes.length}</span> associated PheCode entries</>} content={<ul className="ps-3">{phecodes.map((data) => display_phecode_link(data,phecodes.length))}</ul>}/>
-							: phecodes.map((data, index) => display_phecode_link(data,phecodes.length))
-					}
+				phenotypes && phenotypes.length > 0 ? <tr key='phenotypes'><td>{element_icon('phenotype')}<span>PheWAS</span></td><td>
+					<div className='d-flex'>
+						<div>
+							{
+								phenotypes.length > 1 ?
+									<ToogleDiv key={'toggle_phenotypes'} title={<><span className='font-bold'>{phenotypes.length}</span> associated phenotype entries</>} content={<ul className="ps-3">{phenotypes.map((data) => display_phenotype_link(data,phenotypes.length))}</ul>}/>
+									: phenotypes.map((data, index) => display_phenotype_link(data,phenotypes.length))
+							}
+						</div>
+						<Tooltip title="See details in the Phenotype table at the bottom of the current page">
+							<div className="ms-3">
+								<Href href="#phenotype_table" icon={<Table/>}/>
+							</div>
+						</Tooltip>
+					</div>
 					</td></tr> : ''
 			}
 			{
@@ -96,5 +107,4 @@ export const MolecularTraitAssociation = (props) => {
 			}
 		</>
 	)
-
 }

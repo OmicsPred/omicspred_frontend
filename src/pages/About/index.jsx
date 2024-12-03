@@ -17,6 +17,11 @@ function About() {
       />
 
       <Container
+        title="Ancestry"
+        text={<p>The Ancestry categories and colour scheme is described on the <Href href='https://www.pgscatalog.org/docs/ancestry/' text='Polygenic Score (PGS) Catalog website'/>.</p>}
+      />
+
+      <Container
         title="Our Collaborators"
         text={
         <>
