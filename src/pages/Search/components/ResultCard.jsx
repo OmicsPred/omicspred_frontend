@@ -8,16 +8,16 @@ import MolecularTraits from './MolecularTraits';
 const index2url = {
     'gene': 'gene',
     'metabolite': 'metabolite',
-    'phecode': 'phecode',
+    'phenotype': 'phenotype',
     'protein': 'protein',
     'score': 'score'
 }
 
 const index2id = {
-    'gene': 'Ensembl ID',
-    'metabolite': 'Metabolon ID',
-    'phecode': 'PheCode',
-    'protein': 'UniProt ID',
+    'gene': 'Gene ID',
+    'metabolite': 'Metabolite ID',
+    'phenotype': 'Phenotype ID',
+    'protein': 'Protein ID',
     'score': 'OmicsPred ID'
 }
 
@@ -32,7 +32,7 @@ export default function ResultCard(props) {
         result_id = data.id;
     }
 
-    if (props.type == 'phecode'){
+    if (props.type == 'phenotype'){
         url_id = url_id.replace('.','_');
     }
 
@@ -42,11 +42,21 @@ export default function ResultCard(props) {
 
     const url = '/'+index2url[props.type]+'/'+url_id;
 
-    const display_phecode_category = () => {
-        if (props.type == 'phecode') {
+    const display_phenotype_category = () => {
+        if (props.type == 'phenotype') {
             return (<><span className="px-3">/</span><span className="line_key">Category</span>{data.category}</>)
         }
         else { return ''; }
+    }
+
+    const get_source_name = (data) => {
+        if (data.external_id_source) {
+            return (<><span className="px-3">/</span><span className="line_key">Source</span>{data.external_id_source}</>)
+        }
+        else if (data.source) {
+            return <small className="ms-2">(Source: {data.source})</small>
+        }
+        return ''
     }
 
     return (
@@ -60,7 +70,7 @@ export default function ResultCard(props) {
                             <div className="d-flex op_search_card_content">
                                 <div>
                                     <ul className="key_val_line mb-1">
-                                        { result_id == data.name && data.id ? <li><span className="line_key">{index2id[props.type]}</span>{data.id}{display_phecode_category()}</li> : '' }
+                                        { result_id == data.name && data.id ? <li><span className="line_key">{index2id[props.type]}</span>{data.id}{get_source_name(data)}{display_phenotype_category()}</li> : '' }
                                         { result_id == data.id && data.name ? <li><span className="line_key">Name</span>{data.name}</li> : '' }
                                         { data.scores_count ? <li><span className="line_key">Scores count</span>{scoresBadge(data.scores_count)}</li>:'' }
                                         { data.omics_type.length > 0 ? <li><span className="line_key">Omics type{data.omics_type.length > 1 && 's'}</span><OmicsList omics={data.omics_type} key_prefix={result_id}/></li> : '' }
