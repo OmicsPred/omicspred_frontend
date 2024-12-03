@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import DocumentTitle from '../../../components/DocumentTitle';
 import restApiCall from '../../../components/RestAPI';
 import Href from '../../../components/Href';
+import { display_source, display_synonyms } from '../components/links';
 import { display_description, no_entry_found } from '../../../components/Common';
 import { loading_data } from '../../../components/Generic';
 import { MolecularTraitContent, MolecularTraitAssociation } from '../components/Content';
@@ -45,7 +46,10 @@ function Protein() {
     const get_information_left_content = () => {
 		return (
 			<>
-                <tr><td>Identifier</td><td>{external_id_link()}</td></tr>
+                <tr><td>Identifier</td><td>{external_id_link()}{display_source(elementData.external_id_source)}</td></tr>
+                { elementData.synonyms && elementData.synonyms.length > 0 ?
+                    <tr><td>Synonym{elementData.synonyms.length > 1 ? 's' : ''}</td><td>{display_synonyms(elementData.synonyms)}</td></tr>:''
+                }
                 { elementData.descriptions && elementData.descriptions.length ?
                     <tr><td>Description</td><td>{display_description(elementData.descriptions)}</td></tr>:''
                 }

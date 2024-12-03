@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { ChevronRight } from 'react-bootstrap-icons';
 import restApiCall from '../../../components/RestAPI';
 import { thousandifyNumber } from '../../../components/Generic';
-import OmicsDistribution from './components/OmicsDistribution';
+// import OmicsDistribution from './components/OmicsDistribution';
 import PlatformsDistribution from './components/PlatformsDistribution';
 
 
 const Stats = (props) => {
     const [scoresCount, setScoresCount] = useState([]);
     const [platformsCount, setPlatformsCount] = useState([]);
-    const [publicationsCount, setPublicationsCount] = useState([]);;
+    // const [publicationsCount, setPublicationsCount] = useState([]);;
     const [pheWASCount, setPheWASCount] = useState([]);
     const [pathwaysCount, setPathwaysCount] = useState([]);
 
@@ -29,7 +29,7 @@ const Stats = (props) => {
             setPathwaysCount(count_data.pathways)
             setScoresCount(count_data.scores);
             setPlatformsCount(count_data.platforms);
-            setPublicationsCount(count_data.publications);
+            // setPublicationsCount(count_data.publications);
         }
     }
 
@@ -43,7 +43,7 @@ const Stats = (props) => {
                 <div className='home_stats_title'>
                     <ChevronRight className='r me-1' size="20px"/>
                     <span className='d-sm-none'>{small_title}</span>
-                    <span className='d-none d-sm-inline'>{title}</span>
+                    <span className='d-none d-sm-inline' style={{minWidth:"200px"}}>{title}</span>
                 </div>
                 <div className='home_stats_count'>{thousandifyNumber(count)}</div>
                 <div className='home_stats_btn'>
@@ -61,21 +61,31 @@ const Stats = (props) => {
     return (
         <div className='op_stats_container mt-5'>
             <div>
-                <h5 className='mb-4'>{project_name} data summary</h5>
+                {/* <h5 className='mb-4'>{project_name} data summary</h5> */}
+                <h5 className='mb-4'>{project_name} genetic scores</h5>
                 <div className='op_stats2'>
                     { scoresCount && scoresCount > 0 ? display_count_block('Genetic Scores',scoresCount,'/scores' ,'Scores') : ''}
-                    { pheWASCount && pheWASCount > 0 ? display_count_block('PheWAS associations',pheWASCount,'/applications/phecode/full' ,'PheWAS') : ''}
+                    {/* { pheWASCount && pheWASCount > 0 ? display_count_block('PheWAS associations',pheWASCount,'/applications/phenotype/full' ,'PheWAS') : ''}
                     { pathwaysCount && pathwaysCount > 0 ? display_count_block('Pathways',pathwaysCount,'/pathways') : ''}
                     { platformsCount && platformsCount > 0 ? display_count_block('Platforms',platformsCount,'/platforms') : ''}
-                    { publicationsCount && publicationsCount > 0 ? display_count_block('Publications',publicationsCount,'/publications') : ''}
+                    { publicationsCount && publicationsCount > 0 ? display_count_block('Publications',publicationsCount,'/publications') : ''} */}
+                    <PlatformsDistribution scores_count={scoresCount} colours={type_colours} />
                 </div>
             </div>
             {  scoresCount &&  scoresCount != 0 ?
                 <>
                     <div className='op_stats_separator'></div>
                     <div className='d-flex flex-column'>
-                        <OmicsDistribution data={props.data} scores_count={scoresCount} colours={type_colours} />
-                        <PlatformsDistribution scores_count={scoresCount} colours={type_colours} />
+                    <h5 className='mb-4'>{project_name} data summary</h5>
+                    <div className='op_stats2'>
+                        {/* { scoresCount && scoresCount > 0 ? display_count_block('Genetic Scores',scoresCount,'/scores' ,'Scores') : ''}  */}
+                        { pheWASCount && pheWASCount > 0 ? display_count_block('PheWAS associations',pheWASCount,'/applications/phenotype/full' ,'PheWAS') : ''}
+                        { pathwaysCount && pathwaysCount > 0 ? display_count_block('Pathways',pathwaysCount,'/pathways') : ''}
+                        { platformsCount && platformsCount > 0 ? display_count_block('Platforms',platformsCount,'/platforms') : ''}
+                        {/* { publicationsCount && publicationsCount > 0 ? display_count_block('Publications',publicationsCount,'/publications') : ''} */}
+                    </div>
+                        {/* <OmicsDistribution data={props.data} scores_count={scoresCount} colours={type_colours} />
+                        <PlatformsDistribution scores_count={scoresCount} colours={type_colours} /> */}
                     </div>
                 </>:''
             }

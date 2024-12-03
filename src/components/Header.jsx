@@ -36,8 +36,8 @@ function Header() {
                                 <NavDropdown.Item href="/pathways">Pathways</NavDropdown.Item>
                             </NavDropdown>
                             <NavDropdown title="PheWAS" id="phewas-nav-dropdown" renderMenuOnMount={true}>
-                                <NavDropdown.Item href="/applications/phecode/sum">Summary</NavDropdown.Item>
-                                <NavDropdown.Item href="/applications/phecode/full">All Associations</NavDropdown.Item>
+                                <NavDropdown.Item href="/applications/phenotype/sum">Summary</NavDropdown.Item>
+                                <NavDropdown.Item href="/applications/phenotype/full">All Associations</NavDropdown.Item>
                             </NavDropdown>
                             <Nav.Link href={process.env.PROJECT_SUBMIT_SCORES_URL} target="_blank">Submit Score</Nav.Link>
                             <NavDropdown title="Downloads" id="download-nav-dropdown" renderMenuOnMount={true}>

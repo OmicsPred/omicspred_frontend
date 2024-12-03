@@ -40,14 +40,14 @@ export const download_applications_labels = {
         "title": "Download CSV file",
         "icon": <FiletypeCsv className="align-middle" size={icon_size}/>,
         "url": "https://app.box.com/s/e0t5v55ul588z7ls0qk5slo9lmp8yync",
-        'desc': "List the number of OmicsPred genetic scores by Platform, for each PheCode."
+        'desc': "List the number of OmicsPred genetic scores by Platform, for each Phenotype."
     },
     'phewas_associations': {
         "label": "PheWAS associations",
         "title": "Download Excel file",
         "icon": <FiletypeXlsx className="align-middle" size={icon_size}/>,
         "url": "https://drive.google.com/drive/folders/15hE030Bq23ox0HSWq4AeSmkdGZUUoHkm?usp=sharing",
-        'desc': "List the identified associations between PheCode entries and OmicsPred genetic scores."
+        'desc': "List the identified associations between Phenotype entries and OmicsPred genetic scores."
     }
 }
 

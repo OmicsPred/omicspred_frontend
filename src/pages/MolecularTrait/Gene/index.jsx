@@ -6,7 +6,7 @@ import restApiCall from '../../../components/RestAPI';
 import restApiCallPaginated from '../../../components/RestAPIPaginated';
 import { display_description, no_entry_found } from '../../../components/Common';
 import { loading_data } from '../../../components/Generic';
-import { display_synonyms } from '../components/links';
+import { display_source, display_synonyms } from '../components/links';
 import { MolecularTraitContent, MolecularTraitAssociation } from '../components/Content';
 
 
@@ -41,13 +41,15 @@ function Gene() {
 	const get_information_left_content = () => {
 		return (
 			<>
-				{ elementData.external_id_source=='Ensembl' && elementData.name ?
-					<tr><td>Ensembl ID</td><td><Href href={process.env.URL_ENSEMBL_ENTRY+elementData.external_id} text={elementData.external_id}/></td></tr>:''
+				{ elementData.name ?
+					<tr><td>Identifier</td><td><Href href={process.env.URL_ENSEMBL_ENTRY+elementData.external_id} text={elementData.external_id}/>{display_source(elementData.external_id_source)}</td></tr>:''
+				}
+				{ elementData.synonyms && elementData.synonyms.length > 0 ?
+					<tr><td>Synonym{elementData.synonyms.length > 1 ? 's' : ''}</td><td>{display_synonyms(elementData.synonyms)}</td></tr>:''
 				}
 				{ elementData.descriptions && elementData.descriptions.length ?
 					<tr><td>Description{elementData.descriptions.length > 1 ? 's' : ''}</td><td>{display_description(elementData.descriptions)}</td></tr>:''
 				}
-				{ elementData.synonyms ? <tr><td>Synonym{elementData.synonyms.length > 1 ? 's' : ''}</td><td>{display_synonyms(elementData.synonyms)}</td></tr>:''}
 				{ elementData.biotype ? <tr><td>Gene type</td><td>{elementData.biotype.replace('_', ' ')}</td></tr>:''}
 			</>
 		)

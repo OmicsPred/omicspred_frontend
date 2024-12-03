@@ -86,7 +86,7 @@ const Platforms = (props) => {
 
     return (
         <div className="odd_section">
-            <div className="op_section_title" id='platforms'><Stack size="0.9em" className='me-3'/>Platforms with Genetic Scores</div>
+            <div className="op_section_title" id='platforms'><Stack size="0.9em" className='me-3'/><span>Platforms with Genetic Scores</span></div>
             {
                 Object.keys(categorizedPlatform).sort().map((key) => {
                     return(

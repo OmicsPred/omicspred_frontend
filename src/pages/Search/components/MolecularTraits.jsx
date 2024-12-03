@@ -11,8 +11,6 @@ const MolecularTraits = (props) =>{
             <ul className="key_val_line mb-1">
                 { genes && genes.length > 0 ?
                     <li key="score_genes">
-                        {console.log('||| GENES |||')}
-                        {console.log(genes)}
                         <span className="line_key">Gene{genes.length > 1 ? 's':''}</span>
                         { genes.map((gene, index) => display_gene_link(gene,index)) }
                     </li> : ''

@@ -19,7 +19,7 @@ const Href = (props) => {
     }
 
     // Internal link
-    if (props.href.startsWith('/')) {
+    if (props.href.startsWith('/') || props.href.startsWith('#')) {
         return(
             <a href={props.href} className={extra_classes} title={title}>
                 {props.icon}{props.icon && <span className='me-2'></span>}{props.text}

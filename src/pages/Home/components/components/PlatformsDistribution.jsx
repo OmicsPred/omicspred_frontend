@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Stack } from 'react-bootstrap-icons';
+import { ChevronRight, Stack } from 'react-bootstrap-icons';
 import restApiCall from '../../../../components/RestAPI';
 import OPDoughnut from "../../../Tests/Doughnut";
 import { thousandifyNumber } from '../../../../components/Generic';
 import Href from '../../../../components/Href';
+
 
 
 const PlatformsDistribution = (props) => {
@@ -11,7 +12,7 @@ const PlatformsDistribution = (props) => {
     const [scoresPlatformCount, setScoresPlatformCount] = useState({});
     const [platformColours, setPlatformColours] = useState({});
 
-    const title = 'Scores distribution by Platform';
+    const title = 'Genetic scores distribution by Platform';
 
     const type_colours = props.colours;
     const global_scores_count = props.scores_count;
@@ -57,7 +58,14 @@ const PlatformsDistribution = (props) => {
             data.labels.push(platform_name+' ('+percent_rounded+'%)');
             dataset.data.push(platform_scores);
             dataset.backgroundColor.push(bg_colour);
-            platforms[platform_name] = platform_scores
+            if (!Object.keys(platforms).includes(platform_type)) {
+                platforms[platform_type] = {};
+            }
+            platforms[platform_type][platform_name] = platform_scores
+            // }
+            // else {
+            //     platforms[platform_type] = { platform_name: platform_scores};
+            // }
             colours_by_platform[platform_name] = bg_colour
         }
 
@@ -100,15 +108,26 @@ const PlatformsDistribution = (props) => {
     return (
         <>
             { platformChartData  && Object.keys(platformChartData).length > 0 && Object.keys(scoresPlatformCount).length > 0 && Object.keys(platformColours).length > 0?
-                <div className='d-flex justify-content-center mt-4'>
+                <div className='d-flex justify-content-center'>
                     <div>
-                        <h5 className='mb-4'>{title}</h5>
+                        <h6 className='text-center mb-3 mt-2'>{title}</h6>
                         <div className='d-flex justify-content-center op_stats_dist'>
                             {/* Chart */}
-                            <OPDoughnut data={platformChartData} width="180" display_legend="false"/>
+                            <div className='mt-2'>
+                                <OPDoughnut data={platformChartData} width="200" display_legend="false"/>
+                            </div>
                             {/* Legend */}
-                            <div>
-                                {Object.keys(scoresPlatformCount).map((platform) => <div className="d-flex justify-content-between" key={platform}><span className='me-3'><Stack size="0.9em" className="me-2" style={{color:platformColours[platform]}}/><Href href={"/platform/"+platform} text={platform}/></span><span style={{fontWeight:'bold'}}>{thousandifyNumber(scoresPlatformCount[platform])}</span></div>)}
+                            <div className='home_chart_legend'>
+                                {/* {Object.keys(scoresPlatformCount).map((platform) => <div className="d-flex justify-content-between" key={platform}><span className='me-3'><Stack size="0.9em" className="me-2" style={{color:platformColours[platform]}}/><Href href={"/platform/"+platform} text={platform}/></span><span style={{fontWeight:'bold'}}>{thousandifyNumber(scoresPlatformCount[platform])}</span></div>)} */}
+                                {Object.keys(scoresPlatformCount).map((platform_type) =>
+                                    <div className='home_chart_legend_category'>
+                                        {/* <div key={platform_type}><span className='me-3'>{omicspred_omics_type(platform_type)}</span></div> */}
+                                        <div key={platform_type} className='fw-bold'><ChevronRight size="0.9em" className="me-2 op_color_2"/><span>{platform_type}</span></div>
+                                        { Object.keys(scoresPlatformCount[platform_type]).map((platform) =>
+                                            <div className="d-flex justify-content-between ms-4" key={platform}><span className='me-3'><Stack size="0.9em" className="me-2" style={{color:platformColours[platform]}}/><Href href={"/platform/"+platform} text={platform}/></span><span style={{fontWeight:'bold'}}>{thousandifyNumber(scoresPlatformCount[platform_type][platform])}</span></div>)
+                                        }
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>

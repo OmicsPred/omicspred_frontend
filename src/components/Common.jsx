@@ -321,6 +321,7 @@ export const get_cohorts_col_groups_list = (sample_cohorts, cohorts_list) => {
     return cohorts_list;
 }
 
+
 /* Format the list of descriptions for the molecular traits */
 export const display_description = (description_list) => {
     if (description_list.length == 1) {

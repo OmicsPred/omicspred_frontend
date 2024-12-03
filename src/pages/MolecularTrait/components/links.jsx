@@ -15,6 +15,9 @@ const display_omics_link = (data, type, index) => {
     }
 }
 
+export const display_source = (source) => {
+    return source ? <small className='ms-2'>(Source: {source})</small> : '';
+}
 
 export const display_gene_link = (gene, index) => {
     return display_omics_link(gene,'gene',index)
@@ -70,13 +73,24 @@ export const display_pathways = (pathways_list) => {
 }
 
 
-export const display_synonyms = (synonyms) => {
-    if (synonyms.length == 1) {
-        const synonym = synonyms[0];
-        return (<>{synonym.name}{synonym.source ? ' ['+synonym.source+']':''}</>);
+/* Format the list of synonyms for the molecular traits */
+export const display_synonyms = (synonyms_list) => {
+    if (synonyms_list.length == 1) {
+        return <ToogleText text={synonyms_list[0]} limit='200'/>;
     }
-    return (<ToogleDiv key={'toggle_synonyms'} title={<><span className='font-bold'>{synonyms.length}</span> synonyms</>} content={<ul className='mb-2'>{synonyms.map((synonym) => <li key={'synonym_'+synonym.name}>{synonym.name}{synonym.source ? <small> [{synonym.source}]</small>:''}</li>)}</ul>}/>)
+    else {
+        return (<ToogleDiv key={'toggle_synonyms'} title={<><span className='font-bold'>{synonyms_list.length}</span> synonyms</>} content={<ul className='mb-2'>{synonyms_list.map((synonym,index) => <li key={'synonym_'+index}><ToogleText text={synonym}/></li>)}</ul>}/>)
+    }
 }
+// OLD VERSION using the DB structure, i.e.: [{"name": "<mt_alt_name>"","source": "<name_source>""}]
+// export const display_synonyms = (synonyms) => {
+//     if (synonyms.length == 1) {
+//         const synonym = synonyms[0];
+//         return (<>{synonym.name}{synonym.source ? ' ['+synonym.source+']':''}</>);
+//     }
+//     return (<ToogleDiv key={'toggle_synonyms'} title={<><span className='font-bold'>{synonyms.length}</span> synonyms</>} content={<ul className='mb-2'>{synonyms.map((synonym) => <li key={'synonym_'+synonym.name}>{synonym.name}{synonym.source ? <small> [{synonym.source}]</small>:''}</li>)}</ul>}/>)
+// }
+
 
 export const display_xrefs = (xrefs) => {
     if (xrefs.length == 1) {
@@ -95,20 +109,20 @@ export const display_superpathways = (superpathways) => {
 }
 
 
-export const display_phecode_link = (phecode, data_size) => {
-    let id = phecode.id;
+export const display_phenotype_link = (phenotype, data_size) => {
+    let id = phenotype.id;
     id = id.replace('.','_');
     if (data_size > 1) {
-        return <li key={phecode.id}><small><span key={phecode.id}>{phecode.name} (<Href href={'/phecode/'+id} text={phecode.id}/>)</span></small></li>
+        return <li key={phenotype.id}><small><span key={phenotype.id}>{phenotype.name} (<Href href={'/phenotype/'+id} text={phenotype.id} title={phenotype.source+' ID'}/>)</span></small></li>
     }
     else {
-        return <span key={phecode.id}>{phecode.name} (<Href href={'/phecode/'+id} text={phecode.id}/>)</span>
+        return <span key={phenotype.id}>{phenotype.name} (<Href href={'/phenotype/'+id} text={phenotype.id} title={phenotype.source+' ID'}/>)</span>
     }
 }
 
 
-export const phecode_data_list = (phecode_data) => {
-    return (phecode_data.map((data) => display_phecode_link(data,phecode_data.length)))
+export const phenotype_data_list = (phenotype_data) => {
+    return (phenotype_data.map((data) => display_phenotype_link(data,phenotype_data.length)))
 }
 
 

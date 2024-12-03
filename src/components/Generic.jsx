@@ -46,6 +46,11 @@ export const participantsBadge = function(number) {
     return <span className="badge rounded-pill badge-op badge-op-table" title={participants_number+" Participants"}><People className='me-1' style={{verticalAlign:'top'}}/>{participants_number}</span>
 }
 
+export const participantsHeader = function(number) {
+    const participants_number = thousandifyNumber(number);
+    return <span title="Participants"><People className='me-1 op_color_2' style={{verticalAlign:'top'}}/>{participants_number}</span>
+}
+
 
 export const ToogleDiv = (props) => {
     const [show, setShow] = useState(false);
