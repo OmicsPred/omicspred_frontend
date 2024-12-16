@@ -4,7 +4,7 @@ const Href = (props) => {
 
     let extra_classes = '';
     let title = '';
-    const button_classes = ' btn btn-op shadow'
+    const button_classes = 'btn btn-op shadow'
     // const button_small_classes = ' btn-sm btn-op shadow'
 
     if (props.title) {
@@ -18,12 +18,18 @@ const Href = (props) => {
         extra_classes = button_classes+' btn-sm';
     }
 
+    let text_content = '';
+    if (props.icon) {
+        text_content = <>{props.icon}{props.icon && <span className='me-2'></span>}<span>{props.text}</span></>;
+    }
+    else {
+        text_content = props.text;
+    }
+
     // Internal link
     if (props.href.startsWith('/') || props.href.startsWith('#')) {
         return(
-            <a href={props.href} className={extra_classes} title={title}>
-                {props.icon}{props.icon && <span className='me-2'></span>}{props.text}
-            </a>
+            <a href={props.href} className={extra_classes} title={title}>{text_content}</a>
         );
     }
     // External link
@@ -31,16 +37,14 @@ const Href = (props) => {
         // Without external link icon
         if (props.no_external_icon) {
             return(
-                <a href={props.href} className={extra_classes} title={title} target="_blank" rel="noreferrer">
-                    {props.icon}{props.icon && ' '}{props.text}
-                </a>
+                <a href={props.href} className={extra_classes} title={title} target="_blank" rel="noreferrer">{text_content}</a>
             );
         }
         // With external link icon
         else {
             return(
                 <a href={props.href} className={"external-link"+extra_classes} title={title} target="_blank" rel="noreferrer">
-                    {props.icon}{props.icon && ' '}{props.text}<BoxArrowUpRight/>
+                    {text_content}<BoxArrowUpRight/>
                 </a>
             );
         }

@@ -1,4 +1,4 @@
-import { ChevronDoubleRight, Book, GraphUp } from 'react-bootstrap-icons';
+import { ChevronDoubleRight, Book, GraphUp, ChevronRight } from 'react-bootstrap-icons';
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -6,12 +6,12 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { People } from 'react-bootstrap-icons';
 
 import Href from "../../../components/Href";
-import { scoresBadge } from '../../../components/Generic';
+import { scoresBadge, TooltipText } from '../../../components/Generic';
 import { SampleTable } from '../../../components/Sample';
 import { ExpandableDownloadButton, get_download_list } from '../../../components/Downloads';
 
 
-const PublicationCard = (props) => {
+const DatasetCard = (props) => {
     const dataset = props.data;
     const dataset_name = dataset.name;
     const publication = dataset.publication;
@@ -73,16 +73,21 @@ const PublicationCard = (props) => {
                 </div>
             </AccordionSummary>
             <AccordionDetails>
+
                 {/* Download buttons */}
                 { download_urls ?
                     <div className='mb-3'>
                         <ExpandableDownloadButton download_urls={download_urls}/>
                     </div >: ''
                 }
+                {/* Tissue */}
+                <div className='mb-3'>
+                    <ChevronRight className='me-1 color_hl'/><span>Tissue: </span><span className="fw-bold"><TooltipText title={dataset.tissue.description} content={dataset.tissue.label}/></span> (<Href href={dataset.tissue.url} text={dataset.tissue.id}/>)
+                </div>
                 <h5 className='mt-1'><People className='me-2 op_subtitle color_hl' style={{fontSize:'10px',verticalAlign:'top'}}/>{samples_label}</h5>
                 <SampleTable table_name={key} samples_training={samples_training} samples_validation={samples_validation}/>
             </AccordionDetails>
         </Accordion>
     )
 };
-export default PublicationCard;
+export default DatasetCard;

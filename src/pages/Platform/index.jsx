@@ -14,7 +14,7 @@ import { transcriptomics_columns, transcriptomics_column_groups } from '../../co
 import restApiCall from '../../components/RestAPI';
 import DataTableServer from '../../components/table/DataTableServer';
 import PlatformSummary from './components/PlatformSummary';
-import PublicationCard from './components/PublicationCard';
+import DatasetCard from './components/DatasetCard';
 import { op_subtitle, op_title, op_count_badge, ancestry_labels } from '../../components/Common'
 import { loading_data } from '../../components/Generic';
 import Href from '../../components/Href';
@@ -267,7 +267,7 @@ function Platform() {
                     <div>
                         <h5><ChevronDoubleRight className="me-2 color_hl" size="0.9rem"/>Dataset{datasetData.length > 1 ? 's': ''}{op_count_badge(datasetData.length)}</h5>
                         <div className="d-flex flex-column">
-                            { datasetData.map((dataset) => <PublicationCard data={dataset} key={dataset.publication.doi+'_'+dataset.name} />)}
+                            { datasetData.map((dataset) => <DatasetCard data={dataset} key={dataset.publication.doi+'_'+dataset.name} />)}
                         </div>
                     </div> : ''
                 }
