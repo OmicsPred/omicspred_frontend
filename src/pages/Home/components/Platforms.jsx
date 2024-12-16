@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { DashLg, Stack } from 'react-bootstrap-icons';
+import Href from '../../../components/Href';
 import { thousandifyNumber } from "../../../components/Generic";
 import PlatformCohort from './PlatformCohort';
 
@@ -110,7 +111,7 @@ const Platforms = (props) => {
                                                 <span className={'badge bg_'+item.o_type+' me-2'}>{item.o_type}</span>{item.tissues.map((tissue) => <span key={item.name+'-'+tissue} className='badge text-bg-dark'>{tissue}</span>)}
                                             </div>
                                         </div>
-                                        <a href={"/platform/"+item.name} className="btn btn-op shadow"><Stack size='0.9em' className='me-2'/>Platform page</a>
+                                        <Href role='button' href={"/platform/"+item.name} text='Platform page' icon={<Stack size='0.9em'/>}/>
                                     </div>
                                 </div>
                             )}

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronRight, Stack } from 'react-bootstrap-icons';
+// import { ChevronRight, Stack } from 'react-bootstrap-icons';
+import { Stack } from 'react-bootstrap-icons';
 import restApiCall from '../../../../components/RestAPI';
-import OPDoughnut from "../../../Tests/Doughnut";
+// import OPDoughnut from "../../../Tests/Doughnut";
 import { thousandifyNumber } from '../../../../components/Generic';
+// import { omicspred_omics_type } from '../../../../components/Common';
 import Href from '../../../../components/Href';
 
 
@@ -12,7 +14,7 @@ const PlatformsDistribution = (props) => {
     const [scoresPlatformCount, setScoresPlatformCount] = useState({});
     const [platformColours, setPlatformColours] = useState({});
 
-    const title = 'Genetic scores distribution by Platform';
+    const title = 'Genetic Scores distribution by Platform';
 
     const type_colours = props.colours;
     const global_scores_count = props.scores_count;
@@ -112,20 +114,17 @@ const PlatformsDistribution = (props) => {
                     <div>
                         <h6 className='text-center mb-3 mt-2'>{title}</h6>
                         <div className='d-flex justify-content-center op_stats_dist'>
-                            {/* Chart */}
-                            <div className='mt-2'>
-                                <OPDoughnut data={platformChartData} width="200" display_legend="false"/>
-                            </div>
-                            {/* Legend */}
-                            <div className='home_chart_legend'>
-                                {/* {Object.keys(scoresPlatformCount).map((platform) => <div className="d-flex justify-content-between" key={platform}><span className='me-3'><Stack size="0.9em" className="me-2" style={{color:platformColours[platform]}}/><Href href={"/platform/"+platform} text={platform}/></span><span style={{fontWeight:'bold'}}>{thousandifyNumber(scoresPlatformCount[platform])}</span></div>)} */}
+                            <div className='home_chart_legend d-flex'>
                                 {Object.keys(scoresPlatformCount).map((platform_type) =>
-                                    <div className='home_chart_legend_category'>
-                                        {/* <div key={platform_type}><span className='me-3'>{omicspred_omics_type(platform_type)}</span></div> */}
-                                        <div key={platform_type} className='fw-bold'><ChevronRight size="0.9em" className="me-2 op_color_2"/><span>{platform_type}</span></div>
-                                        { Object.keys(scoresPlatformCount[platform_type]).map((platform) =>
-                                            <div className="d-flex justify-content-between ms-4" key={platform}><span className='me-3'><Stack size="0.9em" className="me-2" style={{color:platformColours[platform]}}/><Href href={"/platform/"+platform} text={platform}/></span><span style={{fontWeight:'bold'}}>{thousandifyNumber(scoresPlatformCount[platform_type][platform])}</span></div>)
-                                        }
+                                    <div className="home_dist" key={platform_type}>
+                                        <div className="p-2">
+                                            <div className={"mb-2 pb-2 fw-bold text-center border_color_"+platform_type} style={{width:"100%",borderBottom:"1px solid"}}>{platform_type}</div>
+                                            <div>
+                                                { Object.keys(scoresPlatformCount[platform_type]).map((platform) =>
+                                                    <div className="d-flex justify-content-between" key={platform}><span className='me-3'><Stack size="0.9em" className={"me-2 color_"+platform_type}/><Href href={"/platform/"+platform} text={platform} style={{verticalAlign:'middle'}}/></span><span style={{fontWeight:'bold'}}>{thousandifyNumber(scoresPlatformCount[platform_type][platform])}</span></div>)
+                                                }
+                                            </div>
+                                        </div>
                                     </div>
                                 )}
                             </div>

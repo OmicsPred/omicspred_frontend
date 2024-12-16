@@ -10,7 +10,7 @@ const Stats = (props) => {
     const [scoresCount, setScoresCount] = useState([]);
     const [platformsCount, setPlatformsCount] = useState([]);
     // const [publicationsCount, setPublicationsCount] = useState([]);;
-    const [pheWASCount, setPheWASCount] = useState([]);
+    const [phenotypeAssoCount, setPhenotypeAssoCount] = useState([]);
     const [pathwaysCount, setPathwaysCount] = useState([]);
 
     const project_name = process.env.PROJECT_NAME
@@ -25,7 +25,7 @@ const Stats = (props) => {
         const data = await restApiCall('info');
         if (data) {
             const count_data = data.data_count;
-            setPheWASCount(count_data.phewas)
+            setPhenotypeAssoCount(count_data.phenotype_associations)
             setPathwaysCount(count_data.pathways)
             setScoresCount(count_data.scores);
             setPlatformsCount(count_data.platforms);
@@ -37,7 +37,7 @@ const Stats = (props) => {
         if (!type) {
             type = title;
         }
-        const small_title = title.replace('associations', 'asso.')
+        const small_title = title.replace('associations', 'asso.');
         return (
             <div className='home_stats_box'>
                 <div className='home_stats_title'>
@@ -54,38 +54,50 @@ const Stats = (props) => {
         )
     }
 
+    const display_count_block_main = (title,count,url,type) => {
+        if (!type) {
+            type = title;
+        }
+        // const small_title = title.replace('associations', 'asso.')
+        return (
+            <div className='home_stats_box_main'>
+                <div className='home_stats_title'>
+                    <span>{title}</span>
+                </div>
+                <div className='home_stats_count'>{thousandifyNumber(count)}</div>
+                <div className='home_stats_btn'>
+                    {/* <a className="btn btn-primary btn-sm shadow" href={url} role="button">Browse</a> */}
+                    <a className="btn btn-op btn-sm shadow" href={url} role="button">Browse</a>
+                </div>
+            </div>
+        )
+    }
+
     useEffect(() => {
         fetchCounts();
     },[])
 
     return (
-        <div className='op_stats_container mt-5'>
+        <div className='op_stats_container flex-xl-row flex-lg-column flex-md-column flex-sm-column flex-xs-column mt-4'>
             <div>
                 {/* <h5 className='mb-4'>{project_name} data summary</h5> */}
-                <h5 className='mb-4'>{project_name} genetic scores</h5>
+                <h5 className='mt-2 mb-4'>{project_name} genetic scores</h5>
                 <div className='op_stats2'>
-                    { scoresCount && scoresCount > 0 ? display_count_block('Genetic Scores',scoresCount,'/scores' ,'Scores') : ''}
-                    {/* { pheWASCount && pheWASCount > 0 ? display_count_block('PheWAS associations',pheWASCount,'/applications/phenotype/full' ,'PheWAS') : ''}
-                    { pathwaysCount && pathwaysCount > 0 ? display_count_block('Pathways',pathwaysCount,'/pathways') : ''}
-                    { platformsCount && platformsCount > 0 ? display_count_block('Platforms',platformsCount,'/platforms') : ''}
-                    { publicationsCount && publicationsCount > 0 ? display_count_block('Publications',publicationsCount,'/publications') : ''} */}
+                    { scoresCount && scoresCount > 0 ? display_count_block_main('Genetic Scores',scoresCount,'/scores' ,'Scores') : ''}
                     <PlatformsDistribution scores_count={scoresCount} colours={type_colours} />
                 </div>
             </div>
             {  scoresCount &&  scoresCount != 0 ?
                 <>
-                    <div className='op_stats_separator'></div>
+                    {/* <div className='op_stats_separator'></div> */}
                     <div className='d-flex flex-column'>
-                    <h5 className='mb-4'>{project_name} data summary</h5>
-                    <div className='op_stats2'>
-                        {/* { scoresCount && scoresCount > 0 ? display_count_block('Genetic Scores',scoresCount,'/scores' ,'Scores') : ''}  */}
-                        { pheWASCount && pheWASCount > 0 ? display_count_block('PheWAS associations',pheWASCount,'/applications/phenotype/full' ,'PheWAS') : ''}
-                        { pathwaysCount && pathwaysCount > 0 ? display_count_block('Pathways',pathwaysCount,'/pathways') : ''}
-                        { platformsCount && platformsCount > 0 ? display_count_block('Platforms',platformsCount,'/platforms') : ''}
-                        {/* { publicationsCount && publicationsCount > 0 ? display_count_block('Publications',publicationsCount,'/publications') : ''} */}
-                    </div>
-                        {/* <OmicsDistribution data={props.data} scores_count={scoresCount} colours={type_colours} />
-                        <PlatformsDistribution scores_count={scoresCount} colours={type_colours} /> */}
+                        <h5 className='mt-2 mb-4'>{project_name} data summary</h5>
+                        <div className='op_stats2'>
+                            { phenotypeAssoCount && phenotypeAssoCount > 0 ? display_count_block('Phenotype associations',phenotypeAssoCount,'/applications/phenotype/full' ,'phenotype') : ''}
+                            { pathwaysCount && pathwaysCount > 0 ? display_count_block('Pathways',pathwaysCount,'/pathways') : ''}
+                            { platformsCount && platformsCount > 0 ? display_count_block('Platforms',platformsCount,'/platforms') : ''}
+                            {/* { publicationsCount && publicationsCount > 0 ? display_count_block('Publications',publicationsCount,'/publications') : ''} */}
+                        </div>
                     </div>
                 </>:''
             }

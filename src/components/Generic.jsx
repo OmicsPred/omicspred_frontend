@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { PlusCircleFill, DashCircleFill, People, InfoCircle, BarChart } from 'react-bootstrap-icons';
+import Tooltip from '@mui/material/Tooltip';
 
 
 export const thousandifyNumber = function(number) {
@@ -120,6 +121,11 @@ export const ToogleText = (props) => {
             </p>
         )
     }
+}
+
+
+export const TooltipText = (props) => {
+    return <Tooltip className="op_tooltip" title={props.title}>{props.content}</Tooltip>
 }
 
 

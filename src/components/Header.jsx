@@ -35,7 +35,7 @@ function Header() {
                                 <NavDropdown.Item href="/platforms">Platforms</NavDropdown.Item>
                                 <NavDropdown.Item href="/pathways">Pathways</NavDropdown.Item>
                             </NavDropdown>
-                            <NavDropdown title="PheWAS" id="phewas-nav-dropdown" renderMenuOnMount={true}>
+                            <NavDropdown title="Phenotype" id="phenotype-nav-dropdown" renderMenuOnMount={true}>
                                 <NavDropdown.Item href="/applications/phenotype/sum">Summary</NavDropdown.Item>
                                 <NavDropdown.Item href="/applications/phenotype/full">All Associations</NavDropdown.Item>
                             </NavDropdown>
@@ -44,8 +44,9 @@ function Header() {
                                 <NavDropdown.Item href="/downloads">Data files</NavDropdown.Item>
                                 <NavDropdown.Item href={process.env.REST_API_URL_PUBLIC}>REST API</NavDropdown.Item>
                             </NavDropdown>
-                            <NavDropdown title="About" id="about-nav-dropdown" renderMenuOnMount={true}>
+                            <NavDropdown title="Documentation" id="documentation-nav-dropdown" renderMenuOnMount={true}>
                                 <NavDropdown.Item href="/about">About {process.env.PROJECT_NAME}</NavDropdown.Item>
+                                <NavDropdown.Item href="/docs">Data Description</NavDropdown.Item>
                                 <NavDropdown.Item href="/cohorts">Cohorts</NavDropdown.Item>
                                 <NavDropdown.Item href="/faqs">FAQs</NavDropdown.Item>
                             </NavDropdown>

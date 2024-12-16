@@ -9,9 +9,11 @@ const OPDoughnut = (props) => {
     const [doughnutData, setDoughnutData] = useState([])
     const [doughnutOptions, setDoughnutOptions] = useState([])
 
+    const defaut_aratio = 1.6;
+
     const default_options = {
         responsive: true,
-        aspectRatio: 1.6,
+        aspectRatio: props.aratio ? props.aratio : defaut_aratio,
         borderWidth: 1,
         plugins: {
             legend: {
