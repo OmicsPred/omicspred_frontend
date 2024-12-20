@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { DataGrid, GridToolbar } from '@mui/x-data-grid'
+import React, { useState, useEffect, useCallback } from 'react';
+// import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridToolbarContainer, GridToolbarColumnsButton, GridToolbarQuickFilter} from '@mui/x-data-grid';
 import { loading_data } from '../Generic';
 
 
@@ -134,8 +135,8 @@ const DataTableServer = (props) => {
 
         const url = rest_api_url(props.url_suffix, offset, paginationModel.pageSize)
         console.log("URL: "+url);
-        console.log("PAGE: "+paginationModel.page);
-        console.log("offset: "+offset);
+        // console.log("PAGE: "+paginationModel.page);
+        // console.log("offset: "+offset);
         const response = await fetch(url);
         const json = await response.json();
         const results = json.results;
@@ -168,6 +169,16 @@ const DataTableServer = (props) => {
         }
     }, []);
 
+
+    const CustomToolbar = () => {
+        return (
+          <GridToolbarContainer className='d-flex justify-content-between'>
+            <GridToolbarColumnsButton />
+            <GridToolbarQuickFilter debounceMs={parseInt(process.env.TABLE_FILTER_STROKE_TIME)}/>
+          </GridToolbarContainer>
+        );
+    }
+
     // This replace the 3 useEffect above - test to check this works
     useEffect(() => {
         fetchData()
@@ -180,7 +191,7 @@ const DataTableServer = (props) => {
                 <div className="table-responsive" style={{flexBasis: "fit-content"}}>
                     <DataGrid
                         key="server-side"
-                        autoHeight
+                        // autoHeight
                         columnGroupingModel={props.groups}
                         columns={props.columns}
                         rows={data}
@@ -204,12 +215,15 @@ const DataTableServer = (props) => {
                         filterMode="server"
                         onFilterModelChange={onFilterModelChange}
                         slots={{
-                            toolbar: GridToolbar
+                            toolbar: CustomToolbar
                         }}
+                        // slots={{
+                        //     toolbar: GridToolbar
+                        // }}
                         slotProps={{
-                            toolbar: {
-                                showQuickFilter: true
-                            },
+                            // toolbar: {
+                            //     showQuickFilter: true
+                            // },
                             loadingOverlay: {
                                 variant: 'linear-progress',
                                 noRowsVariant: 'skeleton',

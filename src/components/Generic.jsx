@@ -125,7 +125,21 @@ export const ToogleText = (props) => {
 
 
 export const TooltipText = (props) => {
-    return <Tooltip className="op_tooltip" title={props.title}>{props.content}</Tooltip>
+    if (props) {
+        const title = props.title ? props.title : undefined;
+        const text = props.text ? props.text : '';
+        let class_name = 'op_tooltip';
+        if (props.ttype) {
+            if (props.ttype=='link') {
+                class_name = 'op_tooltip_2';
+            }
+        }
+        if (title) {
+            // Need to be a React Element in the "text" Tooltip element
+            return <Tooltip className={class_name} title={title}><span>{text}</span></Tooltip>
+        }
+        return text;
+    }
 }
 
 

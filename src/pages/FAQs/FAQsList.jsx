@@ -40,7 +40,7 @@ export const faqs_list = [
     {
       title: "How was the external validation done?",
       type: "Genetic score development",
-      text: "The genetic score model trained with INTERVAL training samples for a trait was used to calculate genetic scores of the validation samples (external cohorts or withheld INTERVAL samples). Then R2 score and Spearman correlation coefficient were calculated using the predicted scores of these samples against their acutal trait levels.",
+      text: "The genetic score model trained with INTERVAL training samples for a trait was used to calculate genetic scores of the validation samples (external cohorts or withheld INTERVAL samples). Then R2 score and Spearman correlation coefficients were calculated using the predicted scores of these samples against their actual trait levels.",
     },
     {
       title: "How can I contribute omic genetic scores from our study to OmicsPred?",

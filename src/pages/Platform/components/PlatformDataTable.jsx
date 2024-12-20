@@ -7,7 +7,7 @@ const PlatformDataTable = (props) => {
 
     useEffect(() => {
         setPlatformRestEndpoint(props.rest_endpoint)
-    }), [props.rest_endpoint]
+    }, [props.rest_endpoint])
 
     return (
         <div className="mt-2">

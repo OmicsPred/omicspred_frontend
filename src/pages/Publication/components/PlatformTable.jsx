@@ -10,7 +10,7 @@ import { scoresBadge, ToogleDiv, TooltipText } from '../../../components/Generic
 import { get_cohorts_cols_list, get_cohorts_col_groups_list, omicspred_omics_type } from '../../../components/Common';
 import {cohort_cols, common_column_groups, cohort_valueGetter} from '../../../components/table/columns/common';
 import { metabolomics_columns,metabolomics_column_groups } from '../../../components/table/columns/metabolomics';
-import { proteomics_columns } from '../../../components/table/columns/proteomics';
+import { proteomics_pub_columns } from '../../../components/table/columns/proteomics';
 import { transcriptomics_columns } from '../../../components/table/columns/transcriptomics';
 import DataTableServer from '../../../components/table/DataTableServer';
 import { SampleTable } from '../../../components/Sample';
@@ -69,8 +69,8 @@ const PlatformTable = (props) => {
                 }
                 break;
             case 'Proteomics':
-                if (platform_name in proteomics_columns) {
-                    return proteomics_columns[platform_name].map(object => ({ ...object }));
+                if (platform_name in proteomics_pub_columns) {
+                    return proteomics_pub_columns[platform_name].map(object => ({ ...object }));
                 }
                 break;
             case 'Transcriptomics':
@@ -282,7 +282,7 @@ const PlatformTable = (props) => {
                             <ul className='key_val_line'>
                                 { platformInfo.full_name ? <li><span className='line_key'>Full Name</span>{platformInfo.full_name}</li>:''}
                                 { platformInfo.version ? <li><span className='line_key'>Version</span>{platformInfo.version}</li>:''}
-                                { dataset.tissue ? <li><span className='line_key'>Tissue</span><TooltipText title={dataset.tissue.description} content={dataset.tissue.label}/> (<Href href={dataset.tissue.url} text={dataset.tissue.id}/>)</li>:''}
+                                { dataset.tissue ? <li><span className='line_key'>Tissue</span><TooltipText title={dataset.tissue.description} text={dataset.tissue.label}/> (<Href href={dataset.tissue.url} text={dataset.tissue.id}/>)</li>:''}
                             </ul>:''
                         }
                         <div className="d-flex mb-3">

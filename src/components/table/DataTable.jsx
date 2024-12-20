@@ -1,5 +1,5 @@
-// import React, { useState, useEffect } from 'react'
-import { DataGrid, GridToolbar } from '@mui/x-data-grid'
+// import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridToolbarContainer, GridToolbarColumnsButton, GridToolbarExport, GridToolbarQuickFilter} from '@mui/x-data-grid';
 
 
 const DataTable = (props) => {
@@ -59,7 +59,22 @@ const DataTable = (props) => {
             return generateString(20);
         }
     }
-    
+
+
+    const CustomToolbar = () => {
+        return (
+          <GridToolbarContainer className='d-flex justify-content-between'>
+            <div className='d-flex'>
+                <GridToolbarColumnsButton/>
+                <GridToolbarExport/>
+            </div>
+            {/* <GridToolbarQuickFilter/> */}
+            <GridToolbarQuickFilter debounceMs={parseInt(process.env.TABLE_FILTER_STROKE_TIME)}/>
+          </GridToolbarContainer>
+        );
+    }
+
+
     // useEffect(() => {
     //   setRowCountState((prevRowCountState) =>
     //     rowCount !== undefined ? rowCount : prevRowCountState,
@@ -70,27 +85,32 @@ const DataTable = (props) => {
         <div className="d-flex" >
             <div className="table-responsive" style={{flexBasis: "fit-content"}}>
                 <DataGrid
-                    autoHeight
+                    // autoHeight
                     columnGroupingModel={props.groups}
                     columns={props.columns}
                     rows={props.data}
                     getRowId={(row) => getRowId(row)}
                     getRowHeight={() => row_height_settings}
                     sx={{ '--DataGrid-overlayHeight': '200px' }}
+                    getRowClassName={(params) => params.row.evaluation_type && params.row.evaluation_type == 'Training' ? 'training_row':''} // Highlight the training rows
                     initialState={{
                         pagination: { paginationModel: { pageSize: default_page_size } },
                         sorting: {
                             sortModel: [initial_sorting]
-                        },
+                        }
                     }}
                     slots={{
-                        toolbar: GridToolbar
+                        toolbar: CustomToolbar
                     }}
+                    // slots={{
+                    //     toolbar: GridToolbar
+                    // }}
                     // loading
                     slotProps={{
-                        toolbar: {
-                            showQuickFilter: true
-                        },
+                        // toolbar: {
+                        //     showQuickFilter: true,
+                        //     quickFilterProps: { debounceMs: 1000 }
+                        // },
                         loadingOverlay: {
                             variant: 'linear-progress',
                             noRowsVariant: 'skeleton',

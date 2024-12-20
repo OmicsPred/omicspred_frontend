@@ -6,7 +6,6 @@ const AncestryLegend = (props) => {
     const anc_list = Array.from(Object.keys(ancestry_labels()));
     const anc_length = anc_list.length;
     const grp_cutoff = Math.floor(anc_length/2 + 0.5);
-    console.log('left_grp_idx: '+grp_cutoff)
 
     let anc_list_left = [];
     let anc_list_right = [];

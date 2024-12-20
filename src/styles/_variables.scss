@@ -1,0 +1,112 @@
+/*****************/
+/**  Variables  **/
+/*****************/
+
+/* Main colours */
+// $op_color_1: #0066b2; //Bayern Blue
+// $op_color_1_alt: #005A9C;// Dodgers Blue
+$op_color_1: #192E5B;
+$op_color_2: #1D65A6; // Denim
+$op_color_3: #2581d1;//#709DC2;//#7C9FBF; // Glacier
+$op_color_4: #00A75B; // #00743F;
+$op_color_5: #93C4F0; //#abcff0; // #F2A104;
+$op_color_1_alt: #005A9C;// Dodgers Blue
+$ge_color: #0A0;
+$tr_color: #800080; // #975ebe
+$pr_color: #D00;
+$me_color: orange; //#ff974e
+$ph_color: #00CED1; // DarkTurquoise
+$pa_color: #FA8072;
+$hl_color: $op_color_2; //blue;
+$score_color: #0066b2; //$op_color_1;
+$op_white: #FFF;
+$op_grey: #CCC;
+$op_light_grey: #F8F8F8;
+$op_light_grey_2: #f1f5f9;
+$op_light_grey_3: #EFEFEF;
+$op_hover_grey: rgba(0, 0, 0, 0.04);
+$op_black: #000;
+$op_dark: rgba(0, 0, 0, 0.6);
+$op_dark2: #212529; // Default boostrap font color
+$op_blue_2: #0d6efd;
+$op_blue_3: #0a58ca;
+$op_light_bg_color: $op_light_grey_2;
+$default_font_color: $op_dark2;
+
+
+/* Omics colours */
+$omics_colors: (
+  "Metabolomics": $me_color,
+  "Proteomics": $pr_color,
+  "Transcriptomics": $tr_color
+);
+
+/* Type colours */
+$type_colors: (
+    'gene': $ge_color,
+    'transcript': $tr_color,
+    'protein': $pr_color,
+    'metabolite': $me_color,
+    'phenotype': $ph_color,
+    'score': $score_color,
+    'pathway': $pa_color
+);
+
+/* Mixins */
+@mixin op_dark_bg {
+    background-color: $op_color_2 !important;
+}
+@mixin op_light_bg {
+    background-color: $op_light_bg_color !important;
+}
+@mixin link_default_color {
+    color: $op_color_2 !important;
+}
+@mixin link_hover_color {
+    color: $op_color_5 !important;
+}
+
+/* Omics colours */
+@each $omics_key, $omics_color in $omics_colors {
+    .color_#{$omics_key} {
+        color: $omics_color;
+    }
+
+    .border_color_#{$omics_key} {
+        border-color: $omics_color !important;
+    }
+
+    .border_#{$omics_key} {
+        border: 1px solid $omics_color;
+    }
+
+    .hl_#{$omics_key} {
+      border-bottom: 1px solid $omics_color;
+    }
+
+    .badge_#{$omics_key} {
+        background-color: $omics_color;
+        font-weight: normal !important;
+    }
+
+    .bg_#{$omics_key} {
+        background-color: $omics_color;
+        font-weight: normal !important;
+        color: $omics_color;
+    }
+}
+
+/* Data type colours */
+@each $type_key, $type_color in $type_colors {
+    .color_#{$type_key} {
+        color: $type_color !important;
+    }
+
+    .bg_#{$type_key} {
+        background-color: $type_color;
+    }
+
+    .border_color_#{$type_key} {
+        border-color: $type_color !important;
+    }
+}

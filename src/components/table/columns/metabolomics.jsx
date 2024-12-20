@@ -22,9 +22,9 @@ export const metabolomics_columns = {
         // common_cols['publication'],
         // common_cols['platform_version'],
         // dataset_name_col,
+        common_cols['variants_number'],
         ancestry_training_cols,
         ancestry_validation_cols,
-        common_cols['variants_number'],
         // Cohorts columns
         // cohort_cols['INTERVAL']['R2'],
         // cohort_cols['INTERVAL']['Rho'],
@@ -44,9 +44,9 @@ export const metabolomics_columns = {
         // common_cols['publication'],
         // common_cols['platform_version'],
         // dataset_name_col,
+        common_cols['variants_number'],
         ancestry_training_cols,
         ancestry_validation_cols,
-        common_cols['variants_number'],
         // Cohorts columns
         // cohort_cols['INTERVAL']['R2'],
         // cohort_cols['INTERVAL']['Rho'],

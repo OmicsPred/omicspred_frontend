@@ -1,18 +1,19 @@
 import { participantsBadge } from '../../Generic';
 import Href from '../../Href';
-import { omicspred_internal_link, r2_col_header_label } from './common';
+// import { omicspred_internal_link, r2_col_header_label } from './common';
+import { common_cols, r2_col_header_label } from './common';
 import { ancestry_cols } from './ancestry';
 
 
 const default_cell_value = process.env.DEFAULT_CELL_VALUE;
 
-const match_rate_col = 'Match Rate'
+const match_rate_col = 'Match Rate';
 
 const metric_valueGetter = function(performance_metrics,method,eval_type) {
     for (let i=0; i<performance_metrics.length; i++) {
         const metric = performance_metrics[i];
         if (metric.name_short == method) {
-            return metric.estimate
+            return metric.estimate;
         }
     }
     if (method == match_rate_col && eval_type == 'Training') {
@@ -22,7 +23,7 @@ const metric_valueGetter = function(performance_metrics,method,eval_type) {
 }
 
 
-export const score_columns = [
+export const performance_metrics_columns = [
     {
         field: 'cohort',
         headerName: 'Cohort',
@@ -36,7 +37,7 @@ export const score_columns = [
             return <Href text={cohort_label} href={'/cohort/'+cohort_label}/>
         },
         valueGetter:  (value, row) => {
-            const cohort_label = row.cohort_label
+            const cohort_label = row.cohort_label;
             const lastIndexOf = cohort_label.lastIndexOf("_");
             if (lastIndexOf > 0 ) {
                 return cohort_label.substring(0, lastIndexOf).replaceAll('_',' ');
@@ -48,7 +49,7 @@ export const score_columns = [
     },
     ancestry_cols['ancestry'],
     {
-        field: 'individuals',
+        field: 'sample_number',
         headerName: 'Sample size',
         width: 120,
         renderCell: (params) => {
@@ -59,7 +60,7 @@ export const score_columns = [
         }
     },
     {
-        field: 'type',
+        field: 'study_type',
         headerName: 'Study stage',
         width: 180,
         renderCell: (params) => {
@@ -112,23 +113,6 @@ export const score_columns = [
     }
 ]
 
+const score_col = [common_cols['omicspred_id']];
 
-const score_col = [
-    {
-        field: 'id',
-        headerName: 'OmicsPred ID',
-        minWidth: 150,
-        flex: 0.5,
-        resizable: false,
-        hideable: false,
-        renderCell: (params) => {
-            let score_id = params.row.associated_opgs_id;
-            return omicspred_internal_link({'label': score_id},'score')
-        },
-        valueGetter: (value, row) => {
-            let score_id = row.associated_opgs_id;
-            return score_id
-        }
-    }]
-
-export const score_columns_ext = score_col.concat(score_columns)
+export const performance_metrics_columns_ext = score_col.concat(performance_metrics_columns);

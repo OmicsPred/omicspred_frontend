@@ -82,7 +82,7 @@ const DatasetCard = (props) => {
                 }
                 {/* Tissue */}
                 <div className='mb-3'>
-                    <ChevronRight className='me-1 color_hl'/><span>Tissue: </span><span className="fw-bold"><TooltipText title={dataset.tissue.description} content={dataset.tissue.label}/></span> (<Href href={dataset.tissue.url} text={dataset.tissue.id}/>)
+                    <ChevronRight className='me-1 color_hl'/><span>Tissue: </span><span className="fw-bold"><TooltipText title={dataset.tissue.description} text={dataset.tissue.label}/></span> (<Href href={dataset.tissue.url} text={dataset.tissue.id}/>)
                 </div>
                 <h5 className='mt-1'><People className='me-2 op_subtitle color_hl' style={{fontSize:'10px',verticalAlign:'top'}}/>{samples_label}</h5>
                 <SampleTable table_name={key} samples_training={samples_training} samples_validation={samples_validation}/>
