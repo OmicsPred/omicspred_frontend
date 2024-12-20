@@ -61,6 +61,14 @@ export default defineConfig(({ mode }) => {
       port: 3000,
       hot: true
     },
+    // Allow to use/load the SCSS file _variables.scss
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@use "/src/styles/_variables.scss" as *;`
+        }
+      }
+    },
     build: {
       sourcemap: false,
       rollupOptions: {

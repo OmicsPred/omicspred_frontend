@@ -26,7 +26,7 @@ const documentation_op = {
     },
     'Platform':{
         'label': 'platform',
-        'desc': '',
+        'desc': 'Omics platform used to analyse the samples',
         'struct': [
             {'name': 'Platform name', 'desc': 'Name of the platform.'},
             {'name': 'Platform full name', 'desc': 'Full name of the platform.'},
@@ -54,20 +54,20 @@ const documentation_op = {
             {'name': 'Sample Male Percent', 'desc': 'Percentage of male individuals in the sample'},
             // {'name': 'Age of Study Participants', 'desc': 'A summary (mean/median, range/confidence intervals) of study participants ages.'},
             {'name': 'Broad Ancestry Category', 'desc': <>Author reported ancestry is mapped to the best matching ancestry category from the NHGRI-EBI GWAS Catalog framework (<Href href='https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5815218/table/Tab1/?report=objectonly' text='Table 1, Morales et al. (2018)'/>).</>},
-            {'name': 'Cohort(s)', 'desc': 'List of Cohorts.'},
+            {'name': 'Cohort(s)', 'desc': 'List of Cohorts used to create the Sample.'},
         ]
     },
     'Genetic Score': {
         'label': 'score',
         'desc': '',
         'struct': [
-            {'name': project_name+' ID', 'desc': 'Unique ID created for the genetic score in '+process.env.PROJECT_NAME+'.'},
-            {'name': project_name+' name', 'desc': 'Name used by the author to refer to the genetic score before being assign an'+process.env.PROJECT_NAME+' identifier'},
+            {'name': project_name+' ID', 'desc': 'Unique identifier created for the genetic score in '+process.env.PROJECT_NAME+'.'},
+            {'name': project_name+' name', 'desc': 'Name used by the author to refer to the genetic score before an '+process.env.PROJECT_NAME+' identifier has been assigned.'},
             {'name': 'Reported Molecular Trait', 'desc': 'Molecular trait (Gene, Protein, Metabolite, ...) identifier and/or name as reported by the author'},
             {'name': 'Original Genome Build', 'desc': 'The version of the genome that the variants present in the Genetic Score are associated with.'},
             {'name': 'Number of Variants', 'desc': 'Number of variants used to calculate the PGS. In the future this will include a more detailed description of the types of variants present.'},
             {'name': 'Genetic Score Development Method', 'desc': 'The name or description of the method or computational algorithm used to develop the Genetic Score.'},
-            // {'name': 'Genetic Score Development Development Details/Relevant Parameters', 'desc': 'A description of the relevant inputs and parameters relevant to the Genetic Score development method/process.'},
+            // {'name': 'Genetic Score Development Details/Relevant Parameters', 'desc': 'A description of the relevant inputs and parameters relevant to the Genetic Score development method/process.'},
             // {'name': 'Species', 'desc': 'Species targeted in this Genetic Score'},
             {'name': 'Molecular Traits',  'desc': <>Molecular Traits associated with the Genetic Score: <span className='fw-bold'>Gene</span>, <span className='fw-bold'>Transcript</span>, <span className='fw-bold'>Protein</span>, <span className='fw-bold'>Metabolite</span>.</>},
             {'name': 'Ancestry distribution', 'desc': 'Distribution of the ancestries in the training and validation of the Genetic Score.'},
@@ -152,15 +152,15 @@ const documentation_op = {
         'label': 'tissue',
         'desc': 'Tissue entries are mapped to ontologies in order to facilitate the tissue comparaison, grouping and filtering.',
         'struct': [
-            {'name': 'Identifier', 'desc': 'External identifier of the Tissue, from the ontology'},
+            {'name': 'Identifier', 'desc': 'External identifier from an ontology (e.g. Uberon)'},
             {'name': 'Label', 'desc': 'Tissue short name/label'},
             {'name': 'Description', 'desc': 'Detailed description of the Tissue'},
             {'name': 'URL', 'desc': 'External URL to the ontology entry'}
         ]
     },
-    'Phenotype': {
+    'Phenotype [Applications]': {
         'label': 'phenotype',
-        'desc': 'All the phenotypes are associated to an ontology to facilitate grouping and comparability.',
+        'desc': 'Phenotypes used in the Applications part of '+project_name+', i.e. Phenome-wide association analysis (PheWAS). All the phenotypes are associated to an ontology to facilitate grouping and comparability.',
         'struct': [
             {'name': 'Identifier', 'desc': 'External identifier of the Phenotype.'},
             {'name': 'Name', 'desc': 'Phenotype name/label'},
@@ -169,9 +169,9 @@ const documentation_op = {
             {'name': 'Child phenotype(s)', 'desc': 'Children entries of the Phenotype from the ontology'}
         ]
     },
-    'Score Applications (Phenotype)': {
+    'Genetic Score [Applications]': {
         'label': 'score_app',
-        'desc': ' ',
+        'desc': 'This data structure is similar to the `Genetic Score` but for the Applications part of '+project_name+', i.e. Phenome-wide association analysis (PheWAS).',
         'struct': [
             {'name': project_name+' ID', 'desc': project_name+' Score Identifier.'},
             {'name': 'Phenotype', 'desc': 'Associated Phenotype.'},
@@ -179,8 +179,8 @@ const documentation_op = {
             {'name': 'Platform', 'desc': 'Associated Platform.'},
             {'name': 'Sample', 'desc': 'Associated Sample (control/cases, percentage female participants).'},
             {'name': 'Cohort', 'desc': 'Cohort use to evaluate the Score/Phenotype association.'},
-            {'name': 'Molecular Traits', 'desc': 'List of associated Molecular Traits (genes, transcripts, protein, metabolites.'},
-            {'name': <>R<sup>2</sup></>, 'desc': 'Proportion of the variance explained.'},
+            {'name': 'Molecular Traits', 'desc': 'List of associated Molecular Traits (genes, transcripts, protein, metabolites) - simplifed structure.'},
+            // {'name': <>R<sup>2</sup></>, 'desc': 'Proportion of the variance explained.'},
             {'name': 'HR', 'desc': 'Hazard Ratio with confidence interval.'},
             {'name': 'FDR', 'desc': 'False Discovery Rate-adjusted P-value (<0.5).'},
 
@@ -220,7 +220,7 @@ function Documentation() {
                 This page contains information regarding the contents of {project_name} and the data structure of its main components.
             </p>
         </div>
-        <div className='d-flex mb-4'>
+        <div className='d-flex mb-5'>
             <div className="card p-0">
                 <div className="card-header"><h6 className="mb-0">List of data structures</h6></div>
                 <div className="card-body p-2">

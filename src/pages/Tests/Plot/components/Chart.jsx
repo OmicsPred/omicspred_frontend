@@ -7,7 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import ChartPlot from "./ChartPlot";
-import ChartDoughnut from "./ChartDoughnut";
+// import ChartDoughnut from "./ChartDoughnut";
 import ChartBar from "./ChartBar";
 
 
@@ -259,7 +259,7 @@ export default function Charts(props) {
         />
         <hr className="mt-5"/>
         {/* Doughnut Plot */}
-        <ChartDoughnut
+        {/* <ChartDoughnut
           study_1={datastudy1}
           missed={misseddata}
           name_1={study1}
@@ -267,7 +267,7 @@ export default function Charts(props) {
           study_2={datastudy2}
           missed_name={missed}
           matrix={matrix}
-        />
+        /> */}
         {/* Vertical Bar Plot */}
         <ChartBar
           study_1={datastudy1}

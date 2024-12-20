@@ -23,9 +23,7 @@ export const ancestry_cols = {
         field: 'ancestry_training',
         headerName: 'Training',
         minWidth: 100,
-        // flex: 0.5,
         resizable: false,
-        hideable: false,
         sortable: false,
         renderCell: (params) => {
             if (params.row.ancestry.dev) {
@@ -58,9 +56,7 @@ export const ancestry_cols = {
         field: 'ancestry_validation',
         headerName: 'Validation',
         minWidth: 100,
-        // flex: 0.5,
         resizable: false,
-        hideable: false,
         sortable: false,
         renderCell: (params) => {
             if (params.row.ancestry.eval) {

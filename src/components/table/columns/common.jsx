@@ -1,6 +1,6 @@
 import { FileEarmarkText, Stack } from 'react-bootstrap-icons';
 import { internal_publication_link, omicspred_omics_type, display_description } from '../../Common';
-import { thousandifyNumber, ToogleDiv, ToogleText, scoresBadge } from '../../Generic';
+import { thousandifyNumber, ToogleDiv, ToogleText, TooltipText, scoresBadge } from '../../Generic';
 import Href from '../../Href';
 
 export const default_cell_value = process.env.DEFAULT_CELL_VALUE;
@@ -61,8 +61,8 @@ export const omicspred_internal_link = function(op_entry,type,index) {
     op_url = op_url.replace('.','_');
     if (op_id && op_label != default_cell_value) {
         return (
-            <span key={op_id+'_'+type+'_span'} title={op_title ? op_title:''}>
-                {index ? ', ': ''}<Href key={op_id+'_'+type} href={op_url} text={op_label}/>
+            <span key={op_id+'_'+type+'_link'}>
+                {index ? ', ': ''}<Href key={op_id+'_'+type} href={op_url} text={op_title ? <TooltipText title={op_title} text={op_label} ttype='link'/> : op_label}/>
             </span>
         )
     }
@@ -136,6 +136,12 @@ export const r2_col_header_label = function() {
     return <span className='fw-bold'>R<sup>2</sup></span>;
 }
 
+
+export const rho_col_header_label = function() {
+    return <span className='fw-bold'>Rho</span>;
+}
+
+
 const sort_objects = function(objects, key) {
     function compare(a, b) {
         a = a[key];
@@ -164,15 +170,25 @@ export const common_cols = {
         hideable: false,
         renderCell: (params) => {
             let op_id = params.row.id;
-            if (params.row.score_id) {
-                op_id = params.row.score_id;
+            if (params.row.associated_opgs_id) {
+                op_id = params.row.associated_opgs_id;
+            }
+            else {
+                if (params.row.score_id) {
+                    op_id = params.row.score_id;
+                }
             }
             return omicspred_internal_link({'label': op_id},'score')
         },
         valueGetter: (value, row) => {
             let op_id = row.id;
-            if (row.score_id) {
-                op_id = row.score_id;
+            if (row.associated_opgs_id) {
+                op_id = row.associated_opgs_id;
+            }
+            else {
+                if (row.score_id) {
+                    op_id = row.score_id;
+                }
             }
             return op_id
         }
@@ -291,10 +307,10 @@ export const common_cols = {
         renderCell: (params) => {
             let pr_ids = [];
             if (params.row.proteins) {
-                pr_ids = params.row.proteins.map((protein) => ({'label': protein.external_id}));
+                pr_ids = params.row.proteins.map((protein) => ({'label': protein.external_id, 'desc': protein.name}));
             }
             else if (params.row.external_id) {
-                pr_ids.push({'label': params.row.external_id});
+                pr_ids.push({'label': params.row.external_id, 'desc': params.row.name});
             }
             return omicspred_internal_links(pr_ids, 'protein');
         },
@@ -352,7 +368,10 @@ export const common_cols = {
         renderCell: (params) => {
             let gene_ids = [];
             if (params.row.genes) {
-                gene_ids = params.row.genes.map((gene) => ({'label': gene.external_id}));
+                gene_ids = params.row.genes.map((gene) => ({
+                    'label': gene.external_id,
+                    'desc': gene.descriptions.length ? gene.descriptions[0]: undefined
+                }));
             }
             return omicspred_internal_links(gene_ids, 'gene');
         },
@@ -373,7 +392,11 @@ export const common_cols = {
         renderCell: (params) => {
             let gene_names = [];
             if (params.row.genes) {
-                gene_names = params.row.genes.map((gene) => ({'id': (gene.external_id ? gene.external_id : gene.name),'label': gene.name ? gene.name : '-', 'desc': gene.description}))
+                gene_names = params.row.genes.map((gene) => ({
+                    'id': (gene.external_id ? gene.external_id : gene.name),
+                    'label': gene.name ? gene.name : '-',
+                    'desc': gene.descriptions.length ? gene.descriptions[0]: undefined
+                }))
             }
             gene_names = sort_objects(gene_names,'label');
 
@@ -429,7 +452,7 @@ export const common_cols = {
         renderCell: (params) => {
             let metabolite_ids = [];
             if (params.row.metabolites) {
-                metabolite_ids = params.row.metabolites.map((metabolite) => ({'label': metabolite.external_id}))
+                metabolite_ids = params.row.metabolites.map((metabolite) => ({'label': metabolite.external_id, 'desc': metabolite.name}))
             }
 
             if (metabolite_ids.length>display_threshold) {
@@ -817,7 +840,10 @@ export const cohort_cols = {
         },
         'Rho': {
             field: 'INTERVAL_Rho',
-            headerName: 'Rho',
+            // headerName: 'Rho',
+            renderHeader: (params) => {
+                return rho_col_header_label();
+            },
             // headerClassName: 'training_col',
             // minWidth: 100,
             // flex: 0.5,
@@ -842,7 +868,10 @@ export const cohort_cols = {
         },
         'Rho': {
             field: 'UKB_Rho',
-            headerName: 'Rho',
+            // headerName: 'Rho',
+            renderHeader: (params) => {
+                return rho_col_header_label();
+            },
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
@@ -866,7 +895,10 @@ export const cohort_cols = {
         },
         'Rho': {
             field: 'ORCADES_Rho',
-            headerName: 'Rho',
+            // headerName: 'Rho',
+            renderHeader: (params) => {
+                return rho_col_header_label();
+            },
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
@@ -900,7 +932,10 @@ export const cohort_cols = {
         },
         'Rho': {
             field: 'VIKING_Rho',
-            headerName: 'Rho',
+            // headerName: 'Rho',
+            renderHeader: (params) => {
+                return rho_col_header_label();
+            },
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
@@ -933,7 +968,10 @@ export const cohort_cols = {
         },
         'Rho': {
             field: 'MEC_CN_Rho',
-            headerName: 'Rho',
+            // headerName: 'Rho',
+            renderHeader: (params) => {
+                return rho_col_header_label();
+            },
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
@@ -966,7 +1004,10 @@ export const cohort_cols = {
         },
         'Rho': {
             field: 'MEC_IN_Rho',
-            headerName: 'Rho',
+            // headerName: 'Rho',
+            renderHeader: (params) => {
+                return rho_col_header_label();
+            },
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
@@ -999,7 +1040,10 @@ export const cohort_cols = {
         },
         'Rho': {
             field: 'MEC_MA_Rho',
-            headerName: 'Rho',
+            // headerName: 'Rho',
+            renderHeader: (params) => {
+                return rho_col_header_label();
+            },
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
@@ -1031,7 +1075,10 @@ export const cohort_cols = {
         },
         'Rho': {
             field: 'INTERVAL_withheld_subset_Rho',
-            headerName: 'Rho',
+            // headerName: 'Rho',
+            renderHeader: (params) => {
+                return rho_col_header_label();
+            },
             valueGetter: (value, row) => {
                 return cohort_valueGetter(row,'INTERVAL withheld subset','Rho');
             }
@@ -1052,7 +1099,10 @@ export const cohort_cols = {
         },
         'Rho': {
             field: 'NSPHS_Rho',
-            headerName: 'Rho',
+            // headerName: 'Rho',
+            renderHeader: (params) => {
+                return rho_col_header_label();
+            },
             valueGetter: (value, row) => {
                 return cohort_valueGetter(row,'NSPHS','Rho');
             }
@@ -1080,7 +1130,10 @@ export const cohort_cols = {
         },
         'Rho': {
             field: 'FENLAND_Rho',
-            headerName: 'Rho',
+            // headerName: 'Rho',
+            renderHeader: (params) => {
+                return rho_col_header_label();
+            },
             width: 100,
             valueGetter: (value, row) => {
                 return cohort_valueGetter(row,'FENLAND','Rho');
@@ -1109,7 +1162,10 @@ export const cohort_cols = {
         },
         'Rho': {
             field: 'JHS_Rho',
-            headerName: 'Rho',
+            // headerName: 'Rho',
+            renderHeader: (params) => {
+                return rho_col_header_label();
+            },
             valueGetter: (value, row) => {
                 return cohort_valueGetter(row,'JHS','Rho');
             }
@@ -1138,7 +1194,10 @@ export const cohort_cols = {
         },
         'Rho': {
             field: 'UKB_Withheld_ALL_Rho',
-            headerName: 'Rho',
+            // headerName: 'Rho',
+            renderHeader: (params) => {
+                return rho_col_header_label();
+            },
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
@@ -1162,7 +1221,10 @@ export const cohort_cols = {
         },
         'Rho': {
             field: 'UKB_Withheld_AFR_Rho',
-            headerName: 'Rho',
+            // headerName: 'Rho',
+            renderHeader: (params) => {
+                return rho_col_header_label();
+            },
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
@@ -1186,7 +1248,10 @@ export const cohort_cols = {
         },
         'Rho': {
             field: 'UKB_Withheld_AMR_Rho',
-            headerName: 'Rho',
+            // headerName: 'Rho',
+            renderHeader: (params) => {
+                return rho_col_header_label();
+            },
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
@@ -1210,7 +1275,10 @@ export const cohort_cols = {
         },
         'Rho': {
             field: 'UKB_Withheld_EAS_Rho',
-            headerName: 'Rho',
+            // headerName: 'Rho',
+            renderHeader: (params) => {
+                return rho_col_header_label();
+            },
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
@@ -1234,7 +1302,10 @@ export const cohort_cols = {
         },
         'Rho': {
             field: 'UKB_Withheld_EUR_Rho',
-            headerName: 'Rho',
+            // headerName: 'Rho',
+            renderHeader: (params) => {
+                return rho_col_header_label();
+            },
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
@@ -1258,7 +1329,10 @@ export const cohort_cols = {
         },
         'Rho': {
             field: 'UKB_Withheld_SAS_Rho',
-            headerName: 'Rho',
+            // headerName: 'Rho',
+            renderHeader: (params) => {
+                return rho_col_header_label();
+            },
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {

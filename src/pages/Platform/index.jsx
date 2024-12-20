@@ -9,7 +9,7 @@ import Select from "@mui/material/Select";
 
 import DocumentTitle from '../../components/DocumentTitle';
 import { metabolomics_columns, metabolomics_column_groups } from '../../components/table/columns/metabolomics';
-import { proteomics_test_columns, proteomics_column_groups } from '../../components/table/columns/proteomics';
+import { proteomics_columns, proteomics_column_groups } from '../../components/table/columns/proteomics';
 import { transcriptomics_columns, transcriptomics_column_groups } from '../../components/table/columns/transcriptomics';
 import restApiCall from '../../components/RestAPI';
 import DataTableServer from '../../components/table/DataTableServer';
@@ -76,8 +76,8 @@ function Platform() {
                 }
                 break;
             case 'Proteomics':
-                if (platform in proteomics_test_columns) {
-                    return proteomics_test_columns[platform];
+                if (platform in proteomics_columns) {
+                    return proteomics_columns[platform];
                 }
                 break;
             case 'Transcriptomics':

@@ -4,7 +4,7 @@ import { Download } from 'react-bootstrap-icons';
 import DocumentTitle from '../../components/DocumentTitle';
 import { internal_publication_link, op_title, op_subtitle_no_asso, no_entry_found, Header2Cards } from '../../components/Common';
 import DataTable from '../../components/table/DataTable';
-import { score_columns } from '../../components/table/columns/score';
+import { performance_metrics_columns } from '../../components/table/columns/score';
 import { score_phenotype_columns } from '../../components/table/columns/phenotype';
 import restApiCall from '../../components/RestAPI';
 import restApiCallPaginated from '../../components/RestAPIPaginated';
@@ -225,7 +225,7 @@ function Score() {
                                 </div>
                                 <AncestryLegend/>
                             </div>
-                            <DataTable key="score" data={metricData} columns={score_columns}/>
+                            <DataTable key="performance_metrics" data={metricData} columns={performance_metrics_columns}/>
                         </div>:''
                     }
                     {/* PheWAS association table */}
