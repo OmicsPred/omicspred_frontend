@@ -8,7 +8,7 @@ import { performance_metrics_columns } from '../../components/table/columns/scor
 import { score_phenotype_columns } from '../../components/table/columns/phenotype';
 import restApiCall from '../../components/RestAPI';
 import restApiCallPaginated from '../../components/RestAPIPaginated';
-import { ToogleDiv, loading_data, numberBadge } from '../../components/Generic';
+import { ToogleDiv, loading_data, numberBadge, add_s_when_plural } from '../../components/Generic';
 import { DownloadList, get_download_list } from '../../components/Downloads';
 import { MolecularTraitAssociation } from '../MolecularTrait/components/Content';
 import AncestryDistribution from '../../components/ancestry/AncestryDistribution';
@@ -178,6 +178,9 @@ function Score() {
         return ancestry_list;
     }
 
+    const performance_cols_ids = ['id','cohort_label','sample__ancestry_broad','sample__sample_number','evaluation_type'];
+    const phenotype_cols_ids = ['phenotype__id','cohort__name_short','data_values__FDR'];
+
     useEffect(() => {
         fetchScoreData();
         fetchScoreMetrics();
@@ -225,14 +228,14 @@ function Score() {
                                 </div>
                                 <AncestryLegend/>
                             </div>
-                            <DataTable key="performance_metrics" data={metricData} columns={performance_metrics_columns}/>
+                            <DataTable key="performance_metrics" data={metricData} columns={performance_metrics_columns} hidden_columns={{platform__name:false,platform__platform_master__type:false}} col_for_ids={performance_cols_ids}/>
                         </div>:''
                     }
-                    {/* PheWAS association table */}
+                    {/* Phenotype association table */}
                     { scorePhenotypeData && scorePhenotypeData.length ?
                         <div className='mt-5' id="phenotype_table">
-                            {op_subtitle_no_asso('phenotype','Associated PheWAS', scorePhenotypeData.length)}
-                            <DataTable key="phenotype" data={scorePhenotypeData} columns={score_phenotype_columns} sorting='phenotype_name'/>
+                            {op_subtitle_no_asso('phenotype',<>Linked phenotype{add_s_when_plural(scorePhenotypeData.length)}</>, scorePhenotypeData.length)}
+                            <DataTable key="phenotype" data={scorePhenotypeData} columns={score_phenotype_columns} col_for_ids={phenotype_cols_ids} sorting='phenotype_name'/>
                         </div>:''
                     }
                 </div>

@@ -53,6 +53,10 @@ export const participantsHeader = function(number) {
 }
 
 
+export const add_s_when_plural = function(number) {
+    return number > 1 ? 's':''
+}
+
 export const ToogleDiv = (props) => {
     const [show, setShow] = useState(false);
 
@@ -182,15 +186,21 @@ export const useExternalScript = (url) => {
 };
 
 
-export const loading_data = () => {
+export const Spinner = (props) => {
+    const label = props.label ? props.label : undefined;
     return (
         <div className="spinner-container">
             <div className="spinner-border" role="status">
-                <span className="visually-hidden">Loading data</span>
+                {label ? <span className="visually-hidden">{label}</span> : ''}
             </div>
-            <div className='spinner-label ms-3'><span>Loading data</span></div>
+            {label ? <div className='spinner-label ms-3'><span>{label}</span></div>: ''}
         </div>
     )
+}
+
+
+export const loading_data = () => {
+    return <Spinner label='Loading data'/>
 }
 
 

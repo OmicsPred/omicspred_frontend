@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { Tooltip } from '@mui/material';
+import { Table } from 'react-bootstrap-icons';
 import restApiCall from '../../../components/RestAPI';
 import { op_title, element_icon, Header2Cards } from '../../../components/Common';
 import { ToogleDiv }  from '../../../components/Generic';
 import { ScoresTable, PerformanceMetricsTable } from './tables';
 import { display_gene_link, display_protein_link, display_metabolite_link, display_phenotype_link, display_pathway_link, sort_data } from './links';
-import { Table } from 'react-bootstrap-icons';
 import Href from '../../../components/Href';
-import { Tooltip } from '@mui/material'
+
 
 export const MolecularTraitContent = (props) => {
 
@@ -31,14 +32,15 @@ export const MolecularTraitContent = (props) => {
 
     const fetchPerformanceMetrics = async () => {
 		const score_metric_data = await restApiCall('performance/search/'+mt_type+'/'+mt_id);
-        setPerformanceMetricData(score_metric_data.results);
+		if (score_metric_data.results) {
+			setPerformanceMetricData(score_metric_data.results);
+		}
     }
 
     useEffect(() => {
 		fetchScoreData();
 		fetchPerformanceMetrics();
 	},[])
-
 
     return (
 		<div>
@@ -97,7 +99,7 @@ export const MolecularTraitAssociation = (props) => {
 					</td></tr> : ''
 			}
 			{
-				pathways && pathways.length > 0 ? <tr key='pathways'><td>{element_icon('pathway')}<span>Pathway{pathways.length > 1 && 's'}</span></td><td>
+				pathways && pathways.length > 0 ? <tr key='pathways'><td>{element_icon('pathway')}<span>Pathway{pathways.length > 1 && 's'}</span><small className='ms-1 fw-normal'>(lowest-level)</small></td><td>
 					{
 						pathways.length > 1 ?
 							<ToogleDiv key={'toggle_pathways'} title={<><span className='font-bold'>{pathways.length}</span> associated pathways</>} content={<ul className="ps-3">{pathways.map((data) => display_pathway_link(data,pathways.length))}</ul>}/>

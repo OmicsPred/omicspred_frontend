@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 // import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { DataGrid, GridToolbarContainer, GridToolbarColumnsButton, GridToolbarQuickFilter} from '@mui/x-data-grid';
+import { DataGrid, GridToolbarContainer, GridToolbarColumnsButton, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import { loading_data } from '../Generic';
 
 
@@ -75,6 +75,9 @@ const DataTableServer = (props) => {
         }
         else if (row.id) {
             return row.id
+        }
+        else if (row.external_id) {
+            return row.external_id
         }
         else if (row.name) {
             return row.name;
@@ -188,7 +191,7 @@ const DataTableServer = (props) => {
         <>
         { data && data.length > 0 ?
             <div className='d-flex'>
-                <div className="table-responsive" style={{flexBasis: "fit-content"}}>
+                <div className="table-responsive">
                     <DataGrid
                         key="server-side"
                         // autoHeight
@@ -204,6 +207,7 @@ const DataTableServer = (props) => {
                         paginationModel={paginationModel}
                         paginationMode="server"
                         onPaginationModelChange={setPaginationModel}
+                        disableColumnFilter
                         initialState={{
                             pagination: {
                                 paginationModel: paginationModel
@@ -241,6 +245,7 @@ const DataTableServer = (props) => {
                 </div>
             </div>
             : noEntry ?
+                // <div>Error: no data found or there is an issue to fetch the data</div> : ''
                 <div>Error: no data found or there is an issue to fetch the data</div> : loading_data()
         }
         </>

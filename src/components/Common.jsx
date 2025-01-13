@@ -144,7 +144,7 @@ export const op_subtitle = (type,label,count) => {
         suffix += '(s)'
     }
     // return <h5><ChevronRight className={'op_subtitle color_'+type}/>Associated {label}{suffix}{count ? <> (<span className={'color_'+type}>{count}</span>)</> : ''}</h5>
-    return <h5><ChevronRight className={'op_subtitle color_'+type}/>Associated {label}{suffix}{count ? op_count_badge(count,type) : ''}</h5>
+    return <h5><ChevronRight className={'op_subtitle color_'+type}/>Linked {label}{suffix}{count ? op_count_badge(count,type) : ''}</h5>
 }
 
 
@@ -199,7 +199,7 @@ export const HeaderCard = (props) => {
 export const Header2Cards = (props) => {
     const type_left = props.type_left;
     const content_left = props.content_left;
-    const type_right = props.type_right ? props.type_right : 'Associated data';
+    const type_right = props.type_right ? props.type_right : 'Linked annotations';
     const content_right = props.content_right;
 
     const type_left_uc = type_left.charAt(0).toUpperCase() + type_left.slice(1);

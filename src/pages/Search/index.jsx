@@ -1,13 +1,14 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'react-router';
-import { ChevronRight, Search as SearchIcon } from 'react-bootstrap-icons';
+import { ChevronRight, InfoCircleFill, Search as SearchIcon } from 'react-bootstrap-icons';
+import { Tooltip } from '@mui/material';
 import DocumentTitle from '../../components/DocumentTitle';
 import restApiCall from '../../components/RestAPI';
 import ResultCard from './components/ResultCard';
 import { SidePanelFilter } from './components/SidePanelFilter';
 import { loading_data } from '../../components/Generic';
 import { element_icon } from '../../components/Common';
-
+import Href from '../../components/Href';
 
 
 function Search() {
@@ -23,7 +24,9 @@ function Search() {
     let query = '';
     for (const [key, value] of searchParams.entries()) {
         if (key == 'q') {
-            query = value;
+            if (value) {
+                query = value.trim(); // Remove whitespaces
+            }
         }
     }
     DocumentTitle('Search "'+query+'"');
@@ -54,6 +57,14 @@ function Search() {
                     }
                 }
             }
+            if (results_list[i]['_index']=='pathway') {
+                if (omics_counts['Pathways']) {
+                    omics_counts['Pathways'] += 1;
+                }
+                else {
+                    omics_counts['Pathways'] = 1;
+                }
+            }
             // Platforms
             if (results_list[i]['_source']['platform_name']) {
                 const res_platforms = results_list[i]['_source']['platform_name'];
@@ -73,7 +84,7 @@ function Search() {
 
         setEsResults(results);
         setResultsReturned(true);
-        options.push({header:'Omics', type:'omics', list: omics.sort(), counts: omics_counts})
+        options.push({header:'Group type', type:'omics', list: omics.sort(), counts: omics_counts})
         options.push({header:'Platform', type:'platform', list: platforms.sort(), counts: platform_counts})
         setEsOptions(options);
         // console.log(">>> options");
@@ -105,9 +116,13 @@ function Search() {
     function isFiltered(result) {
         let filter_count = 0;
         const result_source = result._source;
-        // Omics filter
-        const omics = result_source.omics_type;
+
+        // Omics/Types filter
         if (omicsChecked && omicsChecked.length > 0) {
+            let omics = result_source.omics_type;
+            if (!omics && result._index=='pathway') {
+                omics = ['Pathways'];
+            }
             for (let i=0; i < omics.length; i++) {
                 if (omicsChecked.includes(omics[i])) {
                     filter_count += 1;
@@ -120,12 +135,14 @@ function Search() {
         }
 
         // Platforms filter
-        const platforms = result_source.platform_name;
         if (platformChecked && platformChecked.length > 0) {
-            for (let i=0; i < platforms.length; i++) {
-                if (platformChecked.includes(platforms[i])) {
-                    filter_count += 1;
-                    break;
+            const platforms = result_source.platform_name;
+            if (platforms) {
+                for (let i=0; i < platforms.length; i++) {
+                    if (platformChecked.includes(platforms[i])) {
+                        filter_count += 1;
+                        break;
+                    }
                 }
             }
         }
@@ -177,8 +194,20 @@ function Search() {
     return (
         <>
             <div className='d-flex'>
-                <h2 className='page_title'><SearchIcon size="0.9em" className="color_hl me-3"/>Search results<ChevronRight className={'op_title_separator color_hl'}/><span>{query}</span></h2>
-                <div className='mt-4 ms-3'><span className="badge rounded-pill badge-op">{esResults ? esResults.length: 0 } hits</span></div>
+                <h2 className='page_title' style={{verticalAlign:"middle"}}>
+                    <SearchIcon size="0.9em" className="color_hl me-3"/>
+                    <span>Search results</span>
+                    <ChevronRight className={'op_title_separator color_hl'}/>
+                    <span className='fw-bold'>{query}</span>
+                    <span className="badge rounded-pill badge-op ms-3" style={{fontSize:"14px",marginTop:"4px"}}>{esResults ? esResults.length: 0 } hit{esResults && esResults.length > 1 ? 's':'' }</span>
+                    {/* <span className='ms-3'> */}
+                        <Tooltip className='ms-4' title="Website search documentation">
+                            <span style={{marginTop:"1px"}}>
+                                <Href href="/about#website_search" icon={<InfoCircleFill size={22}/>} target='blank'/>
+                            </span>
+                        </Tooltip>
+                    {/* </span> */}
+                </h2>
             </div>
             <div className='d-flex'>
                 <Suspense fallback={<div>Loading results ...</div>}>
@@ -191,6 +220,7 @@ function Search() {
                                 { esOptions && esOptions.length > 0 ? esOptions.map((data) => <SidePanelFilter handleChange={handleChange} filter={data} key={data.type+'_side'}/>) : <div>No data</div>}
 
                                 {/* Legend of feature type in the results */}
+                                <hr/>
                                 <div className="MuiBox-root search_selection_block">
                                     <fieldset>
                                         <legend className="mb-3">Result types</legend>

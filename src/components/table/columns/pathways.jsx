@@ -2,6 +2,7 @@ import {common_cols} from "./common";
 
 
 const gene_name_col = {...common_cols['gene_name'], field: 'pathway_genes_name', sortable: false, headerClassName: 'col_border_left'}
+const protein_name_col = {...common_cols['protein_id'], field: 'pathway_proteins_name', sortable: false}
 const metabolite_id_col = {...common_cols['metabolite_id'], field: 'pathway_metabolites_external_id', sortable: false}
 const metabolite_name_col = {...common_cols['metabolite_name'], field: 'pathway_metabolites_name', sortable: false}
 
@@ -12,6 +13,7 @@ export const pathways_columns = [
     common_cols['superpathway_name'],
     // common_cols['gene_name'],
     gene_name_col,
+    protein_name_col,
     // common_cols['metabolite_id'],
     metabolite_id_col,
     // common_cols['metabolite_name']
@@ -26,7 +28,7 @@ export const pathways_group_columns = [
     },
     {
         groupId: 'Mapped Molecular Trait',
-        children: [{ field: 'pathway_genes_name' }, { field: 'pathway_metabolites_external_id' }, { field: 'pathway_metabolites_name' }],
+        children: [{ field: 'pathway_genes_name' }, {field: 'pathway_proteins_name' }, { field: 'pathway_metabolites_external_id' }, { field: 'pathway_metabolites_name' }],
         headerClassName: ['col_border_left','col_border_right']
     },
 ]

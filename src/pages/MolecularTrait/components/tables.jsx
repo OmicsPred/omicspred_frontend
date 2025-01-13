@@ -3,7 +3,7 @@ import AncestryLegend from '../../../components/ancestry/AncestryLegend';
 import { performance_metrics_columns_ext } from '../../../components/table/columns/score';
 import { score_molecular_trait_columns } from '../../../components/table/columns/scores';
 // import { pathway_molecular_trait_columns } from '../../../components/table/columns/pathways';
-import { op_subtitle,op_subtitle_no_asso } from '../../../components/Common';
+import { op_subtitle, op_subtitle_no_asso } from '../../../components/Common';
 
 
 export const ScoresTable = (props) => {
@@ -20,10 +20,11 @@ export const ScoresTable = (props) => {
 }
 
 export const PerformanceMetricsTable = (props) => {
+    const cols_ids = ['id','cohort_label','sample__ancestry_broad','sample__sample_number','evaluation_type'];
     return (
         <div className='mt-5'>
-            {op_subtitle_no_asso('hl','Performance Metrics',props.data.length)}
-            <DataTable key="performance_metrics" data={props.data} columns={performance_metrics_columns_ext}/>
+            {op_subtitle_no_asso('hl','Performance metrics',props.data.length)}
+            <DataTable key="performance_metrics" data={props.data} columns={performance_metrics_columns_ext} hidden_columns={{platform__name:false,platform__platform_master__type:false}} col_for_ids={cols_ids}/>
         </div>
     )
 }

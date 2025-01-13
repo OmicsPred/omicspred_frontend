@@ -76,6 +76,8 @@ export const performance_metrics_columns = [
             return row.evaluation_type;
         }
     },
+    common_cols['platform_name'],
+    common_cols['platform_type'],
     {
         field: 'r2',
         // headerName: <>R<sup>2</sup></>,
