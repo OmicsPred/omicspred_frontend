@@ -6,7 +6,7 @@ import Href from '../../Href';
 export const default_cell_value = process.env.DEFAULT_CELL_VALUE;
 
 const data_separator = ', ';
-const display_threshold = 10;
+const display_threshold = 2;
 
 const variant_rate_label = 'Variant Match Rate'
 
@@ -300,19 +300,36 @@ export const common_cols = {
     'protein_id': {
         field: 'proteins__external_id',
         headerName: 'Protein ID',
-        minWidth: 110,
+        minWidth: 115,
         // minWidth: 120,
         // flex: 0.5,
         hideable: false,
         renderCell: (params) => {
             let pr_ids = [];
             if (params.row.proteins) {
-                pr_ids = params.row.proteins.map((protein) => ({'label': protein.external_id, 'desc': protein.name}));
+                pr_ids = params.row.proteins.map((protein) => ({
+                    'id': protein.external_id ? protein.external_id : protein.name,
+                    'label': protein.external_id,
+                    'desc': protein.name
+                }));
             }
             else if (params.row.external_id) {
-                pr_ids.push({'label': params.row.external_id, 'desc': params.row.name});
+                pr_ids.push({
+                    'id': params.row.external_id,
+                    'label': params.row.external_id,
+                    'desc': params.row.name
+                });
             }
-            return omicspred_internal_links(pr_ids, 'protein');
+
+            if (pr_ids.length>display_threshold) {
+                return <ToogleDiv content={omicspred_internal_links(pr_ids, 'Protein')} title={pr_ids.length+' proteins'}/>;
+            }
+            else if (pr_ids.length > 0) {
+                return omicspred_internal_links(pr_ids, 'Protein');
+            }
+            else {
+                return default_cell_value;
+            }
         },
         valueGetter: (value, row) => {
             let pr_ids = [];
@@ -393,7 +410,7 @@ export const common_cols = {
             let gene_names = [];
             if (params.row.genes) {
                 gene_names = params.row.genes.map((gene) => ({
-                    'id': (gene.external_id ? gene.external_id : gene.name),
+                    'id': gene.external_id ? gene.external_id : gene.name,
                     'label': gene.name ? gene.name : '-',
                     'desc': gene.descriptions.length ? gene.descriptions[0]: undefined
                 }))
@@ -437,6 +454,30 @@ export const common_cols = {
         flex: 0.5,
         renderCell: (params) => {
             return omicspred_internal_link({'label': params.row.name}, 'gene');
+        },
+        valueGetter: (value, row) => {
+            return row.name;
+        }
+    },
+    'protein_id_from_list': {
+        field: 'protein_id',
+        headerName: 'Protein ID',
+        minWidth: 180,
+        // flex: 0.5,
+        renderCell: (params) => {
+            return omicspred_internal_link({'label': params.row.external_id} , 'protein');
+        },
+        valueGetter: (value, row) => {
+            return row.external_id;
+        }
+    },
+    'protein_name_from_list': {
+        field: 'protein_name',
+        headerName: 'Protein',
+        minWidth: 120,
+        flex: 0.5,
+        renderCell: (params) => {
+            return omicspred_internal_link({'label': params.row.name}, 'protein');
         },
         valueGetter: (value, row) => {
             return row.name;

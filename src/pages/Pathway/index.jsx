@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
+import { Tooltip } from '@mui/material';
+import { Table } from 'react-bootstrap-icons';
 import DocumentTitle from '../../components/DocumentTitle';
 import Href from '../../components/Href';
 import DataTable from '../../components/table/DataTable';
 import { common_cols } from '../../components/table/columns/common';
 import restApiCall from '../../components/RestAPI';
-import { op_title, op_subtitle_no_asso, HeaderCard, no_entry_found } from '../../components/Common';
+import { op_title, op_subtitle_no_asso, Header2Cards, element_icon, no_entry_found } from '../../components/Common';
 import { loading_data } from '../../components/Generic';
 import ReactomeDiagram from './components/Diagram';
 import { display_source, display_superpathways, display_synonyms } from '../MolecularTrait/components/links';
@@ -17,12 +19,14 @@ function Pathway() {
 	const [elementData, setElementData] = useState()
 	const [noEntry, setNoEntry] = useState(false)
 	const [geneData, setGeneData] = useState([])
+	const [proteinData, setProteinData] = useState([])
 	const [metaboliteData, setMetaboliteData] = useState([])
 	const [superpathwayData, setSuperpathwayData] = useState([])
 
     const element = 'pathway';
 
 	const gene_scores_count_col = {...common_cols['scores_count'], field: 'pathway_genes__gene_score'}
+	const protein_scores_count_col = {...common_cols['scores_count'], field: 'pathway_proteins__protein_score'}
 	const metabolite_scores_count_col = {...common_cols['scores_count'], field: 'pathway_metabolites__metabolite_score'}
 
     const gene_columns = [
@@ -30,6 +34,13 @@ function Pathway() {
 		common_cols['gene_name_from_list'],
 		common_cols['description'],
 		gene_scores_count_col
+	]
+
+	const protein_columns = [
+		common_cols['protein_id_from_list'],
+		common_cols['protein_name_from_list'],
+		common_cols['description'],
+		protein_scores_count_col
 	]
 
     const metabolite_columns = [
@@ -48,6 +59,9 @@ function Pathway() {
 			if (data.genes) {
 				setGeneData(data.genes)
 			}
+			if (data.proteins) {
+				setProteinData(data.proteins)
+			}
 			if (data.metabolites) {
 				setMetaboliteData(data.metabolites)
 			}
@@ -60,7 +74,7 @@ function Pathway() {
 		}
 	}
 
-	const get_information_content = () => {
+	const get_information_left_content = () => {
 		return (
 			<>
 				{ elementData.name ?
@@ -76,6 +90,58 @@ function Pathway() {
         )
     }
 
+	const get_information_right_content = () => {
+		return (
+			<>
+				{ geneData && geneData.length > 0 ?
+					<tr>
+						<td>{element_icon('gene')}<span>Mapped gene{geneData.length > 1 && 's'}</span></td>
+						<td key='genes_data'>
+							<div className='d-flex justify-content-between'>
+								{geneData.length}
+								<Tooltip title="See details in the Gene table at the bottom of the current page">
+									<div className="ms-3" style={{marginTop:"-2px"}}>
+										<Href href="#gene_table" icon={<Table/>}/>
+									</div>
+								</Tooltip>
+							</div>
+						</td>
+					</tr> : ''
+				}
+				{ proteinData && proteinData.length > 0 ?
+					<tr>
+						<td>{element_icon('protein')}<span>Mapped protein{proteinData.length > 1 && 's'}</span></td>
+						<td key='proteins_data'>
+							<div className='d-flex justify-content-between'>
+								{proteinData.length}
+								<Tooltip title="See details in the Protein table at the bottom of the current page">
+									<div className="ms-3" style={{marginTop:"-2px"}}>
+										<Href href="#protein_table" icon={<Table/>}/>
+									</div>
+								</Tooltip>
+							</div>
+						</td>
+					</tr> : ''
+				}
+				{ metaboliteData && metaboliteData.length > 0 ?
+					<tr>
+						<td>{element_icon('metabolite')}<span>Mapped metabolite{metaboliteData.length > 1 && 's'}</span></td>
+						<td key='metabolite_data'>
+							<div className='d-flex justify-content-between'>
+								{metaboliteData.length}
+								<Tooltip title="See details in theMetabolite table at the bottom of the current page">
+									<div className="ms-3" style={{marginTop:"-2px"}}>
+										<Href href="#metabolite_table" icon={<Table/>}/>
+									</div>
+								</Tooltip>
+							</div>
+						</td>
+					</tr> : ''
+				}
+			</>
+		)
+	}
+
     useEffect(() => {
 		fetchData();
 	},[])
@@ -86,19 +152,26 @@ function Pathway() {
 				<>
 					{/* Summary Data */}
 					{op_title(element, elementData, pathway)}
-					{ elementData ? <HeaderCard type={element} content={get_information_content()} />:'' }
+					{/* { elementData ? <HeaderCard type={element} content={get_information_content()} />:'' } */}
+					<Header2Cards type_left='pathway' content_left={get_information_left_content()} content_right={get_information_right_content()} />
 
 					{/* Reactome Diagram */}
 					<ReactomeDiagram reactome_id={elementData.external_id} />
 
 					{/* Associated genes */}
 					{
-						geneData.length ? <div key="gene_table" className="mt-4">{op_subtitle_no_asso('gene','Mapped genes',geneData.length)}<DataTable key="gene" data={geneData} columns={gene_columns} col_for_ids={key_cols}/></div> : ''
+						geneData.length ? <div key="gene_table" id="gene_table" className="mt-4">{op_subtitle_no_asso('gene','Mapped genes',geneData.length)}<DataTable key="gene" data={geneData} columns={gene_columns} col_for_ids={key_cols}/></div> : ''
 					}
+
+					{/* Associated protein */}
+					{
+						proteinData.length ? <div key="protein_table" id="protein_table" className="mt-4">{op_subtitle_no_asso('protein','Mapped proteins',proteinData.length)}<DataTable key="protein" data={proteinData} columns={protein_columns} col_for_ids={key_cols}/></div> : ''
+					}
+
 
 					{/* Associated metabolites */}
 					{
-						metaboliteData.length ? <div key="metabolite_table" className="mt-4">{op_subtitle_no_asso('metabolite','Mapped metabolites',metaboliteData.length)}<DataTable key="metabolite" data={metaboliteData} columns={metabolite_columns} col_for_ids={key_cols}/></div> : ''
+						metaboliteData.length ? <div key="metabolite_table" id="metabolite_table" className="mt-4">{op_subtitle_no_asso('metabolite','Mapped metabolites',metaboliteData.length)}<DataTable key="metabolite" data={metaboliteData} columns={metabolite_columns} col_for_ids={key_cols}/></div> : ''
 					}
 				</>
 				: noEntry ?

@@ -1,4 +1,5 @@
 import Container from "./components/Container";
+import SearchDocs from "./components/SearchDocs";
 import Href from "../../components/Href";
 import CitationCard from "../../components/CitationCard";
 import { PageTitleSimple } from "../../components/Common";
@@ -6,19 +7,26 @@ import { PageTitleSimple } from "../../components/Common";
 
 function About() {
 
+  const project_name = process.env.PROJECT_NAME;
+
   return (
     <>
       <PageTitleSimple title="About"/>
-      <div className="mb-5">The OmicsPred Atlas development was led by <Href text="Yu Xu" href="mailto:yx322@medschl.cam.ac.uk"></Href>, under the supervison of <Href text="Michael Inouye" href="https://www.inouyelab.org/home/people" /> at the Department of Public Health and Primary Care, University of Cambridge.</div>
+      <div className="mb-5">The {project_name} Atlas development was led by <Href text="Yu Xu" href="mailto:yx322@medschl.cam.ac.uk"></Href>, under the supervison of <Href text="Michael Inouye" href="https://www.inouyelab.org/home/people" /> at the Department of Public Health and Primary Care, University of Cambridge.</div>
       
       <Container
         title="Citation"
-        text={<div><div className="mb-3">If you use OmicsPred in your research, we ask that you cite our publication:</div><CitationCard/></div>}
+        text={<div><div className="mb-3">If you use {project_name} in your research, we ask that you cite our publication:</div><CitationCard/></div>}
       />
 
       <Container
-        title="Ancestry"
-        text={<p>The Ancestry categories and colour scheme is described on the <Href href='https://www.pgscatalog.org/docs/ancestry/' text='Polygenic Score (PGS) Catalog website'/>.</p>}
+        title="Metadata"
+        text={<p>The metadata structure of {project_name} is heavily inspired by the metadata from the <Href href='https://www.pgscatalog.org/docs/' text='Polygenic Score (PGS) Catalog'/>. The metadata structure is described in the <Href text='Data description' href='/docs'/> page.</p>}
+      />
+
+      <Container
+        title="Website search"
+        text={<SearchDocs/>}
       />
 
       <Container

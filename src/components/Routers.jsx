@@ -21,6 +21,7 @@ import Metabolite from "../pages/MolecularTrait/Metabolite";
 import Phenotype from "../pages/Applications/Phenotype";
 import Pathway from "../pages/Pathway";
 import Cohort from "../pages/Cohort";
+import ScrollToAnchor from './ScrollToAnchor';
 // Tests
 import Search from "../pages/Search";
 import Plot from "../pages/Tests/Plot";
@@ -35,6 +36,7 @@ function OpRouters() {
                 v7_startTransition: true
             }}
         >
+            <ScrollToAnchor/>
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/downloads" element={<Downloads />} />

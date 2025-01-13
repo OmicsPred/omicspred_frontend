@@ -1,4 +1,4 @@
-import { Hexagon } from 'react-bootstrap-icons';
+import { ArrowRight, Hexagon } from 'react-bootstrap-icons';
 import { PageTitleSimple } from '../../components/Common';
 import Href from '../../components/Href';
 import Container from "./components/Container";
@@ -114,8 +114,14 @@ const documentation_op = {
     },
     'Pathway': {
         'label': 'pathway',
-        'desc': <>The Pathways come from Reactome and the mapping pathways-genes and pathways-metabolites have be done using the mappings files from the <Href href='https://reactome.org/download-data' text='Reactome "Identifier mapping files"'/>.
-                <p>From the file category "Lowest level pathway diagram" we used the "ENSEMBL to pathways" file to map the genes and the "ChEBI to pathways" file to map the metabolites.</p></>,
+        'desc': <>
+                    <p>The Pathways come from <Href text="Reactome" href="https://reactome.org/"/> and the mapping pathways-genes and pathways-metabolites have be done using the mappings files from the <Href href='https://reactome.org/download-data' text={<>Reactome "Identifier mapping files <ArrowRight /> Lowest level pathway diagram"</>}/>.</p>
+                    <span>From the file category "Lowest level pathway diagram" we used:</span>
+                    <ul>
+                        <li>The <Href text="ENSEMBL to pathways" href="https://reactome.org/download/current/Ensembl2Reactome.txt"/> file to map the genes (Ensembl2Reactome.txt), and to map the proteins by extension.</li>
+                        <li>The <Href text="ChEBI to pathways" href="https://reactome.org/download/current/ChEBI2Reactome.txt"/> file to map the metabolites (ChEBI2Reactome.txt).</li>
+                    </ul>
+                </>,
         'struct': [
             {'name': 'Name', 'desc': 'Name of the Pathway'},
             {'name': 'External Identifier', 'desc': 'Pathway external identifier (e.g. R-HSA-156582 from Reactome)'},

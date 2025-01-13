@@ -30,7 +30,7 @@ function Protein() {
     }
 
     const fetchSummaryData = async () => {
-        const data = await restApiCall(element+'/'+protein+'?extend_schema=1');
+        const data = await restApiCall(element+'/'+protein);
         if (data && Object.keys(data).length) {
             setElementData(data);
             if (data.gene) {

@@ -1,5 +1,5 @@
 // import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { DataGrid, GridToolbarContainer, GridToolbarColumnsButton, GridToolbarExport, GridToolbarQuickFilter} from '@mui/x-data-grid';
+import { DataGrid, GridToolbarContainer, GridToolbarColumnsButton, GridToolbarFilterButton, GridToolbarExport, GridToolbarQuickFilter} from '@mui/x-data-grid';
 
 
 const DataTable = (props) => {
@@ -19,6 +19,11 @@ const DataTable = (props) => {
         initial_sorting = { field: props.sorting, sort: 'asc' }
     }
 
+    let initial_hidden_columns = {};
+    if (props.hidden_columns) {
+        initial_hidden_columns = props.hidden_columns;
+    }
+
     const row_height_settings = 'auto';
 
     // const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_';
@@ -34,23 +39,29 @@ const DataTable = (props) => {
     }
 
     function getRowId(row) {
-      // Special combination of columns values to get unique row ID
+        // Special combination of columns values to get unique row ID
         if (props.col_for_ids) {
             const ids = props.col_for_ids;
             let row_key = '';
             for (let i=0; i<ids.length; i++) {
                 const cols = ids[i].split('__');
+                let additional_key = '';
                 if (cols.length == 2) {
-                    row_key = row_key+'_'+row[cols[0]][cols[1]];
+                    additional_key = String(row[cols[0]][cols[1]]);
                 }
                 else {
-                    row_key = row_key+'_'+row[cols[0]];
+                    additional_key = String(row[cols[0]]);
                 }
+                additional_key = additional_key.replaceAll(' ','_');
+                row_key = row_key+'_'+additional_key;
             }
             return row_key;
         }
         else if (row.id) {
             return row.id
+        }
+        else if (row.external_id) {
+            return row.external_id
         }
         else if (row.name) {
             return row.name;
@@ -66,6 +77,7 @@ const DataTable = (props) => {
           <GridToolbarContainer className='d-flex justify-content-between'>
             <div className='d-flex'>
                 <GridToolbarColumnsButton/>
+                <GridToolbarFilterButton/>
                 <GridToolbarExport/>
             </div>
             {/* <GridToolbarQuickFilter/> */}
@@ -83,7 +95,7 @@ const DataTable = (props) => {
 
     return (
         <div className="d-flex" >
-            <div className="table-responsive" style={{flexBasis: "fit-content"}}>
+            <div className="table-responsive">
                 <DataGrid
                     // autoHeight
                     columnGroupingModel={props.groups}
@@ -93,6 +105,8 @@ const DataTable = (props) => {
                     getRowHeight={() => row_height_settings}
                     sx={{ '--DataGrid-overlayHeight': '200px' }}
                     getRowClassName={(params) => params.row.evaluation_type && params.row.evaluation_type == 'Training' ? 'training_row':''} // Highlight the training rows
+                    ignoreDiacritics // Ignore accents for quick search
+                    columnVisibilityModel={initial_hidden_columns}
                     initialState={{
                         pagination: { paginationModel: { pageSize: default_page_size } },
                         sorting: {

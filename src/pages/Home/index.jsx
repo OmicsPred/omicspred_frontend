@@ -12,30 +12,30 @@ import Supports from "./components/Supports"
 
 
 function Home() {
-  DocumentTitle('Homepage');
-  const [datasetData, setDatasetData] = useState([])
+    DocumentTitle('Homepage');
+    const [datasetData, setDatasetData] = useState([])
 
-  const fetchDatasetData = async () => {
-    const dataset_data = await restApiCallPaginated('dataset/all');
-    setDatasetData(dataset_data);
-  }
+    const fetchDatasetData = async () => {
+        const dataset_data = await restApiCallPaginated('dataset/all');
+        setDatasetData(dataset_data);
+    }
 
-  useEffect(() => {
-    fetchDatasetData();
-  },[])
+    useEffect(() => {
+        fetchDatasetData();
+    },[])
 
-  return (
-    <>
-      <Header/>
-      { datasetData && datasetData.length > 0 ? <Stats data={datasetData}/> : ''}
-      <About/>
-      { datasetData && datasetData.length > 0 ? <Platforms data={datasetData}/> : ''}
-      <Applications/>
-      <Citation/>
-      <Feedback/>
-      <Supports/>
-    </>
-  );
+    return (
+        <>
+            <Header/>
+            { datasetData && datasetData.length > 0 ? <Stats data={datasetData}/> : ''}
+            <About/>
+            { datasetData && datasetData.length > 0 ? <Platforms data={datasetData}/> : ''}
+            <Applications/>
+            <Citation/>
+            <Feedback/>
+            <Supports/>
+        </>
+    );
 }
 
 export default Home;

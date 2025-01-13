@@ -28,6 +28,11 @@ const Href = (props) => {
 
     // Internal link
     if (props.href.startsWith('/') || props.href.startsWith('#')) {
+        if (props.target && props.target=='blank') {
+            return(
+                <a href={props.href} target="_blank" className={extra_classes} title={title}>{text_content}</a>
+            );
+        }
         return(
             <a href={props.href} className={extra_classes} title={title}>{text_content}</a>
         );
@@ -41,13 +46,11 @@ const Href = (props) => {
             );
         }
         // With external link icon
-        else {
-            return(
-                <a href={props.href} className={"external-link"+extra_classes} title={title} target="_blank" rel="noreferrer">
-                    {text_content}<BoxArrowUpRight/>
-                </a>
-            );
-        }
+        return(
+            <a href={props.href} className={"external-link"+extra_classes} title={title} target="_blank" rel="noreferrer">
+                {text_content}<BoxArrowUpRight/>
+            </a>
+        );
     }
 }
 

@@ -904,6 +904,10 @@ button.MuiButton-root:hover {
 .navbar {
     background-color: $op_color_2;
     // color: $op_white !important;
+    .container {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
     .navbar-nav {
         >a , .nav-item>a {
             color: $op_white !important;
@@ -977,10 +981,11 @@ a.navbar-brand {
             background-color: $op_hover_grey;
         }
     }
+    border: 1px solid $op_table_border;
 }
 .table-responsive {
     width: 100%;
-    flex-basis: fit-content;
+    flex-basis: fit-content !important;
     min-width: 750px;
 }
 
@@ -1018,9 +1023,11 @@ a.navbar-brand {
         padding: 8px 10px;
     }
 }
-.table_desc {
-    tbody > tr > td:first-child {
-        background-color: $op_light_grey;
+.table_doc {
+    width: auto !important;
+    thead > tr > th {
+        background-color: $op_color_2;
+        color: $op_white;
     }
 }
 
@@ -1041,6 +1048,11 @@ a.navbar-brand {
 }
 .col_border_right {
     border-right: 1px solid;
+}
+ul.example_list {
+    list-style-type: none;
+    padding-left: 0px;
+    margin-bottom: 0px;
 }
 
 
@@ -1213,7 +1225,7 @@ fieldset {
     .search_selection_block {
         display: flex;
         fieldset {
-            margin: 1.5rem;
+            margin: 1rem 1.5rem 1.5rem;
         }
     }
 }
@@ -1333,61 +1345,6 @@ fieldset {
     background-color: $me_color;
 }
 
-// @each $omics_key, $omics_color in $omics_colors {
-//     .color_#{$omics_key} {
-//         color: $omics_color;
-//     }
-
-//     .border_color_#{$omics_key} {
-//         border-color: $omics_color !important;
-//     }
-
-//     .border_#{$omics_key} {
-//         border: 1px solid $omics_color;
-//     }
-
-//     .hl_#{$omics_key} {
-//       border-bottom: 1px solid $omics_color;
-//     }
-
-//     .badge_#{$omics_key} {
-//         background-color: $omics_color;
-//         font-weight: normal !important;
-//     }
-
-//     .bg_#{$omics_key} {
-//         background-color: $omics_color;
-//         font-weight: normal !important;
-//         color: $omics_color;
-//     }
-// }
-
-// @each $type_key, $type_color in $type_colors {
-//     .color_#{$type_key} {
-//         color: $type_color !important;
-//     }
-
-//     .bg_#{$type_key} {
-//         background-color: $type_color;
-//     }
-
-//     .border_color_#{$type_key} {
-//         border-color: $type_color !important;
-//     }
-// }
-
-// @media screen and (max-width: 1200px) {
-//     .op_stats_container {
-//         flex-direction:column;
-//         justify-content: center;
-//         > div {
-//             margin-bottom: 1rem;
-//         }
-//         // .op_stats_separator {
-//         //     display:none
-//         // }
-//     }
-// }
 
 @media screen and (max-width: 1170px) {
     .platform_accordion {
@@ -1461,6 +1418,10 @@ fieldset {
 }
 
 @media screen and (max-width: 766px) {
+    .navbar > .container {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+    }
     .container-fluid {
         padding-left: 0.5rem !important;
         padding-right:0.5rem !important;

@@ -1,5 +1,5 @@
 import Href from "../../../components/Href"
-import { scoresBadge } from '../../../components/Generic';
+import { numberBadge, scoresBadge, add_s_when_plural } from '../../../components/Generic';
 import { element_icon } from '../../../components/Common';
 import OmicsList from "./OmicsList"
 import MolecularTraits from './MolecularTraits';
@@ -8,6 +8,7 @@ import MolecularTraits from './MolecularTraits';
 const index2url = {
     'gene': 'gene',
     'metabolite': 'metabolite',
+    'pathway': 'pathway',
     'phenotype': 'phenotype',
     'protein': 'protein',
     'score': 'score'
@@ -16,6 +17,7 @@ const index2url = {
 const index2id = {
     'gene': 'Gene ID',
     'metabolite': 'Metabolite ID',
+    'pathway': 'Pathway ID',
     'phenotype': 'Phenotype ID',
     'protein': 'Protein ID',
     'score': 'OmicsPred ID'
@@ -36,7 +38,9 @@ export default function ResultCard(props) {
         url_id = url_id.replace('.','_');
     }
 
-    data.platform_name.sort();
+    if (data.platform_name) {
+        data.platform_name.sort();
+    }
 
     const key = result_id.replace(' ','_');
 
@@ -47,6 +51,41 @@ export default function ResultCard(props) {
             return (<><span className="px-3">/</span><span className="line_key">Category</span>{data.category}</>)
         }
         else { return ''; }
+    }
+
+    const display_molecular_trait_counts = (data) => {
+        const mt_types_list = {
+            'genes': 'Gene',
+            'proteins': 'Protein',
+            'metabolites': 'Metabolite'
+        }
+
+        const mt_types = Object.keys(mt_types_list);
+
+        let mt_types_with_data = [];
+        for (let i=0; i<mt_types.length;i++) {
+            const mt_type = mt_types[i];
+            if (data[mt_type] && data[mt_type].length > 0) {
+                mt_types_with_data.push(mt_type);
+            }
+        }
+        return (
+            <>
+                { mt_types_with_data.length > 0 ?
+                    <li key='asso_mt'>
+                        <span className="line_key">Associated Molecular Traits</span>
+                        {
+                            mt_types_with_data.map((mt_type, index) =>
+                                <span key={mt_type}>
+                                    {index != 0 ? <span className="px-2">/</span>:''}
+                                    <span>{mt_types_list[mt_type]}{add_s_when_plural(data[mt_type].length)} {numberBadge(data[mt_type].length)}</span>
+                                </span>
+                            )
+                        }
+                    </li>
+                : '' }
+            </>
+        )
     }
 
     const get_source_name = (data) => {
@@ -72,9 +111,10 @@ export default function ResultCard(props) {
                                     <ul className="key_val_line mb-1">
                                         { result_id == data.name && data.id ? <li><span className="line_key">{index2id[props.type]}</span>{data.id}{get_source_name(data)}{display_phenotype_category()}</li> : '' }
                                         { result_id == data.id && data.name ? <li><span className="line_key">Name</span>{data.name}</li> : '' }
-                                        { data.scores_count ? <li><span className="line_key">Scores count</span>{scoresBadge(data.scores_count)}</li>:'' }
-                                        { data.omics_type.length > 0 ? <li><span className="line_key">Omics type{data.omics_type.length > 1 && 's'}</span><OmicsList omics={data.omics_type} key_prefix={result_id}/></li> : '' }
-                                        { data.platform_name.length > 0 ? <li><span className="line_key">Platform{data.platform_name.length > 1 && 's'}</span>{data.platform_name.join(', ')}</li> : '' }
+                                        { props.type == 'pathway' ? display_molecular_trait_counts(data) : ''}
+                                        { data.scores_count && data.scores_count ? <li><span className="line_key">Scores count</span>{scoresBadge(data.scores_count)}</li>:'' }
+                                        { data.omics_type && data.omics_type.length > 0 ? <li><span className="line_key">Omics type{data.omics_type.length > 1 && 's'}</span><OmicsList omics={data.omics_type} key_prefix={result_id}/></li> : '' }
+                                        { data.platform_name && data.platform_name.length > 0 ? <li><span className="line_key">Platform{data.platform_name.length > 1 && 's'}</span>{data.platform_name.join(', ')}</li> : '' }
                                     </ul>
                                 </div>
                                 { props.type == 'score' ? <MolecularTraits data={data}/> : '' }

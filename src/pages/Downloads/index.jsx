@@ -25,11 +25,16 @@ function Downloads() {
     return(
         <div>
             <PageTitleSimple title='Downloads'/>
-            <div>
-                <div className='mb-5'>
-                    {process.env.PROJECT_NAME} metadata and data files downloads.
-                </div>
 
+            <div className='mb-4'>
+                {process.env.PROJECT_NAME} metadata and data files downloads.
+            </div>
+
+            <div className='mb-5'>
+                <Note msg={rest_api_doc()}/>
+            </div>
+
+            <div>
                 {op_subtitle_no_asso('hl','Genetic scores')}
 
                 <h6 className='mt-4 mb-3'><b>The list of the different data files is listed below:</b></h6>
@@ -46,7 +51,7 @@ function Downloads() {
                 </div>
             </div>
 
-            <div className='my-5'>
+            <div className='mt-5'>
                {op_subtitle_no_asso('hl','PheWAS associations')}
                 <ul className='expanded mt-3'>
                     { Object.keys(download_applications_labels).map((type) =>
@@ -57,10 +62,6 @@ function Downloads() {
                         </li>)
                     }
                 </ul>
-            </div>
-
-            <div className='mt-4'>
-                <Note msg={rest_api_doc()}/>
             </div>
         </div>
     )

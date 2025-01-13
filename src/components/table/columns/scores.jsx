@@ -6,6 +6,7 @@ const gene_id_col = {...common_cols['gene_name'], headerClassName: 'col_border_l
 const protein_id_col = {...common_cols['protein_id'], headerName: 'Protein'}
 const metabolite_id_col = {...common_cols['metabolite_id'], headerName: 'Metabolite', headerClassName: 'col_border_right'}
 
+
 // Export Scores columns
 export const scores_columns = [
     common_cols['omicspred_id'],
