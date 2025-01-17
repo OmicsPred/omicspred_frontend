@@ -209,7 +209,7 @@ function Search() {
                     {/* </span> */}
                 </h2>
             </div>
-            <div className='d-flex'>
+            <div className='search_result_container'>
                 <Suspense fallback={<div>Loading results ...</div>}>
                 {
                     resultsReturned == true ?
@@ -217,19 +217,22 @@ function Search() {
                         <>
                             {/* Selection Panel */}
                             <div className='search_selection_panel'>
-                                { esOptions && esOptions.length > 0 ? esOptions.map((data) => <SidePanelFilter handleChange={handleChange} filter={data} key={data.type+'_side'}/>) : <div>No data</div>}
-
+                                <div className='search_selection_container'>
+                                    { esOptions && esOptions.length > 0 ? esOptions.map((data) => <SidePanelFilter handleChange={handleChange} filter={data} key={data.type+'_side'}/>) : <div>No data</div>}
+                                </div>
                                 {/* Legend of feature type in the results */}
                                 <hr/>
-                                <div className="MuiBox-root search_selection_block">
+                                <div className="MuiBox-root search_result_types">
                                     <fieldset>
-                                        <legend className="mb-3">Result types</legend>
-                                        { resultTypes && Object.keys(resultTypes).length > 0 ? Object.keys(resultTypes).map((data) => <div key={'legend_'+data} className="op_search_feature_legend mb-1" >
-                                            {/* <span className={'px-2 py-2 me-3 mb-1 bg_'+data}></span> */}
-                                            { element_icon(data.toLowerCase()) }
-                                            <span className='op_legend_label'>{data}</span>
-                                            <span className='badge badge-sq-op-sm op_color_default_font bg_white ms-2'>{resultTypes[data]}</span>
-                                        </div>): ''}
+                                        <legend>Result types</legend>
+                                        <div className='op_search_result_legend'>
+                                            { resultTypes && Object.keys(resultTypes).length > 0 ? Object.keys(resultTypes).map((data) => <div key={'legend_'+data} className="op_search_feature_legend mb-1" >
+                                                {/* <span className={'px-2 py-2 me-3 mb-1 bg_'+data}></span> */}
+                                                { element_icon(data.toLowerCase()) }
+                                                <span className='op_legend_label'>{data}</span>
+                                                <span className='badge badge-sq-op-sm op_color_default_font bg_white ms-2'>{resultTypes[data]}</span>
+                                            </div>): ''}
+                                        </div>
                                     </fieldset>
                                 </div>
                             </div>

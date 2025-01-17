@@ -1,5 +1,6 @@
 import { ChevronRight } from 'react-bootstrap-icons';
 import Href from "../../../components/Href";
+import { add_s_when_plural } from '../../../components/Generic';
 
 const Container = (props) => {
     const cohort = props.data;
@@ -7,11 +8,15 @@ const Container = (props) => {
     return (
         <div className="w-full h-auto py-2">
             <h3 className="hl_grey_box mb-3 p-2">
-                <ChevronRight className='me-1' size='1.4rem'/><Href href={cohort.href} text={cohort.title}/>
+                <span>
+                    <ChevronRight className='me-1' size='1.4rem'/><Href href={cohort.href} text={cohort.title}/>
+                </span>
             </h3>
-
             <div className="d-flex mb-5">
                 <div>
+                    <div className='mb-1'><span className='me-2'>Short name{add_s_when_plural(cohort.labels.length)}:</span>
+                        {cohort.labels.map((cohort_label,index) => <span key={cohort_label}>{index > 0 ? ', ':''}<Href href={"/cohort/"+cohort_label} text={cohort_label}/></span>)}
+                    </div>
                     <p>{cohort.desc}</p>
                 </div>
                 <div className="ps-3">

@@ -14,7 +14,7 @@ const metabolite = <Hexagon className='color_metabolite element_icon_close'/>;
 const documentation_op = {
     'Publication': {
         'label': 'publication',
-        'desc': '',
+        'desc': 'For each publication the following information is extracted and stored:',
         'struct': [
             {'name': 'PubMed ID (PMID)', 'desc': 'PubMed Identification number.'},
             {'name': 'Digital Object Identifier (doi)', 'desc': 'The doi of the publication.'},
@@ -37,7 +37,7 @@ const documentation_op = {
     },
     'Cohort': {
         'label': 'cohort',
-        'desc': '',
+        'desc': 'Cohorts used in the to build the samples',
         'struct': [
             {'name': 'Cohort name', 'desc': 'Cohort short name.'},
             {'name': 'Cohort full name', 'desc': 'Full name of the cohort.'},
@@ -46,7 +46,7 @@ const documentation_op = {
     },
     'Sample': {
         'label': 'sample',
-        'desc': '',
+        'desc': 'Information describing the samples used to train and validate each Genetic Score.',
         'struct': [
             {'name': 'Sample Number', 'desc': 'Number of individuals included in the sample.'},
             {'name': 'Sample Cases', 'desc': 'Number of individual cases in the sample.'},
@@ -59,11 +59,11 @@ const documentation_op = {
     },
     'Genetic Score': {
         'label': 'score',
-        'desc': '',
+        'desc': 'Each Genetic Score in the database is given a unique '+project_name+' ID to identify it. The following information is extracted, and associated with each Genetic Score in '+project_name+':',
         'struct': [
-            {'name': project_name+' ID', 'desc': 'Unique identifier created for the genetic score in '+process.env.PROJECT_NAME+'.'},
-            {'name': project_name+' name', 'desc': 'Name used by the author to refer to the genetic score before an '+process.env.PROJECT_NAME+' identifier has been assigned.'},
-            {'name': 'Reported Molecular Trait', 'desc': 'Molecular trait (Gene, Protein, Metabolite, ...) identifier and/or name as reported by the author'},
+            {'name': project_name+' ID', 'desc': 'Unique identifier created for the genetic score in '+project_name+'.'},
+            {'name': project_name+' name', 'desc': 'Name used by the author to refer to the genetic score before an '+project_name+' identifier has been assigned.'},
+            {'name': 'Reported Molecular Trait', 'desc': 'Molecular trait (Gene, Protein, Metabolite, ...) identifier and/or name as reported by the author.'},
             {'name': 'Original Genome Build', 'desc': 'The version of the genome that the variants present in the Genetic Score are associated with.'},
             {'name': 'Number of Variants', 'desc': 'Number of variants used to calculate the PGS. In the future this will include a more detailed description of the types of variants present.'},
             {'name': 'Genetic Score Development Method', 'desc': 'The name or description of the method or computational algorithm used to develop the Genetic Score.'},
@@ -92,7 +92,7 @@ const documentation_op = {
     },
     'Performance Metrics': {
         'label': 'perf',
-        'desc': '',
+        'desc': 'Each evaluation of a Genetic Score is stored as Performance Metric, with information about the linked Genetic Score and Sample information',
         'struct': [
             {'name': 'Genetic Score', 'desc': 'Associated Genetic Score'},
             {'name': 'Dataset', 'desc': 'Associated Dataset (includes Publication, Platform and Tissue'},
@@ -169,10 +169,10 @@ const documentation_op = {
         'desc': 'Phenotypes used in the Applications part of '+project_name+', i.e. Phenome-wide association analysis (PheWAS). All the phenotypes are associated to an ontology to facilitate grouping and comparability.',
         'struct': [
             {'name': 'Identifier', 'desc': 'External identifier of the Phenotype.'},
-            {'name': 'Name', 'desc': 'Phenotype name/label'},
-            {'name': 'Category', 'desc': 'Phenotype category'},
-            {'name': 'Source', 'desc': 'External source of the Phenotype (e.g. PheCode)'},
-            {'name': 'Child phenotype(s)', 'desc': 'Children entries of the Phenotype from the ontology'}
+            {'name': 'Name', 'desc': 'Phenotype name/label.'},
+            {'name': 'Category', 'desc': 'Phenotype category.'},
+            {'name': 'Source', 'desc': 'External source of the Phenotype (e.g. PheCode).'},
+            {'name': 'Child phenotype(s)', 'desc': 'Children entries of the Phenotype from the ontology.'}
         ]
     },
     'Genetic Score [Applications]': {
@@ -185,7 +185,7 @@ const documentation_op = {
             {'name': 'Platform', 'desc': 'Associated Platform.'},
             {'name': 'Sample', 'desc': 'Associated Sample (control/cases, percentage female participants).'},
             {'name': 'Cohort', 'desc': 'Cohort use to evaluate the Score/Phenotype association.'},
-            {'name': 'Molecular Traits', 'desc': 'List of associated Molecular Traits (genes, transcripts, protein, metabolites) - simplifed structure.'},
+            {'name': 'Molecular Traits', 'desc': 'List of associated Molecular Traits (genes, transcripts, protein, metabolites) - simplifed structure with only `External ID` and `name`.'},
             // {'name': <>R<sup>2</sup></>, 'desc': 'Proportion of the variance explained.'},
             {'name': 'HR', 'desc': 'Hazard Ratio with confidence interval.'},
             {'name': 'FDR', 'desc': 'False Discovery Rate-adjusted P-value (<0.5).'},
@@ -220,7 +220,6 @@ function Documentation() {
     return (
       <>
         <PageTitleSimple title='Data Description'/>
-        <h2 className='text-warning mb-3'>PAGE IN PROGRESS</h2>
         <div>
             <p>
                 This page contains information regarding the contents of {project_name} and the data structure of its main components.

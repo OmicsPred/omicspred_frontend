@@ -68,7 +68,7 @@ export const datasets_columns = [
     {
         field: 'scoring_files',
         headerName: 'Scoring files',
-        minWidth: 100,
+        minWidth: 120,
         flex: 0.5,
         align: 'right',
         renderCell: (params) => {

@@ -6,8 +6,10 @@ import Stats from "./components/Stats"
 import About from "./components/About"
 import Platforms from "./components/Platforms"
 import Applications from "./components/Applications"
-import Citation from "./components/Citation"
+import DataDownloads from "./components/DataDownloads"
 import Feedback from "./components/Feedback"
+import Citation from "./components/Citation"
+
 import Supports from "./components/Supports"
 
 
@@ -31,8 +33,9 @@ function Home() {
             <About/>
             { datasetData && datasetData.length > 0 ? <Platforms data={datasetData}/> : ''}
             <Applications/>
-            <Citation/>
+            <DataDownloads/>
             <Feedback/>
+            <Citation/>
             <Supports/>
         </>
     );

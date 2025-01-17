@@ -45,6 +45,8 @@ function Downloads() {
                     <li><span className='line_key'>{download_labels['gwas_sumstats']['icon']} GWAS summary stats</span>List of GWAS summary stats files used to build the genetic score models.</li>
                 </ul>
 
+                <p>The data files are publicly accessible on the <Href href={process.env.URL_DOWNLOADS} text={<>Box<sup>TM</sup></>}/> platform.</p>
+
                 <h6 className='mt-4 mb-3'><b>Data files availability by dataset:</b></h6>
                 <div className='mt-2'>
                     <DataTableFromRestApi table_key="datasets" url_suffix={url_suffix} columns={datasets_columns}/>

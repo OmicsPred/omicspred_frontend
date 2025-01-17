@@ -38,7 +38,7 @@ export const scoresBadge = function(number,in_table) {
     if (in_table) {
         class_names += ' badge-op-table';
     }
-    return <span className={class_names} title={thousandifyNumber(number)+" Scores"}><BarChart className='me-1' style={{verticalAlign:'top'}}/>{thousandifyNumberShort(number)}</span>
+    return <span className={class_names} title={thousandifyNumber(number)+" Genetic Score"+add_s_when_plural(number)}><BarChart className='me-1' style={{verticalAlign:'top'}}/>{thousandifyNumberShort(number)}</span>
 }
 
 
@@ -58,6 +58,8 @@ export const add_s_when_plural = function(number) {
 }
 
 export const ToogleDiv = (props) => {
+    // Toogle element which is the same DOM element as the toogle button
+    // (i.e. placed just after the toogle button)
     const [show, setShow] = useState(false);
 
     useEffect(() => {}, [show])
@@ -81,10 +83,55 @@ export const ToogleDiv = (props) => {
 
     return (
         <>
+            {/* Toogle button */}
             <div className={toogle_class} onClick={(e) => {
               hideShowDiv(e)
             }}>{props.title}{show ? <DashCircleFill className="ms-1"/>:<PlusCircleFill className="ms-1"/>}</div>
+            {/* Toogle content */}
             {show ? <div className="d-flex mt-2"><div className={props.class_name ? props.class_name : ''}>{props.content}</div></div>:null}
+        </>
+    )
+}
+
+
+export const ToogleID = (props) => {
+    // Toogle element which is NOT directly under the same DOM element as the toogle button
+    const [show, setShow] = useState(false);
+    const element_id = props.id;
+
+    useEffect(() => {}, [show])
+
+    const hideShowElement = (e) => {
+        // "element" corresponds to the DOM node containing the "Toogle content".
+        const element = document.getElementById(element_id);
+        if (show) {
+            setShow(false);
+            if (element) {
+                element.classList.replace('d-table-cell','d-none');
+            }
+        }
+        else {
+            setShow(true);
+            if (element) {
+                element.classList.replace('d-none','d-table-cell');
+            }
+        }
+    }
+
+    let toogle_class = 'op_toogle';
+    if (props.type == 'button') {
+        toogle_class = 'btn shadow op_toogle_btn';
+    }
+    else if (props.type == 'button_blue') {
+        toogle_class = 'btn btn-op shadow op_toogle_btn_blue';
+    }
+
+    return (
+        <>
+            {/* Toogle button */}
+            <div className={toogle_class} onClick={(e) => {
+              hideShowElement(e)
+            }}>{props.title}{show ? <DashCircleFill className="ms-1"/>:<PlusCircleFill className="ms-1"/>}</div>
         </>
     )
 }
@@ -116,7 +163,7 @@ export const ToogleText = (props) => {
         const displayed_text = whole_text.slice(0, threshold)
         const hidden_text = whole_text.slice(threshold)
         return (
-            <p className='mb-0'>
+            <p key={displayed_text.replaceAll(/\W+/g,'_')} className='mb-0'>
                 <span>{displayed_text}</span>
                 {show ? hidden_text: '...'}
                 <span className={toogle_class} onClick={(e) => {hideShowDiv(e)}}>
