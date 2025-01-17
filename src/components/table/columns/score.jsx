@@ -66,7 +66,7 @@ export const performance_metrics_columns = [
         renderCell: (params) => {
             const stype = params.row.evaluation_type;
             if (stype == 'Training') {
-                return (<span className='training_col'>{stype}</span>)
+                return (<span className='training_col fw-bold'>{stype}</span>)
             }
             else {
                 return stype;

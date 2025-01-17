@@ -30,7 +30,7 @@ function Header() {
                         <Nav className="me-auto">
                             <Nav.Link href="/">Home</Nav.Link>
                             <NavDropdown title="Browse" id="browse-nav-dropdown" renderMenuOnMount={true}>
-                                <NavDropdown.Item href="/scores">Scores</NavDropdown.Item>
+                                <NavDropdown.Item href="/scores">Genetic Scores</NavDropdown.Item>
                                 <NavDropdown.Item href="/publications">Publications</NavDropdown.Item>
                                 <NavDropdown.Item href="/platforms">Platforms</NavDropdown.Item>
                                 <NavDropdown.Item href="/pathways">Pathways</NavDropdown.Item>

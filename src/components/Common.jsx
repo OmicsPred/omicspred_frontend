@@ -4,6 +4,7 @@ import { cohort_cols, common_column_groups } from './table/columns/common';
 import { ToogleDiv, ToogleText, thousandifyNumber } from './Generic';
 import DocumentTitle from './DocumentTitle';
 
+
 export const internal_publication_link = (publication) => {
     let firstauthor = publication.firstauthor;
     let pmid = publication.pmid;
@@ -46,15 +47,12 @@ export const PageTitle = (props) => {
     let prefix = '';
 
     if (category == 'Browse') {
-        if (label == 'scores') {
+        if (label == 'scores' || type == 'score') {
             // prefix = <Clipboard2Data size="26px" className={'me-3 '+color_class}/>
             prefix = <ClipboardDataFill className={'op_title_prefix '+color_class}/>
         }
         else if (label == 'pathways') {
-            prefix = <>
-            <Bezier2 className={'op_title_prefix '+color_class}/>
-            {/* <Bezier size="26px" className={'me-3 '+color_class}/> */}
-            </>
+            prefix = <Bezier2 className={'op_title_prefix '+color_class}/>
         }
         else if (label == 'platforms') {
             prefix = <Stack className={'op_title_prefix '+color_class}/>
@@ -92,16 +90,28 @@ export const PageTitleSimple = (props) => {
 
 
 export const op_title = (type, data, label, force_use_label) => {
-    const type_uc = (type == 'phecode') ? 'PheWAS' : type.charAt(0).toUpperCase() + type.slice(1);
+
+    // const type_uc = (type == 'phecode') ? 'PheWAS' : type.charAt(0).toUpperCase() + type.slice(1);
+    let type_uc = '';
+    switch(type) {
+        case 'phecode':
+            type_uc = 'PheWAS';
+            break;
+        case 'score':
+            type_uc = 'Genetic Score';
+            break;
+        default:
+            type_uc = type.charAt(0).toUpperCase() + type.slice(1);
+            break;
+    }
+
     let value = label;
     let color_class = 'color_'+type;
-    // let prefix = <SlashSquareFill className={'op_title_prefix '+color_class}/>
     let prefix = <Hexagon className={'op_title_prefix '+color_class}/>
     if (!force_use_label) {
         value = (data && data.name) ? data.name : label;
     }
     if (type == 'score') {
-        // prefix = <Clipboard2Data className={'op_title_prefix '+color_class}/>
         prefix = <ClipboardDataFill className={'op_title_prefix '+color_class}/>
     }
     else if (type == 'pathway') {
@@ -143,8 +153,8 @@ export const op_subtitle = (type,label,count) => {
     else {
         suffix += '(s)'
     }
-    // return <h5><ChevronRight className={'op_subtitle color_'+type}/>Associated {label}{suffix}{count ? <> (<span className={'color_'+type}>{count}</span>)</> : ''}</h5>
-    return <h5><ChevronRight className={'op_subtitle color_'+type}/>Linked {label}{suffix}{count ? op_count_badge(count,type) : ''}</h5>
+    // return <h5><ChevronRight className={'op_subtitle color_'+type}/>Linked {label}{suffix}{count ? op_count_badge(count,type) : ''}</h5>
+    return <h4>Linked {label}{suffix}{count ? op_count_badge(count,type) : ''}</h4>
 }
 
 
@@ -152,8 +162,8 @@ export const op_subtitle_no_asso = (type,label,count) => {
     if (!label) {
         label = type;
     }
-    // return <h5><ChevronRight className={'op_subtitle color_'+type}/>{label}{count ? <> (<span className={'color_'+type}>{count}</span>)</> : ''}</h5>
-    return <h5><ChevronRight className={'op_subtitle color_'+type}/>{label}{count ? op_count_badge(count,type) : ''}</h5>
+    // return <h5><ChevronRight className={'op_subtitle color_'+type}/>{label}{count ? op_count_badge(count,type) : ''}</h5>
+    return <h4>{label}{count ? op_count_badge(count,type) : ''}</h4>
 }
 
 
@@ -334,17 +344,12 @@ export const display_description = (description_list) => {
 
 
 export const element_icon = (type,use_alt) => {
-    // return (<SlashSquareFill className={'color_'+type+' element_icon'} />);
-    // return (<HexagonFill className={'color_'+type+' element_icon'} />);
     if (use_alt) {
         return (<HexagonFill className={'color_'+type+' element_icon'} />);
     }
     else {
         return (<Hexagon className={'color_'+type+' element_icon'} />);
     }
-    // else {
-    //     return (<Hexagon className={'color_'+type+' element_icon'} />);
-    // }
 }
 
 

@@ -706,7 +706,7 @@ export const common_cols = {
     'pathway_id': {
         field: 'pathway_id',
         headerName: 'Pathway ID',
-        minWidth: 150,
+        width: 150,
         // flex: 0.4,
         renderCell: (params) => {
             return omicspred_internal_link({'label': params.row.external_id}, 'pathway');
@@ -743,7 +743,7 @@ export const common_cols = {
     'superpathway_name': {
         field: 'superpathways_name',
         headerName: 'Top Level Pathway',
-        minWidth: 200,
+        minWidth: 225,
         // flex: 0.5,
         renderCell: (params) => {
             let sp_pathways = []
@@ -760,8 +760,8 @@ export const common_cols = {
     'description': {
         field: 'descriptions',
         headerName: 'Description',
-        minWidth: 250,
-        flex: 1,
+        minWidth: 260,
+        // flex: 1,
         renderCell: (params) => {
             let desc_list = [];
             if (params.row.descriptions) {
@@ -780,7 +780,7 @@ export const common_cols = {
         headerName: '#Scores',
         type: 'number',
         minWidth: 100,
-        flex: 0.5,
+        // flex: 0.5,
         align: 'right',
         renderCell: (params) => {
             let counts = 0;

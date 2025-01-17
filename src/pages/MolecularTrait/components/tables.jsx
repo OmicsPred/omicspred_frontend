@@ -20,7 +20,7 @@ export const ScoresTable = (props) => {
 }
 
 export const PerformanceMetricsTable = (props) => {
-    const cols_ids = ['id','cohort_label','sample__ancestry_broad','sample__sample_number','evaluation_type'];
+    const cols_ids = ['associated_opgs_id','cohort_label','sample__ancestry_broad','sample__sample_number','evaluation_type'];
     return (
         <div className='mt-5'>
             {op_subtitle_no_asso('hl','Performance metrics',props.data.length)}

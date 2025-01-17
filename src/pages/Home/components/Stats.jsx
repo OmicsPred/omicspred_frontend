@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronRight } from 'react-bootstrap-icons';
+import { Lungs, Bezier2, Stack } from 'react-bootstrap-icons';
 import restApiCall from '../../../components/RestAPI';
 import { thousandifyNumber } from '../../../components/Generic';
 // import OmicsDistribution from './components/OmicsDistribution';
@@ -37,11 +37,28 @@ const Stats = (props) => {
         if (!type) {
             type = title;
         }
+        let icon = undefined;
+        switch(type) {
+            case 'phenotype':
+                icon =  <Lungs className='me-2' size="20px"/>;
+                break;
+            case 'Pathways':
+                icon =  <Bezier2 className='me-2' size="20px"/>;
+                break;
+            case 'Platforms':
+                icon =  <Stack className='me-2' size="20px"/>;
+                break;
+            default:
+                icon = '';
+                break;
+        }
+
         const small_title = title.replace('associations', 'asso.');
         return (
             <div className='home_stats_box'>
                 <div className='home_stats_title'>
-                    <ChevronRight className='r me-1' size="20px"/>
+                    {/* <ChevronRight className='me-1' size="20px"/> */}
+                    {icon}
                     <span className='d-sm-none'>{small_title}</span>
                     <span className='d-none d-sm-inline' style={{minWidth:"200px"}}>{title}</span>
                 </div>
@@ -78,7 +95,7 @@ const Stats = (props) => {
     },[])
 
     return (
-        <div className='op_stats_container flex-xl-row flex-lg-column flex-md-column flex-sm-column flex-xs-column mt-4'>
+        <div className='op_stats_container flex-xl-row flex-lg-row flex-md-column flex-sm-column flex-xs-column mt-4'>
             <div>
                 {/* <h5 className='mb-4'>{project_name} data summary</h5> */}
                 <h5 className='mt-2 mb-4'>{project_name} genetic scores</h5>
@@ -93,7 +110,7 @@ const Stats = (props) => {
                     <div className='d-flex flex-column'>
                         <h5 className='mt-2 mb-4'>{project_name} data summary</h5>
                         <div className='op_stats2'>
-                            { phenotypeAssoCount && phenotypeAssoCount > 0 ? display_count_block('Phenotype associations',phenotypeAssoCount,'/applications/phenotype/full' ,'phenotype') : ''}
+                            { phenotypeAssoCount && phenotypeAssoCount > 0 ? display_count_block('Phenotype associations',phenotypeAssoCount,'/applications/phenotype/full','phenotype') : ''}
                             { pathwaysCount && pathwaysCount > 0 ? display_count_block('Pathways',pathwaysCount,'/pathways') : ''}
                             { platformsCount && platformsCount > 0 ? display_count_block('Platforms',platformsCount,'/platforms') : ''}
                             {/* { publicationsCount && publicationsCount > 0 ? display_count_block('Publications',publicationsCount,'/publications') : ''} */}
