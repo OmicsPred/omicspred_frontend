@@ -821,7 +821,7 @@ export const common_data_cols = {
 //         },
 //         valueGetter: (value, row) => {
 //             if (row.data_values) {
-//                 if (row.data_values.R2) {
+//                 if (row.data_values.R2 || row.data_values.R2==0) {
 //                     return row.data_values.R2;
 //                 }
 //             }
@@ -851,7 +851,7 @@ export const common_data_cols = {
         width: 100,
         valueGetter: (value, row) => {
             if (row.data_values) {
-                if (row.data_values.FDR) {
+                if (row.data_values.FDR || row.data_values.FDR==0) {
                     return row.data_values.FDR;
                 }
                 else {

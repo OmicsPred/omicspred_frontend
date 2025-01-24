@@ -6,7 +6,7 @@ import Href from '../../../components/Href';
 import { display_source, display_synonyms } from '../components/links';
 import { display_description, no_entry_found } from '../../../components/Common';
 import { loading_data } from '../../../components/Generic';
-import { MolecularTraitContent, MolecularTraitAssociation } from '../components/Content';
+import { MolecularTraitContent, MolecularTraitAssociation } from '../components/components';
 
 
 function Protein() {
@@ -16,7 +16,6 @@ function Protein() {
     const [noEntry, setNoEntry] = useState(false)
     const [geneData, setGeneData] = useState()
     const [pathwayData, setPathwayData] = useState()
-
 
     const element = 'protein';
 
@@ -46,7 +45,9 @@ function Protein() {
     const get_information_left_content = () => {
 		return (
 			<>
-                <tr><td>Identifier</td><td>{external_id_link()}{display_source(elementData.external_id_source)}</td></tr>
+                {elementData.external_id ?
+                    <tr><td>Identifier</td><td>{external_id_link()}{display_source(elementData.external_id_source)}</td></tr>:<tr><td>Additional information</td><td>None</td></tr>
+                }
                 { elementData.synonyms && elementData.synonyms.length > 0 ?
                     <tr><td>Synonym{elementData.synonyms.length > 1 ? 's' : ''}</td><td>{display_synonyms(elementData.synonyms)}</td></tr>:''
                 }

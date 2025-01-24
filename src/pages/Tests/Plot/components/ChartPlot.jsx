@@ -13,9 +13,8 @@ import {
 } from "chart.js";
 import { Chart } from "react-chartjs-2";
 import annotationPlugin from "chartjs-plugin-annotation";
-
-import { Download, FiletypePng } from 'react-bootstrap-icons';
 import { saveAs } from "file-saver";
+import ExportChart from "./ExportChart";
 
 
 ChartJS.register(
@@ -385,7 +384,7 @@ export default function ChartPlot(props) {
       return file;
     };
   
-    const DownloadAsImage = () => {
+    const ExportAsImage = () => {
       const base64Image = ChartRef.current.toBase64Image();
       console.log("img ", base64Image);
       let fileName = "omicspred_data_plot.png";
@@ -401,11 +400,7 @@ export default function ChartPlot(props) {
                     <Chart ref={ChartRef} options={options} data={data} />
                 </div> */}
             </div>
-            <div className="d-flex ms-5 mt-3" style={{justifyContent:'start'}}>
-                <button className="btn btn-op shadow mb-3" onClick={DownloadAsImage}>
-                  <Download size={20} /><span className="px-2">Export as image</span><span className='extra_icon'><FiletypePng/></span>
-                </button>
-            </div>
+            <ExportChart export_function={ExportAsImage}/>
         </>
     );
   };

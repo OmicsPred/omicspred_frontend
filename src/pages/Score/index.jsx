@@ -10,10 +10,11 @@ import restApiCall from '../../components/RestAPI';
 import restApiCallPaginated from '../../components/RestAPIPaginated';
 import { ToogleDiv, loading_data, numberBadge, add_s_when_plural } from '../../components/Generic';
 import { DownloadList, get_download_list } from '../../components/Downloads';
-import { MolecularTraitAssociation } from '../MolecularTrait/components/Content';
+import { MolecularTraitAssociation } from '../MolecularTrait/components/components';
 import AncestryDistribution from '../../components/ancestry/AncestryDistribution';
 import AncestryLegend from '../../components/ancestry/AncestryLegend';
 import { ancestry_label, omicspred_omics_type } from '../../components/Common';
+
 
 function Score() {
     const { score } = useParams();

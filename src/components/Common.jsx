@@ -162,8 +162,13 @@ export const op_subtitle_no_asso = (type,label,count) => {
     if (!label) {
         label = type;
     }
+    // Element ID
+    let elem_id = type+"_section";
+    if (typeof(label) == 'string') {
+        elem_id = label.replace(/\W+/g, '_').toLowerCase();
+    }
     // return <h5><ChevronRight className={'op_subtitle color_'+type}/>{label}{count ? op_count_badge(count,type) : ''}</h5>
-    return <h4>{label}{count ? op_count_badge(count,type) : ''}</h4>
+    return <h4 id={elem_id}>{label}{count ? op_count_badge(count,type) : ''}</h4>
 }
 
 

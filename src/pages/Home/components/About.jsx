@@ -3,13 +3,14 @@ import Href from "../../../components/Href"
 
 
 const About = (props) => {
+    const project_name = process.env.PROJECT_NAME;
     return (
         <div className='even_section'>
-            <div className="op_section_title" id='about'>About OmicsPred</div>
+            <div className="op_section_title" id='about'>About {project_name}</div>
             <p className="mt-3 text-justify text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-md lg:mx-0">
-                OmicsPred is a resource for predicting multi-omics data (proteomics, metabolomics, transcriptomics, etc.) directly from genotypes. 
+                {project_name} is a resource for predicting multi-omics data (proteomics, metabolomics, transcriptomics, etc.) directly from genotypes.
                 To do this, we use extensive multi-omics data to train genetic scores using machine learning. 
-                Here, you can explore and download the genetic scores for a wide range of biomolecular traits in human blood as well as the summary statistics of their associations with key traits and diseases in the UK Biobank.
+                Here, you can explore and download the genetic scores for a wide range of biomolecular traits in human blood as well as the summary statistics of their associations with key traits and diseases in the <Href text="UK Biobank" href={process.env.URL_UKB}/>.
             </p>
             <p className="mt-3 text-justify text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
                 Currently, genetic scores have been trained on the  <Href text="INTERVAL cohort" href="https://www.intervalstudy.org.uk/" />  using  <Href text="Bayesian Ridge regression" href="https://scikit-learn.org/stable/auto_examples/linear_model/plot_bayesian_ridge.html"  /> with validation performed on independent individuals from other cohorts or on withheld subsets of INTERVAL (more info below). 
