@@ -12,7 +12,7 @@ const DataDownloads = (props) => {
                     {/* Downloads */}
                     <div className="card ms-2 me-2 mb-1" style={{padding:"0px",maxWidth:"580px"}}>
                     <div className="card-body">
-                        <h4 className="card-title">Data files</h4>
+                        <h4 className="card-title hl_bb mb-2 pb-2">Data files</h4>
                         <p className="card-text">
                             Genetic scores and Phenotype data files are publicly accessible for download on Box<sup>TM</sup>.
                         </p>
@@ -23,7 +23,7 @@ const DataDownloads = (props) => {
                     {/* REST API */}
                     <div className="card ms-2 me-2 mb-1" style={{padding:"0px",maxWidth:"580px"}}>
                     <div className="card-body">
-                        <h4 className="card-title">REST API</h4>
+                        <h4 className="card-title hl_bb mb-2 pb-2">REST API</h4>
                         <p className="card-text">
                             Programmatic access to the {project_name} metadata is available via a REST API.
                         </p>

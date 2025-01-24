@@ -7,7 +7,7 @@ import restApiCallPaginated from '../../../components/RestAPIPaginated';
 import { display_description, no_entry_found } from '../../../components/Common';
 import { loading_data } from '../../../components/Generic';
 import { display_source, display_synonyms } from '../components/links';
-import { MolecularTraitContent, MolecularTraitAssociation } from '../components/Content';
+import { MolecularTraitContent, MolecularTraitAssociation } from '../components/components';
 
 
 function Gene() {

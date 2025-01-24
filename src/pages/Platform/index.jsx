@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-import { ChevronDoubleRight, SignpostFill } from 'react-bootstrap-icons';
-// import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { ChevronDoubleRight } from 'react-bootstrap-icons';
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -17,7 +16,6 @@ import PlatformSummary from './components/PlatformSummary';
 import DatasetCard from './components/DatasetCard';
 import { op_subtitle, op_title, op_count_badge, ancestry_labels } from '../../components/Common'
 import { loading_data } from '../../components/Generic';
-import Href from '../../components/Href';
 import AncestryLegend from '../../components/ancestry/AncestryLegend';
 
 
@@ -37,12 +35,13 @@ function Platform() {
     // const [platformDatasetsSelection, setPlatformDatasetsSelection] = useState([])
     const [platformDataEndpoint, setPlatformDataEndpoint] = useState([])
     const [selectedAncestry, setSelectedAncestry] = useState('')
-    const [selectedStage, setSelectedStage] = useState('')
+    const [selectedStage, setSelectedStage] = useState('a')
 
     const stages = {
+        'a': 'Any stage',
+        'b': 'Both stages',
         't': 'Training',
-        'v': 'Validation',
-        'b': 'Both'
+        'v': 'Validation'
     }
 
     const ancestry_labels_data = ancestry_labels();
@@ -52,7 +51,7 @@ function Platform() {
         if (selectedAncestry && selectedAncestry.length > 0) { //&& selectedAncestry != previousAncestrySelection) {
             endpoint_suffix += '&anc='+selectedAncestry;
         }
-        if (selectedStage && selectedStage.length > 0) { //&& selectedStage != previousStageSelection) {
+        if (selectedStage && selectedStage != 'a') { //&& selectedStage != previousStageSelection) {
             endpoint_suffix += '&stage='+selectedStage;
         }
         switch(type) {
@@ -251,15 +250,7 @@ function Platform() {
     return (
         <>
             {op_title('platform', platformSumData, platformSumData.name)}
-
-            {/* Temporary code - start */}
-            <div style={{position:'relative',top:'-70px',left:'90%',height:'0px'}}>
-                <Href role='button' text='Go to alt page' href={'/test/platform/'+platform} icon={<SignpostFill/>}/>
-            </div>
-            {/* Temporary code - end */}
-
             <div className='d-flex justify-content-start d-flex flex-lg-row flex-column mb-5'>
-                {/* {platformSumData && platformVersions && platformScoresCount ? <PlatformSummary metadata={platformSumData} scores_count={platformScoresCount} versions={platformVersions}/>: ''} */}
                 {platformSumData && platformScoresCount ? <div><PlatformSummary metadata={platformSumData} scores_count={platformScoresCount} versions={platformVersions}/></div>: ''}
                 <div className='me-5 d-none d-lg-inline-block'></div>
                 <div className='pt-3 d-lg-none'></div>
@@ -318,7 +309,7 @@ function Platform() {
                                                 label="Stage"
                                                 onChange={handleStageChange}
                                             >
-                                                <MenuItem key='none_sel' value=''>-</MenuItem>
+                                                {/* <MenuItem key='any_sel' value='' selected={true}>Any</MenuItem> */}
                                                 {Object.keys(stages).map((s_type) => <MenuItem key={s_type+'_sel'} value={s_type}>{stages[s_type]}</MenuItem>)}
                                             </Select>
                                         </FormControl>

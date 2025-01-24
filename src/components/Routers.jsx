@@ -25,7 +25,7 @@ import ScrollToAnchor from './ScrollToAnchor';
 // Tests
 import Search from "../pages/Search";
 import Plot from "../pages/Tests/Plot";
-import PlatformAlt from "../pages/Tests/Platform";
+// import PlatformAlt from "../pages/Tests/Platform";
 
 
 function OpRouters() {
@@ -74,7 +74,7 @@ function OpRouters() {
                 {/* <Route path="/doughnut/" element={<OPDoughnut />} /> */}
                 {/* <Route path="/doughnut/" element={<MuiDoughnut />} /> */}
                 {/* <Route path="/test/reactome/:reactome_id" element={<ReactomeDiagram />} /> */}
-                <Route path="/test/platform/:platform" element={<PlatformAlt />} />
+                {/* <Route path="/test/platform/:platform" element={<PlatformAlt />} /> */}
 
                 {/* Errors */}
                 <Route path="*" element={<Error404 />} />

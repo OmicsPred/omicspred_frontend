@@ -9,9 +9,8 @@ import {
     Legend,
   } from "chart.js";
 import { Bar } from "react-chartjs-2";
-
-import { Download, FiletypePng } from 'react-bootstrap-icons';
 import { saveAs } from "file-saver";
+import ExportChart from "./ExportChart";
 
 
 ChartJS.register(
@@ -160,11 +159,11 @@ export default function ChartBar(props) {
     //     chart.update();
     // }, [props.data_2, props.data_1]);
 
-    const DownloadAsImage = () => {
+    const ExportAsImage = () => {
         //save to png
         const canvasSave = document.getElementById('barchart');
         canvasSave.toBlob(function (blob) {
-            saveAs(blob, "barchar.png")
+            saveAs(blob, "omicspred_barchar.png")
         })
     }
     
@@ -174,14 +173,7 @@ export default function ChartBar(props) {
                 <div className="d-flex justify-content-center">
                     <Bar className="op_barchart" id="barchart" data={data} options={options} plugins={[legendMarginBottom]}/>
                 </div>
-                <div className="d-flex justify-content-center mt-3">
-                    {/* <button className="btn btn-primary shadow" onClick={DownloadAsImage}>
-                        <Download size={20} /> <span>Export as image</span>
-                    </button> */}
-                    <button className="btn btn-op shadow" onClick={DownloadAsImage}>
-                        <Download size={20} /><span className="px-2">Export as image</span><span className='extra_icon'><FiletypePng/></span>
-                    </button>
-                </div>
+                <ExportChart export_function={ExportAsImage}/>
             </div>
         </>
     );

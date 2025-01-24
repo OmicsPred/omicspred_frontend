@@ -871,10 +871,12 @@ button.MuiButton-root:hover {
 .op_barchart {
     max-width:800px;
     min-height:250px;
+    background-color: $op_white !important;
 }
 .op_plot {
     max-width:1000px;
     max-height:500px;
+    background-color: $op_white !important;
 }
 
 .op_chart_tooltip {
@@ -930,7 +932,6 @@ button.MuiButton-root:hover {
                 @include op_dark_bg;
             }
             &:active {
-                
                 @include link_hover_color;
                 @include op_dark_bg;
             }
@@ -1135,7 +1136,7 @@ ul.example_list {
     > div:not(:last-child) {
         border-bottom: 1px solid $op_grey;
     }
-    a {
+    div > a {
         display:flex;
         height: 40px!important;
         line-height: 40px!important;
@@ -1349,6 +1350,10 @@ fieldset {
 }
 .color_hl {
     color: $hl_color !important;
+}
+
+.hl_bb {
+    border-bottom: 1px solid $hl_color;
 }
 
 .hl_grey_box {

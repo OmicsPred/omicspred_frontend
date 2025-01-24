@@ -1,5 +1,6 @@
-import { Download, FileEarmarkZip, FiletypeCsv, FiletypeXlsx, Folder2 } from 'react-bootstrap-icons';
+import { Download, FileEarmarkZip, FiletypeCsv, FiletypeXlsx, Folder2, InfoCircleFill } from 'react-bootstrap-icons';
 import { ToogleDiv } from './Generic';
+import Href from './Href';
 
 
 const icon_size = 20;
@@ -46,7 +47,7 @@ export const download_applications_labels = {
         "label": "PheWAS associations",
         "title": "Download Excel file",
         "icon": <FiletypeXlsx className="align-middle" size={icon_size}/>,
-        "url": "https://drive.google.com/drive/folders/15hE030Bq23ox0HSWq4AeSmkdGZUUoHkm?usp=sharing",
+        "url": "https://app.box.com/s/2kbj2exeexuab51hjaveyzkftpc6ehdj",
         'desc': "List the identified associations between Phenotype entries and OmicsPred genetic scores."
     }
 }
@@ -81,6 +82,10 @@ export const DownloadList = (props) => {
                             </a>
                        </div>
                     )}
+                    {/* Link to data files doc */}
+                    <span className='d-flex justify-content-center mt-2 mb-1'>
+                        <Href href="/downloads#genetic_scores" icon={<InfoCircleFill className="align-middle" size={18}/>} text="Information about the data files" target='blank'/>
+                    </span>
                 </div>
                 :''
             }

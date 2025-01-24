@@ -5,6 +5,7 @@ import { Bezier2 } from "react-bootstrap-icons";
 
 
 function Applications() {
+  const project_name = process.env.PROJECT_NAME;
   return (
     <div className="even_section" >
       <div className="op_section_title">Application of Multi-Omic Genetic Scores</div>
@@ -14,12 +15,11 @@ function Applications() {
         {/* UKB */}
         <div className="card ms-2 me-2 mb-1" style={{padding:"0px",maxWidth:"580px"}}>
           <div className="card-body">
-            <h4 className="card-title">A Phenome-wide association analysis in UK biobank</h4>
-            <p className="card-text">Genetic scores in OmicsPred have been applied to{" "}
-              <Href text="UK biobank" href={process.env.URL_UKB}/>{" "}
-              to test for associations with complex phenotypes.
+            <h4 className="card-title hl_bb mb-2 pb-2">A Phenome-wide association analysis in UK biobank</h4>
+            <p className="card-text">
+              Genetic scores in {project_name} have been applied to <Href text="UK Biobank" href={process.env.URL_UKB}/> to test for associations with complex phenotypes.
             </p>
-            <a href="/applications/phecode/sum" className="btn btn-op shadow">PheWAS page</a>
+            <Href href="/applications/phenotype/sum" text="PheWAS page" role='button'/>
           </div>
           <div className="card-footer">
             <img src={ukb_img} alt="UKB"/>
@@ -29,11 +29,11 @@ function Applications() {
         {/* Reactome */}
         <div className="card ms-2 me-2 mb-1" style={{padding:"0px",maxWidth:"580px"}}>
           <div className="card-body">
-            <h4 className="card-title">Quantifying genetic control of pathways</h4>
-            <p className="card-text">Genetic scores for proteomics were applied to assess the extent to which biological pathways are genetically controlled using data at{" "}
-              <Href text="Reactome" href={process.env.URL_REACTOME}/>{"."}
+            <h4 className="card-title hl_bb mb-2 pb-2">Quantifying genetic control of pathways</h4>
+            <p className="card-text">
+              Genetic scores for proteomics were applied to assess the extent to which biological pathways are genetically controlled using data at <Href text="Reactome" href={process.env.URL_REACTOME}/>{"."}
             </p>
-            <a href="/pathways" className="btn btn-op shadow"><Bezier2 size="0.9em" className="me-2"/>Browse Pathways</a>
+            <Href href="/pathways" text="Browse Pathways" icon={<Bezier2/>} role='button'/>
           </div>
           <div className="card-footer">
             <img src={reactome_img} alt="Reactome"/>
