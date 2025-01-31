@@ -23,8 +23,8 @@ function About() {
 			title="Metadata"
 			text={
 				<div>
-					<div>The metadata structure of {project_name} is heavily inspired by the metadata from the <Href href='https://www.pgscatalog.org/docs/' text='Polygenic Score (PGS) Catalog'/>.</div>
-					<div>Its metadata structure is described in the <Href text='Data description' href='/docs'/> page.</div>
+					<div>The metadata structure of {project_name} is heavily inspired by the metadata from the <Href href='https://www.pgscatalog.org/docs/' text='Polygenic Score (PGS) Catalog'/> and try to match it as much as possible.</div>
+					<div>It is described in detail in the <Href text='Data description' href='/docs'/> page.</div>
 				</div>
 			}
 		/>

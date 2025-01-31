@@ -565,7 +565,6 @@ a {
 }
 
 .even_section, .odd_section {
-    padding: 0rem 2rem 2rem;
     margin: 4rem 0rem 0rem;
     text-align:center;
     .op_section_title {
@@ -578,6 +577,9 @@ a {
     .op_subsection_header {
         @include op_light_bg;
     }
+}
+.odd_section {
+    padding: 1rem 0rem 2rem;
 }
 .even_section {
     padding: 1rem 2rem 2rem;
@@ -592,7 +594,7 @@ a {
 }
 
 .card {
-    padding: 2em;
+    padding: 0rem;
 }
 
 .card-header {
@@ -600,9 +602,14 @@ a {
     color: $op_white !important;
 }
 
-// .card-footer {
-//     @include op_light_bg;
-// }
+.citation_card {
+    padding-left: 3rem;
+    padding-right: 3rem;
+}
+.op_card_homepage {
+    margin: 0rem 0.5rem 0.25rem;
+    max-width:580px;
+} 
 .op_card_row {
     display: flex;
     flex-direction: row;
@@ -664,7 +671,13 @@ ul.key_val_line {
         margin-bottom: 0.25rem;
     }
 }
-.key_val_line, ul.expanded {
+ul.result_content {
+    margin-bottom: 0rem !important;
+    li:not(:last-child) {
+        margin-bottom: 0.15rem;
+    }
+}
+.key_val_line, ul.result_content, ul.expanded {
     .line_key {
         font-weight: bold;
         &:after {
@@ -1409,6 +1422,13 @@ fieldset {
             width:175px !important;
         }
     }
+    .even_section {
+        padding: 0rem 1rem 2rem;
+    }
+    .citation_card {
+        padding-left: 0rem;
+        padding-right: 0rem;
+    }
 }
 
 
@@ -1488,30 +1508,20 @@ fieldset {
             margin-bottom: 1rem;
         }
     }
-
-    // .home_header_left {
-    //     width: 100%;
-    //     margin-left: auto;
-    //     margin-right: auto;
-    //     > div {
-    //         margin-left: 0.5rem;
-    //         margin-right: 0.5rem;
-    //     }
-    // }
-    // .home_header_right {
-    //     height: 730px !important;
-    // }
-    // .home_header_right {
-    //     width: 100%;
-    //     // overflow: hidden;
-    //     margin-left: 0px;
-    //     height: 740px;
-    //     background-size: cover;
-    // }
+    .op_card_homepage {
+        margin-left:auto;
+        margin-right:auto;
+        &:not(:last-child){
+            margin-bottom: 1rem !important;
+        }
+        &:last-child{
+            margin-bottom: 0rem !important;
+        }
+    }
 }
 
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 720px) {
     .op_stats {
         flex-direction:column;
         justify-content: center;

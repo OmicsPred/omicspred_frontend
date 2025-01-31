@@ -1219,9 +1219,9 @@ export const cohort_cols = {
             }
         }
     },
-    'UKB_Withheld_ALL': {
+    'UKB_withheld_ALL': {
         'R2': {
-            field: 'UKB_Withheld_ALL_R2',
+            field: 'UKB_withheld_ALL_R2',
             // headerName: <>R<sup>2</sup></>,
             headerClassName: 'col_border_left',
             // minWidth: 100,
@@ -1230,11 +1230,11 @@ export const cohort_cols = {
                 return r2_col_header_label();
             },
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'UKB_Withheld_ALL','R2');
+                return cohort_valueGetter(row,'UKB_withheld_ALL','R2');
             }
         },
         'Rho': {
-            field: 'UKB_Withheld_ALL_Rho',
+            field: 'UKB_withheld_ALL_Rho',
             // headerName: 'Rho',
             renderHeader: (params) => {
                 return rho_col_header_label();
@@ -1242,13 +1242,13 @@ export const cohort_cols = {
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'UKB_Withheld_ALL','Rho');
+                return cohort_valueGetter(row,'UKB_withheld_ALL','Rho');
             }
         }
     },
-    'UKB_Withheld_AFR': {
+    'UKB_withheld_AFR': {
         'R2': {
-            field: 'UKB_Withheld_AFR_R2',
+            field: 'UKB_withheld_AFR_R2',
             // headerName: <>R<sup>2</sup></>,
             headerClassName: 'col_border_left',
             // minWidth: 100,
@@ -1257,11 +1257,11 @@ export const cohort_cols = {
                 return r2_col_header_label();
             },
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'UKB_Withheld_AFR','R2');
+                return cohort_valueGetter(row,'UKB_withheld_AFR','R2');
             }
         },
         'Rho': {
-            field: 'UKB_Withheld_AFR_Rho',
+            field: 'UKB_withheld_AFR_Rho',
             // headerName: 'Rho',
             renderHeader: (params) => {
                 return rho_col_header_label();
@@ -1269,13 +1269,13 @@ export const cohort_cols = {
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'UKB_Withheld_AFR','Rho');
+                return cohort_valueGetter(row,'UKB_withheld_AFR','Rho');
             }
         }
     },
-    'UKB_Withheld_AMR': {
+    'UKB_withheld_AMR': {
         'R2': {
-            field: 'UKB_Withheld_AMR_R2',
+            field: 'UKB_withheld_AMR_R2',
             // headerName: <>R<sup>2</sup></>,
             headerClassName: 'col_border_left',
             // minWidth: 100,
@@ -1284,11 +1284,11 @@ export const cohort_cols = {
                 return r2_col_header_label();
             },
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'UKB_Withheld_AMR','R2');
+                return cohort_valueGetter(row,'UKB_withheld_AMR','R2');
             }
         },
         'Rho': {
-            field: 'UKB_Withheld_AMR_Rho',
+            field: 'UKB_withheld_AMR_Rho',
             // headerName: 'Rho',
             renderHeader: (params) => {
                 return rho_col_header_label();
@@ -1296,13 +1296,13 @@ export const cohort_cols = {
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'UKB_Withheld_AMR','Rho');
+                return cohort_valueGetter(row,'UKB_withheld_AMR','Rho');
             }
         }
     },
-    'UKB_Withheld_EAS': {
+    'UKB_withheld_EAS': {
         'R2': {
-            field: 'UKB_Withheld_EAS_R2',
+            field: 'UKB_withheld_EAS_R2',
             // headerName: <>R<sup>2</sup></>,
             headerClassName: 'col_border_left',
             // minWidth: 100,
@@ -1311,11 +1311,11 @@ export const cohort_cols = {
                 return r2_col_header_label();
             },
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'UKB_Withheld_EAS','R2');
+                return cohort_valueGetter(row,'UKB_withheld_EAS','R2');
             }
         },
         'Rho': {
-            field: 'UKB_Withheld_EAS_Rho',
+            field: 'UKB_withheld_EAS_Rho',
             // headerName: 'Rho',
             renderHeader: (params) => {
                 return rho_col_header_label();
@@ -1323,13 +1323,13 @@ export const cohort_cols = {
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'UKB_Withheld_EAS','Rho');
+                return cohort_valueGetter(row,'UKB_withheld_EAS','Rho');
             }
         }
     },
-    'UKB_Withheld_EUR': {
+    'UKB_withheld_EUR': {
         'R2': {
-            field: 'UKB_Withheld_EUR_R2',
+            field: 'UKB_withheld_EUR_R2',
             // headerName: <>R<sup>2</sup></>,
             headerClassName: 'col_border_left',
             // minWidth: 100,
@@ -1338,11 +1338,11 @@ export const cohort_cols = {
                 return r2_col_header_label();
             },
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'UKB_Withheld_EUR','R2');
+                return cohort_valueGetter(row,'UKB_withheld_EUR','R2');
             }
         },
         'Rho': {
-            field: 'UKB_Withheld_EUR_Rho',
+            field: 'UKB_withheld_EUR_Rho',
             // headerName: 'Rho',
             renderHeader: (params) => {
                 return rho_col_header_label();
@@ -1350,13 +1350,13 @@ export const cohort_cols = {
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'UKB_Withheld_EUR','Rho');
+                return cohort_valueGetter(row,'UKB_withheld_EUR','Rho');
             }
         }
     },
-    'UKB_Withheld_SAS': {
+    'UKB_withheld_SAS': {
         'R2': {
-            field: 'UKB_Withheld_SAS_R2',
+            field: 'UKB_withheld_SAS_R2',
             // headerName: <>R<sup>2</sup></>,
             headerClassName: 'col_border_left',
             // minWidth: 100,
@@ -1365,11 +1365,11 @@ export const cohort_cols = {
                 return r2_col_header_label();
             },
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'UKB_Withheld_SAS','R2');
+                return cohort_valueGetter(row,'UKB_withheld_SAS','R2');
             }
         },
         'Rho': {
-            field: 'UKB_Withheld_SAS_Rho',
+            field: 'UKB_withheld_SAS_Rho',
             // headerName: 'Rho',
             renderHeader: (params) => {
                 return rho_col_header_label();
@@ -1377,7 +1377,7 @@ export const cohort_cols = {
             // minWidth: 100,
             // flex: 0.5,
             valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'UKB_Withheld_SAS','Rho');
+                return cohort_valueGetter(row,'UKB_withheld_SAS','Rho');
             }
         }
     },
@@ -1542,34 +1542,34 @@ export const common_column_groups = {
         children: [{ field: 'VIKING_R2' }, { field: 'VIKING_Rho' }, { field: 'VIKING_Match Rate' }],
         headerClassName: 'col_border_left'
     },
-    'UKB_Withheld_ALL': {
-        groupId: 'UKB Withheld ALL',
-        children: [{ field: 'UKB_Withheld_ALL_R2' }, { field: 'UKB_Withheld_ALL_Rho' }],
+    'UKB_withheld_ALL': {
+        groupId: 'UKB withheld ALL',
+        children: [{ field: 'UKB_withheld_ALL_R2' }, { field: 'UKB_withheld_ALL_Rho' }],
         headerClassName: 'col_border_left'
     },
-    'UKB_Withheld_AFR': {
-        groupId: 'UKB Withheld AFR',
-        children: [{ field: 'UKB_Withheld_AFR_R2' }, { field: 'UKB_Withheld_AFR_Rho' }],
+    'UKB_withheld_AFR': {
+        groupId: 'UKB withheld AFR',
+        children: [{ field: 'UKB_withheld_AFR_R2' }, { field: 'UKB_withheld_AFR_Rho' }],
         headerClassName: 'col_border_left'
     },
-    'UKB_Withheld_AMR': {
-        groupId: 'UKB Withheld AMR',
-        children: [{ field: 'UKB_Withheld_AMR_R2' }, { field: 'UKB_Withheld_AMR_Rho' }],
+    'UKB_withheld_AMR': {
+        groupId: 'UKB withheld AMR',
+        children: [{ field: 'UKB_withheld_AMR_R2' }, { field: 'UKB_withheld_AMR_Rho' }],
         headerClassName: 'col_border_left'
     },
-    'UKB_Withheld_EAS': {
-        groupId: 'UKB Withheld EAS',
-        children: [{ field: 'UKB_Withheld_EAS_R2' }, { field: 'UKB_Withheld_EAS_Rho' }],
+    'UKB_withheld_EAS': {
+        groupId: 'UKB withheld EAS',
+        children: [{ field: 'UKB_withheld_EAS_R2' }, { field: 'UKB_withheld_EAS_Rho' }],
         headerClassName: 'col_border_left'
     },
-    'UKB_Withheld_EUR': {
-        groupId: 'UKB Withheld EUR',
-        children: [{ field: 'UKB_Withheld_EUR_R2' }, { field: 'UKB_Withheld_EUR_Rho' }],
+    'UKB_withheld_EUR': {
+        groupId: 'UKB withheld EUR',
+        children: [{ field: 'UKB_withheld_EUR_R2' }, { field: 'UKB_withheld_EUR_Rho' }],
         headerClassName: 'col_border_left'
     },
-    'UKB_Withheld_SAS': {
-        groupId: 'UKB Withheld SAS',
-        children: [{ field: 'UKB_Withheld_SAS_R2' }, { field: 'UKB_Withheld_SAS_Rho' }],
+    'UKB_withheld_SAS': {
+        groupId: 'UKB withheld SAS',
+        children: [{ field: 'UKB_withheld_SAS_R2' }, { field: 'UKB_withheld_SAS_Rho' }],
         headerClassName: 'col_border_left'
     },
     // 'MESA-AFA': {

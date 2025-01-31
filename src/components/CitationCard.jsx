@@ -4,7 +4,7 @@ import Href from "./Href";
 const CitationCard = () => {
   const doi = process.env.PROJECT_DOI;
   return (
-    <div className="ps-5 pe-5">
+    <div className="citation_card">
       <div className="card" style={{padding:"0px",textAlign:"center"}}>
         <div className="card-body">
           <h4 className="card-title"><u>An atlas of genetic scores to predict multi-omic traits</u></h4>

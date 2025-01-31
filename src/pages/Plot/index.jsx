@@ -5,11 +5,11 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { ChevronRight, GraphUp } from 'react-bootstrap-icons';
-import DocumentTitle from '../../../components/DocumentTitle';
-import restApiCall from '../../../components/RestAPI';
+import DocumentTitle from '../../components/DocumentTitle';
+import restApiCall from '../../components/RestAPI';
 import Charts from "./components/Chart";
-import { get_data_type, publication_ref } from '../../../components/Common';
-import { loading_data } from '../../../components/Generic';
+import { get_data_type, publication_ref } from '../../components/Common';
+import { loading_data } from '../../components/Generic';
 
 
 const Plot = (props) => {
@@ -71,32 +71,8 @@ const Plot = (props) => {
                     setData(selectedDataset);
                 }
             }
-            // else {
-            //     setPlotFile(data_file_prefix+'_plot.json');
-            //     setPlotScoreFile(data_file_prefix+'_plot_score.json');
-            // }
         }
     }
-
-    // const fetchPlotData = async () => {
-    //     if (plotFile != '') {
-    //         const platform_plot_data = await fetch(plotFile)
-    //             .then(response => {
-    //                 return response.json()
-    //             })
-    //             setPlotData(platform_plot_data);
-    //     }
-    // }
-
-    // const fetchScoreData = async () => {
-    //     if (plotScoreFile != '') {
-    //         const platform_plot_score_data = await fetch(plotScoreFile)
-    //             .then(response => {
-    //                 return response.json()
-    //             })
-    //             setScoreData(platform_plot_score_data);
-    //     }
-    // }
 
     const fetchData = async () => {
         let url = 'plot/search?pmid='+pmid+'&platform='+platform;
@@ -118,25 +94,17 @@ const Plot = (props) => {
 
     const setData = (dataset) => {
         setSelectedDataset(dataset);
-        // const file_prefix = data_file_prefix+'_'+dataset.replace(" ", "_");
-        // setPlotFile(file_prefix+'_plot.json');
-        // setPlotScoreFile(file_prefix+'_plot_score.json');
     }
 
     useEffect(() => {
         fetchDatasetData();
-        // fetchPlotData();
-        // fetchScoreData();
         fetchData();
     },[])
 
     // Re-render form and charts when a different dataset is selected
     useEffect(() => {
-        // fetchPlotData();
-        // fetchScoreData();
         fetchData();
     },[selectedDataset])
-    // },[plotFile,plotScoreFile,selectedDataset])
 
     return (
         <>
@@ -162,7 +130,6 @@ const Plot = (props) => {
                 </div> : ''
             }
             <div>
-                {/* { plotFile != '' && plotScoreFile != '' && plotData.length && scoreData.length ? */}
                 { platformName != '' && plotData.length && scoreData.length ?
                     <div key={selectedDataset+'_plot'}>
                         <Suspense fallback={<div>Data is coming !</div>}>

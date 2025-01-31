@@ -108,7 +108,7 @@ export default function ResultCard(props) {
                         <div className="card-text">
                             <div className="d-flex op_search_card_content">
                                 <div>
-                                    <ul className="key_val_line mb-1">
+                                    <ul className="result_content">
                                         { result_id == data.name && data.id ? <li><span className="line_key">{index2id[props.type]}</span>{data.id}{get_source_name(data)}{display_phenotype_category()}</li> : '' }
                                         { result_id == data.id && data.name ? <li><span className="line_key">Name</span>{data.name}</li> : '' }
                                         { props.type == 'pathway' ? display_molecular_trait_counts(data) : ''}
