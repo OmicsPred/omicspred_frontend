@@ -21,6 +21,8 @@ function Downloads() {
             </>
         )
     }
+
+    const dataset_cols_ids = ['publication__pmid','platform__name','name'];
     
     return(
         <div>
@@ -49,7 +51,7 @@ function Downloads() {
 
                 <h6 className='mt-4 mb-3'><b>Data files availability by dataset:</b></h6>
                 <div className='mt-2'>
-                    <DataTableFromRestApi table_key="datasets" url_suffix={url_suffix} columns={datasets_columns}/>
+                    <DataTableFromRestApi table_key="datasets" url_suffix={url_suffix} columns={datasets_columns} col_for_ids={dataset_cols_ids}/>
                 </div>
             </div>
 

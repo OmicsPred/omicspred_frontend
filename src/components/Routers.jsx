@@ -22,9 +22,8 @@ import Phenotype from "../pages/Applications/Phenotype";
 import Pathway from "../pages/Pathway";
 import Cohort from "../pages/Cohort";
 import ScrollToAnchor from './ScrollToAnchor';
-// Tests
 import Search from "../pages/Search";
-import Plot from "../pages/Tests/Plot";
+import Plot from "../pages/Plot";
 // import PlatformAlt from "../pages/Tests/Platform";
 
 
@@ -63,13 +62,15 @@ function OpRouters() {
                 <Route path="/pathway/:pathway" element={<Pathway />} />
                 <Route path="/phenotype/:phenotype" element={<Phenotype />} />
                 <Route path="/cohort/:cohort" element={<Cohort />} />
+
+                {/* Plot page */}
+                <Route path="/plot/:platform/:pmid" element={<Plot />} />
                 
                 {/* Search page */}
                 <Route path="/search" element={<Search />} />
 
                 {/* Test pages */}
                 {/* <Route path="/search_es" element={<SearchES />} /> */}
-                <Route path="/plot/:platform/:pmid" element={<Plot />} />
                 {/* <Route path="/publication_old/:pubmed_id" element={<PublicationOld />} /> */}
                 {/* <Route path="/doughnut/" element={<OPDoughnut />} /> */}
                 {/* <Route path="/doughnut/" element={<MuiDoughnut />} /> */}

@@ -9,6 +9,7 @@ import Select from "@mui/material/Select";
 import ChartPlot from "./ChartPlot";
 // import ChartDoughnut from "./ChartDoughnut";
 import ChartBar from "./ChartBar";
+import Href from "../../../components/Href";
 
 
 export default function Charts(props) {
@@ -79,6 +80,9 @@ export default function Charts(props) {
   const [study1, setStudy1] = useState('');
   const [study2, setStudy2] = useState('');
 
+  const [study1Label, setStudy1Label] = useState('');
+  const [study2Label, setStudy2Label] = useState('');
+
   const [missed, setMissed] = useState([]);
   const [matrix, setMatrix] = useState('');
 
@@ -113,15 +117,37 @@ export default function Charts(props) {
     setdataStudy2(default_study_2.data);
     setMatrix(default_study_1.type)
 
+    setStudy1Label(get_study_label(default_study_1.name))
+    setStudy2Label(get_study_label(default_study_2.name))
+
     if (default_study_2_mr) {
       setMissed(default_study_2_mr.name);
       setMisseddata(default_study_2_mr.data);
     }
   }
 
+  const get_study_label = (study_name) => {
+
+    // Training cohort
+    study_name = study_name.replace(' (internal validation)','')
+
+    // e.g. MEC_IN -> MEC
+    const lastIndexOf = study_name.lastIndexOf("_");
+    if (lastIndexOf > 0 ) {
+      study_name = study_name.substring(0, lastIndexOf).replaceAll('_',' ');
+    }
+    // e.g. UKB withheld EUR -> UKB withheld
+    else if (study_name.match(/\s[A-Z]{3}$/)) {
+        const lastIndexOfSpace = study_name.lastIndexOf(" ");
+        study_name = study_name.substring(0, lastIndexOfSpace);
+    }
+    return study_name
+  }
+
 
   const handleChange_1 = async (event) => {
     setStudy1(event.target.value);
+    setStudy1Label(get_study_label(event.target.value))
     props.data.map((e) => {
       if (e.title == event.target.value + matrix) {
         setdataStudy1(e.data);
@@ -145,6 +171,7 @@ export default function Charts(props) {
 
   const handleChange_2 = async (event) => {
     setStudy2(event.target.value);
+    setStudy2Label(get_study_label(event.target.value))
     setMissed(event.target.value);
     props.data.map((e) => {
       if (e.title == event.target.value + matrix) {
@@ -246,7 +273,7 @@ export default function Charts(props) {
       </div>
       {/* Data Plot */}
       <Suspense fallback={<div>Data is coming !</div>}>
-        <h3 key={study1+"_"+study2} className="mt-3"><span className="op_color_2">{study1}</span> <small>VS</small> <span className="op_color_2">{study2}</span></h3>
+        <h4 key={study1+"_"+study2} className="mt-3"><Href href={'/cohort/'+study1Label}  text={study1}/> <small>vs</small> <Href href={'/cohort/'+study2Label}  text={study2}/></h4>
         <ChartPlot
           data_1={datastudy1}
           data_2={datastudy2}

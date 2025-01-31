@@ -6,11 +6,9 @@ const DataDownloads = (props) => {
     return (
         <div className="odd_section">
             <div className="op_section_title">Data downloads</div>
-
-                <div className="card-deck d-lg-flex flex-lg-row justify-content-center d-md-flex flex-md-row d-sm-flex flex-sm-column">
-            
+                <div className="card-deck d-flex justify-content-center flex-lg-row flex-md-row flex-sm-column">
                     {/* Downloads */}
-                    <div className="card ms-2 me-2 mb-1" style={{padding:"0px",maxWidth:"580px"}}>
+                    <div className="card op_card_homepage">
                     <div className="card-body">
                         <h4 className="card-title hl_bb mb-2 pb-2">Data files</h4>
                         <p className="card-text">
@@ -21,7 +19,7 @@ const DataDownloads = (props) => {
                     </div>
                     
                     {/* REST API */}
-                    <div className="card ms-2 me-2 mb-1" style={{padding:"0px",maxWidth:"580px"}}>
+                    <div className="card op_card_homepage">
                     <div className="card-body">
                         <h4 className="card-title hl_bb mb-2 pb-2">REST API</h4>
                         <p className="card-text">

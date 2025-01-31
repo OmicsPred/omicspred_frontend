@@ -30,9 +30,15 @@ export const performance_metrics_columns = [
         width: 200,
         renderCell: (params) => {
             let cohort_label = params.row.cohort_label;
+            // e.g. MEC_IN -> MEC
             const lastIndexOf = cohort_label.lastIndexOf("_");
             if (lastIndexOf > 0 ) {
                 cohort_label = cohort_label.substring(0, lastIndexOf).replaceAll('_',' ');
+            }
+            // e.g. UKB withheld EUR -> UKB withheld
+            else if (cohort_label.match(/\s[A-Z]{3}$/)) {
+                const lastIndexOfSpace = cohort_label.lastIndexOf(" ");
+                cohort_label = cohort_label.substring(0, lastIndexOfSpace);
             }
             return <Href text={cohort_label} href={'/cohort/'+cohort_label}/>
         },
@@ -41,6 +47,10 @@ export const performance_metrics_columns = [
             const lastIndexOf = cohort_label.lastIndexOf("_");
             if (lastIndexOf > 0 ) {
                 return cohort_label.substring(0, lastIndexOf).replaceAll('_',' ');
+            }
+            else if (cohort_label.match(/\s[A-Z]{3}$/)) {
+                const lastIndexOfSpace = cohort_label.lastIndexOf(" ");
+                return cohort_label.substring(0, lastIndexOfSpace);
             }
             else {
                 return cohort_label;

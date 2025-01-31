@@ -77,7 +77,6 @@ function Score() {
                 const platform = score_data.platform;
                 setPlatformData(platform);
                 const publication = score_data.publication;
-                console.log(']] platform.name: '+platform.name)
                 fetchDownloadUrls(score_data.dataset_name,platform.name,publication.pmid)
             }
             if (score_data.dataset_name) {
@@ -125,11 +124,10 @@ function Score() {
 			<>
                 { scoreData.name ? <tr><td>Score Name</td><td>{scoreData.name}</td></tr>:''}
                 { scoreData.publication ? <tr><td>Publication</td><td>{internal_publication_link(scoreData.publication)}</td></tr>:''}
-                {/* <tr><td>Platform</td><td><a href={'/platform/'+platformData.name}>{platformData.name}</a>{platformData.version ? <span className='ms-1'>({platformData.version})</span> : ''}<span className={'ms-2 badge badge_'+platformData.type}>{platformData.type}</span></td></tr> */}
                 <tr><td>Platform</td><td><a href={'/platform/'+platformData.name}>{platformData.name}</a>{platformData.version ? <span className='ms-1' title='Platform version'>({platformData.version})</span> : ''}<span className='mx-2'>-</span>{omicspred_omics_type(platformData.type)}</td></tr>
                 { datasetName ? <tr><td>Dataset</td><td>{datasetName}</td></tr> : ''}
                 <tr><td>Method Name</td><td>{scoreData.method_name}</td></tr>
-                { scoreData.trait_reported ? <tr><td>Reported Trait</td><td>{scoreData.trait_reported}</td></tr>:''}
+                { scoreData.trait_reported ? <tr><td>Reported Trait</td><td>{scoreData.trait_reported}{scoreData.trait_reported_id ? ' ('+scoreData.trait_reported_id+')':''}</td></tr>:''}
                 <tr><td>Number of Variants</td><td>{numberBadge(scoreData.variants_number)}</td></tr>
                 <tr><td>Genome Build</td><td>{scoreData.variants_genomebuild}</td></tr>
                 {/* <tr><td>Scoring file</td><td><FileEarmarkText className="hl_color" size={24}/></td></tr> */}

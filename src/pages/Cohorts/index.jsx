@@ -52,7 +52,7 @@ const cohorts_list = [
   {
     "src": p4,
     "title": "The UK Biobank",
-    "labels": ["UKB","UKB_Withheld"],
+    "labels": ["UKB","UKB withheld"],
     "href": "https://www.ukbiobank.ac.uk",
     "desc": <>A prospective cohort study with deep genetic and phenotypic data collected on approximately 500,000 individuals from across the United Kingdom, aged between 40 and 69 at recruitment. A rich variety of phenotypic and health-related information is available on each participant, including biological measurements, lifestyle indicators, biomarkers in blood and urine, and imaging of the body and brain. Follow-up information is provided by linking health and medical records. Genome-wide genotype data have been collected on all participants, providing many opportunities for the discovery of new genetic associations and the genetic bases of complex traits.</>
   },
