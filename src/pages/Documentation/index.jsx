@@ -69,7 +69,7 @@ const documentation_op = {
             {'name': 'Genetic Score Development Method', 'desc': 'The name or description of the method or computational algorithm used to develop the Genetic Score.'},
             // {'name': 'Genetic Score Development Details/Relevant Parameters', 'desc': 'A description of the relevant inputs and parameters relevant to the Genetic Score development method/process.'},
             // {'name': 'Species', 'desc': 'Species targeted in this Genetic Score'},
-            {'name': 'Molecular Traits',  'desc': <>Molecular Traits associated with the Genetic Score: <span className='fw-bold'>Gene</span>, <span className='fw-bold'>Transcript</span>, <span className='fw-bold'>Protein</span>, <span className='fw-bold'>Metabolite</span>.</>},
+            {'name': 'Molecular Traits',  'desc': <>Molecular Traits linked to the Genetic Score: <span className='fw-bold'>Gene</span>, <span className='fw-bold'>Transcript</span>, <span className='fw-bold'>Protein</span>, <span className='fw-bold'>Metabolite</span>.</>},
             {'name': 'Ancestry distribution', 'desc': 'Distribution of the ancestries in the training and validation of the Genetic Score.'},
             {'name': 'License/Terms of Use', 'desc': 'License/Terms of Use that applies to the Genetic Score.'}
         ]
@@ -100,7 +100,7 @@ const documentation_op = {
             {'name': 'Cohort label', 'desc': 'Shortcut to retrieve the cohort short name/label'},
             {'name': 'Metric value', 'desc':
                 <div>
-                    <p className='text-danger'>[PLACEHOLDER]</p>
+                    <div className='mb-2'>A list of metrics used to evaluate the performance of the Genetic Score within a Sample/Cohort</div>
                     <ul className='mb-0'>
                         <li key="name"><span className='fw-bold'>Name</span>: Name of the metric method (e.g. Proportion of the variance explained).</li>
                         <li key="name_short"><span className='fw-bold'>Name short</span>: Shorter name of the metric method (e.g. R<sup>2</sup>).</li>
@@ -185,7 +185,7 @@ const documentation_op = {
             {'name': 'Platform', 'desc': 'Associated Platform.'},
             {'name': 'Sample', 'desc': 'Associated Sample (control/cases, percentage female participants).'},
             {'name': 'Cohort', 'desc': 'Cohort use to evaluate the Score/Phenotype association.'},
-            {'name': 'Molecular Traits', 'desc': 'List of associated Molecular Traits (genes, transcripts, protein, metabolites) - simplifed structure with only `External ID` and `name`.'},
+            {'name': 'Molecular Traits', 'desc': 'List of linked Molecular Traits (genes, transcripts, protein, metabolites) - simplifed structure with only `External ID` and `name`.'},
             // {'name': <>R<sup>2</sup></>, 'desc': 'Proportion of the variance explained.'},
             {'name': 'HR', 'desc': 'Hazard Ratio with confidence interval.'},
             {'name': 'FDR', 'desc': 'False Discovery Rate-adjusted P-value (<0.5).'},

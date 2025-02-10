@@ -1,5 +1,5 @@
 import Href from '../../Href';
-import { common_cols, omicspred_platform_omics_type } from "./common";
+import { common_cols, default_cell_value, omicspred_platform_omics_type } from "./common";
 
 
 export const publications_columns = [
@@ -18,9 +18,24 @@ export const publications_columns = [
         minWidth: 120,
         flex: 1,
         renderCell: (params) => {
-            return <Href href={process.env.URL_ROOT_PUBMED+params.row.pmid} text={params.row.pmid}/>
+            // TEMPORARY
+            if (params.row.pmid != 12345) {
+                return <Href href={process.env.URL_ROOT_PUBMED+params.row.pmid} text={params.row.pmid}/>
+            }
+            else {
+                return default_cell_value;
+            }
         },
-        valueGetter: (value) => { return value }
+        // valueGetter: (value) => {return value }
+        // TEMPORARY:
+        valueGetter: (value) => {
+            if (value != 12345) {
+                return value
+            }
+            else {
+                return default_cell_value;
+            }
+        }
     },
     { 
         field: 'doi', 
@@ -28,9 +43,24 @@ export const publications_columns = [
         minWidth: 250,
         flex: 1,
         renderCell: (params) => {
-            return <Href href={process.env.URL_ROOT_DOI+params.row.doi} text={params.row.doi}/>
+             // TEMPORARY
+            if (params.row.pmid != 12345) {
+                return <Href href={process.env.URL_ROOT_DOI+params.row.doi} text={params.row.doi}/>
+            }
+            else {
+                return default_cell_value;
+            }
         },
-        valueGetter: (value) => { return value }
+        // valueGetter: (value) => {return value }
+        // TEMPORARY:
+        valueGetter: (value, row) => {
+            if (row.pmid != 12345) {
+                return value
+            }
+            else {
+                return default_cell_value;
+            }
+        }
     },
     
     { field: 'title', headerName: 'Title', minWidth: 450 },

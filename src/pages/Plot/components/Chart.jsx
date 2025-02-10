@@ -17,6 +17,8 @@ export default function Charts(props) {
     return { name: e.name };
   });
 
+  const rate_label = '_MatchRate';
+
   // const [cd, setcd] = useState(d);
   // const [names, setNames] = useState(_.uniq(cd, "name"));
   const names = _.uniq(d, "name");
@@ -57,7 +59,7 @@ export default function Charts(props) {
         if (props.data[i].type == '_R2') {
           default_study_2 = props.data[i];
         }
-        else if (props.data[i].type == '_MissingRate') {
+        else if (props.data[i].type == rate_label) {
           default_study_2_mr = props.data[i];
         }
       }
@@ -69,36 +71,28 @@ export default function Charts(props) {
   // const default_study_1 = get_default_study_1();
   // const [default_study_2,default_study_2_mr] = get_default_study_2();
 
-  // // Missing Rate
-  // let default_study_2_mr_name;
-  // let default_study_2_mr_data = [];
-  // if (default_study_2_mr) {
-  //   default_study_2_mr_name = default_study_2_mr.name;
-  //   default_study_2_mr_data = default_study_2_mr.data;
-  // }
-
   const [study1, setStudy1] = useState('');
   const [study2, setStudy2] = useState('');
 
   const [study1Label, setStudy1Label] = useState('');
   const [study2Label, setStudy2Label] = useState('');
 
-  const [missed, setMissed] = useState([]);
+  const [matchRate, setMatchRate] = useState([]);
   const [matrix, setMatrix] = useState('');
 
   const [datastudy1, setdataStudy1] = useState([]);
   const [datastudy2, setdataStudy2] = useState([]);
-  const [misseddata, setMisseddata] = useState([]);
+  const [matchRateData, setMatchRateData] = useState([]);
 
   // const [study1, setStudy1] = useState(default_study_1.name);
   // const [study2, setStudy2] = useState(default_study_2.name);
 
-  // const [missed, setMissed] = useState(default_study_2_mr_name);
+  // const [matchRate, setMatchRate] = useState(default_study_2_mr_name);
   // const [matrix, setMatrix] = useState(default_study_1.type);
 
   // const [datastudy1, setdataStudy1] = useState(default_study_1.data);
   // const [datastudy2, setdataStudy2] = useState(default_study_2.data);
-  // const [misseddata, setMisseddata] = useState(default_study_2_mr_data);
+  // const [matchRateData, setMatchRateData] = useState(default_study_2_mr_data);
 
 
   // const default_study_1 = get_default_study_1();
@@ -121,8 +115,8 @@ export default function Charts(props) {
     setStudy2Label(get_study_label(default_study_2.name))
 
     if (default_study_2_mr) {
-      setMissed(default_study_2_mr.name);
-      setMisseddata(default_study_2_mr.data);
+      setMatchRate(default_study_2_mr.name);
+      setMatchRateData(default_study_2_mr.data);
     }
   }
 
@@ -172,7 +166,7 @@ export default function Charts(props) {
   const handleChange_2 = async (event) => {
     setStudy2(event.target.value);
     setStudy2Label(get_study_label(event.target.value))
-    setMissed(event.target.value);
+    setMatchRate(event.target.value);
     props.data.map((e) => {
       if (e.title == event.target.value + matrix) {
         setdataStudy2(e.data);
@@ -184,13 +178,13 @@ export default function Charts(props) {
           let tdata = Object.values(e.data).map((c) => {
             return 0;
           });
-          setMisseddata(tdata);
+          setMatchRateData(tdata);
         }
       });
     } else {
       props.data.map((e) => {
-        if (e.title == event.target.value + "_MissingRate") {
-          setMisseddata(e.data);
+        if (e.title == event.target.value + rate_label) {
+          setMatchRateData(e.data);
           return;
         }
       });
@@ -262,7 +256,7 @@ export default function Charts(props) {
             label="Label"
           >
             {types.map((r, index) => {
-              return r.type != "_MissingRate" ? (
+              return r.type != rate_label ? (
                 <MenuItem key={index} value={r.type}>
                   {r.type.substring(1)}
                 </MenuItem>
@@ -280,19 +274,19 @@ export default function Charts(props) {
           name_1={study1}
           name_2={study2}
           tdata={props.tdata}
-          missed={misseddata}
-          missed_name={missed}
+          rate={matchRateData}
+          rate_name={matchRate}
           matrix={matrix}
         />
         <hr className="mt-5"/>
         {/* Doughnut Plot */}
         {/* <ChartDoughnut
           study_1={datastudy1}
-          missed={misseddata}
+          matchRate={matchRateData}
           name_1={study1}
           name_2={study2}
           study_2={datastudy2}
-          missed_name={missed}
+          matchRate_name={matchRate}
           matrix={matrix}
         /> */}
         {/* Vertical Bar Plot */}

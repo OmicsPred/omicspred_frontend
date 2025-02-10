@@ -42,6 +42,11 @@ footer {
     .op_copyright {
         text-align:center;
     }
+    .contacts_list {
+        li:not(:first-child) {
+            margin-left: 0.5rem;
+        }
+    }
 }
 
 h1 {
@@ -1651,6 +1656,16 @@ fieldset {
             border-left: none !important;
             padding-left: 2rem !important;
             padding-right: 1rem !important;
+        }
+    }
+    .contacts_list {
+        flex-direction: column;
+        text-align: right;
+        li {
+            margin-left: 0rem !important;
+        }
+        li:not(:first-child) {
+            margin-top: 0.25rem;
         }
     }
     .search_selection_panel {

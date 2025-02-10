@@ -5,6 +5,9 @@ import { ancestry_cols } from "./ancestry";
 const gene_id_col = {...common_cols['gene_name'], headerClassName: 'col_border_left'}
 const protein_id_col = {...common_cols['protein_id'], headerName: 'Protein'}
 const metabolite_id_col = {...common_cols['metabolite_id'], headerName: 'Metabolite', headerClassName: 'col_border_right'}
+const platform_type_col = {...common_cols['platform_type'],  field: 'dataset__platform__platform_master__type'}
+const platform_name_col = {...common_cols['platform_name'],  field: 'dataset__platform__platform_master__name'}
+const publication_col = {...common_cols['publication'],  field: 'dataset__publication__firstauthor'}
 
 
 // Export Scores columns
@@ -12,14 +15,12 @@ export const scores_columns = [
     common_cols['omicspred_id'],
     gene_id_col,
     protein_id_col,
-    // common_cols['protein_name'],
-    // common_cols['metabolite_name'],
     metabolite_id_col,
     common_cols['molecular_trait_name'],
     common_cols['variants_number'],
-    common_cols['platform_type'],
-    common_cols['platform_name'],
-    common_cols['publication'],
+    platform_type_col,
+    platform_name_col,
+    publication_col,
     // common_cols['scoring_file']
 ]
 

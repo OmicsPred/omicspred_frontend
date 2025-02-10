@@ -39,7 +39,7 @@ function Header() {
                                 <NavDropdown.Item href="/applications/phenotype/sum">Summary</NavDropdown.Item>
                                 <NavDropdown.Item href="/applications/phenotype/full">All Associations</NavDropdown.Item>
                             </NavDropdown>
-                            <Nav.Link href={process.env.PROJECT_SUBMIT_SCORES_URL} target="_blank">Submit Score</Nav.Link>
+                            <Nav.Link href='/submit' target="_blank">Submit Score</Nav.Link>
                             <NavDropdown title="Downloads" id="download-nav-dropdown" renderMenuOnMount={true}>
                                 <NavDropdown.Item href="/downloads">Data files</NavDropdown.Item>
                                 <NavDropdown.Item href={process.env.REST_API_URL_PUBLIC}>REST API</NavDropdown.Item>
