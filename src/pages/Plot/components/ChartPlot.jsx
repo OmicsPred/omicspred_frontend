@@ -70,22 +70,24 @@ export default function ChartPlot(props) {
     const [colors, setColors] = useState([]);
   
     const updatecolors = async () => {
-      let datatocolor = Object.values(props.missed);
+      let datatocolor = Object.values(props.rate);
   
-      // Set the default value to 0 if there is no missing rate data
+      // Set the default value to 1 if there is no match rate data
       if (!datatocolor || datatocolor.length == 0) {
-        datatocolor = data2.map((item) => { return 0;});
+        datatocolor = data2.map((item) => { return 1;});
       }
 
       const toreturn = datatocolor.map((e) => {
         if (e >= 0 && e < 0.35) {
-          return "blue";
+          // return "blue";
+          return "red";
         }
         if (e >= 0.35 && e < 0.65) {
           return "green";
         }
         if (e >= 0.65) {
-          return "red";
+          // return "red";
+          return "blue";
         }
       });
   
@@ -192,8 +194,8 @@ export default function ChartPlot(props) {
       return [
         props.name_2 + " : " + study1,
         props.name_1 + " : " + study2,
-        "Missing Rate ("+props.name_2+") : "+
-          Object.values(props.missed)[tooltipItems[0].dataIndex],
+        "Match Rate ("+props.name_2+") : "+
+          Object.values(props.rate)[tooltipItems[0].dataIndex],
         '----------------------------------',
         ...metadata.map((e) => {
           return e.name + " : " + e.value;
@@ -286,7 +288,7 @@ export default function ChartPlot(props) {
           max: 1,
           title: {
             display: true,
-            text: props.name_2 + " Missingness Rate",
+            text: props.name_2 + " Variant Matching Rate",
             align: "center",
           },
           type: "linear",
@@ -324,9 +326,12 @@ export default function ChartPlot(props) {
           0,
           chartArea.top
         );
-        gradient.addColorStop(0, "blue");
+        // gradient.addColorStop(0, "blue");
+        // gradient.addColorStop(0.5, "green");
+        // gradient.addColorStop(1, "red");
+        gradient.addColorStop(0, "red");
         gradient.addColorStop(0.5, "green");
-        gradient.addColorStop(1, "red");
+        gradient.addColorStop(1, "blue");
       }
   
       return gradient;
@@ -369,7 +374,7 @@ export default function ChartPlot(props) {
       updatecolors();
       const chart = ChartRef.current;
       chart.update();
-    }, [props.missed, props.data_2, props.data_1]);
+    }, [props.rate, props.data_2, props.data_1]);
   
     const convertBase64ToFile = (base64String, fileName) => {
       let arr = base64String.split(",");

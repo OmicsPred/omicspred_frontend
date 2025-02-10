@@ -1,6 +1,6 @@
 import Href from "./Href"
-import { Envelope, TwitterX, Building, CCircle } from 'react-bootstrap-icons';
-
+import { Envelope, Building, CCircle } from 'react-bootstrap-icons';
+import { Bluesky } from "./Generic";
 
 function Footer() {
     return (
@@ -14,12 +14,12 @@ function Footer() {
                 <Href icon={<CCircle />} text="All Genetics Scores are provided under a CC-BY license" href={process.env.URL_INOUYE_LAB} no_external_icon="1" />
             </div>
 
-            <ul className="nav col-3 justify-content-end list-unstyled d-flex">
-                <li key="contact" className="ms-3">
-                    <Href icon={<Envelope />} text="" title="Contact us" href="mailto:omicspred@gmail.com" no_external_icon="1" />
+            <ul className="nav col-3 justify-content-end list-unstyled d-flex contacts_list">
+                <li key="contact">
+                    <Href icon={<Envelope />} text="" title="Contact us" href={"mailto:"+process.env.PROJECT_EMAIL} no_external_icon="1" />
                 </li>
-                <li key="twitter" className="ms-3">
-                    <Href icon={<TwitterX />} text="" title="Twitter @CamBakerSGI" href="https://twitter.com/CamBakerSGI" no_external_icon="1" />
+                <li key="bluesky">
+                    <Href icon={<Bluesky />} text="" title="Bluesky @omicspred.bsky.social" href={process.env.PROJECT_BLUESKY} no_external_icon="1" />
                 </li>
             </ul>
         </footer>

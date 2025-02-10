@@ -1,9 +1,11 @@
+import { consoleDev } from "./Generic";
+
 const rest_url = process.env.REST_API_URL;
 
 const getData = async (url) => {
     var data = [];
     var next_url = '';
-    console.log("Retrieving data from API for page : " + url);
+    consoleDev("Retrieving data from API for page : " + url);
     if (url != '') {
     var apiResults = await fetch(url)
         .then(resp=>{
@@ -32,7 +34,7 @@ export default async function restApiCallPaginated(url) {
         url += 'format=json';
     }
     const [data_results,next_url] = await getData(url);
-    console.log("Retreiving data from API for page : " + url);
+    consoleDev("Retreiving data from API for page : " + url);
     //console.log(data_results);
     if (next_url) {
         //console.log(">> NEXT: "+next_url);

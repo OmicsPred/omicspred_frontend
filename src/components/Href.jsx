@@ -1,4 +1,4 @@
-import { BoxArrowUpRight } from 'react-bootstrap-icons';
+import { BoxArrowUpRight, EnvelopeAt } from 'react-bootstrap-icons';
 
 const Href = (props) => {
 
@@ -27,31 +27,37 @@ const Href = (props) => {
     }
 
     // Internal link
-    if (props.href.startsWith('/') || props.href.startsWith('#')) {
-        if (props.target && props.target=='blank') {
-            return(
-                <a href={props.href} target="_blank" className={extra_classes} title={title}>{text_content}</a>
-            );
-        }
+    if (props.role=='email') {
         return(
-            <a href={props.href} className={extra_classes} title={title}>{text_content}</a>
-        );
+            <a href={"mailto:"+props.href} rel="noreferrer"><EnvelopeAt className='me-1'/>{text_content}</a>
+        )
     }
-    // External link
     else {
-        // Without external link icon
-        if (props.no_external_icon) {
+        if (props.href.startsWith('/') || props.href.startsWith('#')) {
+            if (props.target && props.target=='blank') {
+                return(
+                    <a href={props.href} target="_blank" className={extra_classes} title={title}>{text_content}</a>
+                );
+            }
             return(
-                <a href={props.href} className={extra_classes} title={title} target="_blank" rel="noreferrer">{text_content}</a>
+                <a href={props.href} className={extra_classes} title={title}>{text_content}</a>
             );
         }
-        // With external link icon
-        return(
-            <a href={props.href} className={"external-link"+extra_classes} title={title} target="_blank" rel="noreferrer">
-                {text_content}<BoxArrowUpRight/>
-            </a>
-        );
+        // External link
+        else {
+            // Without external link icon
+            if (props.no_external_icon) {
+                return(
+                    <a href={props.href} className={extra_classes} title={title} target="_blank" rel="noreferrer">{text_content}</a>
+                );
+            }
+            // With external link icon
+            return(
+                <a href={props.href} className={"external-link"+extra_classes} title={title} target="_blank" rel="noreferrer">
+                    {text_content}<BoxArrowUpRight/>
+                </a>
+            );
+        }
     }
 }
-
 export default Href ;

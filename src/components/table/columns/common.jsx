@@ -1,6 +1,6 @@
 import { FileEarmarkText, Stack } from 'react-bootstrap-icons';
 import { internal_publication_link, omicspred_omics_type, display_description } from '../../Common';
-import { thousandifyNumber, ToogleDiv, ToogleText, TooltipText, scoresBadge } from '../../Generic';
+import { thousandifyNumber, ToogleDiv, TooltipText, scoresBadge } from '../../Generic';
 import Href from '../../Href';
 
 export const default_cell_value = process.env.DEFAULT_CELL_VALUE;
@@ -564,9 +564,14 @@ export const common_cols = {
                 mt_names = row.metabolites.map((metabolite) => metabolite.name)
             }
             else if (row.genes.length > 0) {
-                mt_names = row.genes.map((gene) => gene.descriptions.length ? <ToogleText key={gene.name ? gene.name : gene.external_id} text={gene.descriptions[0]}/>:'')
+                mt_names = row.genes.map((gene) => gene.descriptions.length ? gene.descriptions[0] : '-')
             }
-            return mt_names.join(data_separator);
+            if (mt_names.length > 0) {
+                return mt_names.join(data_separator);
+            }
+            else {
+                return default_cell_value;
+            }
         }
     },
     'metabolite_id_from_list': {

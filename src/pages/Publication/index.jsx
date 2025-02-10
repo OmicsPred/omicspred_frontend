@@ -52,8 +52,17 @@ function Publication() {
 		return (
 			<>
                 { publicationData.title ? <tr><td>Title</td><td>{publicationData.title}</td></tr>:''}
+                {/* TEMPORARY */}
+                { publicationData.pmid & publicationData.pmid != 12345 ?
+                    <>
+                        <tr><td>PubMed ID</td><td><Href href={process.env.URL_ROOT_PUBMED+publicationData.pmid} text={publicationData.pmid}/></td></tr>
+                        { publicationData.doi ? <tr><td>doi</td><td><Href href={process.env.URL_ROOT_DOI+publicationData.doi} text={publicationData.doi}/></td></tr>:''}
+                    </>
+                    :''}
+                {/*
                 { publicationData.pmid ? <tr><td>PubMed ID</td><td><Href href={process.env.URL_ROOT_PUBMED+publicationData.pmid} text={publicationData.pmid}/></td></tr>:''}
                 { publicationData.doi ? <tr><td>doi</td><td><Href href={process.env.URL_ROOT_DOI+publicationData.doi} text={publicationData.doi}/></td></tr>:''}
+                */}
                 { publicationData.date_publication ? <tr><td>Publication Date</td><td>{convertPublicationDate()}</td></tr>:''}
                 { publicationData.journal ? <tr><td>Journal</td><td>{publicationData.journal}</td></tr>:''}
                 { datasetsData ? <tr><td>Number of scores</td><td>{get_scores_count()}</td></tr>:''}

@@ -35,6 +35,11 @@ function About() {
 		/>
 
 		<Container
+			title="Feedback & Contact Information"
+			text={<div>To provide feedback or ask a question, please contact us <Href href={process.env.PROJECT_EMAIL} role="email" text="here"/>.</div>}
+		/>
+
+		<Container
 			title="Our Collaborators"
 			text={
 				<>

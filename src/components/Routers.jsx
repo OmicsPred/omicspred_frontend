@@ -24,6 +24,7 @@ import Cohort from "../pages/Cohort";
 import ScrollToAnchor from './ScrollToAnchor';
 import Search from "../pages/Search";
 import Plot from "../pages/Plot";
+import { Redirect } from './Generic';
 // import PlatformAlt from "../pages/Tests/Platform";
 
 
@@ -43,6 +44,7 @@ function OpRouters() {
                 <Route path="/cohorts" element={<Cohorts />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/docs" element={<Documentation />} />
+                <Route path="/submit" element={<Redirect url={process.env.PROJECT_SUBMIT_SCORES_URL}/>}/>
 
                 {/* Group pages */}
                 <Route path="/pathways" element={<Pathways />} />
