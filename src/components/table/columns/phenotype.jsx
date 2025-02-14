@@ -2,7 +2,8 @@
 import { Stack } from "react-bootstrap-icons";
 import Href from '../../Href';
 import { ToogleDiv, thousandifyNumber, participantsHeader, participantsBadge } from '../../../components/Generic';
-import { common_cols,common_data_cols } from "./common";
+import { display_cohort } from '../../../components/Common';
+import { common_cols, common_data_cols, molecular_trait_header } from "./common";
 
 export const default_cell_value = process.env.DEFAULT_CELL_VALUE;
 
@@ -25,9 +26,11 @@ const application_molecular_traits = function(mt_entry,index) {
 export const applications_cols = {
     'gene': {
         field: 'gene',
-        headerName: 'Gene',
         minWidth: 150,
         flex: 0.5,
+        renderHeader: (params) => {
+            return (molecular_trait_header('Gene'))
+        },
         renderCell: (params) => {
             const genes_list =  params.row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'gene'});
             if (genes_list.length > 0) {
@@ -45,9 +48,11 @@ export const applications_cols = {
     },
     'protein': {
         field: 'protein',
-        headerName: 'Protein',
         minWidth: 150,
         flex: 0.5,
+        renderHeader: (params) => {
+            return (molecular_trait_header('Protein'))
+        },
         renderCell: (params) => {
             const proteins_list =  params.row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'protein'});
             if (proteins_list.length > 0) {
@@ -65,9 +70,11 @@ export const applications_cols = {
     },
     'metabolite': {
         field: 'metabolite',
-        headerName: 'Metabolite',
         minWidth: 150,
         flex: 0.5,
+        renderHeader: (params) => {
+            return (molecular_trait_header('Metabolite'))
+        },
         renderCell: (params) => {
             const metabolites_list =  params.row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'metabolite'});
             if (metabolites_list.length > 0) {
@@ -141,10 +148,10 @@ export const applications_cols = {
         renderCell: (params) => {
             const cohort = params.row.cohort;
             if (cohort.name_short == cohort.name_full) {
-                return cohort.name_short;
+                return display_cohort(cohort)
             }
             else {
-                return <span>{cohort.name_full} <small>({cohort.name_short})</small></span>;
+                return <span>{display_cohort(cohort,cohort.name_full)} <small>({cohort.name_short})</small></span>;
             }
         }
         ,

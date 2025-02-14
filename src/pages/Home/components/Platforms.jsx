@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { DashLg, Stack } from 'react-bootstrap-icons';
 import Href from '../../../components/Href';
 import { thousandifyNumber } from "../../../components/Generic";
-import PlatformCohort from './PlatformCohort';
+import PlatformCohort from './components/PlatformCohort';
 
 
 const Platforms = (props) => {

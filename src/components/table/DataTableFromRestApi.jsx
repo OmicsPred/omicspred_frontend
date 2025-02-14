@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DataTable from './DataTable';
 import restApiCallPaginated from '../RestAPIPaginated';
 import { op_subtitle } from '../Common';
-import { loading_data } from '../Generic';
+import { loading_data, consoleDev } from '../Generic';
 
 
 const DataTableFromRestApi = (props) => {
@@ -12,7 +12,7 @@ const DataTableFromRestApi = (props) => {
     useEffect(() => {
         (async () => {
             const dataset = await restApiCallPaginated(props.url_suffix);
-            console.log(dataset);
+            consoleDev(dataset);
             if (dataset && dataset.length > 0) {
                 setTableData(dataset);
                 // Check when the Rest API call is done

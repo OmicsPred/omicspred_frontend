@@ -13,6 +13,7 @@ function Cohort() {
     const { cohort } = useParams();
 
     const [cohortData, setCohortData] = useState();
+    const [cohortTitle, setCohortTitle] = useState();
     const [cohortName, setCohortName] = useState();
     const [noEntry, setNoEntry] = useState(false)
     const [cohortImageSource, setCohortImageSource] = useState();
@@ -21,7 +22,7 @@ function Cohort() {
         const cohort_data = await restApiCall('cohort/'+cohort);
         if (cohort_data && Object.keys(cohort_data).length) {
             setCohortData(cohort_data);
-            getImageSource(cohort);
+            setCohortTitle(cohort_data.name_full ? cohort_data.name_full : cohort_data.name_short)
             setCohortName(cohort_data.name_short ? cohort_data.name_short : cohort_data.name_full)
         }
         else {
@@ -52,6 +53,7 @@ function Cohort() {
                 { cohortData.name_full && cohortData.name_short ? <tr><td>Short name</td><td>{cohortData.name_short}</td></tr> : ''}
                 { cohortData.name_full && cohortData.name_short ? '' : <tr><td>Long name</td><td>{cohortData.name_full}</td></tr>}
                 { cohortData.url ? <tr><td>Website</td><td><Href text={cohortData.url} href={cohortData.url}/></td></tr>:''}
+                { cohortData.description ? <tr><td>Description</td><td>{cohortData.description}</td></tr>:''}
                 { cohortData.ancestries ? <tr><td>Ancestr{cohortData.ancestries.length > 1 ? 'ies' : 'y'}</td><td>{display_ancestries(cohortData.ancestries)}</td></tr>:''}
             </>
         )
@@ -67,13 +69,14 @@ function Cohort() {
 
     useEffect(() => {
         fetchCohortData();
+        getImageSource(cohort);
     },[])
 
     return (
         <>
-            { cohortName && cohortData && cohortData.name_short ?
+            { cohortName && cohortTitle && cohortData && cohortData.name_short ?
                 <>
-                    <PageTitle type='hl' category='Cohort' label={cohortName} title={'Cohort '+cohortName}/>
+                    <PageTitle type='hl' category='Cohort' label={cohortTitle} title={'Cohort '+cohortTitle}/>
                     <div>
                         <div className='d-flex justify-content-between'>
                             {/* Summary data */}

@@ -1,8 +1,5 @@
-// import { CollectionFill } from 'react-bootstrap-icons';
-import Href from "../components/Href";
-// import { ToogleDiv, participantsBadge } from "../components/Generic";
 import { participantsBadge } from "../components/Generic";
-import { display_ancestry } from "../components/Common";
+import { display_ancestry, display_cohort } from "../components/Common";
 
 
 export const SampleTable = (props) => {
@@ -62,7 +59,9 @@ const PlatformSampleCohorts = (props) => {
         const participants = sample.sample_number;
         const ancestry = sample.ancestry_broad;
         for (let j=0; j < sample.cohorts.length; j++) {
-            const cohort_name = sample.cohorts[0].name_short;
+            const cohort = sample.cohorts[0];
+            const cohort_name = cohort.name_short;
+            // const cohort_desc = sample.cohorts[0].description;
             if (cohorts_obj[cohort_name]) {
                 if (!cohorts_obj[cohort_name]['ancestry'][ancestry]) {
                     cohorts_obj[cohort_name]['ancestry'][ancestry] = 0;
@@ -70,14 +69,15 @@ const PlatformSampleCohorts = (props) => {
             }
             else {
                 cohorts_obj[cohort_name] = {
-                    // 'url': <Href text='External link' href={cohort_url}/>,
-                    'url': '/cohort/'+cohort_name,
+                    'cohort': cohort,
                     'ancestry': {}
                 }
                 cohorts_obj[cohort_name]['ancestry'][ancestry] = 0;
             }
             cohorts_obj[cohort_name]['ancestry'][ancestry] += participants;
         }
+        console.log("cohorts_obj:");
+        console.log(cohorts_obj);
         return cohorts_obj
     }
 
@@ -97,25 +97,22 @@ const PlatformSampleCohorts = (props) => {
         <>
             { samples_list.map((sample,index) =>
                 <tr key={sample_type+sample.participants+'_tr'}>
-                    {/* { index == 0 ? <td scope="row" rowSpan={samples_list.length}>{sample_type == 'Training'? <span className='training_col font-bold'>{sample_type}</span>:<span className='font-bold'>{sample_type}</span>}</td> : '' } */}
                     { index == 0 ? <td rowSpan={samples_list.length}>{sample_type == 'Training'? <span className='training_col font-bold'>{sample_type}</span>:<span className='font-bold'>{sample_type}</span>}</td> : '' }
                     <td>
                         { sample.cohorts.length > 1 ?
                                 <ul key={'ul_samples'} className="mb-0">
                                 {
                                     Object.keys(sample.cohorts).map((cohort_name) => {
-                                        return (
-                                            <li key={'li_'+cohort_name}><Href key={cohort_name+'_link'} href={sample.cohorts[cohort_name]['url']} text={cohort_name}/></li>
-                                        )
+                                        return (<li key={'li_'+cohort_name}>{display_cohort(sample.cohorts[cohort_name]['cohort'])}</li>)
                                     })
                                 }
                                 </ul>
                             :
-                            Object.keys(sample.cohorts).map((cohort_name) => <Href key={cohort_name+'_link'} href={sample.cohorts[cohort_name]['url']} text={cohort_name}/>)
+                            Object.keys(sample.cohorts).map((cohort_name) => <span key={'cohort_'+cohort_name}>{display_cohort(sample.cohorts[cohort_name]['cohort'])}</span>)
                         }
                     </td>
                     <td>
-                        { Object.keys(sample.cohorts).map((cohort_name) => render_ancestries(cohort_name,sample.cohorts[cohort_name],sample.participants)) }
+                        { Object.keys(sample.cohorts).map((cohort_name) => <span key={'ancestry_'+cohort_name+"_"+sample.participants}>{render_ancestries(cohort_name,sample.cohorts[cohort_name],sample.participants)}</span>) }
                     </td>
                     { sample.participants ? <td>{participantsBadge(sample.participants)}</td> : <td>-</td> }
                     { sample.sample_percent_male? <td>{sample.sample_percent_male}</td> : <td>-</td> }

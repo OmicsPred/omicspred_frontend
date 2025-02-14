@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 // import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { DataGrid, GridToolbarContainer, GridToolbarColumnsButton, GridToolbarQuickFilter } from '@mui/x-data-grid';
-import { loading_data } from '../Generic';
+import { loading_data, consoleDev } from '../Generic';
 
 
 const rest_url = process.env.REST_API_URL;
@@ -111,13 +111,13 @@ const DataTableServer = (props) => {
         //   url += '&filter='+filter;
         // }
         const filter = queryParam.filter;
-        console.log("FILTER: "+filter)
+        consoleDev("FILTER: "+filter)
         if (!url.includes('filter=') && filter) {
             url += '&filter='+filter;
         }
         const sort_field = queryParam.sort_field;
         const sort = queryParam.sort;
-        console.log("SORT: "+sort_field+' | '+sort)
+        consoleDev("SORT: "+sort_field+' | '+sort)
         if (!url.includes('sort_field=') && sort_field) {
             if (cols2db[sort_field]) {
                 url += '&sort_field='+cols2db[sort_field];
@@ -137,9 +137,7 @@ const DataTableServer = (props) => {
         const offset = paginationModel.page * paginationModel.pageSize;
 
         const url = rest_api_url(props.url_suffix, offset, paginationModel.pageSize)
-        console.log("URL: "+url);
-        // console.log("PAGE: "+paginationModel.page);
-        // console.log("offset: "+offset);
+        consoleDev("URL: "+url);
         const response = await fetch(url);
         const json = await response.json();
         const results = json.results;
@@ -200,6 +198,7 @@ const DataTableServer = (props) => {
                         rows={data}
                         getRowId={(row) => getRowId(row)}
                         getRowHeight={() => row_height_settings}
+                        getEstimatedRowHeight={() => 100}
                         // getRowId={(row) => row.id}
                         rowCount={rowCountState}
                         loading={isLoading}

@@ -1013,6 +1013,7 @@ a.navbar-brand {
     width: 100%;
     flex-basis: fit-content !important;
     min-width: 750px;
+    min-height: 200px;
 }
 
 .table_card {
@@ -1084,6 +1085,9 @@ ul.example_list {
     list-style-type: none;
     padding-left: 0px;
     margin-bottom: 0px;
+}
+.op_col_header {
+    padding-top: 1px;
 }
 
 

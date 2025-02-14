@@ -1,7 +1,7 @@
 import Href from "./Href";
 import { Bezier2, Book, ChevronRight, ClipboardDataFill, People, BoxFill, Stack, Hexagon, HexagonFill } from 'react-bootstrap-icons';
 import { cohort_cols, common_column_groups } from './table/columns/common';
-import { ToogleDiv, ToogleText, thousandifyNumber } from './Generic';
+import { ToogleDiv, ToogleText, TooltipText, thousandifyNumber } from './Generic';
 import DocumentTitle from './DocumentTitle';
 
 
@@ -153,7 +153,6 @@ export const op_subtitle = (type,label,count) => {
     else {
         suffix += '(s)'
     }
-    // return <h5><ChevronRight className={'op_subtitle color_'+type}/>Linked {label}{suffix}{count ? op_count_badge(count,type) : ''}</h5>
     return <h4>Linked {label}{suffix}{count ? op_count_badge(count,type) : ''}</h4>
 }
 
@@ -167,7 +166,6 @@ export const op_subtitle_no_asso = (type,label,count) => {
     if (typeof(label) == 'string') {
         elem_id = label.replace(/\W+/g, '_').toLowerCase();
     }
-    // return <h5><ChevronRight className={'op_subtitle color_'+type}/>{label}{count ? op_count_badge(count,type) : ''}</h5>
     return <h4 id={elem_id}>{label}{count ? op_count_badge(count,type) : ''}</h4>
 }
 
@@ -191,7 +189,7 @@ export const HeaderCard = (props) => {
     const type_uc = type.charAt(0).toUpperCase() + type.slice(1)
     return (
         <div className='d-flex'>
-            <div className="card-deck d-lg-flex flex-lg-row justify-content-center d-md-flex flex-md-row d-sm-flex flex-sm-column">
+            <div className="card-deck d-flex justify-content-center flex-md-row flex-sm-column">
                 <div className="card op_card mb-3">
                     <div className="card-header"><h5 className="mb-0">{type_uc} information</h5></div>
                     <div className="card-body">
@@ -210,7 +208,6 @@ export const HeaderCard = (props) => {
 }
 
 
-// export const display_information_2_cards = (type_left, content_left, type_right, content_right) => {
 export const Header2Cards = (props) => {
     const type_left = props.type_left;
     const content_left = props.content_left;
@@ -269,9 +266,6 @@ export const publication_ref = (publication,display_year) => {
 
 export const omicspred_omics_type = (type,use_alt) => {
     if (use_alt) {
-        // return (
-        //     <span className={"border_left_mark border_color_"+type}>{type}</span>
-        // )
         return (
             <span key={'omics_'+type} className={'badge badge_border_'+type}>
                 <BoxFill className={"align-middle color_"+type}/>
@@ -336,6 +330,28 @@ export const get_cohorts_col_groups_list = (sample_cohorts, cohorts_list) => {
     return cohorts_list;
 }
 
+
+/* Display cohort as a link to the internal URL and with the description in tooltip */
+export const display_cohort = (cohort, cohort_name) => {
+    if (!cohort_name) {
+        cohort_name = cohort.name_short
+    }
+    // const cohort_name = cohort.name_short
+    const cohort_url = '/cohort/'+cohort_name;
+    const cohort_desc = cohort.description
+    return (
+        <>
+            {cohort_desc ?
+                <TooltipText
+                    ttype='link'
+                    title={cohort_desc}
+                    text={<Href key={cohort_name+'_link'} href={cohort_url} text={cohort_name}/>}
+                />
+                : <Href key={cohort_name+'_link'} href={cohort_url} text={cohort_name}/>
+            }
+        </>
+    )
+}
 
 /* Format the list of descriptions for the molecular traits */
 export const display_description = (description_list) => {

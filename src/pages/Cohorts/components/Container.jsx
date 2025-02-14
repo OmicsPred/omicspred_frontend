@@ -17,7 +17,7 @@ const Container = (props) => {
                     <div className='mb-1'><span className='me-2'>Short name{add_s_when_plural(cohort.labels.length)}:</span>
                         {cohort.labels.map((cohort_label,index) => <span key={cohort_label}>{index > 0 ? ', ':''}<Href href={"/cohort/"+cohort_label} text={cohort_label}/></span>)}
                     </div>
-                    <p>{cohort.desc}</p>
+                    <span>{cohort.desc}</span>
                 </div>
                 <div className="ps-3">
                     {
