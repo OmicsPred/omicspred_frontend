@@ -103,7 +103,7 @@ const DataTable = (props) => {
                     rows={props.data}
                     getRowId={(row) => getRowId(row)}
                     getRowHeight={() => row_height_settings}
-                    sx={{ '--DataGrid-overlayHeight': '200px' }}
+                    // sx={{ '--DataGrid-overlayHeight': '200px' }}
                     getRowClassName={(params) => params.row.evaluation_type && params.row.evaluation_type == 'Training' ? 'training_row':''} // Highlight the training rows
                     ignoreDiacritics // Ignore accents for quick search
                     columnVisibilityModel={initial_hidden_columns}

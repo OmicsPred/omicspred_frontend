@@ -1,5 +1,5 @@
 
-import { FileEarmarkArrowDown } from 'react-bootstrap-icons';
+import { FileEarmarkArrowDown, Stack } from 'react-bootstrap-icons';
 import { common_cols } from './common';
 import { download_labels } from '../../Downloads';
 
@@ -42,15 +42,22 @@ export const datasets_columns = [
             valueGetter:  (value, row) => { return row.publication.firstauthor }
     },
     { 
-        field: 'platform', 
-        headerName: 'Platform', 
+        field: 'platform',
         minWidth: 150,
         flex: 1,
-            renderCell: (params) => {
-                const platform = params.row.platform;
-                return (<a href={"/platform/"+platform.name}>{platform.name}</a>);
-            },
-            valueGetter:  (value, row) => { return row.platform.name }
+        renderHeader: (params) => {
+            return (
+                <span>
+                    <Stack className={"align-middle me-1"}/>
+                    <span className="align-middle fw-bold" style={{paddingTop:"1px"}}>Platform</span>
+                </span>
+            )
+        },
+        renderCell: (params) => {
+            const platform = params.row.platform;
+            return (<a href={"/platform/"+platform.name}>{platform.name}</a>);
+        },
+        valueGetter:  (value, row) => { return row.platform.name }
     },
     common_cols['platform_type'],
     { 

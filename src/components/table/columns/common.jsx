@@ -1,4 +1,4 @@
-import { FileEarmarkText, Stack } from 'react-bootstrap-icons';
+import { FileEarmarkText, Stack, Hexagon } from 'react-bootstrap-icons';
 import { internal_publication_link, omicspred_omics_type, display_description } from '../../Common';
 import { thousandifyNumber, ToogleDiv, TooltipText, scoresBadge } from '../../Generic';
 import Href from '../../Href';
@@ -142,6 +142,20 @@ export const rho_col_header_label = function() {
 }
 
 
+export const molecular_trait_header = (mt_header, mt_type) => {
+    if (! mt_type) {
+        mt_type = mt_header.split(' ')[0]
+    }
+    const mt_type_lc = mt_type.toLowerCase();
+    return (
+        <span>
+            <Hexagon className={"align-middle me-1 color_"+mt_type_lc}/>
+            <span className="align-middle fw-bold op_col_header">{mt_header}</span>
+        </span>
+    )
+}
+
+
 const sort_objects = function(objects, key) {
     function compare(a, b) {
         a = a[key];
@@ -230,9 +244,16 @@ export const common_cols = {
     },
     'platform_name': {
         field: 'platform__name',
-        headerName: 'Platform',
         minWidth: 140,
         flex: 0.6,
+        renderHeader: (params) => {
+            return (
+                <span>
+                    <Stack className="align-middle me-1"/>
+                    <span className="align-middle fw-bold op_col_header">Platform</span>
+                </span>
+            )
+        },
         renderCell: (params) => {
             return omicspred_internal_link({'label': params.row.platform.name},'platform');
         },
@@ -299,11 +320,13 @@ export const common_cols = {
     },
     'protein_id': {
         field: 'proteins__external_id',
-        headerName: 'Protein ID',
         minWidth: 115,
         // minWidth: 120,
         // flex: 0.5,
         hideable: false,
+        renderHeader: (params) => {
+            return (molecular_trait_header('Protein ID'))
+        },
         renderCell: (params) => {
             let pr_ids = [];
             if (params.row.proteins) {
@@ -346,7 +369,6 @@ export const common_cols = {
         field: 'proteins__name',
         headerName: 'Protein Name',
         minWidth: 300,
-        // flex: 1,
         valueGetter: (value, row) => {
             let pr_names = [];
             if (row.proteins) {
@@ -402,10 +424,12 @@ export const common_cols = {
     },
     'gene_name': {
         field: 'genes__name',
-        headerName: 'Gene',
         minWidth: 110,
         // minWidth: 120,
         // flex: 0.5,
+        renderHeader: (params) => {
+            return (molecular_trait_header('Gene'))
+        },
         renderCell: (params) => {
             let gene_names = [];
             if (params.row.genes) {
@@ -439,7 +463,9 @@ export const common_cols = {
         field: 'gene_id',
         headerName: 'Gene ID',
         minWidth: 180,
-        // flex: 0.5,
+        renderHeader: (params) => {
+            return (molecular_trait_header('Gene ID'))
+        },
         renderCell: (params) => {
             return omicspred_internal_link({'label': params.row.external_id} , 'gene');
         },
@@ -449,9 +475,11 @@ export const common_cols = {
     },
     'gene_name_from_list': {
         field: 'gene_name',
-        headerName: 'Gene',
         minWidth: 120,
         flex: 0.5,
+        renderHeader: (params) => {
+            return (molecular_trait_header('Gene'))
+        },
         renderCell: (params) => {
             return omicspred_internal_link({'label': params.row.name}, 'gene');
         },
@@ -461,9 +489,10 @@ export const common_cols = {
     },
     'protein_id_from_list': {
         field: 'protein_id',
-        headerName: 'Protein ID',
         minWidth: 180,
-        // flex: 0.5,
+        renderHeader: (params) => {
+            return (molecular_trait_header('Protein ID'))
+        },
         renderCell: (params) => {
             return omicspred_internal_link({'label': params.row.external_id} , 'protein');
         },
@@ -473,9 +502,11 @@ export const common_cols = {
     },
     'protein_name_from_list': {
         field: 'protein_name',
-        headerName: 'Protein',
         minWidth: 120,
         flex: 0.5,
+        renderHeader: (params) => {
+            return (molecular_trait_header('Protein'))
+        },
         renderCell: (params) => {
             return omicspred_internal_link({'label': params.row.name}, 'protein');
         },
@@ -485,11 +516,13 @@ export const common_cols = {
     },
     'metabolite_id': {
         field: 'metabolite_id',
-        headerName: 'Metabolite ID',
         headerClassName: 'col_border_left',
         minWidth: 150,
         flex: 0.6,
         hideable: false,
+        renderHeader: (params) => {
+            return (molecular_trait_header('Metabolite ID'))
+        },
         renderCell: (params) => {
             let metabolite_ids = [];
             if (params.row.metabolites) {
@@ -513,11 +546,13 @@ export const common_cols = {
     },
     'metabolite_name': {
         field: 'metabolites__name',
-        headerName: 'Metabolite Name',
         headerClassName: 'col_border_right',
         minWidth: 200,
         flex: 1,
         hideable: false,
+        renderHeader: (params) => {
+            return (molecular_trait_header('Metabolite Name'))
+        },
         renderCell: (params) => {
             let metabolite_names = [];
             let metabolite_labels = [];
@@ -576,9 +611,11 @@ export const common_cols = {
     },
     'metabolite_id_from_list': {
         field: 'metabolite_id',
-        headerName: 'Metabolite ID',
         minWidth: 120,
         flex: 0.5,
+        renderHeader: (params) => {
+            return (molecular_trait_header('Metabolite ID'))
+        },
         renderCell: (params) => {
             return omicspred_internal_link({'label': params.row.external_id}, 'metabolite');
         },
@@ -600,9 +637,11 @@ export const common_cols = {
     },
     'metabolite_name_from_list': {
         field: 'metabolite_name',
-        headerName: 'Metabolite',
         minWidth: 120,
         flex: 0.5,
+        renderHeader: (params) => {
+            return (molecular_trait_header('Metabolite'))
+        },
         renderCell: (params) => {
             return omicspred_internal_link({'label': params.row.name}, 'metabolite');
         },

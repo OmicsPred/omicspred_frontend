@@ -6,6 +6,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { Tooltip } from '@mui/material';
+import { InfoCircleFill } from "react-bootstrap-icons";
 import ChartPlot from "./ChartPlot";
 // import ChartDoughnut from "./ChartDoughnut";
 import ChartBar from "./ChartBar";
@@ -267,7 +269,14 @@ export default function Charts(props) {
       </div>
       {/* Data Plot */}
       <Suspense fallback={<div>Data is coming !</div>}>
-        <h4 key={study1+"_"+study2} className="mt-3"><Href href={'/cohort/'+study1Label}  text={study1}/> <small>vs</small> <Href href={'/cohort/'+study2Label}  text={study2}/></h4>
+        <h4 key={study1+"_"+study2} className="mt-3">
+          <Href href={'/cohort/'+study1Label}  text={study1}/> <small>vs</small> <Href href={'/cohort/'+study2Label}  text={study2}/>
+          <Tooltip className='ms-3' title="Cohorts description">
+            <span>
+                <Href href="/cohorts" icon={<InfoCircleFill size={18}/>} target='blank'/>
+            </span>
+          </Tooltip>
+        </h4>
         <ChartPlot
           data_1={datastudy1}
           data_2={datastudy2}

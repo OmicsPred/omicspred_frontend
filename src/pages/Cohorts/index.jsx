@@ -34,7 +34,11 @@ const cohorts_list = [
     "title": "The Multi-Ethnic Cohort",
     "labels": ["MEC"],
     "href": "https://blog.nus.edu.sg/sphs/",
-    "desc": <>A prospective cohort of 49,700 community-dwelling Singapore citizens and Permanent Residents, 21 years old and older and of Chinese, Malay or Indian ethnicity. The study aims to discover how lifestyle factors, physiological factors, genetic factors and their interactions impact the development of common health conditions in Singapore. The baseline recruitment was completed between 2004 and 2010. Between 2011 and 2016, the participants were invited for a follow-up. At both baseline and revisit, participants completed an interview-administered questionnaire and clinical examination. The questionnaires collected demographic information, detailed lifestyle behaviors, personal and family medical histories, and medication usage. At the health examination, anthropometric measures, blood pressures, and blood was taken for lipid and glycemic biomarker measurements. Informed consent was obtained from all participants. All human biological samples were collected in accordance with ethical regulations and protocols.</>
+    "desc": <>
+      A prospective cohort of 49,700 community-dwelling Singapore citizens and Permanent Residents, 21 years old and older and of Chinese, Malay or Indian ethnicity. The study aims to discover how lifestyle factors, physiological factors, genetic factors and their interactions impact the development of common health conditions in Singapore. The baseline recruitment was completed between 2004 and 2010. Between 2011 and 2016, the participants were invited for a follow-up. At both baseline and revisit, participants completed an interview-administered questionnaire and clinical examination. The questionnaires collected demographic information, detailed lifestyle behaviors, personal and family medical histories, and medication usage. At the health examination, anthropometric measures, blood pressures, and blood was taken for lipid and glycemic biomarker measurements. Informed consent was obtained from all participants. All human biological samples were collected in accordance with ethical regulations and protocols.
+      <br/>
+      The different ethnicities in the study are: Chinese (<span className='fw-bold'>CN</span>), Malay (<span className='fw-bold'>MA</span>) and Indian (<span className='fw-bold'>IN</span>).
+    </>
   },
   {
     "title": "The Northern Swedish Population Health Study",

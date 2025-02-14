@@ -1,5 +1,5 @@
 import { Hexagon } from 'react-bootstrap-icons';
-import {common_cols} from "./common";
+import { common_cols, molecular_trait_header } from "./common";
 
 
 // const gene_name_col = {...common_cols['gene_name'], field: 'pathway_genes_name', sortable: false, headerClassName: 'col_border_left'}
@@ -21,15 +21,6 @@ import {common_cols} from "./common";
 //     metabolite_name_col
 // ]
 
-const molecular_trait_header = (mt_type) => {
-    const mt_type_lc = mt_type.toLowerCase();
-    return (
-        <span>
-            <Hexagon className={"align-middle me-1 color_"+mt_type_lc}/>
-            <span className="align-middle fw-bold" style={{paddingTop:"1px"}}>{mt_type}</span>
-        </span>
-    )
-}
 
 export const pathways_columns = [
     common_cols['pathway_name'],
@@ -37,7 +28,6 @@ export const pathways_columns = [
     common_cols['superpathway_name'],
     {
         field: 'genes_count',
-        headerName: 'Gene',
         width: 110,
         renderHeader: (params) => {
             return (molecular_trait_header('Gene'))
