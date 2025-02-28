@@ -1,14 +1,18 @@
+import { href } from "react-router";
 import Href from '../../../components/Href';
 import { ToogleDiv, ToogleText } from '../../../components/Generic';
 import { element_icon } from '../../../components/Common';
 
 
 const display_omics_link = (data, type, index) => {
+
+    const omics_url = href("/:mtype/:id", { mtype: type, id: data.external_id ? data.external_id: data.name});
+
     if (data.external_id) {
-        return <span key={type+'_'+data.external_id}>{index ? ', ': ''}{data.name ? data.name+' ' : ''}(<Href href={'/'+type+'/'+data.external_id} key={'link'+data.external_id} text={data.external_id}/>)</span>
+        return <span key={type+'_'+data.external_id}>{index ? ', ': ''}{data.name ? data.name+' ' : ''}(<Href href={omics_url} key={'link'+data.external_id} text={data.external_id}/>)</span>
     }
     else if (type!='protein') {
-        return <span key={type+'_'+data.name}>{index ? ', ': ''}<Href href={'/'+type+'/'+data.name} key={'link'+data.name} text={data.name}/></span>
+        return <span key={type+'_'+data.name}>{index ? ', ': ''}<Href href={omics_url} key={'link'+data.name} text={data.name}/></span>
     }
     else {
         return <span key={type+'_'+data.name}>{index ? ', ': ''}{data.name}</span>

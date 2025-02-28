@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { PlusCircleFill, DashCircleFill, People, InfoCircle, BarChart } from 'react-bootstrap-icons';
-import Tooltip from '@mui/material/Tooltip';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import { styled } from '@mui/material/styles';
 
 
 export const consoleDev = function(msg) {
@@ -198,6 +199,21 @@ export const TooltipText = (props) => {
         return text;
     }
 }
+
+
+export const TooltipHtml = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} arrow/>
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.arrow}`]: {
+        color: theme.palette.common.black,
+    },
+    [`& .${tooltipClasses.tooltip}`]: {
+        backgroundColor: 'rgba(0, 0, 0, 0.85)',
+        borderRadius: '6px',
+        color: '#FFF',
+        fontSize: '13px'
+    },
+}));
 
 
 export const useExternalScript = (url) => {

@@ -10,7 +10,7 @@ function Applications() {
     <div className="even_section" >
       <div className="op_section_title">Application of Multi-Omic Genetic Scores</div>
 
-      <div className="card-deck d-flex justify-content-center flex-lg-row flex-md-row flex-sm-column">
+      <div className="card_containter flex-lg-row flex-md-row">
         {/* UKB */}
         <div className="card op_card_homepage" style={{maxWidth:"580px"}}>
           <div className="card-body">

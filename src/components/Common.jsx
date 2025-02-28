@@ -189,7 +189,7 @@ export const HeaderCard = (props) => {
     const type_uc = type.charAt(0).toUpperCase() + type.slice(1)
     return (
         <div className='d-flex'>
-            <div className="card-deck d-flex justify-content-center flex-md-row flex-sm-column">
+            <div className="card_containter flex-lg-row flex-md-row">
                 <div className="card op_card mb-3">
                     <div className="card-header"><h5 className="mb-0">{type_uc} information</h5></div>
                     <div className="card-body">
@@ -221,7 +221,7 @@ export const Header2Cards = (props) => {
     }
     return (
         <div className='op_card_row'>
-            <div className="card-deck d-flex">
+            <div className="card_containter flex-lg-row flex-md-row">
                 <div className="card op_card_left mb-3">
                     <div className="card-header"><h5 className="mb-0">{type_left_uc} information</h5></div>
                     <div className="card-body">
@@ -234,22 +234,22 @@ export const Header2Cards = (props) => {
                         </div>
                     </div>
                 </div>
-            </div>
-            { content_right != undefined && content_right != '' ?
-                <>
-                    <div className='me-5 d-none d-lg-inline-block'></div>
-                    <div className="card op_card_right mb-3">
-                        <div className="card-header"><h5 className="mb-0">{type_right_uc}</h5></div>
-                        <div className="card-body">
-                            <div className="card-text">
-                                <table className='table_card'>
-                                    <tbody>{content_right}</tbody>
-                                </table>
+                { content_right != undefined && content_right != '' ?
+                    <>
+                        <div className='me-5 d-none d-lg-inline-block d-md-inline-block'></div>
+                        <div className="card op_card_right mb-3">
+                            <div className="card-header"><h5 className="mb-0">{type_right_uc}</h5></div>
+                            <div className="card-body">
+                                <div className="card-text">
+                                    <table className='table_card'>
+                                        <tbody>{content_right}</tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </> : ''
-            }
+                    </> : ''
+                }
+            </div>
         </div>
     )
 }

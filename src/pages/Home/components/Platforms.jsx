@@ -93,7 +93,7 @@ const Platforms = (props) => {
                     return(
                         <div key={key+"_main"} className="mt-5">
                             <h2 className="py-2" key={key}><DashLg className={"color_"+key+" me-3"} size={50}/>{key}<DashLg className={"color_"+key+" ms-3"} size={50}/></h2>
-                            <div className="card-deck d-flex justify-content-center flex-lg-row flex-md-row flex-sm-column" key={key+"_sub"}>
+                            <div className="card_containter flex-lg-row flex-md-row" key={key+"_sub"}>
                             {categorizedPlatform[key].map((item, index) =>
                                 <div className="card op_card_homepage mb-2" key={item.name}>
                                     <div className="card-body">

@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import OPDoughnut from "../../pages/Tests/Doughnut";
+import OPDoughnut from "../../pages/Plot/components/Doughnut";
 import { ancestry_label } from '../Common';
+import { TooltipHtml, thousandifyNumber } from '../Generic';
 
 
 const AncestryDistribution = (props) => {
 
     const [chartData, setChartData] = useState([]);
-
-    // const title = 'Scores distribution by Omics type'
 
     const chart_size = props.size ? props.size : 100;
 
@@ -17,118 +16,17 @@ const AncestryDistribution = (props) => {
         }
     }
 
-    // const get_ancestry_label = (ancestry) => {
-    //     return (
-    //         <>{ancestry_label(ancestry.id)+' ('+ancestry.percent+'%)'}
-    //             { ancestry.list && ancestry.list.length > 0 ?
-    //                 <>:{ancestry.list.map((anc) => ancestry_label(anc))}</>: ''
-    //             }
-    //         </>
-    //     )
-    //     // return (
-    //     //     <>
-    //     //         <div>{ancestry_label(ancestry.id)+' ('+ancestry.percent+'%)'}</div>
-    //     //         { ancestry.list && ancestry.list.length > 0 ?
-    //     //             <div>
-    //     //                 <ul>
-    //     //                     {ancestry.list.map((anc) => <li key={'multi_'+anc}>{ancestry_label(anc)}</li>)}
-    //     //                 </ul>
-    //     //             </div>: ''
-    //     //         }
-    //     //     </>
-    //     // )
-    // } 
-
-    const anc_tooltip = {
-        // Disable the on-canvas tooltip
-        enabled: false,
-
-        external: function(context) {
-            // Tooltip Element
-            let tooltipEl = document.getElementById('chartjs-tooltip');
-
-            // Create element on first render
-            if (!tooltipEl) {
-                tooltipEl = document.createElement('div');
-                tooltipEl.id = 'chartjs-tooltip';
-                tooltipEl.innerHTML = '<table class="op_chart_tooltip"></table>';
-                document.body.appendChild(tooltipEl);
-            }
-
-            // Hide if no tooltip
-            const tooltipModel = context.tooltip;
-            if (tooltipModel.opacity === 0) {
-                tooltipEl.style.opacity = 0;
-                return;
-            }
-
-            // Set caret Position
-            tooltipEl.classList.remove('above', 'below', 'no-transform');
-            if (tooltipModel.yAlign) {
-                tooltipEl.classList.add(tooltipModel.yAlign);
-            } else {
-                tooltipEl.classList.add('no-transform');
-            }
-
-            function getBody(bodyItem) {
-                return bodyItem.lines;
-            }
-
-            // Set Text
-            if (tooltipModel.body) {
-                const titleLines = tooltipModel.title || [];
-                const bodyLines = tooltipModel.body.map(getBody);
-                const bgcolor = tooltipModel.labelColors[0].backgroundColor;
-
-                let innerHtml = '<thead>';
-                titleLines.forEach(function(title) {
-                    innerHtml += '<tr><th><span class="anc_label me-1" style="background-color:'+bgcolor+'"></span><span>'+title+'</span></th></tr>';
-                });
-                innerHtml += '</thead><tbody>';
-
-                
-
-                bodyLines.forEach(function(body, i) {
-                //     let style = 'background:' + colors.backgroundColor;
-                //     style += '; border-color:' + colors.borderColor;
-                    const data_index = context.tooltip.dataPoints[i].dataIndex; 
-                    const multi_details = context.tooltip.dataPoints[i].dataset.extra_info[data_index]
-                    if (multi_details != '') {
-                        innerHtml += '<tr><td class="tooltip_extra"><ul><li class="smaller">'+ multi_details.replaceAll(', ','</li><li class="smaller">') + '</li></ul></td></tr>';
-                    } 
-                    const span = '<span>' + body + '</span>';                    
-                    innerHtml += '<tr><td class="tooltip_data">' + span + '</td></tr>';
-                });
-                innerHtml += '</tbody>';
-
-                let tableRoot = tooltipEl.querySelector('table');
-                tableRoot.innerHTML = innerHtml;
-            }
-
-            const position = context.chart.canvas.getBoundingClientRect();
-            // const bodyFont = Chart.helpers.toFont(tooltipModel.options.bodyFont);
-
-            // Display, position, and set styles for font
-            tooltipEl.style.opacity = 1;
-            tooltipEl.style.position = 'absolute';
-            tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px';
-            tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY + 'px';
-            // tooltipEl.style.font = bodyFont.string;
-            tooltipEl.style.padding = tooltipModel.padding + 'px ' + tooltipModel.padding + 'px';
-            tooltipEl.style.pointerEvents = 'none';
-        }
-    };
-
-
     const build_omics_data = (anc_data) => {
         let data = {
             'labels': [],
+            'names': [],
             'datasets': []
         }
         let dataset = {
             'label': 'Participants',
             'extra_info': [],
             'data': [],
+            'total': 0,
             'backgroundColor': [],
         }
 
@@ -136,35 +34,71 @@ const AncestryDistribution = (props) => {
         var style = getComputedStyle(document.body);
         for (let i=0;i<anc_data.length;i++) {
             const anc = anc_data[i];
-            let anc_label = ancestry_label(anc.id)+' ('+anc.percent+'%)';
-            const anc_count = anc.count; 
-            // const bg_colour = 'red';//.anc_'+anc.id;
-            // const bg_colour = '.anc_'+anc.id;
-            const bg_colour = style.getPropertyValue('--'+anc.id+'_color');
-            // data.labels.push(anc_label+' ('+anc.percent+'%)');
-            dataset.data.push(anc_count);
-            let extra_info = '';
-            if (anc.list) {
-                // anc_label += ': ';
-                for (let j=0;j<anc.list.length;j++) {
-                    extra_info += j > 0 ? ', ':'';
-                    extra_info += ancestry_label(anc.list[j]);
-                }
-            //     anc_label += <div><ul>{anc.list.map((anc) => <li key={'multi_'+anc}>{ancestry_label(anc)}</li>)}</ul></div>
-            }
 
-            // data.labels.push(get_ancestry_label(anc))
+            // Store ancestry labels and names (3 letter names)
+            const anc_label = ancestry_label(anc.id)+' ('+anc.percent+'%)';
             data.labels.push(anc_label);
+            data.names.push(anc.id);
+
+            // Number of participants for the ancestry
+            const anc_count = anc.count; 
+            dataset.data.push(anc_count);
+            // Total number of participants
+            dataset.total += anc_count;
+
+            // Extra information (i.e. breakdown of the multi-ancestry if available)
+            let extra_info = [];
+            if (anc.anc_list) {
+                for (let j=0;j<anc.anc_list.length;j++) {
+                    extra_info.push(ancestry_label(anc.anc_list[j]));
+                }
+                extra_info.sort();
+            }
             dataset.extra_info.push(extra_info);
-            // dataset.backgroundColor.push(bg_colour);
+
+            // Add background colour
+            const bg_colour = style.getPropertyValue('--'+anc.id+'_color');
             dataset.backgroundColor.push(bg_colour);
         }
-        // data.labels = anc_data.map((anc) => <AncestryLabel ancestry={anc}/>);
-
-        // setDataCount(data_types);
 
         data.datasets.push(dataset);
         return data
+    }
+
+    const build_tooltip = (data) => {
+        console.log("data:")
+        console.log(data)
+        if (data.datasets) {
+            const dataset = data.datasets[0];
+            return (
+                <div className="op_chart_tooltip">
+                    <div>Distribution</div>
+                    <table>
+                        <tbody>
+                            { data.labels.map((label,index) =>
+                                <tr key={label}>
+                                    <td>
+                                        <span className={"anc_label anc_"+data.names[index]+" me-1"}></span><span>{label}</span>
+                                        {
+                                            dataset.extra_info[index].length ? format_ancestry_sublist(dataset.extra_info[index]) :''
+                                        }
+                                    </td>
+                                </tr>)
+                            }
+                        </tbody>
+                    </table>
+                    <div>{dataset.label}: {thousandifyNumber(dataset.total)}</div>
+                </div>
+            )
+        }
+    }
+
+    const format_ancestry_sublist = (ancestry_sublist) => {
+        return (
+            <ul>
+                {ancestry_sublist.map((anc_label) => <li key={"sub_"+anc_label}>{anc_label}</li>)}
+            </ul>
+        )
     }
 
     useEffect(() => {
@@ -174,33 +108,16 @@ const AncestryDistribution = (props) => {
     return (
         <>
             { chartData && Object.keys(chartData).length > 0 ?
-                <OPDoughnut data={chartData} width={chart_size} display_legend="false" tooltip={anc_tooltip}/>
+                <div>
+                    <TooltipHtml title={build_tooltip(chartData)}>
+                        <div>
+                            <OPDoughnut data={chartData} width={chart_size} display_legend="false"/>
+                        </div>
+                    </TooltipHtml>
+                </div>
             :''}
         </>
     )
 }
-
-// const AncestryLabel = (props) => {
-//     const ancestry = props.ancestry;
-//     return (
-//         <>{ancestry_label(ancestry.id)+' ('+ancestry.percent+'%)'}
-//             { ancestry.list && ancestry.list.length > 0 ?
-//                 <>:{ancestry.list.map((anc) => ancestry_label(anc))}</>: ''
-//             }
-//         </>
-//     )
-//     // return (
-//     //     <>
-//     //         <div>{ancestry_label(ancestry.id)+' ('+ancestry.percent+'%)'}</div>
-//     //         { ancestry.list && ancestry.list.length > 0 ?
-//     //             <div>
-//     //                 <ul>
-//     //                     {ancestry.list.map((anc) => <li key={'multi_'+anc}>{ancestry_label(anc)}</li>)}
-//     //                 </ul>
-//     //             </div>: ''
-//     //         }
-//     //     </>
-//     // )
-// }
 
 export default AncestryDistribution;

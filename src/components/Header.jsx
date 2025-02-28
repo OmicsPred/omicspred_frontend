@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { href } from "react-router";
 import SearchBar from './SearchBar';
 import Href from "./Href"
 
@@ -59,7 +60,7 @@ function Header() {
             <div className='bg-light search_box_2'>
                 <div className='large_search_bar'>
                     <SearchBar/>
-                    <div className='op_examples mt-1'>Examples: {search_examples.map((example_term, index) => <span key={'search_'+example_term}>{index > 0 ? ', ': ''}<Href text={example_term} href={'/search?q='+example_term}/></span>)}</div>
+                    <div className='op_examples mt-1'>Examples: {search_examples.map((example_term, index) => <span key={'search_'+example_term}>{index > 0 ? ', ': ''}<Href text={example_term} href={href('/search?q=:squery', {squery: example_term})}/></span>)}</div>
                 </div>
             </div>
         </header>

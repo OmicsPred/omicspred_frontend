@@ -103,10 +103,9 @@ export default function ResultCard(props) {
             <div className="card-deck" key={key+"_card"}>
                 <div className="card ms-2 me-2" style={{padding:"0px", width:"100%"}}>
                     <div className="card-body">
-                        {/* <h4 className="card-title op_search_card"><div title={props.type} className={"px-1 me-2 bg_"+props.type}></div><div><Href href={url} text={result_id}/></div></h4> */}
-                        <h4 className="card-title op_search_card"><div className="me-1" title={props.type}>{element_icon(props.type)}</div><div><Href href={url} text={result_id}/></div></h4>
+                        <h4 className="card-title op_search_card"><div><span className="me-1" title={props.type}>{element_icon(props.type)}</span><Href href={url} text={result_id}/></div></h4>
                         <div className="card-text">
-                            <div className="d-flex op_search_card_content">
+                            <div className="op_search_card_content">
                                 <div>
                                     <ul className="result_content">
                                         { result_id == data.name && data.id ? <li><span className="line_key">{index2id[props.type]}</span>{data.id}{get_source_name(data)}{display_phenotype_category()}</li> : '' }

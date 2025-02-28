@@ -109,7 +109,6 @@ export default function ChartDoughnut(props) {
   const data = {
     labels: [
       lbel + " ≥ 0.5",
-
       "  0.3  ≤ " + lbel + " < 0.5",
       "  0.1  ≤ " + lbel + " < 0.3",
       " 0.01 ≤ " + lbel + " <  0.1 ",
@@ -117,8 +116,7 @@ export default function ChartDoughnut(props) {
     ],
 
     datasets: [
-
- {
+      {
         label: "# of "+props.name_2,
         data: [
           data2.filter((e) => {
@@ -184,8 +182,6 @@ export default function ChartDoughnut(props) {
         borderWidth: 1,
         yAxisID: "y",
       },
-
-     
     ],
   };
 

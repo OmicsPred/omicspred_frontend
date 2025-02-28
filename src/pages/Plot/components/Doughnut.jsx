@@ -67,20 +67,19 @@ const OPDoughnut = (props) => {
             new_plugins.legend = {'display': false}
         }
 
-        const new_options = { ...default_options, plugins:new_plugins }
+        // const new_options = { ...default_options, plugins:new_plugins }
 
+        // let new_option_plugins = {...new_options.plugins};
         // Add external tooltip
         if (props.tooltip) {
-            let new_plugins = {...new_options.plugins}
-            new_plugins.tooltip=props.tooltip
-            const new_options_tooltip = { ...new_options, plugins:new_plugins}
-            // console.log(new_options_tooltip.plugins);
-            setDoughnutOptions(new_options_tooltip)
+            new_plugins.tooltip=props.tooltip;
         }
         else {
-            setDoughnutOptions(new_options)
+            new_plugins.tooltip= {enabled: false};
         }
-
+        const new_options_tooltip = { ...default_options, plugins:new_plugins};
+        // console.log(new_options_tooltip.plugins);
+        setDoughnutOptions(new_options_tooltip);
     }
 
 

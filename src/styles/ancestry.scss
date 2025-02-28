@@ -11,7 +11,7 @@
 	--MAO_color: #FF7F00; // orange
 	--NR_color:  #BBB;    // lighter grey
 	--OTH_color: #999;    // grey
-} 
+}
 
 $ancestry_labels: (
   'MAE': 'Multi-ancestry (including European)',
@@ -55,6 +55,7 @@ $ancestry_labels: (
   display:inline-block;
   height: 12px;
   width: 12px;
+  vertical-align: middle;
 }
 
 .ancestry_container {

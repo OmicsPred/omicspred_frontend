@@ -20,7 +20,6 @@ export const SidePanelFilter = (props) => {
                     filter.list.map((data) =>
                     <FormControlLabel
                         control={<Checkbox onChange={props.handleChange} name={filter.type} value={data} />}
-                        // label={data+' ('+filter.counts[data]+')'}
                         label={<>{data}<span className='badge badge-sq-op-sm op_color_default_font bg_white ms-2' style={{backgroundColor:'#FFF'}}>{filter.counts[data]}</span></>}
                         key={key+"_"+data}
                     />

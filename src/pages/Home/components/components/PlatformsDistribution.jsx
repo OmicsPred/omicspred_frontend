@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 // import { ChevronRight, Stack } from 'react-bootstrap-icons';
 import { Stack } from 'react-bootstrap-icons';
 import restApiCall from '../../../../components/RestAPI';
-// import OPDoughnut from "../../../Tests/Doughnut";
 import { thousandifyNumber } from '../../../../components/Generic';
 // import { omicspred_omics_type } from '../../../../components/Common';
 import Href from '../../../../components/Href';

@@ -1,4 +1,3 @@
-import { Hexagon } from 'react-bootstrap-icons';
 import { common_cols, molecular_trait_header } from "./common";
 
 
