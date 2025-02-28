@@ -48,7 +48,7 @@ export const datasets_columns = [
         renderHeader: (params) => {
             return (
                 <span>
-                    <Stack className={"align-middle me-1"}/>
+                    <Stack className="align-middle me-1"/>
                     <span className="align-middle fw-bold" style={{paddingTop:"1px"}}>Platform</span>
                 </span>
             )

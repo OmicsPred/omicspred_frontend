@@ -6,7 +6,7 @@ const DataDownloads = (props) => {
     return (
         <div className="odd_section">
             <div className="op_section_title">Data downloads</div>
-                <div className="card-deck d-flex justify-content-center flex-lg-row flex-md-row flex-sm-column">
+                <div className="card_containter flex-lg-row flex-md-row">
                     {/* Downloads */}
                     <div className="card op_card_homepage">
                     <div className="card-body">

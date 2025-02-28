@@ -171,7 +171,7 @@ function Score() {
                 "name": ancestry_label(anc_name),
                 "count": ancestry_data[anc_name]['count'],
                 "percent": ancestry_data[anc_name]['dist'],
-                "list": ancestry_data[anc_name]['anc_list'] ? ancestry_data[anc_name]['anc_list'] : undefined
+                "anc_list": ancestry_data[anc_name]['anc_list'] ? ancestry_data[anc_name]['anc_list'] : undefined
             }));
         }
         return ancestry_list;

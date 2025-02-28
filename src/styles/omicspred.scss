@@ -598,6 +598,12 @@ a {
     display:block;
 }
 
+.card_containter {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
 .card {
     padding: 0rem;
 }
@@ -898,17 +904,8 @@ button.MuiButton-root:hover {
 }
 
 .op_chart_tooltip {
-    border-radius: 6px;
-    background-color:rgba(0, 0, 0, 0.8);
-    color:#FFF;
-    font-size: 12px;
-    th {
-        text-align: center;
-        border-bottom:1px solid #FFF;
-        padding: 0.5rem 0.25rem;
-        span {
-            vertical-align: middle;
-        }
+    span {
+        vertical-align: middle;
     }
     .tooltip_extra {
         border-bottom:1px solid #FFF;
@@ -919,8 +916,23 @@ button.MuiButton-root:hover {
     }
     ul {
         padding-left: 1.5rem;
-        margin-top: 0.5rem;
-        margin-bottom: 0.5rem;
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
+        font-size: 12px;
+    }
+    > div {
+        text-align: center;
+    }
+    div:first-child {
+        font-weight: bold;
+        border-bottom:1px solid #FFF;
+        padding-bottom: 0.25rem;
+        margin-bottom: 0.25rem;
+    }
+    div:last-child {
+        border-top:1px solid #FFF;
+        padding-top: 0.25rem;
+        margin-top: 0.25rem;
     }
 }
 
@@ -1205,23 +1217,22 @@ ul.example_list {
 }
 
 .op_search_card {
+    span {
+        vertical-align:middle;
+    }
     div {
         display:inline-block;
-        // vertical-align:top;
         vertical-align:middle;
     }
     svg {
         margin-top: -4px;
         vertical-align: middle;
     }
-    // div:first-child {
-    //     height:26px;
-    //     margin-top:1px;
-    //     vertical-align:top
-    // }
 }
 
 .op_search_card_content {
+    display: flex;
+    flex-direction: row;
     > div:not(:first-child) {
         border-left: 1px solid $op_grey !important;
         padding-left: 1rem;
@@ -1684,6 +1695,18 @@ fieldset {
             .op_search_feature_legend, .MuiTypography-root {
                 font-size: 14px !important;
             }
+        }
+    }
+    .op_search_card_content {
+        flex-direction: column;
+        > div:not(:first-child) {
+            border-left: none !important;
+            padding-left: 0rem;
+            margin-left: 0rem;
+            border-top: 1px solid $op_grey !important;
+            padding-top: 0.5rem;
+            margin-top: 0.5rem;
+
         }
     }
 }
