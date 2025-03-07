@@ -246,7 +246,7 @@ export const common_cols = {
         field: 'platform__name',
         minWidth: 140,
         flex: 0.6,
-        renderHeader: (params) => {
+        renderHeader: () => {
             return (
                 <span>
                     <Stack className="align-middle me-1"/>
@@ -299,7 +299,7 @@ export const common_cols = {
         headerName: 'Scoring File',
         minWidth: 100,
         flex: 0.5,
-        renderCell: (params) => {
+        renderCell: () => {
             return <FileEarmarkText color="blue" size={24}/>;
         }
     },
@@ -324,7 +324,7 @@ export const common_cols = {
         // minWidth: 120,
         // flex: 0.5,
         hideable: false,
-        renderHeader: (params) => {
+        renderHeader: () => {
             return (molecular_trait_header('Protein ID'))
         },
         renderCell: (params) => {
@@ -427,7 +427,7 @@ export const common_cols = {
         minWidth: 110,
         // minWidth: 120,
         // flex: 0.5,
-        renderHeader: (params) => {
+        renderHeader: () => {
             return (molecular_trait_header('Gene'))
         },
         renderCell: (params) => {
@@ -463,7 +463,7 @@ export const common_cols = {
         field: 'gene_id',
         headerName: 'Gene ID',
         minWidth: 180,
-        renderHeader: (params) => {
+        renderHeader: () => {
             return (molecular_trait_header('Gene ID'))
         },
         renderCell: (params) => {
@@ -477,7 +477,7 @@ export const common_cols = {
         field: 'gene_name',
         minWidth: 120,
         flex: 0.5,
-        renderHeader: (params) => {
+        renderHeader: () => {
             return (molecular_trait_header('Gene'))
         },
         renderCell: (params) => {
@@ -490,7 +490,7 @@ export const common_cols = {
     'protein_id_from_list': {
         field: 'protein_id',
         minWidth: 180,
-        renderHeader: (params) => {
+        renderHeader: () => {
             return (molecular_trait_header('Protein ID'))
         },
         renderCell: (params) => {
@@ -504,7 +504,7 @@ export const common_cols = {
         field: 'protein_name',
         minWidth: 120,
         flex: 0.5,
-        renderHeader: (params) => {
+        renderHeader: () => {
             return (molecular_trait_header('Protein'))
         },
         renderCell: (params) => {
@@ -520,7 +520,7 @@ export const common_cols = {
         minWidth: 150,
         flex: 0.6,
         hideable: false,
-        renderHeader: (params) => {
+        renderHeader: () => {
             return (molecular_trait_header('Metabolite ID'))
         },
         renderCell: (params) => {
@@ -550,7 +550,7 @@ export const common_cols = {
         minWidth: 200,
         flex: 1,
         hideable: false,
-        renderHeader: (params) => {
+        renderHeader: () => {
             return (molecular_trait_header('Metabolite Name'))
         },
         renderCell: (params) => {
@@ -613,7 +613,7 @@ export const common_cols = {
         field: 'metabolite_id',
         minWidth: 120,
         flex: 0.5,
-        renderHeader: (params) => {
+        renderHeader: () => {
             return (molecular_trait_header('Metabolite ID'))
         },
         renderCell: (params) => {
@@ -639,7 +639,7 @@ export const common_cols = {
         field: 'metabolite_name',
         minWidth: 120,
         flex: 0.5,
-        renderHeader: (params) => {
+        renderHeader: () => {
             return (molecular_trait_header('Metabolite'))
         },
         renderCell: (params) => {
@@ -860,7 +860,7 @@ export const common_data_cols = {
 //    'r2': {
 //         field: 'r2',
 //         width: 90,
-//         renderHeader: (params) => {
+//         renderHeader: () => {
 //             return r2_col_header_label();
 //         },
 //         valueGetter: (value, row) => {
@@ -916,7 +916,7 @@ export const cohort_cols = {
             // headerName: <>R<sup>2</sup></>,
             // minWidth: 100,
             // flex: 0.5,
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return r2_col_header_label();
             },
             valueGetter: (value, row) => {
@@ -926,7 +926,7 @@ export const cohort_cols = {
         'Rho': {
             field: 'INTERVAL_Rho',
             // headerName: 'Rho',
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return rho_col_header_label();
             },
             // headerClassName: 'training_col',
@@ -944,7 +944,7 @@ export const cohort_cols = {
             headerClassName: 'col_border_left',
             // minWidth: 100,
             // flex: 0.5,
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return r2_col_header_label();
             },
             valueGetter: (value, row) => {
@@ -954,7 +954,7 @@ export const cohort_cols = {
         'Rho': {
             field: 'UKB_Rho',
             // headerName: 'Rho',
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return rho_col_header_label();
             },
             // minWidth: 100,
@@ -971,7 +971,7 @@ export const cohort_cols = {
             headerClassName: 'col_border_left',
             // minWidth: 100,
             // flex: 0.5,
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return r2_col_header_label();
             },
             valueGetter: (value, row) => {
@@ -981,7 +981,7 @@ export const cohort_cols = {
         'Rho': {
             field: 'ORCADES_Rho',
             // headerName: 'Rho',
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return rho_col_header_label();
             },
             // minWidth: 100,
@@ -1008,7 +1008,7 @@ export const cohort_cols = {
             headerClassName: 'col_border_left',
             // minWidth: 100,
             // flex: 0.5,
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return r2_col_header_label();
             },
             valueGetter: (value, row) => {
@@ -1018,7 +1018,7 @@ export const cohort_cols = {
         'Rho': {
             field: 'VIKING_Rho',
             // headerName: 'Rho',
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return rho_col_header_label();
             },
             // minWidth: 100,
@@ -1044,7 +1044,7 @@ export const cohort_cols = {
             headerClassName: 'col_border_left',
             // minWidth: 100,
             // flex: 0.5,
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return r2_col_header_label();
             },
             valueGetter: (value, row) => {
@@ -1054,7 +1054,7 @@ export const cohort_cols = {
         'Rho': {
             field: 'MEC_CN_Rho',
             // headerName: 'Rho',
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return rho_col_header_label();
             },
             // minWidth: 100,
@@ -1080,7 +1080,7 @@ export const cohort_cols = {
             headerClassName: 'col_border_left',
             // minWidth: 100,
             // flex: 0.5,
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return r2_col_header_label();
             },
             valueGetter: (value, row) => {
@@ -1090,7 +1090,7 @@ export const cohort_cols = {
         'Rho': {
             field: 'MEC_IN_Rho',
             // headerName: 'Rho',
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return rho_col_header_label();
             },
             // minWidth: 100,
@@ -1116,7 +1116,7 @@ export const cohort_cols = {
             headerClassName: 'col_border_left',
             // minWidth: 100,
             // flex: 0.5,
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return r2_col_header_label();
             },
             valueGetter: (value, row) => {
@@ -1126,7 +1126,7 @@ export const cohort_cols = {
         'Rho': {
             field: 'MEC_MA_Rho',
             // headerName: 'Rho',
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return rho_col_header_label();
             },
             // minWidth: 100,
@@ -1151,7 +1151,7 @@ export const cohort_cols = {
             // headerName: <>R<sup>2</sup></>,
             headerClassName: 'col_border_left',
             // width: 300,
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return r2_col_header_label();
             },
             valueGetter: (value, row) => {
@@ -1161,7 +1161,7 @@ export const cohort_cols = {
         'Rho': {
             field: 'INTERVAL_withheld_subset_Rho',
             // headerName: 'Rho',
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return rho_col_header_label();
             },
             valueGetter: (value, row) => {
@@ -1175,7 +1175,7 @@ export const cohort_cols = {
             // headerName: <>R<sup>2</sup></>,
             headerClassName: 'col_border_left',
             // width: 300,
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return r2_col_header_label();
             },
             valueGetter: (value, row) => {
@@ -1185,7 +1185,7 @@ export const cohort_cols = {
         'Rho': {
             field: 'NSPHS_Rho',
             // headerName: 'Rho',
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return rho_col_header_label();
             },
             valueGetter: (value, row) => {
@@ -1206,7 +1206,7 @@ export const cohort_cols = {
             // headerName: <>R<sup>2</sup></>,
             headerClassName: 'col_border_left',
             width: 90,
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return r2_col_header_label();
             },
             valueGetter: (value, row) => {
@@ -1216,7 +1216,7 @@ export const cohort_cols = {
         'Rho': {
             field: 'FENLAND_Rho',
             // headerName: 'Rho',
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return rho_col_header_label();
             },
             width: 100,
@@ -1238,7 +1238,7 @@ export const cohort_cols = {
             // headerName: <>R<sup>2</sup></>,
             headerClassName: 'col_border_left',
             // width: 300,
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return r2_col_header_label();
             },
             valueGetter: (value, row) => {
@@ -1248,7 +1248,7 @@ export const cohort_cols = {
         'Rho': {
             field: 'JHS_Rho',
             // headerName: 'Rho',
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return rho_col_header_label();
             },
             valueGetter: (value, row) => {
@@ -1270,7 +1270,7 @@ export const cohort_cols = {
             headerClassName: 'col_border_left',
             // minWidth: 100,
             // flex: 0.5,
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return r2_col_header_label();
             },
             valueGetter: (value, row) => {
@@ -1280,7 +1280,7 @@ export const cohort_cols = {
         'Rho': {
             field: 'UKB_withheld_ALL_Rho',
             // headerName: 'Rho',
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return rho_col_header_label();
             },
             // minWidth: 100,
@@ -1297,7 +1297,7 @@ export const cohort_cols = {
             headerClassName: 'col_border_left',
             // minWidth: 100,
             // flex: 0.5,
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return r2_col_header_label();
             },
             valueGetter: (value, row) => {
@@ -1307,7 +1307,7 @@ export const cohort_cols = {
         'Rho': {
             field: 'UKB_withheld_AFR_Rho',
             // headerName: 'Rho',
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return rho_col_header_label();
             },
             // minWidth: 100,
@@ -1324,7 +1324,7 @@ export const cohort_cols = {
             headerClassName: 'col_border_left',
             // minWidth: 100,
             // flex: 0.5,
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return r2_col_header_label();
             },
             valueGetter: (value, row) => {
@@ -1334,7 +1334,7 @@ export const cohort_cols = {
         'Rho': {
             field: 'UKB_withheld_AMR_Rho',
             // headerName: 'Rho',
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return rho_col_header_label();
             },
             // minWidth: 100,
@@ -1351,7 +1351,7 @@ export const cohort_cols = {
             headerClassName: 'col_border_left',
             // minWidth: 100,
             // flex: 0.5,
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return r2_col_header_label();
             },
             valueGetter: (value, row) => {
@@ -1361,7 +1361,7 @@ export const cohort_cols = {
         'Rho': {
             field: 'UKB_withheld_EAS_Rho',
             // headerName: 'Rho',
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return rho_col_header_label();
             },
             // minWidth: 100,
@@ -1378,7 +1378,7 @@ export const cohort_cols = {
             headerClassName: 'col_border_left',
             // minWidth: 100,
             // flex: 0.5,
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return r2_col_header_label();
             },
             valueGetter: (value, row) => {
@@ -1388,7 +1388,7 @@ export const cohort_cols = {
         'Rho': {
             field: 'UKB_withheld_EUR_Rho',
             // headerName: 'Rho',
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return rho_col_header_label();
             },
             // minWidth: 100,
@@ -1405,7 +1405,7 @@ export const cohort_cols = {
             headerClassName: 'col_border_left',
             // minWidth: 100,
             // flex: 0.5,
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return r2_col_header_label();
             },
             valueGetter: (value, row) => {
@@ -1415,7 +1415,7 @@ export const cohort_cols = {
         'Rho': {
             field: 'UKB_withheld_SAS_Rho',
             // headerName: 'Rho',
-            renderHeader: (params) => {
+            renderHeader: () => {
                 return rho_col_header_label();
             },
             // minWidth: 100,
@@ -1424,82 +1424,7 @@ export const cohort_cols = {
                 return cohort_valueGetter(row,'UKB_withheld_SAS','Rho');
             }
         }
-    },
-    // 'MESA-AFA': {
-    //     'R2': {
-    //         field: 'MESA-AFA_R2',
-    //         // headerName: <>R<sup>2</sup></>,
-    //         headerClassName: ['training_col','col_border_left'],
-    //         minWidth: 100,
-    //         flex: 0.5,
-    //         renderHeader: (params) => {
-    //             return r2_col_header_label();
-    //         },
-    //         valueGetter: (value, row) => {
-    //             return cohort_valueGetter(row,'MESA-AFA','R2');
-    //         }
-    //     }
-    // },
-    // 'MESA-ALL': {
-    //     'R2': {
-    //         field: 'MESA-ALL_R2',
-    //         // headerName: <>R<sup>2</sup></>,
-    //         headerClassName: ['training_col','col_border_left'],
-    //         minWidth: 100,
-    //         flex: 0.5,
-    //         renderHeader: (params) => {
-    //             return r2_col_header_label();
-    //         },
-    //         valueGetter: (value, row) => {
-    //             return cohort_valueGetter(row,'MESA-ALL','R2');
-    //         }
-    //     }
-    // },
-    // 'MESA-CHN': {
-    //     'R2': {
-    //         field: 'MESA-CHN_R2',
-    //         // headerName: <>R<sup>2</sup></>,
-    //         headerClassName: ['training_col','col_border_left'],
-    //         minWidth: 100,
-    //         flex: 0.5,
-    //         renderHeader: (params) => {
-    //             return r2_col_header_label();
-    //         },
-    //         valueGetter: (value, row) => {
-    //             return cohort_valueGetter(row,'MESA-CHN','R2');
-    //         }
-    //     }
-    // },
-    // 'MESA-EUR': {
-    //     'R2': {
-    //         field: 'MESA-EUR_R2',
-    //         // headerName: <>R<sup>2</sup></>,
-    //         headerClassName: ['training_col','col_border_left'],
-    //         minWidth: 100,
-    //         flex: 0.5,
-    //         renderHeader: (params) => {
-    //             return r2_col_header_label();
-    //         },
-    //         valueGetter: (value, row) => {
-    //             return cohort_valueGetter(row,'MESA-EUR','R2');
-    //         }
-    //     }
-    // },
-    // 'MESA-HIS': {
-    //     'R2': {
-    //         field: 'MESA-HIS_R2',
-    //         // headerName: <>R<sup>2</sup></>,
-    //         headerClassName: ['training_col','col_border_left'],
-    //         minWidth: 100,
-    //         flex: 0.5,
-    //         renderHeader: (params) => {
-    //             return r2_col_header_label();
-    //         },
-    //         valueGetter: (value, row) => {
-    //             return cohort_valueGetter(row,'MESA-HIS','R2');
-    //         }
-    //     }
-    // }
+    }
 }
 
 

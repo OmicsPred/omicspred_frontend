@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 
-const SearchBar = (props) => {
+const SearchBar = () => {
 
     const [searchInput, setSearchInput] = useState("");
 

@@ -1,7 +1,7 @@
 import { CodeSlash, Download } from "react-bootstrap-icons";
 import Href from "../../../components/Href";
 
-const DataDownloads = (props) => {
+const DataDownloads = () => {
     const project_name = process.env.PROJECT_NAME;
     return (
         <div className="odd_section">

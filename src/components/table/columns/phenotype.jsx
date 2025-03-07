@@ -28,7 +28,7 @@ export const applications_cols = {
         field: 'gene',
         minWidth: 150,
         flex: 0.5,
-        renderHeader: (params) => {
+        renderHeader: () => {
             return (molecular_trait_header('Gene'))
         },
         renderCell: (params) => {
@@ -50,7 +50,7 @@ export const applications_cols = {
         field: 'protein',
         minWidth: 150,
         flex: 0.5,
-        renderHeader: (params) => {
+        renderHeader: () => {
             return (molecular_trait_header('Protein'))
         },
         renderCell: (params) => {
@@ -72,7 +72,7 @@ export const applications_cols = {
         field: 'metabolite',
         minWidth: 150,
         flex: 0.5,
-        renderHeader: (params) => {
+        renderHeader: () => {
             return (molecular_trait_header('Metabolite'))
         },
         renderCell: (params) => {
@@ -246,7 +246,7 @@ const build_columns = () => {
                 description: 'Number of scores associated with '+platform,
                 width: 150,
                 sortable: false,
-                renderHeader: (params) => {
+                renderHeader: () => {
                     return (<span><Stack size="0.9em" className={"align-middle me-2 color_"+omics_type}/><span className="align-middle fw-bold">{platform}</span></span>)
                 },
                 renderCell: (params) => {

@@ -40,3 +40,7 @@ typings/
 
 # Google Cloud config file
 app.yaml
+
+# Others
+.DS_Store
+package-lock.json

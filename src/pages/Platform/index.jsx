@@ -90,7 +90,7 @@ function Platform() {
     }
 
 
-    const get_table_columns = (platforms, versions) => {
+    const get_table_columns = (platforms) => {
         const type = platforms[0].platform.type;
         // Fetch metadata columns for a given platform
         let columns = get_metadata_columns(type);
