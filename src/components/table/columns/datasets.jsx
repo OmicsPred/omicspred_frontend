@@ -45,7 +45,7 @@ export const datasets_columns = [
         field: 'platform',
         minWidth: 150,
         flex: 1,
-        renderHeader: (params) => {
+        renderHeader: () => {
             return (
                 <span>
                     <Stack className="align-middle me-1"/>

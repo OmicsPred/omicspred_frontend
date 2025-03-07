@@ -3,8 +3,8 @@ import { ancestry_cols } from "./ancestry";
 
 // const metabolite_name_col = {...common_cols['metabolite_name'], field: 'metabolites__name'}
 const gene_id_col = {...common_cols['gene_name'], headerClassName: 'col_border_left'}
-const protein_id_col = {...common_cols['protein_id'], renderHeader: (params) => { return (molecular_trait_header('Protein'))}}
-const metabolite_id_col = {...common_cols['metabolite_id'], renderHeader: (params) => { return (molecular_trait_header('Metabolite'))}, headerClassName: 'col_border_right'}
+const protein_id_col = {...common_cols['protein_id'], renderHeader: () => { return (molecular_trait_header('Protein'))}}
+const metabolite_id_col = {...common_cols['metabolite_id'], renderHeader: () => { return (molecular_trait_header('Metabolite'))}, headerClassName: 'col_border_right'}
 const platform_type_col = {...common_cols['platform_type'],  field: 'dataset__platform__platform_master__type'}
 const platform_name_col = {...common_cols['platform_name'],  field: 'dataset__platform__platform_master__name'}
 const publication_col = {...common_cols['publication'],  field: 'dataset__publication__firstauthor'}

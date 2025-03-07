@@ -6,7 +6,7 @@ import { thousandifyNumber } from '../../../components/Generic';
 import PlatformsDistribution from './components/PlatformsDistribution';
 
 
-const Stats = (props) => {
+const Stats = () => {
     const [scoresCount, setScoresCount] = useState([]);
     const [platformsCount, setPlatformsCount] = useState([]);
     // const [publicationsCount, setPublicationsCount] = useState([]);;

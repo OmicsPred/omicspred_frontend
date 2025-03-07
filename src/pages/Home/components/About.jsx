@@ -2,7 +2,7 @@ import { Book } from 'react-bootstrap-icons';
 import Href from "../../../components/Href"
 
 
-const About = (props) => {
+const About = () => {
     const project_name = process.env.PROJECT_NAME;
     return (
         <div className='even_section'>

@@ -92,7 +92,7 @@ export const performance_metrics_columns = [
         field: 'r2',
         // headerName: <>R<sup>2</sup></>,
         width: 90,
-        renderHeader: (params) => {
+        renderHeader: () => {
             return r2_col_header_label();
         },
         valueGetter: (value, row) => {

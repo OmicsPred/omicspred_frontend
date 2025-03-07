@@ -28,7 +28,7 @@ export const pathways_columns = [
     {
         field: 'genes_count',
         width: 110,
-        renderHeader: (params) => {
+        renderHeader: () => {
             return (molecular_trait_header('Gene'))
         },
         valueGetter: (value, row) => {
@@ -38,7 +38,7 @@ export const pathways_columns = [
     {
         field: 'proteins_count',
         width: 110,
-        renderHeader: (params) => {
+        renderHeader: () => {
             return (molecular_trait_header('Protein'))
         },
         valueGetter: (value, row) => {
@@ -48,7 +48,7 @@ export const pathways_columns = [
     {
         field: 'metabolites_count',
         width: 110,
-        renderHeader: (params) => {
+        renderHeader: () => {
             return (molecular_trait_header('Metabolite'))
         },
         valueGetter: (value, row) => {

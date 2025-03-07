@@ -71,7 +71,7 @@ export const ToogleDiv = (props) => {
 
     useEffect(() => {}, [show])
 
-    const hideShowDiv = (e) => {
+    const hideShowDiv = () => {
         if (show) {
             setShow(false);
         }
@@ -91,8 +91,8 @@ export const ToogleDiv = (props) => {
     return (
         <>
             {/* Toogle button */}
-            <div className={toogle_class} onClick={(e) => {
-              hideShowDiv(e)
+            <div className={toogle_class} onClick={() => {
+              hideShowDiv()
             }}>{props.title}{show ? <DashCircleFill className="ms-1"/>:<PlusCircleFill className="ms-1"/>}</div>
             {/* Toogle content */}
             {show ? <div className="d-flex mt-2"><div className={props.class_name ? props.class_name : ''}>{props.content}</div></div>:null}
@@ -108,7 +108,7 @@ export const ToogleID = (props) => {
 
     useEffect(() => {}, [show])
 
-    const hideShowElement = (e) => {
+    const hideShowElement = () => {
         // "element" corresponds to the DOM node containing the "Toogle content".
         const element = document.getElementById(element_id);
         if (show) {
@@ -136,8 +136,8 @@ export const ToogleID = (props) => {
     return (
         <>
             {/* Toogle button */}
-            <div className={toogle_class} onClick={(e) => {
-              hideShowElement(e)
+            <div className={toogle_class} onClick={() => {
+              hideShowElement()
             }}>{props.title}{show ? <DashCircleFill className="ms-1"/>:<PlusCircleFill className="ms-1"/>}</div>
         </>
     )
@@ -152,7 +152,7 @@ export const ToogleText = (props) => {
 
     useEffect(() => {}, [show])
 
-    const hideShowDiv = (e) => {
+    const hideShowDiv = () => {
         if (show) {
             setShow(false);
         }

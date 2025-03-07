@@ -1,7 +1,7 @@
 import { ancestry_labels } from '../Common';
 
 
-const AncestryLegend = (props) => {
+const AncestryLegend = () => {
 
     const anc_list = Array.from(Object.keys(ancestry_labels()));
     const anc_length = anc_list.length;
