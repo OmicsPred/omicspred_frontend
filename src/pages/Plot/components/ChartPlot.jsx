@@ -74,7 +74,7 @@ export default function ChartPlot(props) {
   
       // Set the default value to 1 if there is no match rate data
       if (!datatocolor || datatocolor.length == 0) {
-        datatocolor = data2.map((item) => { return 1;});
+        datatocolor = data2.map(() => { return 1 });
       }
 
       const toreturn = datatocolor.map((e) => {
@@ -85,7 +85,7 @@ export default function ChartPlot(props) {
         if (e >= 0.35 && e < 0.65) {
           return "green";
         }
-        if (e >= 0.65) {
+        if (e >= 0.65 || e == undefined) {
           // return "red";
           return "blue";
         }
@@ -102,7 +102,7 @@ export default function ChartPlot(props) {
       let index = tooltipItems[0].dataIndex;
   
       let score_id = ids_data1_array[index];
-      tooltipItems.forEach(function (tooltipItem, i) {
+      tooltipItems.forEach(function (tooltipItem) {
         study1 += tooltipItem.parsed.y;
       });
   
@@ -194,7 +194,7 @@ export default function ChartPlot(props) {
       return [
         props.name_2 + " : " + study1,
         props.name_1 + " : " + study2,
-        "Match Rate ("+props.name_2+") : "+
+        "Match Rate (" + props.name_2 + ") : " +
           Object.values(props.rate)[tooltipItems[0].dataIndex],
         '----------------------------------',
         ...metadata.map((e) => {
@@ -269,7 +269,7 @@ export default function ChartPlot(props) {
         },
         datalabels: {
           display: false,
-          formatter: function (value, context) {
+          formatter: function (value) {
             return value;
           },
         },

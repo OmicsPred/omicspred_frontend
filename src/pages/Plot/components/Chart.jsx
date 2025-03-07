@@ -1,4 +1,4 @@
-import React, { Suspense, useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 
 import _ from "underscore";
 
@@ -174,22 +174,33 @@ export default function Charts(props) {
         setdataStudy2(e.data);
       }
     });
+    // Internal validation as "Cohort 2"
     if (event.target.value.endsWith("(internal validation)")) {
       props.data.map((e) => {
         if (e.title.endsWith("(internal validation)_R2")) {
-          let tdata = Object.values(e.data).map((c) => {
-            return 0;
+          let tdata = Object.values(e.data).map(() => {
+            return 1;
           });
           setMatchRateData(tdata);
         }
       });
-    } else {
+    }
+    // External validation as "Cohort 2"
+    else {
+      // Flag for the rate dataset
+      let found_rate = false;
+
       props.data.map((e) => {
         if (e.title == event.target.value + rate_label) {
           setMatchRateData(e.data);
+          found_rate = true;
           return;
         }
       });
+      // Missing rate data
+      if (found_rate == false) {
+        setMatchRateData([]);
+      }
     }
   };
 

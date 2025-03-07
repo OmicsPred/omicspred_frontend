@@ -12,7 +12,7 @@ import { get_data_type, publication_ref } from '../../components/Common';
 import { loading_data } from '../../components/Generic';
 
 
-const Plot = (props) => {
+const Plot = () => {
     let { platform, pmid } = useParams();
     DocumentTitle('Plot | PMID:'+pmid+' / '+platform);
     const [searchParams] = useSearchParams();
