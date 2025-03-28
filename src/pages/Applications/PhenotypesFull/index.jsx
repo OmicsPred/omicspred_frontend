@@ -9,7 +9,7 @@ function PhenotypesFull() {
 
     const url_suffix = "applications_score/all";
 
-    const column_keys = ['phenotype__id','score_id'];
+    const column_keys = ['phenotype__id', 'score_id', 'data_values__FDR'];
 
     const dnld_type = 'phewas_associations';
 

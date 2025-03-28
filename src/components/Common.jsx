@@ -16,6 +16,14 @@ export const internal_publication_link = (publication) => {
     )
 }
 
+export const tissue_link = (tissue) => {
+    return (
+        <>
+            <Href href={'/tissue/'+tissue.id} text={<TooltipText title={tissue.description} text={tissue.label} ttype='link'/>} /> (<Href href={tissue.url} text={tissue.id}/>)
+        </>
+    )
+}
+
 
 export const get_data_type = (omics_type) => {
     switch(omics_type) {

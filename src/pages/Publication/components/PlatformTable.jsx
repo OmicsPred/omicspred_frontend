@@ -6,8 +6,8 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import Href from "../../../components/Href";
-import { scoresBadge, ToogleDiv, TooltipText } from '../../../components/Generic';
-import { get_cohorts_cols_list, get_cohorts_col_groups_list, omicspred_omics_type } from '../../../components/Common';
+import { scoresBadge, ToogleDiv } from '../../../components/Generic';
+import { get_cohorts_cols_list, get_cohorts_col_groups_list, omicspred_omics_type, tissue_link } from '../../../components/Common';
 import {cohort_cols, common_column_groups, cohort_valueGetter} from '../../../components/table/columns/common';
 import { metabolomics_columns,metabolomics_column_groups } from '../../../components/table/columns/metabolomics';
 import { proteomics_pub_columns } from '../../../components/table/columns/proteomics';
@@ -26,6 +26,7 @@ const PlatformTable = (props) => {
     const [platformDownloads, setPlatformDownloads] = useState([])
     const [loadedStatus, setLoadedStatus] = useState(false);
     const [datasetName, setDatasetName] = useState();
+    const [sampleCount, setSampleCount] = useState(1);
 
     const dataset = props.data;
     const platform_name = dataset.platform.name;
@@ -220,6 +221,10 @@ const PlatformTable = (props) => {
             const urls = get_download_list(dataset.scoring_files_urls)
             setPlatformDownloads(urls);
         }
+        const sample_validation_count = dataset['samples_validation'].length
+        const sample_training_count = dataset['samples_training'].length
+        setSampleCount(sample_validation_count + sample_training_count)
+
     }
 
     const loadTable = (expanded) => {
@@ -268,11 +273,13 @@ const PlatformTable = (props) => {
                     <div><span className="me-1"># Scores:</span>{scores_count}</div>
                     <div>{omicspred_omics_type(platform_type)}</div>
                     <div>
-                        <Href key={platformName+'_plot_link'} role="button" text="Go to Plots" href={plot_url} icon={<GraphUp/>} />
-                    </div>
-                    <div>
                         <Href key={platformName+'_platform_link'} role="button" text="Platform page" href={"/platform/"+platformName} icon={<Stack/>}/>
                     </div>
+                    { sampleCount && sampleCount > 1 ?
+                        <div>
+                            <Href key={platformName+'_plot_link'} role="button" text="Go to Plots" href={plot_url} icon={<GraphUp/>} />
+                        </div> : ''
+                    }
                 </div>
             </AccordionSummary>
             <AccordionDetails>
@@ -282,7 +289,7 @@ const PlatformTable = (props) => {
                             <ul className='key_val_line'>
                                 { platformInfo.full_name ? <li><span className='line_key'>Full Name</span>{platformInfo.full_name}</li>:''}
                                 { platformInfo.version ? <li><span className='line_key'>Version</span>{platformInfo.version}</li>:''}
-                                { dataset.tissue ? <li><span className='line_key'>Tissue</span><TooltipText title={dataset.tissue.description} text={dataset.tissue.label}/> (<Href href={dataset.tissue.url} text={dataset.tissue.id}/>)</li>:''}
+                                { dataset.tissue ? <li><span className='line_key'>Tissue</span>{tissue_link(dataset.tissue)}</li>:''}
                             </ul>:''
                         }
                         <div className="d-flex mb-3">

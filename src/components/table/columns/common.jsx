@@ -89,7 +89,7 @@ export const omicspred_internal_links = function(op_data,type) {
 
 
 export const omicspred_external_link = function(op_entry,index) {
-    const op_label = op_entry['label'];
+    const op_label =op_entry['label'];
     const op_id = (op_entry['id']) ? op_entry['id'] : op_entry['label']
 
     if (op_entry['source'] && op_entry['source'].toLowerCase() == 'reactome') {
@@ -714,6 +714,7 @@ export const common_cols = {
         field: 'pathway_group',
         headerName: 'Pathway',
         minWidth: 200,
+        sortable: false,
         flex: 1,
         valueGetter: (value, row) => {
             let result = '';
@@ -733,6 +734,7 @@ export const common_cols = {
         headerName: 'Sub Pathway',
         headerClassName: 'col_border_right',
         minWidth: 200,
+        sortable: false,
         flex: 1,
         valueGetter: (value, row) => {
             let result = '';
@@ -853,6 +855,13 @@ export const common_cols = {
             return counts;
         }
     }
+}
+
+
+export const common_omics_columns = {
+    'omics_publication': {...common_cols['publication'], field: 'dataset__publication'},
+    'omics_platform_version': {...common_cols['platform_version'], field: 'dataset__platform__version'},
+    'omics_dataset_name': {...common_cols['dataset_name'], field: 'dataset__name'}
 }
 
 

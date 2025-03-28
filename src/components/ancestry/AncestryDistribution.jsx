@@ -66,8 +66,6 @@ const AncestryDistribution = (props) => {
     }
 
     const build_tooltip = (data) => {
-        console.log("data:")
-        console.log(data)
         if (data.datasets) {
             const dataset = data.datasets[0];
             return (

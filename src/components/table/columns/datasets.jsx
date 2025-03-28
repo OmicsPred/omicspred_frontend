@@ -1,7 +1,10 @@
 
-import { FileEarmarkArrowDown, Stack } from 'react-bootstrap-icons';
-import { common_cols } from './common';
-import { download_labels } from '../../Downloads';
+import { FileEarmarkArrowDown, Stack, People, GraphUp } from 'react-bootstrap-icons';
+import { common_cols, omicspred_internal_link } from './common';
+import { download_labels, ExpandableDownloadButton, get_download_list } from '../../Downloads';
+import { ToogleDiv } from '../../Generic';
+import { SampleTable } from '../../Sample';
+import Href from '../../Href';
 
 
 const default_cell_value = process.env.DEFAULT_CELL_VALUE;
@@ -22,26 +25,30 @@ const download_link = (url,type=undefined) => {
     );
 }
 
-export const datasets_columns = [
-    { 
+const dataset_common_columns = {
+    'publication': {
         field: 'publication', 
         headerName: 'Publication', 
         minWidth: 230,
         flex: 1,
-            renderCell: (params) => {
-                const publication = params.row.publication;
-                let year = ''
-                if (publication.date_publication) {
-                    const date_array = publication.date_publication.split('-');
-                    year = date_array[0];
-                }
-                return (
-                    <a href={"/publication/"+publication.pmid}>{publication.firstauthor} <i>et al.</i> {publication.journal}{year ? <> ({year})</>:''}</a>
-                );
-            },
-            valueGetter:  (value, row) => { return row.publication.firstauthor }
-    },
-    { 
+        renderCell: (params) => {
+            const publication = params.row.publication;
+            let year = ''
+            if (publication.date_publication) {
+                const date_array = publication.date_publication.split('-');
+                year = date_array[0];
+            }
+            return (
+                <a href={"/publication/"+publication.pmid}>{publication.firstauthor} <i>et al.</i> {publication.journal}{year ? <> ({year})</>:''}</a>
+            );
+        },
+        valueGetter:  (value, row) => { return row.publication.firstauthor }
+    }
+}
+
+export const datasets_columns = [
+    dataset_common_columns['publication'],
+    {
         field: 'platform',
         minWidth: 150,
         flex: 1,
@@ -142,6 +149,117 @@ export const datasets_columns = [
     }
 ]
 
+
+export const datasets_platform_columns = [
+    {
+        field: 'name',
+        headerName: 'Dataset Name',
+        minWidth: 120,
+        flex: 1,
+        valueGetter:  (value, row) => {
+            if (row.name) {
+                return row.name;
+            }
+            else {
+                return default_cell_value;
+            }
+        }
+    },
+    dataset_common_columns['publication'],
+    {
+        field: 'tissue__label',
+        headerName: 'Tissue',
+        minWidth: 150,
+        flex: 1,
+        renderCell: (params) => {
+            if (params.row.tissue) {
+                const tissue = params.row.tissue;
+                return omicspred_internal_link({'id': tissue.id, 'label': tissue.label},'tissue');
+            }
+        },
+        valueGetter: (value, row) => {
+            if (row.tissue) {
+                return row.tissue.label;
+            }
+            else {
+                return default_cell_value;
+            }
+        }
+    },
+    {
+        field: 'platform__version',
+        headerName: 'Platform version',
+        minWidth: 150,
+        flex: 1,
+        valueGetter: (value, row) => {
+            if (row.platform.version) {
+                return row.platform.version;
+            }
+            else {
+                return default_cell_value;
+            }
+        }
+    },
+    {
+        field: 'samples',
+        headerName: ' Samples',
+        minWidth: 320,
+        sortable: false,
+        flex: 1,
+        renderCell: (params) => {
+            if (params.row.samples_training || params.row.samples_validation) {
+                const sample_key = params.row.name+'_'+params.row.publication.pmid;
+                return(
+                    <ToogleDiv key={'toggle_sample_'+sample_key} type='button' title={<><People className='me-1'/>Sample details</>} content={<SampleTable table_name={'sample_table_'+sample_key} samples_training={params.row.samples_training} samples_validation={params.row.samples_validation}/>}/>
+                )
+            }
+            else {
+                return default_cell_value;
+            }
+        }
+    },
+    {
+        field: 'plots',
+        headerName: ' Plots',
+        minWidth: 180,
+        sortable: false,
+        flex: 1,
+        renderCell: (params) => {
+            const count_samples = params.row.samples_training.length + params.row.samples_validation.length
+            if (count_samples > 1) {
+                const dataset_name = params.row.name;
+                const platform_name = params.row.platform.name;
+                const publication_id = params.row.publication.pmid;
+                let plot_url = "/plot/"+platform_name+"/"+publication_id;
+                if (dataset_name) {
+                    plot_url += '?dataset='+dataset_name;
+                }
+                return(
+                    <Href key={publication_id+'_'+dataset_name+'_plot_link'} role="button-small" text="Go to data plots" href={plot_url} icon={<GraphUp/>} />
+                )
+            }
+            else {
+                return default_cell_value;
+            }
+        }
+    },
+    {
+        field: 'downloads',
+        headerName: 'Genetic Scores Downloads',
+        minWidth: 320,
+        sortable: false,
+        flex: 1,
+        renderCell: (params) => {
+            if (params.row.scoring_files_urls) {
+                const download_urls = get_download_list(params.row.scoring_files_urls)
+                return <ExpandableDownloadButton download_urls={download_urls}/>
+            }
+            else {
+                return default_cell_value;
+            }
+        }
+    }
+]
 
 // "scoring_files_urls": {
 //     "gwas_sumstats": "https://app.box.com/shared/static/u3flbp13zjydegrxjb2uepagp1vb6bj2",

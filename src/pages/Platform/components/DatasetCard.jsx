@@ -38,6 +38,8 @@ const DatasetCard = (props) => {
         samples_label += ' ('+dataset_name+')'
     }
 
+    const samples_count = samples_training.length + samples_validation.length
+
     return (
         <Accordion>
             <AccordionSummary
@@ -63,11 +65,13 @@ const DatasetCard = (props) => {
                         <div className="ms-4">
                             <span >{[publication.firstauthor," ",<i key={key+'_i'}>et al.</i>," - ",publication.journal," (",pub_year,")"]}</span>
                             <span className='ms-4'>
-                                <Href key={key+'_'+dataset_name+'_plot_link'} role="button-small" text={platform_name+" plots"} href={plot_url} icon={<GraphUp/>} />
-                            </span>
-                            <span className='ms-4'>
                                 <Href key={key+'_pub_link'} role="button-small" text="Publication page" href={"/publication/"+key} icon={<Book/>}/>
                             </span>
+                            { samples_count > 1 ?
+                                <span className='ms-4'>
+                                    <Href key={key+'_'+dataset_name+'_plot_link'} role="button-small" text={platform_name+" plots"} href={plot_url} icon={<GraphUp/>} />
+                                </span> : ''
+                            }
                         </div>
                     </div>
                 </div>
