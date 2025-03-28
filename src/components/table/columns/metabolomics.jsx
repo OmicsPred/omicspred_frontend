@@ -7,7 +7,6 @@ const trait_reported_col = {...common_cols['trait_reported'], headerName: 'Name'
 
 const ancestry_training_cols = {...ancestry_cols['ancestry_training'], headerClassName: ['col_border_left']}
 const ancestry_validation_cols = {...ancestry_cols['ancestry_validation'], headerClassName: ['col_border_right']}
-// const dataset_name_col = {...common_cols['dataset_name'], field: 'dataset__name'}
 
 // Export Metabolomics columns
 export const metabolomics_columns = {
@@ -19,9 +18,9 @@ export const metabolomics_columns = {
         common_cols['metabolite_name'],
         common_cols['pathway_group'],
         common_cols['pathway_subgroup'],
-        // common_cols['publication'],
-        // common_cols['platform_version'],
-        // dataset_name_col,
+        // common_omics_columns['omics_publication'],
+        // common_omics_columns['omics_platform_version'],
+        // common_omics_columns['omics_dataset_name'],
         common_cols['variants_number'],
         ancestry_training_cols,
         ancestry_validation_cols,
@@ -41,9 +40,9 @@ export const metabolomics_columns = {
         common_cols['metabolite_name'],
         common_cols['pathway_group'],
         common_cols['pathway_subgroup'],
-        // common_cols['publication'],
-        // common_cols['platform_version'],
-        // dataset_name_col,
+        // common_omics_columns['omics_publication'],
+        // common_omics_columns['omics_platform_version'],
+        // common_omics_columns['omics_dataset_name'],
         common_cols['variants_number'],
         ancestry_training_cols,
         ancestry_validation_cols,

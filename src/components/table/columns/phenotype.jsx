@@ -25,14 +25,15 @@ const application_molecular_traits = function(mt_entry,index) {
 
 export const applications_cols = {
     'gene': {
-        field: 'gene',
+        field: 'genes__name',
         minWidth: 150,
         flex: 0.5,
         renderHeader: () => {
             return (molecular_trait_header('Gene'))
         },
         renderCell: (params) => {
-            const genes_list =  params.row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'gene'});
+            const genes_list =  params.row.genes;
+            // const genes_list =  params.row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'gene'});
             if (genes_list.length > 0) {
                 const genes = genes_list.map((gene, index) => application_molecular_traits(gene,index))
                 return <div className="d-inline">{genes}</div>;
@@ -41,20 +42,22 @@ export const applications_cols = {
         },
         valueGetter: (value, row) => {
             let gene_names = [];
-            const genes_list =  row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'gene'});
+            // const genes_list =  row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'gene'});
+            const genes_list =  row.genes;
             gene_names = genes_list.map((gene) => gene.name ? gene.name : gene.external_id);
             return gene_names.join(data_separator);
         }
     },
     'protein': {
-        field: 'protein',
+        field: 'proteins__name',
         minWidth: 150,
         flex: 0.5,
         renderHeader: () => {
             return (molecular_trait_header('Protein'))
         },
         renderCell: (params) => {
-            const proteins_list =  params.row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'protein'});
+            // const proteins_list =  params.row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'protein'});
+            const proteins_list =  params.row.proteins;
             if (proteins_list.length > 0) {
                 const proteins = proteins_list.map((protein, index) => application_molecular_traits(protein,index))
                 return <div className="d-inline">{proteins}</div>;
@@ -63,20 +66,22 @@ export const applications_cols = {
         },
         valueGetter: (value, row) => {
             let protein_names = [];
-            const proteins_list =  row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'protein'});
+            // const proteins_list =  row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'protein'});
+            const proteins_list =  row.proteins
             protein_names = proteins_list.map((protein) => protein.name ? protein.name : protein.external_id);
             return protein_names.join(data_separator);
         }
     },
     'metabolite': {
-        field: 'metabolite',
+        field: 'metabolites__name',
         minWidth: 150,
         flex: 0.5,
         renderHeader: () => {
             return (molecular_trait_header('Metabolite'))
         },
         renderCell: (params) => {
-            const metabolites_list =  params.row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'metabolite'});
+            // const metabolites_list =  params.row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'metabolite'});
+            const metabolites_list =  params.row.metabolites;
             if (metabolites_list.length > 0) {
                 const metabolites = metabolites_list.map((metabolite, index) => application_molecular_traits(metabolite,index))
                 return <div className="d-inline">{metabolites}</div>;
@@ -85,7 +90,8 @@ export const applications_cols = {
         },
         valueGetter: (value, row) => {
             let metabolite_names = [];
-            const metabolites_list =  row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'metabolite'});
+            // const metabolites_list = row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'metabolite'});
+            const metabolites_list = row.metabolites;
             metabolite_names = metabolites_list.map((metabolite) => metabolite.name ? metabolite.name : metabolite.external_id);
             return metabolite_names.join(data_separator);
         }
@@ -161,6 +167,9 @@ export const applications_cols = {
     },
 }
 
+// const gene_no_sort = {...applications_cols['gene'], sortable: false}
+// const protein_no_sort = {...applications_cols['protein'], sortable: false}
+// const metabolite_no_sort = {...applications_cols['metabolite'], sortable: false}
 
 let base_phenotype_columns = {
     'Full': [
@@ -172,6 +181,9 @@ let base_phenotype_columns = {
         applications_cols['cohort'],
         common_cols['platform_type'],
         common_cols['platform_name'],
+        // gene_no_sort,
+        // protein_no_sort,
+        // metabolite_no_sort,
         applications_cols['gene'],
         applications_cols['protein'],
         applications_cols['metabolite'],

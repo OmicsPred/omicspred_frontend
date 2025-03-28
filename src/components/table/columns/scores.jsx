@@ -24,6 +24,11 @@ export const scores_columns = [
     // common_cols['scoring_file']
 ]
 
+
+const scores_columns_copy = [...scores_columns]
+
+export const scores_columns_with_ancestry = scores_columns_copy.concat([ancestry_cols['ancestry_training'],ancestry_cols['ancestry_validation']]);
+
 export const publication_score_columns = {
     'start': [
         common_cols['omicspred_id']
