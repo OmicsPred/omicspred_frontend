@@ -17,6 +17,7 @@ $pr_color: #D00;
 $me_color: orange; //#ff974e
 $ph_color: #00CED1; // DarkTurquoise
 $pa_color: #FA8072;
+$ti_color: #219EBC;
 $hl_color: $op_color_2; //blue;
 $score_color: #0066b2; //$op_color_1;
 $op_white: #FFF;
@@ -50,7 +51,8 @@ $type_colors: (
     'metabolite': $me_color,
     'phenotype': $ph_color,
     'score': $score_color,
-    'pathway': $pa_color
+    'pathway': $pa_color,
+    'tissue': $ti_color
 );
 
 /* Mixins */
