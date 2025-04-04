@@ -32,7 +32,7 @@ function Score() {
     const [phenotypeData, setPhenotypeData] = useState([])
     const [pathwayData, setPathwayData] = useState([])
     const [metricData, setMetricData] = useState([])
-    const [platformDownloads, setPlatformDownloads] = useState([])
+    const [platformDownloads, setPlatformDownloads] = useState({})
 
 
     const get_pathways = (data) => {
@@ -200,7 +200,7 @@ function Score() {
                     {/* Summary data */}
                     <Header2Cards type_left='score' content_left={get_information_left_content()} content_right={get_information_right_content()} />
                     {/* Download buttons */}
-                    { platformData && platformDownloads ?
+                    { platformData && Object.keys(platformDownloads).length > 0 ?
                         <div>
                             <ToogleDiv key={'toggle_dowloads'} type='button_blue' class_name='card px-2 py-1' title={<><Download className='me-2'/>Downloads <small>(at platform/dataset level)</small></>} content={<DownloadList urls={platformDownloads}/>}/>
                         </div>:''

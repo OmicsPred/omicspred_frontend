@@ -86,6 +86,12 @@ function OpRouters() {
                 {/* Errors */}
                 <Route path="*" element={<Error404 />} />
 
+                {/* Redirections */}
+                <Route path="/Scores/Olink/INTERVAL" element={<Redirect url='/platform/Olink'/>}/>
+                <Route path="/Scores/Somalogic/INTERVAL" element={<Redirect url='/platform/Somalogic'/>}/>
+                <Route path="/Scores/Nightingale/INTERVAL" element={<Redirect url='/platform/Nightingale'/>}/>
+                <Route path="/Scores/Metabolon/INTERVAL" element={<Redirect url='/platform/Metabolon'/>}/>
+                <Route path="/Scores/Illumina_RNAseq/INTERVAL" element={<Redirect url='/platform/Illumina RNAseq'/>}/>
             </Routes>
         </Router>
     )

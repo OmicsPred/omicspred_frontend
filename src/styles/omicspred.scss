@@ -1129,6 +1129,7 @@ ul.example_list {
 .op_toogle_btn {
     display: inline-block !important;
     overflow: hidden;
+    background-color: $op_white !important;
     // border: 1px solid $op_blue_2 !important;
     svg {
         @include link_default_color;

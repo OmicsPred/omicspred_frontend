@@ -144,7 +144,7 @@ export const op_title2 = (type, prefix, label) => {
 
 export const op_count_badge = (count, type) => {
     const hl_type = (type) ? type : 'hl';
-    return <span className={'badge badge-sq-op-sm ms-2 color_'+hl_type}>{count}</span>
+    return <span className={'badge badge-sq-op-sm ms-2 color_'+hl_type}>{thousandifyNumber(count)}</span>
 }
 
 
