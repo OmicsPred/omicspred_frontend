@@ -78,16 +78,14 @@ export default function ChartPlot(props) {
       }
 
       const toreturn = datatocolor.map((e) => {
-        if (e >= 0 && e < 0.35) {
-          // return "blue";
-          return "red";
+        if (e >= 0.65 || e == undefined) {
+          return "blue";
         }
         if (e >= 0.35 && e < 0.65) {
           return "green";
         }
-        if (e >= 0.65 || e == undefined) {
-          // return "red";
-          return "blue";
+        if (e >= 0 && e < 0.35) {
+          return "red";
         }
       });
   
@@ -190,17 +188,39 @@ export default function ChartPlot(props) {
           }
         }
       }
-  
-      return [
+
+      let returned_values = [
         props.name_2 + " : " + study1,
-        props.name_1 + " : " + study2,
-        "Match Rate (" + props.name_2 + ") : " +
-          Object.values(props.rate)[tooltipItems[0].dataIndex],
+        props.name_1 + " : " + study2
+      ]
+
+      let match_rate_value = undefined;
+      if (Object.values(props.rate)) {
+        match_rate_value = Object.values(props.rate)[tooltipItems[0].dataIndex];
+      }
+      if (match_rate_value) {
+        returned_values.push("Match Rate (" + props.name_2 + ") : " +match_rate_value);
+      }
+
+      // returned_values.push()
+      returned_values.push(
         '----------------------------------',
         ...metadata.map((e) => {
           return e.name + " : " + e.value;
-        }),
-      ];
+        })
+      )
+
+      // return [
+      //   props.name_2 + " : " + study1,
+      //   props.name_1 + " : " + study2,
+      //   "Match Rate (" + props.name_2 + ") : " +
+      //     Object.values(props.rate)[tooltipItems[0].dataIndex],
+      //   '----------------------------------',
+      //   ...metadata.map((e) => {
+      //     return e.name + " : " + e.value;
+      //   }),
+      // ];
+      return returned_values;
     };
 
     const options = {
@@ -231,8 +251,9 @@ export default function ChartPlot(props) {
             //   xMax: Math.max(...data1_array) + 0.01 + (Math.max(...data1_array) * 100) / 5000,
               width: "100px",
               backgroundColor: function (context) {
-                const chart = context.chart;
-                const { ctx, chartArea } = chart;
+                // const chart = context.chart;
+                // const { ctx, chartArea } = chart;
+                const { ctx, chartArea } = context.chart;
                 if (!chartArea) {
                   // This case happens on initial chart load
                   return;

@@ -6,13 +6,15 @@ import DocumentTitle from './DocumentTitle';
 
 
 export const internal_publication_link = (publication) => {
-    let firstauthor = publication.firstauthor;
-    let pmid = publication.pmid;
-    let journal = publication.journal;
-    let year = publication.date_publication.split('-')[0];
+    const opp_id = publication.id
+    const firstauthor = publication.firstauthor;
+    const journal = publication.journal;
+    const year = publication.date_publication.split('-')[0];
 
     return(
-        <Href href={"/publication/"+pmid} text={firstauthor+' et al. '+journal+' ('+year+')'}/>
+        <>
+            <Href href={"/publication/"+opp_id} text={<>{firstauthor} <i>et al.</i> {journal} ({year})</>}/> <span>({opp_id})</span>
+        </>
     )
 }
 
@@ -179,7 +181,7 @@ export const op_subtitle_no_asso = (type,label,count) => {
 
 
 export const no_entry_found = (type, name, no_title) => {
-    console.log("no title: "+no_title);
+    // console.log("no title: "+no_title);
     return (
         <>
             { no_title ? '' : op_title(type, {"name": name}, name) }
@@ -373,11 +375,16 @@ export const display_description = (description_list) => {
 
 
 export const element_icon = (type,use_alt) => {
-    if (use_alt) {
-        return (<HexagonFill className={'color_'+type+' element_icon'} />);
+    if (type == 'pathway') {
+        return (<Bezier2 className={'color_'+type+' element_icon'} />);
     }
     else {
-        return (<Hexagon className={'color_'+type+' element_icon'} />);
+        if (use_alt) {
+            return (<HexagonFill className={'color_'+type+' element_icon'} />);
+        }
+        else {
+            return (<Hexagon className={'color_'+type+' element_icon'} />);
+        }
     }
 }
 

@@ -4,12 +4,12 @@ import DocumentTitle from '../../components/DocumentTitle';
 import restApiCall from '../../components/RestAPI';
 import Href from "../../components/Href";
 import PlatformTable from './components/PlatformTable';
-import { op_subtitle_no_asso, op_title, publication_ref, HeaderCard } from '../../components/Common';
-import { loading_data, scoresBadge } from '../../components/Generic';
+import { op_subtitle_no_asso, op_title, HeaderCard } from '../../components/Common';
+import { loading_data, ToogleText, scoresBadge } from '../../components/Generic';
 
 
 function Publication() {
-    let { pubmed_id } = useParams();
+    let { opp_id } = useParams();
     const [publicationData, setPublicationData] = useState([])
     const [publicationTitle, setPublicationTitle] = useState('')
     // const [publicationYear, setPublicationYear] = useState([])
@@ -17,11 +17,12 @@ function Publication() {
 
 
     const fetchPublicationData = async () => {
-        const publication_data = await restApiCall('publication/'+pubmed_id);
+        console.log('publication/'+opp_id)
+        const publication_data = await restApiCall('publication/'+opp_id);
         console.log(publication_data);
         setPublicationData(publication_data);
         const year = publication_data.date_publication ? ' ('+publication_data.date_publication.split('-')[0]+')' : undefined
-        setPublicationTitle("Publication: "+publication_data.firstauthor+year)
+        setPublicationTitle("Publication: "+publication_data.id+' ('+publication_data.firstauthor+' - '+year+')')
         // buildPublicationYear(publication_data.date_publication);
         publication_data.datasets.sort((a, b) => a.platform.name.localeCompare(b.platform.name))
         setDatasetsData(publication_data.datasets);
@@ -52,19 +53,19 @@ function Publication() {
 		return (
 			<>
                 { publicationData.title ? <tr><td>Title</td><td>{publicationData.title}</td></tr>:''}
-                {/* TEMPORARY */}
-                { publicationData.pmid & publicationData.pmid != 12345 ?
+                { publicationData.pmid ?
                     <>
                         <tr><td>PubMed ID</td><td><Href href={process.env.URL_ROOT_PUBMED+publicationData.pmid} text={publicationData.pmid}/></td></tr>
-                        { publicationData.doi ? <tr><td>doi</td><td><Href href={process.env.URL_ROOT_DOI+publicationData.doi} text={publicationData.doi}/></td></tr>:''}
-                    </>
-                    :''}
+                    </> : ''
+                }
+                { publicationData.doi ? <tr><td>doi</td><td><Href href={process.env.URL_ROOT_DOI+publicationData.doi} text={publicationData.doi}/></td></tr>:''}
                 {/*
                 { publicationData.pmid ? <tr><td>PubMed ID</td><td><Href href={process.env.URL_ROOT_PUBMED+publicationData.pmid} text={publicationData.pmid}/></td></tr>:''}
                 { publicationData.doi ? <tr><td>doi</td><td><Href href={process.env.URL_ROOT_DOI+publicationData.doi} text={publicationData.doi}/></td></tr>:''}
                 */}
                 { publicationData.date_publication ? <tr><td>Publication Date</td><td>{convertPublicationDate()}</td></tr>:''}
                 { publicationData.journal ? <tr><td>Journal</td><td>{publicationData.journal}</td></tr>:''}
+                { publicationData.authors ? <tr><td>Authors</td><td><ToogleText text={publicationData.authors} limit='80' /></td></tr>:''}
                 { datasetsData ? <tr><td>Number of scores</td><td>{get_scores_count()}</td></tr>:''}
             </>
         )
@@ -79,7 +80,7 @@ function Publication() {
             {  publicationData ?
                 <>
                     { DocumentTitle(publicationTitle) }
-                    {op_title('publication', publicationData, publication_ref(publicationData, true))}
+                    {op_title('publication', publicationData, publicationData.id)}
                     <HeaderCard type='publication' content={get_information_content()} />
                 </>
                 :''
@@ -87,11 +88,11 @@ function Publication() {
             <div className='mt-5'></div>
 
             {/* Scores by Platform */}
-            {op_subtitle_no_asso('hl','List of Scores by Platform')}
+            {op_subtitle_no_asso('hl','List of Scores by Platform/Dataset')}
             { datasetsData ?
                 <div className='d-flex mt-3'>
                     <div>
-                        { datasetsData && publicationData.pmid ? datasetsData.map((dataset, index) => <PlatformTable key={index+'_'+dataset.name+'_'+dataset.platform.name+"_platform_table"} data={dataset} pmid={publicationData.pmid} />):''}
+                        { datasetsData && publicationData.id ? datasetsData.map((dataset, index) => <PlatformTable key={index+'_'+dataset.name+'_'+dataset.platform.name+"_platform_table"} data={dataset} opp_id={publicationData.id} />):''}
                     </div>
                 </div>
                 : loading_data()

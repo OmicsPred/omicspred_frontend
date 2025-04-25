@@ -6,12 +6,11 @@ export default async function restApiCall(url) {
     const rest_url = (url.startsWith('http')) ? url : process.env.REST_API_URL+url;
 
     try {
-        consoleDev('REST CALL: '+rest_url);
+        consoleDev('REST API CALL: '+rest_url);
         const res = await fetch(rest_url)
             .then(resp=>{
                 return resp.json();
             });
-        // console.log(res);
         return res
     } catch(err){
       console.log(err)

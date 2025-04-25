@@ -11,7 +11,7 @@ export const transcriptomics_columns = {
         common_cols['gene_name'],
         common_omics_columns['omics_publication'],
         common_omics_columns['omics_platform_version'],
-        common_omics_columns['omics_dataset_name'],
+        common_cols['dataset_id'],
         common_cols['variants_number'],
         ancestry_training_cols,
         ancestry_cols['ancestry_validation'],
@@ -26,6 +26,7 @@ export const transcriptomics_columns = {
 
 export const transcriptomics_column_groups = {
     'Illumina RNAseq': [
+        common_column_groups['molecular_trait_omics'],
         common_column_groups['INTERVAL'],
         common_column_groups['INTERVAL_withheld_subset'],
         common_column_groups['ancestry']

@@ -13,13 +13,14 @@ import { ExpandableDownloadButton, get_download_list } from '../../../components
 
 const DatasetCard = (props) => {
     const dataset = props.data;
+    const dataset_id = dataset.id;
     const dataset_name = dataset.name;
     const publication = dataset.publication;
     const platform_name = dataset.platform.name;
     const platform_version = dataset.platform.version;
     const samples_training = dataset.samples_training;
     const samples_validation = dataset.samples_validation;
-    const key = publication.pmid
+    const key = publication.id
 
     let download_urls = undefined
     if (dataset.scoring_files_urls) {
@@ -28,10 +29,7 @@ const DatasetCard = (props) => {
 
     const pub_year = publication.date_publication.split('-')[0]
 
-    let plot_url = "/plot/"+platform_name+"/"+key;
-    if (dataset_name) {
-        plot_url += '?dataset='+dataset_name;
-    }
+    let plot_url = "/plot/"+platform_name+"/"+key+'?dataset='+dataset_id;
 
     let samples_label = platform_name+' samples';
     if (dataset_name) {

@@ -1,5 +1,5 @@
 import { FileEarmarkText, Stack, Hexagon } from 'react-bootstrap-icons';
-import { internal_publication_link, omicspred_omics_type, display_description } from '../../Common';
+import { omicspred_omics_type, display_description } from '../../Common';
 import { thousandifyNumber, ToogleDiv, TooltipText, scoresBadge } from '../../Generic';
 import Href from '../../Href';
 
@@ -218,18 +218,35 @@ export const common_cols = {
             return <span className="badge rounded-pill badge-op" style={{fontSize:'12px'}} title="# of variants">{thousandifyNumber(params.row.variants_number)}</span>;
         }
     },
-    'dataset_name': {
-        field: 'dataset_name',
-        headerName: 'Dataset name',
+    'dataset_id': {
+        field: 'dataset_id',
+        headerName: 'Dataset ID (name)',
         minWidth: 150,
         flex: 1,
+        renderCell: (params) => {
+            let dataset_id = params.row.dataset_id;
+            let dataset_name = params.row.dataset_name;
+            if (params.row.dataset) {
+                dataset_id = params.row.dataset.id;
+                dataset_name = params.row.dataset.name;
+            }
+            return (
+                <div>
+                    {dataset_id}
+                    {dataset_name ? <div className='small'>({dataset_name})</div> : ''}
+                </div>
+            )
+        },
         valueGetter: (value, row) => {
-            if (row.dataset_name) {
-                return row.dataset_name;
+            if (row.dataset_id) {
+                return row.dataset_id;
             }
             else {
-                return default_cell_value;
+                if (row.dataset) {
+                    return row.dataset.id;
+                }
             }
+            return default_cell_value;
         }
     },
     'platform_type': {
@@ -244,6 +261,7 @@ export const common_cols = {
     },
     'platform_name': {
         field: 'platform__name',
+        headerName: 'Platform', // Kept for the column filtering
         minWidth: 140,
         flex: 0.6,
         renderHeader: () => {
@@ -285,14 +303,23 @@ export const common_cols = {
         valueGetter: (value, row) => { return row.platform_version }
     },
     'publication': {
-        field: 'publication__firstauthor',
+        field: 'publication__id',
         headerName: 'Publication',
         minWidth: 220,
         // flex: 0.8,
         renderCell: (params) => {
-            return internal_publication_link(params.row.publication);
+            const opp_id = params.row.publication.id;
+            const firstauthor = params.row.publication.firstauthor;
+            const journal = params.row.publication.journal;
+            const year = params.row.publication.date_publication.split('-')[0];
+            return (
+                <div>
+                    <Href href={"/publication/"+opp_id} text={opp_id}/>
+                    <div className='small'>{firstauthor} <i>et al.</i> {journal} ({year})</div>
+                </div>
+            )
         },
-        valueGetter: (value, row) => { return row.publication.firstauthor }
+        valueGetter: (value, row) => { return row.publication.id }
     },
     'scoring_file': {
         field: 'scoring_file',
@@ -860,8 +887,7 @@ export const common_cols = {
 
 export const common_omics_columns = {
     'omics_publication': {...common_cols['publication'], field: 'dataset__publication'},
-    'omics_platform_version': {...common_cols['platform_version'], field: 'dataset__platform__version'},
-    'omics_dataset_name': {...common_cols['dataset_name'], field: 'dataset__name'}
+    'omics_platform_version': {...common_cols['platform_version'], field: 'dataset__platform__version'}
 }
 
 
@@ -1453,6 +1479,19 @@ export const common_column_groups = {
         children: [{ field: 'genes__name' }, { field: 'proteins__external_id' }, { field: 'metabolite_id' }],
         headerClassName: ['col_border_left','col_border_right']
     },
+    'molecular_trait_omics': {
+        groupId: 'Molecular trait',
+        children: [
+            { field: 'proteins__external_id' }, { field: 'proteins__name' },
+            { field: 'genes__external_id'}, { field: 'genes__name' }
+        ],
+        headerClassName: ['col_border_left','col_border_right']
+    },
+    // 'molecular_trait_transcriptomics': {
+    //     groupId: 'Molecular trait',
+    //     children: [{ field: 'proteins__external_id' }, { field: 'genes__name' }, { field: 'proteins__name' }],
+    //     headerClassName: ['col_border_left','col_border_right']
+    // },
     'ancestry': {
         groupId: 'Ancestry distribution',
         children: [{ field: 'ancestry_training' }, { field: 'ancestry_validation' }],
