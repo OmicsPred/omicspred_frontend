@@ -22,6 +22,7 @@ const metric_valueGetter = function(performance_metrics,method,eval_type) {
     return default_cell_value;
 }
 
+// const score_platform_name = {...common_cols['platform_name'], headerName:'Platform'}
 
 export const performance_metrics_columns = [
     {
@@ -87,6 +88,7 @@ export const performance_metrics_columns = [
         }
     },
     common_cols['platform_name'],
+    // score_platform_name,
     common_cols['platform_type'],
     {
         field: 'r2',

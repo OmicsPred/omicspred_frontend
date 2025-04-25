@@ -1,25 +1,37 @@
 import Href from '../../Href';
-import { common_cols, default_cell_value, omicspred_platform_omics_type } from "./common";
+import { common_cols, default_cell_value, omicspred_platform_omics_type } from './common';
+import { numberBadge } from '../../Generic';
 
 
 export const publications_columns = [
-    { field: 'firstauthor', 
-      headerName: 'First Author', 
-      minWidth: 150,
-      flex: 1,
-        renderCell: (params) => {
-            return (<a href={"/publication/"+params.row.pmid}>{params.row.firstauthor}</a>);
-        },
-        valueGetter: (value) => { return value }
+    {
+        field: 'opp_id',
+        headerName: 'Publication ID',
+        minWidth: 150,
+        // flex: 1,
+          renderCell: (params) => {
+              return (<a href={"/publication/"+params.row.id}>{params.row.id}</a>);
+          },
+          valueGetter: (value, row) => { return row.id }
     },
-    { 
-        field: 'pmid', 
-        headerName: 'PubMed ID', 
+    {
+        field: 'firstauthor',
+        headerName: 'First Author',
         minWidth: 120,
-        flex: 1,
+        // flex: 1,
+            renderCell: (params) => {
+                return params.row.firstauthor;
+            },
+            valueGetter: (value) => { return value }
+    },
+    {
+        field: 'pmid',
+        headerName: 'PubMed ID',
+        minWidth: 110,
+        // flex: 1,
         renderCell: (params) => {
             // TEMPORARY
-            if (params.row.pmid != 12345) {
+            if (params.row.pmid) {
                 return <Href href={process.env.URL_ROOT_PUBMED+params.row.pmid} text={params.row.pmid}/>
             }
             else {
@@ -29,7 +41,7 @@ export const publications_columns = [
         // valueGetter: (value) => {return value }
         // TEMPORARY:
         valueGetter: (value) => {
-            if (value != 12345) {
+            if (value) {
                 return value
             }
             else {
@@ -37,14 +49,14 @@ export const publications_columns = [
             }
         }
     },
-    { 
-        field: 'doi', 
-        headerName: 'Digital object identifier (doi)', 
-        minWidth: 250,
-        flex: 1,
+    {
+        field: 'doi',
+        headerName: 'Digital object identifier (doi)',
+        minWidth: 240,
+        // flex: 1,
         renderCell: (params) => {
              // TEMPORARY
-            if (params.row.pmid != 12345) {
+            if (params.row.doi) {
                 return <Href href={process.env.URL_ROOT_DOI+params.row.doi} text={params.row.doi}/>
             }
             else {
@@ -53,8 +65,8 @@ export const publications_columns = [
         },
         // valueGetter: (value) => {return value }
         // TEMPORARY:
-        valueGetter: (value, row) => {
-            if (row.pmid != 12345) {
+        valueGetter: (value) => {
+            if (value) {
                 return value
             }
             else {
@@ -62,12 +74,11 @@ export const publications_columns = [
             }
         }
     },
-    
     { field: 'title', headerName: 'Title', minWidth: 450 },
     { field: 'journal', headerName: 'Journal', minWidth: 120 },
-    { 
-        field: 'date_publication', 
-        headerName: 'Publication Date', 
+    {
+        field: 'date_publication',
+        headerName: 'Publication Date',
         minWidth: 150 ,
         renderCell: (params) => {
             // Change date format to DD/MM/YYYY
@@ -80,9 +91,9 @@ export const publications_columns = [
             }
         }
     },
-    { 
-        field: 'platforms', 
-        headerName: 'Platform(s)', 
+    {
+        field: 'platforms',
+        headerName: 'Platform(s)',
         width: 175,
         renderCell: (params) => {
             // Identify and list distinct platforms
@@ -105,6 +116,19 @@ export const publications_columns = [
             )
         },
         valueGetter: (value, row) => { return row.datasets.map((dataset) => dataset.platform.name) }
+    },
+    {
+        field: 'datasets',
+        headerName: '#Datasets',
+        width: 100,
+        renderCell: (params) => {
+            // return scoresBadge(counts, true);
+            const datasets_count = params.row.datasets.length;
+            return (
+                numberBadge(datasets_count)
+            )
+        },
+        valueGetter: (value, row) => { return row.datasets.length }
     },
     common_cols['scores_count']
 ]

@@ -1,6 +1,7 @@
 
 import { FileEarmarkArrowDown, Stack, People, GraphUp } from 'react-bootstrap-icons';
-import { common_cols, omicspred_internal_link } from './common';
+import { common_cols, common_column_groups, omicspred_internal_link } from './common';
+import { ancestry_cols } from './ancestry';
 import { download_labels, ExpandableDownloadButton, get_download_list } from '../../Downloads';
 import { ToogleDiv } from '../../Generic';
 import { SampleTable } from '../../Sample';
@@ -69,7 +70,7 @@ export const datasets_columns = [
     common_cols['platform_type'],
     { 
         field: 'dataset', 
-        headerName: 'Dataset', 
+        headerName: 'Dataset',
         minWidth: 150,
         flex: 1,
             renderCell: (params) => {
@@ -152,8 +153,18 @@ export const datasets_columns = [
 
 export const datasets_platform_columns = [
     {
+        field: 'id',
+        headerName: 'ID',
+        minWidth: 120,
+        flex: 1,
+        hideable: false,
+        valueGetter:  (value) => {
+            return value;
+        }
+    },
+    {
         field: 'name',
-        headerName: 'Dataset Name',
+        headerName: 'Name',
         minWidth: 120,
         flex: 1,
         valueGetter:  (value, row) => {
@@ -218,24 +229,27 @@ export const datasets_platform_columns = [
             }
         }
     },
+    common_cols['scores_count'],
+    ancestry_cols['ancestry_training'],
+    ancestry_cols['ancestry_validation'],
     {
         field: 'plots',
-        headerName: ' Plots',
-        minWidth: 180,
+        headerName: 'Data Plot',
+        minWidth: 150,
         sortable: false,
         flex: 1,
         renderCell: (params) => {
             const count_samples = params.row.samples_training.length + params.row.samples_validation.length
             if (count_samples > 1) {
-                const dataset_name = params.row.name;
+                const dataset_id = params.row.id;
                 const platform_name = params.row.platform.name;
-                const publication_id = params.row.publication.pmid;
+                const publication_id = params.row.publication.id;
                 let plot_url = "/plot/"+platform_name+"/"+publication_id;
-                if (dataset_name) {
-                    plot_url += '?dataset='+dataset_name;
+                if (dataset_id) {
+                    plot_url += '?dataset='+dataset_id;
                 }
                 return(
-                    <Href key={publication_id+'_'+dataset_name+'_plot_link'} role="button-small" text="Go to data plots" href={plot_url} icon={<GraphUp/>} />
+                    <Href key={publication_id+'_'+dataset_id+'_plot_link'} role="button-small" text="Go to plot" href={plot_url} icon={<GraphUp/>} />
                 )
             }
             else {
@@ -251,14 +265,23 @@ export const datasets_platform_columns = [
         flex: 1,
         renderCell: (params) => {
             if (params.row.scoring_files_urls) {
-                const download_urls = get_download_list(params.row.scoring_files_urls)
-                return <ExpandableDownloadButton download_urls={download_urls}/>
+                if (Object.keys(params.row.scoring_files_urls).length > 0) {
+                    const download_urls = get_download_list(params.row.scoring_files_urls)
+                    return <ExpandableDownloadButton download_urls={download_urls}/>
+                }
             }
-            else {
-                return default_cell_value;
-            }
+            return default_cell_value;
         }
     }
+]
+
+export const dataset_column_groups = [
+    {
+        groupId: 'Dataset',
+        children: [{ field: 'id' }, { field: 'name' }],
+        headerClassName: 'col_border_right'
+    },
+    common_column_groups['ancestry']
 ]
 
 // "scoring_files_urls": {

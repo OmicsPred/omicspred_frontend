@@ -65,12 +65,12 @@ function OpRouters() {
                 <Route path="/phenotype/:phenotype" element={<Phenotype />} />
                 <Route path="/platform/:platform" element={<Platform />} />
                 <Route path="/protein/:protein" element={<Protein />} />
-                <Route path="/publication/:pubmed_id" element={<Publication />} />
+                <Route path="/publication/:opp_id" element={<Publication />} />
                 <Route path="/score/:score" element={<Score />} />
                 <Route path="/tissue/:tissue" element={<Tissue />} />
 
                 {/* Plot page */}
-                <Route path="/plot/:platform/:pmid" element={<Plot />} />
+                <Route path="/plot/:platform/:opp_id" element={<Plot />} />
                 
                 {/* Search page */}
                 <Route path="/search" element={<Search />} />

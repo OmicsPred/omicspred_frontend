@@ -35,17 +35,17 @@ const PlatformTable = (props) => {
     const samples_validation = props.data.samples_validation;
     const p_key = platform_name;
     const scores_count = scoresBadge(dataset.scores_count)
-    const pmid = props.pmid;
+    const opp_id = props.opp_id;
 
-    let plot_url = "/plot/"+platformName+"/"+pmid;
+    let plot_url = "/plot/"+platformName+"/"+opp_id;
     if (dataset.name) {
-        plot_url += '?dataset='+dataset.name;
+        plot_url += '?dataset='+dataset.id;
     }
 
     const training_suffix = '__training';
 
-    const get_url_endpoint = (type, pmid, dataset) => {
-        let endpoint_suffix = platform_name+"?pmid="+pmid;
+    const get_url_endpoint = (type, opp_id, dataset) => {
+        let endpoint_suffix = platform_name+"?opp_id="+opp_id;
         if (dataset) {
             endpoint_suffix += '&dataset='+dataset
         }
@@ -212,7 +212,7 @@ const PlatformTable = (props) => {
         const dataset = props.data;
         setDatasetName(dataset.name);
         setPlatformName(dataset.platform.name);
-        const url_endpoint = get_url_endpoint(dataset.platform.type, props.pmid, dataset.name);
+        const url_endpoint = get_url_endpoint(dataset.platform.type, props.opp_id, dataset.name);
         setPlatformDataEndpoint(url_endpoint);
         get_table_columns(dataset);
         const columns_groups = get_table_column_groups(dataset);
@@ -289,6 +289,7 @@ const PlatformTable = (props) => {
                             <ul className='key_val_line'>
                                 { platformInfo.full_name ? <li><span className='line_key'>Full Name</span>{platformInfo.full_name}</li>:''}
                                 { platformInfo.version ? <li><span className='line_key'>Version</span>{platformInfo.version}</li>:''}
+                                <li><span className='line_key'>Dataset</span>{dataset.id}{dataset.name ? ' ('+dataset.name+')' : ''}</li>
                                 { dataset.tissue ? <li><span className='line_key'>Tissue</span>{tissue_link(dataset.tissue)}</li>:''}
                             </ul>:''
                         }

@@ -15,7 +15,7 @@ export const proteomics_columns = {
         common_cols['protein_name'],
         common_omics_columns['omics_publication'],
         common_omics_columns['omics_platform_version'],
-        common_omics_columns['omics_dataset_name'],
+        common_cols['dataset_id'],
         common_cols['variants_number'],
         ancestry_training_cols,
         ancestry_cols['ancestry_validation']
@@ -27,7 +27,7 @@ export const proteomics_columns = {
         common_cols['protein_name'],
         // common_omics_columns['omics_publication'],
         // common_omics_columns['omics_platform_version'],
-        // common_omics_columns['omics_dataset_name'],
+        // common_cols['dataset_id'],
         common_cols['variants_number'],
         ancestry_training_cols,
         ancestry_cols['ancestry_validation']
@@ -90,9 +90,11 @@ export const proteomics_pub_columns = {
 
 export const proteomics_column_groups = {
     'Olink': [
+        common_column_groups['molecular_trait_omics'],
         common_column_groups['ancestry']
     ],
     'Somalogic': [
+        common_column_groups['molecular_trait_omics'],
         common_column_groups['ancestry']
     ]
 };

@@ -13,59 +13,63 @@ import { loading_data } from '../../components/Generic';
 
 
 const Plot = () => {
-    let { platform, pmid } = useParams();
-    DocumentTitle('Plot | PMID:'+pmid+' / '+platform);
+    let { platform, opp_id } = useParams();
+    DocumentTitle('Plot | '+opp_id+' / '+platform);
     const [searchParams] = useSearchParams();
     const [platformSumData, setPlatformSumData] = useState([])
     const [publicationSumData, setPublicationSumData] = useState([])
     const [plotData, setPlotData] = useState([])
     const [scoreData, setScoreData] = useState([])
-    const [datasetNames, setDatasetNames] = useState([])
-    // const [plotFile, setPlotFile] = useState([])
-    // const [plotScoreFile, setPlotScoreFile] = useState([])
+    const [datasetsList, setDatasetsList] = useState([])
+    const [datasetsEntries, setDatasetsEntries] = useState({})
     const [platformName, setPlatformName] = useState([])
     const [defaultCohort, setDefaultCohort] = useState([])
 
     // Dataset
-    let default_dataset = undefined;
+    let default_dataset_id = undefined;
     for (const [key, value] of searchParams.entries()) {
         if (key == 'dataset') {
-            default_dataset = value;
+            default_dataset_id = value;
         }
     }
-    const [selectedDataset, setSelectedDataset] = useState(default_dataset)
+    const [selectedDataset, setSelectedDataset] = useState()
+    const [selectedDatasetId, setSelectedDatasetId] = useState(default_dataset_id)
 
     const default_cohort = {
-        '36991119' :'INTERVAL (internal validation)',
-        '12345' : 'UKB (internal validation)'
+        'OPP000001' :'INTERVAL (internal validation)',
+        'OPP000002' : 'UKB (internal validation)'
     };
 
-    // const platform_file_name = platform.replace(" ", "_");
-
-    // const data_dir = process.env.PROJECT_DATA_DIR+pmid+'/';
-    // const data_file_prefix = data_dir+platform_file_name;
-
     const fetchDatasetData = async () => {
-        const dataset_data = await restApiCall('dataset/search?pmid='+pmid+'&platform='+platform);
+        const dataset_data = await restApiCall('dataset/search?opp_id='+opp_id+'&platform='+platform);
         if (dataset_data.results) {
             const results = dataset_data.results;
             const result = results[0];
             setPublicationSumData(result.publication);
             setPlatformSumData(result.platform);
-            setDefaultCohort(default_cohort[pmid]);
+            setDefaultCohort(default_cohort[opp_id]);
             setPlatformName(platform);
-            // Set list of dataset names
-            let dataset_names = []
+
+            let datasets = []
+            let datasets_entries = {}
             for (let i=0; i<results.length; i++) {
-                if (results[i].name) {
-                    dataset_names.push(results[i].name)
-                }
+                const dataset_val = {'id': results[i].id, 'name': results[i].name};
+                datasets.push(dataset_val)
+                datasets_entries[results[i].id] = dataset_val
             }
-            if (dataset_names.length > 0) {
-                setDatasetNames(dataset_names);
-                const default_dataset = dataset_names[0]
+            setDatasetsEntries(datasets_entries);
+
+            if (datasets.length > 0) {
+                setDatasetsList(datasets);
+                const default_dataset = datasets[0]
                 if (!selectedDataset || selectedDataset == '') {
-                    setData(default_dataset);
+                    if (default_dataset_id) {
+                        const sel_dataset = datasets_entries[default_dataset_id];
+                        setData(sel_dataset);
+                    }
+                    else {
+                        setData(default_dataset);
+                    }
                 }
                 else {
                     setData(selectedDataset);
@@ -75,25 +79,41 @@ const Plot = () => {
     }
 
     const fetchData = async () => {
-        let url = 'plot/search?pmid='+pmid+'&platform='+platform;
-        if (selectedDataset) {
-            url += '&dataset='+selectedDataset
+        let url = 'plot/search?opp_id='+opp_id+'&platform='+platform;
+        if (selectedDatasetId) {
+            url += '&dataset='+selectedDatasetId
         }
         const plot_data = await restApiCall(url);
+        let plot_result = [];
         if (plot_data.results) {
             const results = plot_data.results;
-            const result = results[0];
-            setPlotData(result.plot_data);
-            setScoreData(result.score_data);
+            // Select plot results
+            if (selectedDatasetId) {
+                for (let i=0; i<results.length; i++) {
+                    const result = results[i];
+                    if (result.dataset_id == selectedDatasetId) {
+                        plot_result = result;
+                        break;
+                    }
+                }
+            }
+            else {
+                plot_result = results[0];
+                setData({'id': plot_result.dataset_id, 'name': plot_result.dataset_name})
+            }
+            setPlotData(plot_result.plot_data);
+            setScoreData(plot_result.score_data);
         }
     }
 
     const handleChange = async (event) => {
-        setData(event.target.value);
+        const dataset = datasetsEntries[event.target.value];
+        setData(dataset);
     };
 
     const setData = (dataset) => {
         setSelectedDataset(dataset);
+        setSelectedDatasetId(dataset.id)
     }
 
     useEffect(() => {
@@ -111,7 +131,8 @@ const Plot = () => {
             {platformSumData ? <h2 className='page_title'><GraphUp className={'op_title_prefix color_'+get_data_type(platformSumData.type)}/><span>Visualize performance of genetic scores</span><ChevronRight className={'op_title_separator color_'+get_data_type(platformSumData.type)}/><span>{platformSumData.name}</span></h2>:''}
             {publicationSumData ? <h4 className='page_subtitle'>Publication:{publication_ref(publicationSumData,true)}</h4>: ''}
 
-            { datasetNames && datasetNames.length > 1 && selectedDataset ?
+            {/* { datasetNames && datasetNames.length > 1 && selectedDatasetId ? */}
+            { datasetsList && datasetsList.length > 1 && selectedDataset ?
                 <div className='d-flex mb-4'>
                     <div>
                         <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
@@ -119,11 +140,11 @@ const Plot = () => {
                             <Select
                                 labelId="dataset_select_label"
                                 id="dataset_select"
-                                value={selectedDataset}
+                                value={selectedDatasetId}
                                 label="Dataset"
                                 onChange={handleChange}
                             >
-                                {datasetNames.map((d_name) => <MenuItem key={d_name+'_sel'} value={d_name}>{d_name}</MenuItem>)}
+                                {datasetsList.map((dataset) => <MenuItem key={dataset.id+'_sel'} value={dataset.id}>{dataset.id}{dataset.name ? ' ('+dataset.name+') ' : ''}</MenuItem>)}
                             </Select>
                         </FormControl>
                     </div>
@@ -131,9 +152,9 @@ const Plot = () => {
             }
             <div>
                 { platformName != '' && plotData.length && scoreData.length ?
-                    <div key={selectedDataset+'_plot'}>
+                    <div key={selectedDataset.id+'_plot'}>
                         <Suspense fallback={<div>Data is coming !</div>}>
-                            <Charts key={selectedDataset+'_chart'} dataset={selectedDataset} pagename={platformName} tdata={scoreData} data={plotData} default_cohort={defaultCohort}/>
+                            <Charts key={selectedDataset.id+'_chart'} dataset={selectedDataset.id} pagename={platformName} tdata={scoreData} data={plotData} default_cohort={defaultCohort}/>
                         </Suspense>
                     </div> : loading_data()
                 }

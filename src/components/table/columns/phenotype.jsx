@@ -12,10 +12,9 @@ const data_separator = ', ';
 const omicspred_id_col = {...common_cols['omicspred_id'], field: 'score_id'}
 
 
-const application_molecular_traits = function(mt_entry,index) {
+const application_molecular_traits = function(mt_entry, mt_type, index) {
     const mt_label = mt_entry.name ? mt_entry.name : mt_entry.external_id;
     const mt_id = mt_entry.external_id ? mt_entry.external_id : mt_entry.name;
-    const mt_type = mt_entry.type
     let mt_url = "/"+mt_type+"/"+mt_id;
     return (
         <span key={mt_id+'_'+mt_type}>{index ? ', ': ''}<Href href={mt_url} text={mt_label}/></span>
@@ -35,7 +34,7 @@ export const applications_cols = {
             const genes_list =  params.row.genes;
             // const genes_list =  params.row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'gene'});
             if (genes_list.length > 0) {
-                const genes = genes_list.map((gene, index) => application_molecular_traits(gene,index))
+                const genes = genes_list.map((gene, index) => application_molecular_traits(gene, 'gene', index))
                 return <div className="d-inline">{genes}</div>;
             }
             return default_cell_value;
@@ -59,7 +58,7 @@ export const applications_cols = {
             // const proteins_list =  params.row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'protein'});
             const proteins_list =  params.row.proteins;
             if (proteins_list.length > 0) {
-                const proteins = proteins_list.map((protein, index) => application_molecular_traits(protein,index))
+                const proteins = proteins_list.map((protein, index) => application_molecular_traits(protein, 'protein', index))
                 return <div className="d-inline">{proteins}</div>;
             }
             return default_cell_value;
@@ -83,7 +82,7 @@ export const applications_cols = {
             // const metabolites_list =  params.row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'metabolite'});
             const metabolites_list =  params.row.metabolites;
             if (metabolites_list.length > 0) {
-                const metabolites = metabolites_list.map((metabolite, index) => application_molecular_traits(metabolite,index))
+                const metabolites = metabolites_list.map((metabolite, index) => application_molecular_traits(metabolite, 'metabolite', index))
                 return <div className="d-inline">{metabolites}</div>;
             }
             return default_cell_value;

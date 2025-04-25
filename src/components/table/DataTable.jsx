@@ -22,6 +22,16 @@ const DataTable = (props) => {
     let initial_hidden_columns = {};
     if (props.hidden_columns) {
         initial_hidden_columns = props.hidden_columns;
+        // initial_hidden_columns = {
+        //     platform__name: false,
+        //     platform__platform_master__type: false
+        // }
+        // console.log("HIDDEN COLUMNS:")
+        // console.log(initial_hidden_columns);
+        // console.log({
+        //     platform__name: false,
+        //     platform__platform_master__type: false
+        // })
     }
 
     const row_height_settings = 'auto';
@@ -106,11 +116,15 @@ const DataTable = (props) => {
                     // sx={{ '--DataGrid-overlayHeight': '200px' }}
                     getRowClassName={(params) => params.row.evaluation_type && params.row.evaluation_type == 'Training' ? 'training_row':''} // Highlight the training rows
                     ignoreDiacritics // Ignore accents for quick search
-                    columnVisibilityModel={initial_hidden_columns}
+                    // columnVisibilityModel={initial_hidden_columns}
                     initialState={{
                         pagination: { paginationModel: { pageSize: default_page_size } },
                         sorting: {
                             sortModel: [initial_sorting]
+                        },
+                        columns: {
+                            // Hide columns listed in the model. the other columns will remain visible
+                            columnVisibilityModel: initial_hidden_columns
                         }
                     }}
                     slots={{

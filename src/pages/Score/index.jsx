@@ -8,7 +8,7 @@ import { performance_metrics_columns } from '../../components/table/columns/scor
 import { score_phenotype_columns } from '../../components/table/columns/phenotype';
 import restApiCall from '../../components/RestAPI';
 import restApiCallPaginated from '../../components/RestAPIPaginated';
-import { ToogleDiv, loading_data, numberBadge, add_s_when_plural } from '../../components/Generic';
+import { ToogleDiv, ToogleText, loading_data, numberBadge, add_s_when_plural } from '../../components/Generic';
 import { DownloadList, get_download_list } from '../../components/Downloads';
 import { MolecularTraitAssociation } from '../MolecularTrait/components/components';
 import AncestryDistribution from '../../components/ancestry/AncestryDistribution';
@@ -21,6 +21,7 @@ function Score() {
     DocumentTitle('Score '+score);
     const [scoreData, setScoreData] = useState()
     const [noEntry, setNoEntry] = useState(false)
+    const [datasetId, setDatasetId] = useState()
     const [datasetName, setDatasetName] = useState()
     const [platformData, setPlatformData] = useState([])
     const [tissueData, setTissueData] = useState()
@@ -80,6 +81,7 @@ function Score() {
                 const publication = score_data.publication;
                 fetchDownloadUrls(score_data.dataset_name,platform.name,publication.pmid)
             }
+            setDatasetId(score_data.dataset_id)
             if (score_data.dataset_name) {
                 setDatasetName(score_data.dataset_name)
             }
@@ -130,12 +132,13 @@ function Score() {
                 { scoreData.publication ? <tr><td>Publication</td><td>{internal_publication_link(scoreData.publication)}</td></tr> : ''}
                 <tr><td>Platform</td><td><a href={'/platform/'+platformData.name}>{platformData.name}</a>{platformData.version ? <span className='ms-1' title='Platform version'>({platformData.version})</span> : ''}<span className='mx-2'>-</span>{omicspred_omics_type(platformData.type)}</td></tr>
                 { tissueData ? <tr><td>Tissue</td><td>{tissue_link(tissueData)}</td></tr> : ''}
-                { datasetName ? <tr><td>Dataset</td><td>{datasetName}</td></tr> : ''}
+                <tr><td>Dataset</td><td>{ datasetName ? datasetName+' ('+datasetId+')' : datasetId }</td></tr>
                 <tr><td>Method Name</td><td>{scoreData.method_name}</td></tr>
                 { scoreData.trait_reported ? <tr><td>Reported Trait</td><td>{scoreData.trait_reported}{scoreData.trait_reported_id ? ' ('+scoreData.trait_reported_id+')':''}</td></tr> : ''}
                 <tr><td>Number of Variants</td><td>{numberBadge(scoreData.variants_number)}</td></tr>
                 <tr><td>Genome Build</td><td>{scoreData.variants_genomebuild}</td></tr>
                 {/* <tr><td>Scoring file</td><td><FileEarmarkText className="hl_color" size={24}/></td></tr> */}
+                { scoreData.comment ? <tr><td>Comment</td><td><ToogleText text={scoreData.comment} limit='80' /></td></tr> : ''}
                 <tr><td>Terms & Licenses</td><td>{scoreData.license}</td></tr>
             </>
         )
