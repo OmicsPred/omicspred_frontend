@@ -1,5 +1,5 @@
 import Href from "./Href";
-import { Bezier2, Book, ChevronRight, ClipboardDataFill, People, BoxFill, Stack, Hexagon, HexagonFill } from 'react-bootstrap-icons';
+import { Bezier2, Book, ChevronRight, ClipboardDataFill, People, BoxFill, Stack, Hexagon, HexagonFill, Lungs, PersonArmsUp } from 'react-bootstrap-icons';
 import { cohort_cols, common_column_groups } from './table/columns/common';
 import { ToogleDiv, ToogleText, TooltipText, thousandifyNumber } from './Generic';
 import DocumentTitle from './DocumentTitle';
@@ -70,6 +70,12 @@ export const PageTitle = (props) => {
         else if (label == 'publications') {
             prefix = <Book className={'op_title_prefix '+color_class}/>
         }
+        else if (label == 'tissues') {
+            prefix = <Lungs className={'op_title_prefix '+color_class}/>
+        }
+    }
+    else if (type == 'phenotype') {
+        prefix = <PersonArmsUp className={'op_title_prefix '+color_class}/>
     }
     else if (category == 'Cohort') {
         prefix = <People className={'op_title_prefix '+color_class}/>
@@ -121,19 +127,24 @@ export const op_title = (type, data, label, force_use_label) => {
     if (!force_use_label) {
         value = (data && data.name) ? data.name : label;
     }
-    if (type == 'score') {
-        prefix = <ClipboardDataFill className={'op_title_prefix '+color_class}/>
-    }
-    else if (type == 'pathway') {
-        prefix = <Bezier2 className={'op_title_prefix '+color_class}/>
-    }
-    else if (type == 'platform') {
-        color_class = 'color_'+data.type;
-        prefix = <Stack className={'op_title_prefix '+color_class}/>
-    }
-    else if (type == 'publication') {
-        color_class = 'color_hl';
-        prefix = <Book className={'op_title_prefix '+color_class}/>
+    switch(type) {
+        case 'score':
+            prefix = <ClipboardDataFill className={'op_title_prefix '+color_class}/>
+            break;
+        case 'pathway':
+            prefix = <Bezier2 className={'op_title_prefix '+color_class}/>
+            break;
+        case 'phenotype':
+            prefix = <PersonArmsUp className={'op_title_prefix '+color_class}/>
+            break;
+        case 'platform':
+            color_class = 'color_'+data.type;
+            prefix = <Stack className={'op_title_prefix '+color_class}/>
+            break;
+        case 'publication':
+            color_class = 'color_hl';
+            prefix = <Book className={'op_title_prefix '+color_class}/>
+            break;
     }
     return <h2 className='page_title'>{prefix}<span>{type_uc}</span><ChevronRight className={'op_title_separator '+color_class}/><span>{value}</span></h2>
 }
@@ -373,18 +384,30 @@ export const display_description = (description_list) => {
     }
 }
 
+export const display_tissue_description = (description) => {
+    let descriptions_list = [description]
+    if (description.startsWith("[")) {
+        let desc = description.replace("['","").replace("']","");
+        descriptions_list = desc.split("', '");
+    }
+    return display_description(descriptions_list);
+}
 
 export const element_icon = (type,use_alt) => {
-    if (type == 'pathway') {
-        return (<Bezier2 className={'color_'+type+' element_icon'} />);
-    }
-    else {
-        if (use_alt) {
-            return (<HexagonFill className={'color_'+type+' element_icon'} />);
-        }
-        else {
-            return (<Hexagon className={'color_'+type+' element_icon'} />);
-        }
+    switch(type) {
+        case 'pathway':
+            return (<Bezier2 className={'color_'+type+' element_icon'} />);
+        case 'phenotype':
+            return (<PersonArmsUp className={'color_'+type+' element_icon'} />);
+        case 'tissue':
+            return (<Lungs className={'color_'+type+' element_icon'} />);
+        default:
+            if (use_alt) {
+                return (<HexagonFill className={'color_'+type+' element_icon'} />);
+            }
+            else {
+                return (<Hexagon className={'color_'+type+' element_icon'} />);
+            }
     }
 }
 

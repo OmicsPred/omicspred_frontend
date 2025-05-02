@@ -35,6 +35,7 @@ function Header() {
                                 <NavDropdown.Item href="/publications">Publications</NavDropdown.Item>
                                 <NavDropdown.Item href="/platforms">Platforms</NavDropdown.Item>
                                 <NavDropdown.Item href="/pathways">Pathways</NavDropdown.Item>
+                                <NavDropdown.Item href="/tissues">Tissues</NavDropdown.Item>
                             </NavDropdown>
                             <NavDropdown title="Phenotype" id="phenotype-nav-dropdown" renderMenuOnMount={true}>
                                 <NavDropdown.Item href="/applications/phenotype/sum">Summary</NavDropdown.Item>

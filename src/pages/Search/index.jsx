@@ -33,6 +33,13 @@ function Search() {
 
     const es_url = process.env.OMICSPRED_ES_URL+'?q='+query;
 
+    const entities = {
+        'pathway': 'Pathways',
+        'phenotype': 'Phenotypes',
+        'tissue': ' Tissues'
+    }
+    const entity_keys = Object.keys(entities);
+
     const fetchESResults = async () => {
         const results = await restApiCall(es_url);
 
@@ -57,14 +64,7 @@ function Search() {
                     }
                 }
             }
-            if (results_list[i]['_index']=='pathway') {
-                if (omics_counts['Pathways']) {
-                    omics_counts['Pathways'] += 1;
-                }
-                else {
-                    omics_counts['Pathways'] = 1;
-                }
-            }
+
             // Platforms
             if (results_list[i]['_source']['platform_name']) {
                 const res_platforms = results_list[i]['_source']['platform_name'];
@@ -76,6 +76,21 @@ function Search() {
                     else {
                         platform_counts[platform_label] = 1;
                     }
+                }
+            }
+
+            // Others
+            for (let j=0; j<entity_keys.length; j++) {
+                const entity = entity_keys[j]; // e.g. pathway
+                const label = entities[entity]; // e.g. Pathways
+                if (results_list[i]['_index']==entity) {
+                    if (omics_counts[label]) {
+                        omics_counts[label] += 1;
+                    }
+                    else {
+                        omics_counts[label] = 1;
+                    }
+                    break;
                 }
             }
         }
@@ -119,12 +134,24 @@ function Search() {
 
         // Omics/Types filter
         if (omicsChecked && omicsChecked.length > 0) {
-            let omics = result_source.omics_type;
-            if (!omics && result._index=='pathway') {
-                omics = ['Pathways'];
+            // Value copy only
+            let omics = result_source.omics_type.slice();
+            if (!omics) {
+                omics = [];
             }
-            for (let i=0; i < omics.length; i++) {
-                if (omicsChecked.includes(omics[i])) {
+            // Add "other" filtered omics entities
+            for (let i=0; i < entity_keys.length; i++) {
+                const entity = entity_keys[i]; // e.g. pathway
+                const label = entities[entity]; // e.g. Pathways
+                if (result._index==entity) {
+                    console.log(Array.isArray(omics))
+                    if (!omics.includes(label)) {
+                        omics.push(label);
+                    }
+                }
+            }
+            for (let j=0; j < omics.length; j++) {
+                if (omicsChecked.includes(omics[j])) {
                     filter_count += 1;
                     break;
                 }

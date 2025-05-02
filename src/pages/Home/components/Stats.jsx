@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Lungs, Bezier2, Stack } from 'react-bootstrap-icons';
+import { PersonArmsUp, Lungs, Bezier2, Stack } from 'react-bootstrap-icons';
 import restApiCall from '../../../components/RestAPI';
 import { thousandifyNumber } from '../../../components/Generic';
 // import OmicsDistribution from './components/OmicsDistribution';
@@ -7,11 +7,12 @@ import PlatformsDistribution from './components/PlatformsDistribution';
 
 
 const Stats = () => {
-    const [scoresCount, setScoresCount] = useState([]);
-    const [platformsCount, setPlatformsCount] = useState([]);
-    // const [publicationsCount, setPublicationsCount] = useState([]);;
-    const [phenotypeAssoCount, setPhenotypeAssoCount] = useState([]);
-    const [pathwaysCount, setPathwaysCount] = useState([]);
+    const [scoresCount, setScoresCount] = useState(0);
+    const [platformsCount, setPlatformsCount] = useState(0);
+    // const [publicationsCount, setPublicationsCount] = useState(0);
+    const [phenotypeAssoCount, setPhenotypeAssoCount] = useState(0);
+    const [pathwaysCount, setPathwaysCount] = useState(0);
+    const [tissuesCount, setTissuesCount] = useState(0);
 
     const project_name = process.env.PROJECT_NAME
 
@@ -25,9 +26,10 @@ const Stats = () => {
         const data = await restApiCall('info');
         if (data) {
             const count_data = data.data_count;
-            setPhenotypeAssoCount(count_data.phenotype_associations)
-            setPathwaysCount(count_data.pathways)
+            setPhenotypeAssoCount(count_data.phenotype_associations);
+            setPathwaysCount(count_data.pathways);
             setScoresCount(count_data.scores);
+            setTissuesCount(count_data.tissues);
             setPlatformsCount(count_data.platforms);
             // setPublicationsCount(count_data.publications);
         }
@@ -40,13 +42,17 @@ const Stats = () => {
         let icon = undefined;
         switch(type) {
             case 'phenotype':
-                icon =  <Lungs className='me-2' size="20px"/>;
+                // icon =  <Lungs className='me-2' size="20px"/>;
+                icon =  <PersonArmsUp className='me-2' size="20px"/>;
                 break;
             case 'Pathways':
                 icon =  <Bezier2 className='me-2' size="20px"/>;
                 break;
             case 'Platforms':
                 icon =  <Stack className='me-2' size="20px"/>;
+                break;
+            case 'Tissues':
+                icon =  <Lungs className='me-2' size="20px"/>;
                 break;
             default:
                 icon = '';
@@ -113,6 +119,7 @@ const Stats = () => {
                             { phenotypeAssoCount && phenotypeAssoCount > 0 ? display_count_block('Phenotype associations',phenotypeAssoCount,'/applications/phenotype/full','phenotype') : ''}
                             { pathwaysCount && pathwaysCount > 0 ? display_count_block('Pathways',pathwaysCount,'/pathways') : ''}
                             { platformsCount && platformsCount > 0 ? display_count_block('Platforms',platformsCount,'/platforms') : ''}
+                            { tissuesCount && tissuesCount > 0 ? display_count_block('Tissues',tissuesCount,'/tissues') : ''}
                             {/* { publicationsCount && publicationsCount > 0 ? display_count_block('Publications',publicationsCount,'/publications') : ''} */}
                         </div>
                     </div>

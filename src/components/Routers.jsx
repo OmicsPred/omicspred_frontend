@@ -22,6 +22,7 @@ import Publications from "../pages/Browse/Publications";
 import Score from "../pages/Score";
 import Scores from "../pages/Browse/Scores";
 import Tissue from "../pages/Tissue";
+import Tissues from "../pages/Browse/Tissues";
 
 import ScrollToAnchor from './ScrollToAnchor';
 import Search from "../pages/Search";
@@ -54,6 +55,7 @@ function OpRouters() {
                 <Route path="/publications" element={<Publications />} />
                 <Route path="/platforms" element={<Platforms />} />
                 <Route path="/scores" element={<Scores />} />
+                <Route path="/tissues" element={<Tissues />} />
                 <Route path="/applications/phenotype/full" element={<PhenotypesFull />} />
                 <Route path="/applications/phenotype/sum" element={<PhenotypesSum />} />
                 

@@ -31,6 +31,7 @@ $op_dark: rgba(0, 0, 0, 0.6);
 $op_dark2: #212529; // Default boostrap font color
 $op_blue_2: #0d6efd;
 $op_blue_3: #0a58ca;
+$op_amber: #ffbf00;
 $op_table_border: #DEE2E6;
 $op_light_bg_color: $op_light_grey_2;
 $default_font_color: $op_dark2;
@@ -67,6 +68,10 @@ $type_colors: (
 }
 @mixin link_hover_color {
     color: $op_color_5 !important;
+}
+@mixin link_btn_hover {
+    color: $op_white !important;
+    background-color: $op_color_5 !important;
 }
 
 /* Omics colours */

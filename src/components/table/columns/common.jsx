@@ -414,12 +414,13 @@ export const common_cols = {
         // flex: 1,
         renderCell: (params) => {
             let pr_desc_list = [];
-            if (params.row.descriptions) {
+            if (params.row.descriptions.length) {
                 pr_desc_list = display_description(params.row.descriptions)
+                return pr_desc_list;
                 // const pr_name = params.row.name ? params.row.name : params.row.external_id;
                 // pr_desc_list = params.row.descriptions.map((desc,index) => <ToogleText key={pr_name+'_'+index} text={desc}/>)
             }
-            return pr_desc_list;
+            return default_cell_value;
         },
         valueGetter: (value, row) => {
             if (row.descriptions) {
@@ -508,7 +509,11 @@ export const common_cols = {
             return (molecular_trait_header('Gene'))
         },
         renderCell: (params) => {
-            return omicspred_internal_link({'label': params.row.name}, 'gene');
+            let gene_data = { 'label' : params.row.name }
+            if (params.row.external_id) {
+                gene_data['id'] = params.row.external_id;
+            }
+            return omicspred_internal_link(gene_data, 'gene');
         },
         valueGetter: (value, row) => {
             return row.name;
@@ -535,7 +540,11 @@ export const common_cols = {
             return (molecular_trait_header('Protein'))
         },
         renderCell: (params) => {
-            return omicspred_internal_link({'label': params.row.name}, 'protein');
+            let protein_data = { 'label' : params.row.name }
+            if (params.row.external_id) {
+                protein_data['id'] = params.row.external_id;
+            }
+            return omicspred_internal_link(protein_data, 'protein');
         },
         valueGetter: (value, row) => {
             return row.name;
@@ -837,10 +846,11 @@ export const common_cols = {
         // flex: 1,
         renderCell: (params) => {
             let desc_list = [];
-            if (params.row.descriptions) {
-                desc_list = display_description(params.row.descriptions)
+            if (params.row.descriptions.length) {
+                desc_list = display_description(params.row.descriptions);
+                return desc_list;
             }
-            return desc_list;
+            return default_cell_value;
         },
         valueGetter: (value, row) => {
             if (row.descriptions) {

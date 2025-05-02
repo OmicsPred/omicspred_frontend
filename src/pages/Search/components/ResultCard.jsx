@@ -11,7 +11,8 @@ const index2url = {
     'pathway': 'pathway',
     'phenotype': 'phenotype',
     'protein': 'protein',
-    'score': 'score'
+    'score': 'score',
+    'tissue': 'tissue'
 }
 
 const index2id = {
@@ -20,7 +21,8 @@ const index2id = {
     'pathway': 'Pathway ID',
     'phenotype': 'Phenotype ID',
     'protein': 'Protein ID',
-    'score': 'OmicsPred ID'
+    'score': 'OmicsPred ID',
+    'tissue': 'Tissue ID',
 }
 
 
