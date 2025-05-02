@@ -725,9 +725,7 @@ ul.expanded {
     color: $op_white !important;
     @include op_dark_bg;
     &:hover {
-        color: $op_white !important;
-        // background-color: $op_color_3 !important;
-        background-color: $op_color_5 !important;
+        @include link_btn_hover;
         .extra_icon > svg {
             @include link_hover_color;
         }
@@ -786,6 +784,16 @@ ul.expanded {
     // border:1px solid $op_dark !important;
     border:1px solid $op_grey !important;
     vertical-align: middle !important;
+}
+
+.badge-tissue {
+    @include link_default_color;
+    background-color: $ti_color !important;
+    color: $op_white !important;
+    &:hover {
+        @include link_btn_hover;
+    }
+
 }
 
 .op_tooltip, .op_tooltip_2 {
@@ -1393,6 +1401,10 @@ fieldset {
 .hl_grey_box {
     background-color: $op_light_grey;
     border: 1px solid $op_grey;
+}
+
+.amber_color {
+    color: $op_amber;
 }
 
 .bg_white {

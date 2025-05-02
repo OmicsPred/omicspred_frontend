@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import DocumentTitle from '../../components/DocumentTitle';
 import Href from '../../components/Href';
 import restApiCall from '../../components/RestAPI';
-import { op_title, op_subtitle, HeaderCard, display_description, no_entry_found } from '../../components/Common';
+import { op_title, op_subtitle, HeaderCard, display_tissue_description, no_entry_found } from '../../components/Common';
 import { scoresBadge, loading_data } from '../../components/Generic';
 import AncestryLegend from '../../components/ancestry/AncestryLegend';
 import { scores_columns_with_ancestry } from '../../components/table/columns/scores';
@@ -39,7 +39,7 @@ function Tissue() {
 					<tr><td>Identifier</td><td><Href href={tissueData.url} text={tissueData.id}/></td></tr>:''
 				}
 				{ tissueData.description && tissueData.description.length ?
-					<tr><td>Description</td><td>{display_description([tissueData.description])}</td></tr>:''
+					<tr><td>Description</td><td>{display_tissue_description(tissueData.description)}</td></tr>:''
 				}
                 <tr><td># Score{tissueData.scores_count > 1 ? 's' : ''}</td><td>{scoresBadge(tissueData.scores_count)}</td></tr>
 			</>

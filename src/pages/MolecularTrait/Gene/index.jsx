@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
+import { ExclamationTriangle } from 'react-bootstrap-icons';
 import DocumentTitle from '../../../components/DocumentTitle';
 import Href from '../../../components/Href';
 import restApiCall from '../../../components/RestAPI';
@@ -21,6 +22,7 @@ function Gene() {
 	const element = 'gene';
 
 	const fetchSummaryData = async () => {
+		// Fetch by external ID (should be used by default, except if the gene has no external ID)
 		const data = await restApiCall(element+'/'+gene);
 		if (data && Object.keys(data).length) {
 			setElementData(data);
@@ -29,8 +31,26 @@ function Gene() {
 			}
 		}
 		else {
-			setNoEntry(true);
+			// Fetch by gene name - get the first result
+			const data_name = await restApiCall(element+'/search?gene='+gene);
+			if (data_name) {
+				if (data_name.results.length) {
+					const data_result = data_name.results[0]
+					setElementData(data_result);
+					if (data_result.pathways) {
+						setPathwayData(data_result.pathways)
+					}
+				}
+			}
+			else {
+				setNoEntry(true);
+			}
 		}
+	}
+
+	const get_external_id = () => {
+		const external_url = elementData.retired_gene_model ? process.env.URL_RETIRED_ENSEMBL_ENTRY : process.env.URL_ENSEMBL_ENTRY;
+		return external_url+elementData.external_id
 	}
 
 	const fetchProteinData = async () => {
@@ -42,7 +62,10 @@ function Gene() {
 		return (
 			<>
 				{ elementData.name ?
-					<tr><td>Identifier</td><td><Href href={process.env.URL_ENSEMBL_ENTRY+elementData.external_id} text={elementData.external_id}/>{display_source(elementData.external_id_source)}</td></tr>:''
+					<tr><td>Identifier</td><td><Href href={get_external_id()} text={elementData.external_id}/>{display_source(elementData.external_id_source)}</td></tr>:''
+				}
+				{ elementData.retired_gene_model ?
+					<tr><td>Status</td><td><ExclamationTriangle className='amber_color me-2'/>Gene model removed from Ensembl</td></tr>:''
 				}
 				{ elementData.synonyms && elementData.synonyms.length > 0 ?
 					<tr><td>Synonym{elementData.synonyms.length > 1 ? 's' : ''}</td><td>{display_synonyms(elementData.synonyms)}</td></tr>:''

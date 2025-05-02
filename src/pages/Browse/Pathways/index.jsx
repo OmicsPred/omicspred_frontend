@@ -7,7 +7,7 @@ import Href from '../../../components/Href';
 import restApiCall from '../../../components/RestAPI';
 
 
-function PathwaysTest() {
+function Pathways() {
     const [pathwaysCount, setPathwaysCount] = useState()
 
     const url_endpoint = 'pathway/all?only_counts=1'
@@ -38,4 +38,4 @@ function PathwaysTest() {
     )
 }
 
-export default PathwaysTest
+export default Pathways
