@@ -134,10 +134,13 @@ function Search() {
 
         // Omics/Types filter
         if (omicsChecked && omicsChecked.length > 0) {
+            let omics = []
             // Value copy only
-            let omics = result_source.omics_type.slice();
-            if (!omics) {
-                omics = [];
+            if (result_source.omics_type) {
+                const omics_copy = result_source.omics_type.slice();
+                if (omics_copy) {
+                    omics = omics_copy;
+                }
             }
             // Add "other" filtered omics entities
             for (let i=0; i < entity_keys.length; i++) {

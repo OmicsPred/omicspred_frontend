@@ -1,6 +1,7 @@
 // import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { DataGrid, GridToolbarContainer, GridToolbarColumnsButton, GridToolbarFilterButton, GridToolbarExport, GridToolbarQuickFilter} from '@mui/x-data-grid';
-
+// import { DataGrid, GridToolbarContainer, GridToolbarColumnsButton, GridToolbarFilterButton, GridToolbarExport, GridToolbarQuickFilter} from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
+import { CustomToolbar } from "./TableToolbar";
 
 const DataTable = (props) => {
 
@@ -22,16 +23,6 @@ const DataTable = (props) => {
     let initial_hidden_columns = {};
     if (props.hidden_columns) {
         initial_hidden_columns = props.hidden_columns;
-        // initial_hidden_columns = {
-        //     platform__name: false,
-        //     platform__platform_master__type: false
-        // }
-        // console.log("HIDDEN COLUMNS:")
-        // console.log(initial_hidden_columns);
-        // console.log({
-        //     platform__name: false,
-        //     platform__platform_master__type: false
-        // })
     }
 
     const row_height_settings = 'auto';
@@ -81,28 +72,6 @@ const DataTable = (props) => {
         }
     }
 
-
-    const CustomToolbar = () => {
-        return (
-          <GridToolbarContainer className='d-flex justify-content-between'>
-            <div className='d-flex'>
-                <GridToolbarColumnsButton/>
-                <GridToolbarFilterButton/>
-                <GridToolbarExport/>
-            </div>
-            {/* <GridToolbarQuickFilter/> */}
-            <GridToolbarQuickFilter debounceMs={parseInt(process.env.TABLE_FILTER_STROKE_TIME)}/>
-          </GridToolbarContainer>
-        );
-    }
-
-
-    // useEffect(() => {
-    //   setRowCountState((prevRowCountState) =>
-    //     rowCount !== undefined ? rowCount : prevRowCountState,
-    //   );
-    // }, [rowCount, setRowCountState])
-
     return (
         <div className="d-flex" >
             <div className="table-responsive">
@@ -117,6 +86,7 @@ const DataTable = (props) => {
                     getRowClassName={(params) => params.row.evaluation_type && params.row.evaluation_type == 'Training' ? 'training_row':''} // Highlight the training rows
                     ignoreDiacritics // Ignore accents for quick search
                     // columnVisibilityModel={initial_hidden_columns}
+                    showToolbar
                     initialState={{
                         pagination: { paginationModel: { pageSize: default_page_size } },
                         sorting: {

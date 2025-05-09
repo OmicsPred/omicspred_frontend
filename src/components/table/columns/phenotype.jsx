@@ -27,6 +27,7 @@ export const applications_cols = {
         field: 'genes__name',
         minWidth: 150,
         flex: 0.5,
+        headerName: 'Gene name',
         renderHeader: () => {
             return (molecular_trait_header('Gene'))
         },
@@ -51,6 +52,7 @@ export const applications_cols = {
         field: 'proteins__name',
         minWidth: 150,
         flex: 0.5,
+        headerName: 'Protein name',
         renderHeader: () => {
             return (molecular_trait_header('Protein'))
         },
@@ -75,6 +77,7 @@ export const applications_cols = {
         field: 'metabolites__name',
         minWidth: 150,
         flex: 0.5,
+        headerName: 'Metabolite name',
         renderHeader: () => {
             return (molecular_trait_header('Metabolite'))
         },

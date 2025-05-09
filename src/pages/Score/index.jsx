@@ -8,7 +8,7 @@ import { performance_metrics_columns } from '../../components/table/columns/scor
 import { score_phenotype_columns } from '../../components/table/columns/phenotype';
 import restApiCall from '../../components/RestAPI';
 import restApiCallPaginated from '../../components/RestAPIPaginated';
-import { ToogleDiv, ToogleText, loading_data, numberBadge, add_s_when_plural } from '../../components/Generic';
+import { ToogleDiv, ToogleText, Note, loading_data, numberBadge, add_s_when_plural } from '../../components/Generic';
 import { DownloadList, get_download_list } from '../../components/Downloads';
 import { MolecularTraitAssociation } from '../MolecularTrait/components/components';
 import AncestryDistribution from '../../components/ancestry/AncestryDistribution';
@@ -138,7 +138,6 @@ function Score() {
                 <tr><td>Number of Variants</td><td>{numberBadge(scoreData.variants_number)}</td></tr>
                 <tr><td>Genome Build</td><td>{scoreData.variants_genomebuild}</td></tr>
                 {/* <tr><td>Scoring file</td><td><FileEarmarkText className="hl_color" size={24}/></td></tr> */}
-                { scoreData.comment ? <tr><td>Comment</td><td><ToogleText text={scoreData.comment} limit='80' /></td></tr> : ''}
                 <tr><td>Terms & Licenses</td><td>{scoreData.license}</td></tr>
             </>
         )
@@ -202,6 +201,7 @@ function Score() {
                 <div>
                     {/* Summary data */}
                     <Header2Cards type_left='score' content_left={get_information_left_content()} content_right={get_information_right_content()} />
+                    { scoreData.comment ? <div className='d-flex'><Note msg={<ToogleText text={scoreData.comment} limit='80' />} compact='1'/></div> : ''}
                     {/* Download buttons */}
                     { platformData && Object.keys(platformDownloads).length > 0 ?
                         <div>

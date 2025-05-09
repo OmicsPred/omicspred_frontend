@@ -1,7 +1,8 @@
 
-import Href from "../../../components/Href";
-import { Note } from "../../../components/Generic";
 import { ArrowRight } from "react-bootstrap-icons";
+import Href from "../../../components/Href";
+import { element_icon } from "../../../components/Common";
+import { Note } from "../../../components/Generic";
 
 
 const SearchDocs = () => {
@@ -32,6 +33,7 @@ const SearchDocs = () => {
                 <li key="traits">Molecular traits (Gene, Protein, Metabolite)</li>
                 <li key="pathways">Pathways</li>
                 <li key="phenotypes">Phenotypes</li>
+                <li key="tissues">Tissues</li>
             </ul>
             <div className='d-flex mt-3 mb-4'>
                 <Note msg={<>The results are limited to the <span className="fw-bold">25</span> best hits.</>}/>
@@ -49,14 +51,14 @@ const SearchDocs = () => {
                 </thead>
                 <tbody>
                     <tr>
-                        <td className="fw-bold">Genomic Scores</td>
+                        <td className="fw-bold">{element_icon('score')}Genomic Scores</td>
                         <td>
                             <ul className="ps-4 mb-0">
                                 <li>{project_name} Score ID</li>
                                 <li>Score name</li>
-                                <li>Associated Genes {parse_list(['name','ID','synonyms','description'])}</li>
-                                <li>Associated Proteins {parse_list(['name','ID','synonyms','description(s)'])}</li>
-                                <li>Associated Metabolites {parse_list(['name','ID','synonyms','description'])}</li>
+                                <li>Linked Genes {parse_list(['name','ID','synonyms','description'])}</li>
+                                <li>Linked Proteins {parse_list(['name','ID','synonyms','description(s)'])}</li>
+                                <li>Linked Metabolites {parse_list(['name','ID','synonyms','description'])}</li>
                             </ul>
                         </td>
                         <td>
@@ -70,7 +72,7 @@ const SearchDocs = () => {
                         </td>
                     </tr>
                     <tr>
-                        <td><div className="fw-bold">Molecular traits</div><small>(Gene, Protein, Metabolite)</small></td>
+                        <td><div className="fw-bold">{element_icon('hl')}Molecular traits</div><small>(Gene, Protein, Metabolite)</small></td>
                         <td>
                             <ul className="ps-4 mb-0">
                                 <li>Name</li>
@@ -89,14 +91,14 @@ const SearchDocs = () => {
                         </td>
                     </tr>
                     <tr>
-                        <td className="fw-bold">Pathways</td>
+                        <td className="fw-bold">{element_icon('pathway')}Pathways</td>
                         <td>
                             <ul className="ps-4 mb-0">
                                 <li>Pathway ID (e.g. Reactome ID)</li>
                                 <li>Name</li>
-                                <li>Associated Genes {parse_list(['name','ID','synonyms','description'])}</li>
-                                <li>Associated Proteins {parse_list(['name','ID','synonyms','description(s)'])}</li>
-                                <li>Associated Metabolites {parse_list(['name','ID','synonyms','description'])}</li>
+                                <li>Linked Genes {parse_list(['name','ID','synonyms','description'])}</li>
+                                <li>Linked Proteins {parse_list(['name','ID','synonyms','description(s)'])}</li>
+                                <li>Linked Metabolites {parse_list(['name','ID','synonyms','description'])}</li>
                             </ul>
                         </td>
                         <td>
@@ -110,13 +112,13 @@ const SearchDocs = () => {
                         </td>
                     </tr>
                     <tr>
-                        <td className="fw-bold">Phenotypes</td>
+                        <td className="fw-bold">{element_icon('phenotype')}Phenotypes</td>
                         <td>
                             <ul className="ps-4 mb-0">
                                 <li>Phenotype ID (e.g. PheCode ID)</li>
                                 <li>Name</li>
                                 <li>Category</li>
-                                <li>Associated {project_name} Score ID(s)</li>
+                                <li>Linked {project_name} Score ID(s)</li>
                             </ul>
                         </td>
                         <td>
@@ -125,6 +127,23 @@ const SearchDocs = () => {
                                 <li>{seach_example('Type 2 diabetes')}</li>
                                 <li>{seach_example('endocrine/metabolic')}</li>
                                 <li>{seach_example('OPGS001665')}</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className="fw-bold">{element_icon('tissue')}Tissues</td>
+                        <td>
+                            <ul className="ps-4 mb-0">
+                                <li>Tissue ontology ID (e.g. Uberon ID)</li>
+                                <li>Tissue name</li>
+                                <li>Description</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul className="example_list">
+                                <li>{seach_example('UBERON_0001969')}</li>
+                                <li>{seach_example('blood plasma')}</li>
+                                <li>{seach_example('A fluid that is composed of blood plasma and erythrocytes.')}</li>
                             </ul>
                         </td>
                     </tr>

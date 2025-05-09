@@ -1,5 +1,5 @@
 import Href from "./Href";
-import { Bezier2, Book, ChevronRight, ClipboardDataFill, People, BoxFill, Stack, Hexagon, HexagonFill, Lungs, PersonArmsUp } from 'react-bootstrap-icons';
+import { Bezier2, Book, ChevronRight, ClipboardData, People, BoxFill, Stack, Hexagon, HexagonFill, Lungs, PersonArmsUp } from 'react-bootstrap-icons';
 import { cohort_cols, common_column_groups } from './table/columns/common';
 import { ToogleDiv, ToogleText, TooltipText, thousandifyNumber } from './Generic';
 import DocumentTitle from './DocumentTitle';
@@ -59,7 +59,7 @@ export const PageTitle = (props) => {
     if (category == 'Browse') {
         if (label == 'scores' || type == 'score') {
             // prefix = <Clipboard2Data size="26px" className={'me-3 '+color_class}/>
-            prefix = <ClipboardDataFill className={'op_title_prefix '+color_class}/>
+            prefix = <ClipboardData className={'op_title_prefix '+color_class}/>
         }
         else if (label == 'pathways') {
             prefix = <Bezier2 className={'op_title_prefix '+color_class}/>
@@ -129,7 +129,7 @@ export const op_title = (type, data, label, force_use_label) => {
     }
     switch(type) {
         case 'score':
-            prefix = <ClipboardDataFill className={'op_title_prefix '+color_class}/>
+            prefix = <ClipboardData className={'op_title_prefix '+color_class}/>
             break;
         case 'pathway':
             prefix = <Bezier2 className={'op_title_prefix '+color_class}/>
@@ -394,19 +394,22 @@ export const display_tissue_description = (description) => {
 }
 
 export const element_icon = (type,use_alt) => {
+    const icon_classname = 'element_icon color_'+type;
     switch(type) {
+        case 'score':
+            return (<ClipboardData className={icon_classname} />);
         case 'pathway':
-            return (<Bezier2 className={'color_'+type+' element_icon'} />);
+            return (<Bezier2 className={icon_classname} />);
         case 'phenotype':
-            return (<PersonArmsUp className={'color_'+type+' element_icon'} />);
+            return (<PersonArmsUp className={icon_classname} />);
         case 'tissue':
-            return (<Lungs className={'color_'+type+' element_icon'} />);
+            return (<Lungs className={icon_classname} />);
         default:
             if (use_alt) {
-                return (<HexagonFill className={'color_'+type+' element_icon'} />);
+                return (<HexagonFill className={icon_classname} />);
             }
             else {
-                return (<Hexagon className={'color_'+type+' element_icon'} />);
+                return (<Hexagon className={icon_classname} />);
             }
     }
 }

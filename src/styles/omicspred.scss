@@ -812,14 +812,19 @@ ul.expanded {
 
 
 /* MUI overwriting */
-.MuiDataGrid-toolbarContainer {
+.MuiDataGrid-toolbar {
     background-color: $op_color_3;
+    padding: 4px !important;
+    min-height: 42px !important; // 52px
     button {
         color: $op_white;
-        line-height: 1 !important;
-        margin-right: 0.5rem;
     }
 }
+
+.MuiDivider-vertical {
+    border-color: $op_grey !important;
+}
+
 .MuiDataGrid-columnHeadersInner {
     background-color: $op_light_grey_3;
 }
@@ -1333,27 +1338,21 @@ fieldset {
 }
 
 .note_container {
-    border-left: 4px solid $op_color_4;
-    background-color: $op_light_grey;
-    padding: 0.5rem 1rem;
+    @include note_container;
     > div:first-child {
         margin-bottom: 0.5rem;
-        color: $op_color_4;
-        font-weight: bold;
-        // vertical-align: middle;
-        svg {
-            font-size: 18px;
-            vertical-align: middle !important;
-        }
-        span {
-            padding-left: 0.5rem;
-            vertical-align: middle !important;
-        }
     }
-    .btn-op {
-        background-color: $op_color_4 !important;
-        &:hover {
-            background-color: $op_color_5 !important;
+}
+.note_container_compact {
+    @include note_container;
+    padding: 0.5rem !important;
+    > div {
+        display: inline-block;
+    }
+    > div:first-child {
+        padding-right: 0.5rem;
+        &::after {
+            content: ':'
         }
     }
 }
