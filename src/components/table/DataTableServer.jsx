@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 // import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { DataGrid, GridToolbarContainer, GridToolbarColumnsButton, GridToolbarQuickFilter } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
+import { CustomToolbarLight } from './TableToolbar';
 import { loading_data, consoleDev } from '../Generic';
 
 
@@ -170,16 +171,6 @@ const DataTableServer = (props) => {
         }
     }, []);
 
-
-    const CustomToolbar = () => {
-        return (
-          <GridToolbarContainer className='d-flex justify-content-between'>
-            <GridToolbarColumnsButton />
-            <GridToolbarQuickFilter debounceMs={parseInt(process.env.TABLE_FILTER_STROKE_TIME)}/>
-          </GridToolbarContainer>
-        );
-    }
-
     // This replace the 3 useEffect above - test to check this works
     useEffect(() => {
         fetchData()
@@ -206,7 +197,7 @@ const DataTableServer = (props) => {
                         paginationModel={paginationModel}
                         paginationMode="server"
                         onPaginationModelChange={setPaginationModel}
-                        disableColumnFilter
+                        showToolbar
                         initialState={{
                             pagination: {
                                 paginationModel: paginationModel
@@ -218,7 +209,7 @@ const DataTableServer = (props) => {
                         filterMode="server"
                         onFilterModelChange={onFilterModelChange}
                         slots={{
-                            toolbar: CustomToolbar
+                            toolbar: CustomToolbarLight
                         }}
                         // slots={{
                         //     toolbar: GridToolbar

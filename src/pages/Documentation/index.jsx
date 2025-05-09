@@ -16,6 +16,7 @@ const documentation_op = {
         'label': 'publication',
         'desc': 'For each publication the following information is extracted and stored:',
         'struct': [
+            {'name': project_name+' Publication ID (OPP)', 'desc': 'Unique identifier created for the publication entries in '+project_name+'.'},
             {'name': 'PubMed ID (PMID)', 'desc': 'PubMed Identification number.'},
             {'name': 'Digital Object Identifier (doi)', 'desc': 'The doi of the publication.'},
             {'name': 'Title', 'desc': 'Title of the publication.'},
@@ -78,6 +79,7 @@ const documentation_op = {
         'label': 'dataset',
         'desc': 'A dataset in '+project_name+' helps to separate different groups of data within a same study (e.g. use of different versions of a same platform, or different samples).',
         'struct': [
+            {'name': project_name+' Dataset ID (OPD)', 'desc': 'Unique identifier created for the dataset entries in '+project_name+'.'},
             {'name': 'Dataset Name', 'desc': 'Name of the dataset (if available).'},
             {'name': 'Publication', 'desc': 'Associated Publication.'},
             {'name': 'Platform', 'desc': 'Associated Platform.'},

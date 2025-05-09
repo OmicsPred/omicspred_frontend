@@ -274,11 +274,15 @@ export const loading_data = () => {
 
 
 export const Note = (props) => {
+    let note_class = 'note_container';
+    if (props.compact) {
+        note_class = 'note_container_compact';
+    }
     return (
-    <div className='note_container'>
-        <div><InfoCircle/><span>Note</span></div>
-        <div>{props.msg}</div>
-    </div>
+        <div className={note_class}>
+            <div><InfoCircle/><span>Note</span></div>
+            <div>{props.msg}</div>
+        </div>
     )
 }
 

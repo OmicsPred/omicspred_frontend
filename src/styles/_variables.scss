@@ -73,6 +73,29 @@ $type_colors: (
     color: $op_white !important;
     background-color: $op_color_5 !important;
 }
+@mixin note_container {
+    border-left: 4px solid $op_color_4;
+    background-color: $op_light_grey;
+    padding: 0.5rem 1rem;
+    > div:first-child {
+        color: $op_color_4;
+        font-weight: bold;
+        svg {
+            font-size: 18px;
+            vertical-align: middle !important;
+        }
+        span {
+            padding-left: 0.5rem;
+            vertical-align: middle !important;
+        }
+    }
+    .btn-op {
+        background-color: $op_color_4 !important;
+        &:hover {
+            background-color: $op_color_5 !important;
+        }
+    }
+}
 
 /* Omics colours */
 @each $omics_key, $omics_color in $omics_colors {

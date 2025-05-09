@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PersonArmsUp, Lungs, Bezier2, Stack } from 'react-bootstrap-icons';
+import { PersonArmsUp, Lungs, Bezier2, Stack, Book } from 'react-bootstrap-icons';
 import restApiCall from '../../../components/RestAPI';
 import { thousandifyNumber } from '../../../components/Generic';
 // import OmicsDistribution from './components/OmicsDistribution';
@@ -9,7 +9,7 @@ import PlatformsDistribution from './components/PlatformsDistribution';
 const Stats = () => {
     const [scoresCount, setScoresCount] = useState(0);
     const [platformsCount, setPlatformsCount] = useState(0);
-    // const [publicationsCount, setPublicationsCount] = useState(0);
+    const [publicationsCount, setPublicationsCount] = useState(0);
     const [phenotypeAssoCount, setPhenotypeAssoCount] = useState(0);
     const [pathwaysCount, setPathwaysCount] = useState(0);
     const [tissuesCount, setTissuesCount] = useState(0);
@@ -31,7 +31,7 @@ const Stats = () => {
             setScoresCount(count_data.scores);
             setTissuesCount(count_data.tissues);
             setPlatformsCount(count_data.platforms);
-            // setPublicationsCount(count_data.publications);
+            setPublicationsCount(count_data.publications);
         }
     }
 
@@ -43,16 +43,19 @@ const Stats = () => {
         switch(type) {
             case 'phenotype':
                 // icon =  <Lungs className='me-2' size="20px"/>;
-                icon =  <PersonArmsUp className='me-2' size="20px"/>;
+                icon = <PersonArmsUp className='me-2' size="20px"/>;
                 break;
             case 'Pathways':
-                icon =  <Bezier2 className='me-2' size="20px"/>;
+                icon = <Bezier2 className='me-2' size="20px"/>;
                 break;
             case 'Platforms':
-                icon =  <Stack className='me-2' size="20px"/>;
+                icon = <Stack className='me-2' size="20px"/>;
                 break;
             case 'Tissues':
-                icon =  <Lungs className='me-2' size="20px"/>;
+                icon = <Lungs className='me-2' size="20px"/>;
+                break;
+            case 'Publications':
+                icon = <Book className='me-2' size="20px"/>;
                 break;
             default:
                 icon = '';
@@ -120,7 +123,7 @@ const Stats = () => {
                             { pathwaysCount && pathwaysCount > 0 ? display_count_block('Pathways',pathwaysCount,'/pathways') : ''}
                             { platformsCount && platformsCount > 0 ? display_count_block('Platforms',platformsCount,'/platforms') : ''}
                             { tissuesCount && tissuesCount > 0 ? display_count_block('Tissues',tissuesCount,'/tissues') : ''}
-                            {/* { publicationsCount && publicationsCount > 0 ? display_count_block('Publications',publicationsCount,'/publications') : ''} */}
+                            { publicationsCount && publicationsCount > 0 ? display_count_block('Publications',publicationsCount,'/publications') : ''}
                         </div>
                     </div>
                 </>:''

@@ -224,11 +224,25 @@ export const common_cols = {
         minWidth: 150,
         flex: 1,
         renderCell: (params) => {
-            let dataset_id = params.row.dataset_id;
-            let dataset_name = params.row.dataset_name;
-            if (params.row.dataset) {
+            let dataset_id = '';
+            let dataset_name = undefined;
+            // Score endpoints
+            if (params.row.dataset_id) {
+                dataset_id = params.row.dataset_id;
+                dataset_name = params.row.dataset_name;
+            }
+            // Performance endpoints
+            else if (params.row.dataset) {
                 dataset_id = params.row.dataset.id;
                 dataset_name = params.row.dataset.name;
+            }
+            // Dataset endpoints
+            else if (params.row.id) {
+                dataset_id = params.row.id;
+                dataset_name = params.row.name
+            }
+            else {
+                dataset_id = default_cell_value;
             }
             return (
                 <div>
@@ -241,12 +255,15 @@ export const common_cols = {
             if (row.dataset_id) {
                 return row.dataset_id;
             }
-            else {
-                if (row.dataset) {
-                    return row.dataset.id;
-                }
+            else if (row.dataset) {
+                return row.dataset.id;
             }
-            return default_cell_value;
+            else if (row.id) {
+                return row.id;
+            }
+            else {
+                return default_cell_value;
+            }
         }
     },
     'platform_type': {
@@ -351,6 +368,7 @@ export const common_cols = {
         // minWidth: 120,
         // flex: 0.5,
         hideable: false,
+        headerName: 'Protein ID',
         renderHeader: () => {
             return (molecular_trait_header('Protein ID'))
         },
@@ -455,6 +473,7 @@ export const common_cols = {
         minWidth: 110,
         // minWidth: 120,
         // flex: 0.5,
+        headerName: 'Gene name',
         renderHeader: () => {
             return (molecular_trait_header('Gene'))
         },
@@ -505,6 +524,7 @@ export const common_cols = {
         field: 'gene_name',
         minWidth: 120,
         flex: 0.5,
+        headerName: 'Gene name',
         renderHeader: () => {
             return (molecular_trait_header('Gene'))
         },
@@ -522,6 +542,7 @@ export const common_cols = {
     'protein_id_from_list': {
         field: 'protein_id',
         minWidth: 180,
+        headerName: 'Protein ID',
         renderHeader: () => {
             return (molecular_trait_header('Protein ID'))
         },
@@ -536,6 +557,7 @@ export const common_cols = {
         field: 'protein_name',
         minWidth: 120,
         flex: 0.5,
+        headerName: 'Protein',
         renderHeader: () => {
             return (molecular_trait_header('Protein'))
         },
@@ -556,6 +578,7 @@ export const common_cols = {
         minWidth: 150,
         flex: 0.6,
         hideable: false,
+        headerName: 'Metabolite ID',
         renderHeader: () => {
             return (molecular_trait_header('Metabolite ID'))
         },
@@ -586,6 +609,7 @@ export const common_cols = {
         minWidth: 200,
         flex: 1,
         hideable: false,
+        headerName: 'Metabolite name',
         renderHeader: () => {
             return (molecular_trait_header('Metabolite Name'))
         },
@@ -844,6 +868,7 @@ export const common_cols = {
         headerName: 'Description',
         minWidth: 260,
         // flex: 1,
+        sortable: false,
         renderCell: (params) => {
             let desc_list = [];
             if (params.row.descriptions.length) {

@@ -1,6 +1,6 @@
 import { CodeSlash } from 'react-bootstrap-icons';
 import DataTableFromRestApi from "../../components/table/DataTableFromRestApi";
-import {datasets_columns} from "../../components/table/columns/datasets";
+import { datasets_columns } from "../../components/table/columns/datasets";
 import Href from '../../components/Href';
 import { PageTitleSimple, op_subtitle_no_asso } from '../../components/Common';
 import { Note } from '../../components/Generic';

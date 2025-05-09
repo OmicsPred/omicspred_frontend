@@ -26,29 +26,9 @@ const download_link = (url,type=undefined) => {
     );
 }
 
-const dataset_common_columns = {
-    'publication': {
-        field: 'publication', 
-        headerName: 'Publication', 
-        minWidth: 230,
-        flex: 1,
-        renderCell: (params) => {
-            const publication = params.row.publication;
-            let year = ''
-            if (publication.date_publication) {
-                const date_array = publication.date_publication.split('-');
-                year = date_array[0];
-            }
-            return (
-                <a href={"/publication/"+publication.pmid}>{publication.firstauthor} <i>et al.</i> {publication.journal}{year ? <> ({year})</>:''}</a>
-            );
-        },
-        valueGetter:  (value, row) => { return row.publication.firstauthor }
-    }
-}
 
 export const datasets_columns = [
-    dataset_common_columns['publication'],
+    common_cols['publication'],
     {
         field: 'platform',
         minWidth: 150,
@@ -68,17 +48,7 @@ export const datasets_columns = [
         valueGetter:  (value, row) => { return row.platform.name }
     },
     common_cols['platform_type'],
-    { 
-        field: 'dataset', 
-        headerName: 'Dataset',
-        minWidth: 150,
-        flex: 1,
-            renderCell: (params) => {
-                const dataset_name = params.row.name;
-                return (dataset_name ? dataset_name : default_cell_value);
-            },
-            valueGetter: (value, row) => { return row.name }
-    },
+    common_cols['dataset_id'],
     common_cols['scores_count'],
     {
         field: 'scoring_files',
@@ -176,7 +146,7 @@ export const datasets_platform_columns = [
             }
         }
     },
-    dataset_common_columns['publication'],
+    common_cols['publication'],
     {
         field: 'tissue__label',
         headerName: 'Tissue',
