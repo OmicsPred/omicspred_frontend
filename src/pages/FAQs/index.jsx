@@ -3,7 +3,7 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { LightbulbFill } from "react-bootstrap-icons";
+import { Lightbulb } from "react-bootstrap-icons";
 
 import { PageTitleSimple } from '../../components/Common';
 import { faqs_list, faqs_categories } from "./FAQsList";
@@ -42,7 +42,7 @@ export default function FAQs() {
                           key={d.title+'sum'}
                         >
                           <div style={{ width:"90%", flexShrink:2 }} className="d-flex font-bold faq_box">
-                            <LightbulbFill className="me-3"/><span>{d.title}</span>
+                            <Lightbulb className="me-3"/><span>{d.title}</span>
                           </div>
                         </AccordionSummary>
                         <AccordionDetails>

@@ -1,6 +1,5 @@
 import Href from "./Href"
-import { Envelope, Building, CCircle } from 'react-bootstrap-icons';
-import { Bluesky } from "./Generic";
+import { Envelope, Bluesky, Building, CCircle } from 'react-bootstrap-icons';
 
 function Footer() {
     return (
