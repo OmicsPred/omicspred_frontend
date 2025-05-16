@@ -14,11 +14,11 @@ export const faqs_list = [
       type: "General questions",
       text: [
         "You can find a download links on the Score, Platform and Publication pages. You can also find the links on the ",
-        <Href href='/downloads' text='Downloads page'/>,
+        <Href key='download' href='/downloads' text='Downloads page'/>,
         ". The genetic scores are under the categories ",
-        <b>Scoring files</b>,
+        <b key='scoring_file'>Scoring files</b>,
         ' and ',
-        <b>Scoring files<small> (pgsc_calc compatible)</small></b>,
+        <b key='pgsc_calc_file'>Scoring files<small> (pgsc_calc compatible)</small></b>,
         '. Each of these zipped files contains all the scoring files associated with a dataset/platform.'
       ],
     },

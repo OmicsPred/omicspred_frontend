@@ -1,4 +1,4 @@
-import { Download, FileEarmarkZip, FiletypeCsv, FiletypeXlsx, Folder2, InfoCircleFill } from 'react-bootstrap-icons';
+import { Download, FileEarmarkZip, FileEarmarkZipFill, FiletypeCsv, FiletypeXlsx, Folder2, InfoCircleFill } from 'react-bootstrap-icons';
 import { ToogleDiv } from './Generic';
 import Href from './Href';
 
@@ -14,8 +14,14 @@ export const download_labels = {
     "scoring_files_pgsc_calc": {
         "label": "Scoring files",
         "sub_label": "pgsc_calc compatible",
-        "title": "Download zipped file(s)",
+        "title": "Download zipped file(s) - pgsc_calc compatible",
         "icon": <FileEarmarkZip className="hl_color" size={icon_size}/>
+    },
+    "scoring_files_hm_38": {
+        "label": "Scoring files",
+        "sub_label": "lifted over to GRCh38",
+        "title": "Download zipped file(s) - lifted over to GRCh38 (harmonized)",
+        "icon": <FileEarmarkZipFill className="hl_color" size={icon_size}/>
     },
     "validation_results": {
         "label": "Validation results",

@@ -59,7 +59,12 @@ export const datasets_columns = [
         renderCell: (params) => {
             const files_urls = params.row.scoring_files_urls
             if (files_urls.scoring_files_pgsc_calc) {
-                return download_link(files_urls.scoring_files_pgsc_calc,'scoring_files_pgsc_calc');
+                let link = download_link(files_urls.scoring_files_pgsc_calc,'scoring_files_pgsc_calc');
+                let link2 = ''
+                if (files_urls.scoring_files_hm_38) {
+                    link2 = download_link(files_urls.scoring_files_hm_38,'scoring_files_hm_38');
+                }
+                return <>{link}{link2}</>;
             }
             else {
                 return default_cell_value
@@ -125,8 +130,8 @@ export const datasets_platform_columns = [
     {
         field: 'id',
         headerName: 'ID',
-        minWidth: 120,
-        flex: 1,
+        minWidth: 110,
+        // flex: 1,
         hideable: false,
         valueGetter:  (value) => {
             return value;
@@ -135,8 +140,8 @@ export const datasets_platform_columns = [
     {
         field: 'name',
         headerName: 'Name',
-        minWidth: 120,
-        flex: 1,
+        minWidth: 125,
+        // flex: 1,
         valueGetter:  (value, row) => {
             if (row.name) {
                 return row.name;
@@ -151,7 +156,7 @@ export const datasets_platform_columns = [
         field: 'tissue__label',
         headerName: 'Tissue',
         minWidth: 150,
-        flex: 1,
+        // flex: 1,
         renderCell: (params) => {
             if (params.row.tissue) {
                 const tissue = params.row.tissue;
@@ -170,8 +175,8 @@ export const datasets_platform_columns = [
     {
         field: 'platform__version',
         headerName: 'Platform version',
-        minWidth: 150,
-        flex: 1,
+        minWidth: 135,
+        // flex: 1,
         valueGetter: (value, row) => {
             if (row.platform.version) {
                 return row.platform.version;
@@ -205,9 +210,9 @@ export const datasets_platform_columns = [
     {
         field: 'plots',
         headerName: 'Data Plot',
-        minWidth: 150,
+        minWidth: 130,
         sortable: false,
-        flex: 1,
+        // flex: 1,
         renderCell: (params) => {
             const count_samples = params.row.samples_training.length + params.row.samples_validation.length
             if (count_samples > 1) {
