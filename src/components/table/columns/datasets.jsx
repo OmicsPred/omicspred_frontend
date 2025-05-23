@@ -3,7 +3,7 @@ import { FileEarmarkArrowDown, Stack, People, GraphUp } from 'react-bootstrap-ic
 import { common_cols, common_column_groups, omicspred_internal_link } from './common';
 import { ancestry_cols } from './ancestry';
 import { download_labels, ExpandableDownloadButton, get_download_list } from '../../Downloads';
-import { ToogleDiv } from '../../Generic';
+import { ToogleDiv, TooltipText } from '../../Generic';
 import { SampleTable } from '../../Sample';
 import Href from '../../Href';
 
@@ -20,9 +20,14 @@ const download_link = (url,type=undefined) => {
         link_title = download_labels[type]['title']
     }
     return (
-        <a className="op_icon_link" href={url} title={link_title} target="_blank">
-            {icon}
-        </a>
+         <TooltipText
+            ttype='icon'
+            title={link_title}
+            text={
+                <a className="op_icon_link" href={url} target="_blank">
+                    {icon}
+                </a>}
+        />
     );
 }
 
@@ -62,7 +67,7 @@ export const datasets_columns = [
                 let link = download_link(files_urls.scoring_files_pgsc_calc,'scoring_files_pgsc_calc');
                 let link2 = ''
                 if (files_urls.scoring_files_hm_38) {
-                    link2 = download_link(files_urls.scoring_files_hm_38,'scoring_files_hm_38');
+                    link2 = <span className='ms-1'>{download_link(files_urls.scoring_files_hm_38,'scoring_files_hm_38')}</span>;
                 }
                 return <>{link}{link2}</>;
             }

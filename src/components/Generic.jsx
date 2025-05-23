@@ -191,6 +191,9 @@ export const TooltipText = (props) => {
             if (props.ttype=='link') {
                 class_name = 'op_tooltip_2';
             }
+            else if (props.ttype=='icon') {
+                class_name = 'op_tooltip_icon';
+            }
         }
         if (title) {
             // Need to be a React Element in the "text" Tooltip element
