@@ -27,6 +27,12 @@ const index2id = {
 
 
 export default function ResultCard(props) {
+
+    // Change 'label' to 'name' (tissue results)
+    if (props.data.label) {
+        props.data.name = props.data.label
+    }
+
     const data = props.data;
 
     let result_id = data.name ? data.name : data.id;

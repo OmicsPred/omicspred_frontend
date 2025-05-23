@@ -8,19 +8,19 @@ const icon_size = 20;
 export const download_labels = {
     "scoring_files": {
         "label": "Scoring files",
-        "title": "Download zipped file(s)",
+        "title": "Download zipped file",
         "icon": <FileEarmarkZip className="hl_color" size={icon_size}/>,
     },
     "scoring_files_pgsc_calc": {
         "label": "Scoring files",
         "sub_label": "pgsc_calc compatible",
-        "title": "Download zipped file(s) - pgsc_calc compatible",
+        "title": "Download zipped file - pgsc_calc compatible",
         "icon": <FileEarmarkZip className="hl_color" size={icon_size}/>
     },
     "scoring_files_hm_38": {
         "label": "Scoring files",
         "sub_label": "lifted over to GRCh38",
-        "title": "Download zipped file(s) - lifted over to GRCh38 (harmonized)",
+        "title": "Download zipped file - lifted over to GRCh38 (harmonized)",
         "icon": <FileEarmarkZipFill className="hl_color" size={icon_size}/>
     },
     "validation_results": {
