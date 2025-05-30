@@ -41,6 +41,13 @@ footer {
     }
     .op_copyright {
         text-align:center;
+        color: $op_white !important;
+        svg {
+            vertical-align: top !important;
+            margin-top: 1px;
+            margin-right: 0.5rem;
+            font-size: 22px;
+        }
     }
     .contacts_list {
         li:not(:first-child) {

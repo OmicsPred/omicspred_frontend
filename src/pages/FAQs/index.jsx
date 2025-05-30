@@ -6,7 +6,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Lightbulb } from "react-bootstrap-icons";
 
 import { PageTitleSimple } from '../../components/Common';
-import { faqs_list, faqs_categories } from "./FAQsList";
+import { faqs_list, faqs_categories, faqs_categories_keys } from "./FAQsList";
 
 
 export default function FAQs() {
@@ -23,10 +23,10 @@ export default function FAQs() {
     
       <div className="w-full grid place-items-center ">
         <div className="w-[90%]">
-          {faqs_categories.map((cat) => {
+          {faqs_categories_keys.map((cat) => {
             return (
               <div key={cat}>
-                <h3 className="mt-5 mb-3">{cat}</h3>
+                <h3 className="mt-5 mb-3">{faqs_categories[cat]}</h3>
                 {faqs_list.map((d, index) => {
                   if (d.type == cat) {
                     return (

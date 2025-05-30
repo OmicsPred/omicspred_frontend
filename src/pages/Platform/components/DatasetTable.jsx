@@ -1,17 +1,8 @@
-// import { ChevronDoubleRight, Book, GraphUp, ChevronRight } from 'react-bootstrap-icons';
-// import Accordion from "@mui/material/Accordion";
-// import AccordionDetails from "@mui/material/AccordionDetails";
-// import AccordionSummary from "@mui/material/AccordionSummary";
-// import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-// import { People } from 'react-bootstrap-icons';
+import DataTable from '../../../components/table/DataTable';
+import { datasets_platform_columns, dataset_column_groups } from '../../../components/table/columns/datasets';
+import { get_ancestry_name } from '../../../components/Common';
+import AncestryLegend from '../../../components/ancestry/AncestryLegend';
 
-// import Href from "../../../../components/Href";
-// import { scoresBadge, TooltipText } from '../../../../components/Generic';
-// import { SampleTable } from '../../../../components/Sample';
-// import { ExpandableDownloadButton, get_download_list } from '../../../../components/Downloads';
-import DataTable from '../../../../components/table/DataTable';
-import { datasets_platform_columns, dataset_column_groups } from '../../../../components/table/columns/datasets';
-import { get_ancestry_name } from '../../../../components/Common';
 
 const DatasetTable = (props) => {
     const dataset = props.data;
@@ -149,7 +140,12 @@ const DatasetTable = (props) => {
     // const samples_count = samples_training.length + samples_validation.length
 
     return (
-        <DataTable data={dataset} columns={datasets_platform_columns} groups={dataset_column_groups} hidden_columns={{samples: false}}/>
+        <div>
+            <div className='d-flex mb-3'>
+                <AncestryLegend />
+            </div>
+            <DataTable data={dataset} columns={datasets_platform_columns} groups={dataset_column_groups} hidden_columns={{samples: false}}/>
+        </div>
     )
 };
 export default DatasetTable;

@@ -11,9 +11,10 @@ export const internal_publication_link = (publication) => {
     const journal = publication.journal;
     const year = publication.date_publication.split('-')[0];
 
+
     return(
         <>
-            <Href href={"/publication/"+opp_id} text={<>{firstauthor} <i>et al.</i> {journal} ({year})</>}/> <span>({opp_id})</span>
+            <Href href={"/publication/"+opp_id} text={<>{firstauthor}{firstauthor.endsWith('.') ? '' : <i>et al.</i>} {journal} ({year})</>}/> <span>({opp_id})</span>
         </>
     )
 }
@@ -360,12 +361,24 @@ export const display_cohort = (cohort, cohort_name) => {
     // const cohort_name = cohort.name_short
     const cohort_url = '/cohort/'+cohort_name;
     const cohort_desc = cohort.description
+
+    // Text tooltip:
+    let cohort_tooltip_text = undefined;
+    // Cohort description
+    if (cohort_desc) {
+        cohort_tooltip_text = cohort_desc;
+    }
+    // Cohort long name
+    else if (cohort.name_short != cohort.name_full) {
+        cohort_tooltip_text = cohort.name_full;
+    }
+
     return (
         <>
-            {cohort_desc ?
+            {cohort_tooltip_text ?
                 <TooltipText
                     ttype='link'
-                    title={cohort_desc}
+                    title={cohort_tooltip_text}
                     text={<Href key={cohort_name+'_link'} href={cohort_url} text={cohort_name}/>}
                 />
                 : <Href key={cohort_name+'_link'} href={cohort_url} text={cohort_name}/>

@@ -9,8 +9,8 @@ function Footer() {
                 <Href icon={<Building />} text="Lab's website" href={process.env.URL_INOUYE_LAB} no_external_icon="1" />
             </div>
 
-            <div className="col-6 op_copyright">
-                <Href icon={<CCircle />} text="All Genetics Scores are provided under a CC-BY license" href={process.env.URL_INOUYE_LAB} no_external_icon="1" />
+            <div className="col-6 op_copyright op_color_white">
+                <CCircle />All Genetics Scores are provided under a CC-BY license
             </div>
 
             <ul className="nav col-3 justify-content-end list-unstyled d-flex contacts_list">
