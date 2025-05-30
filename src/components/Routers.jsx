@@ -29,7 +29,7 @@ import Search from "../pages/Search";
 import Plot from "../pages/Plot";
 import { Redirect } from './Generic';
 import { Error404 } from "../pages/Errors";
-import PlatformTest from "../pages/Tests/Platform";
+import PlatformOld from "../pages/Tests/Platform";
 
 
 function OpRouters() {
@@ -78,12 +78,7 @@ function OpRouters() {
                 <Route path="/search" element={<Search />} />
 
                 {/* Test pages */}
-                {/* <Route path="/search_es" element={<SearchES />} /> */}
-                {/* <Route path="/publication_old/:pubmed_id" element={<PublicationOld />} /> */}
-                {/* <Route path="/doughnut/" element={<OPDoughnut />} /> */}
-                {/* <Route path="/doughnut/" element={<MuiDoughnut />} /> */}
-                {/* <Route path="/test/reactome/:reactome_id" element={<ReactomeDiagram />} /> */}
-                <Route path="/test/platform/:platform" element={<PlatformTest />} />
+                <Route path="/test/platform/:platform" element={<PlatformOld />} />
 
                 {/* Errors */}
                 <Route path="*" element={<Error404 />} />

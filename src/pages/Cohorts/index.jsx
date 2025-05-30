@@ -7,6 +7,7 @@ import p1 from "../../assets/cohorts/INTERVAL.png";
 import p4 from "../../assets/cohorts/UKB.png";
 import p3 from "../../assets/cohorts/ORCADES.png";
 import p5 from "../../assets/cohorts/VIKING.png";
+import p6 from "../../assets/cohorts/GTEXV8.png";
 
 
 const cohorts_list = [
@@ -66,6 +67,13 @@ const cohorts_list = [
     "labels": ["VIKING"],
     "href": "https://www.ed.ac.uk/viking/about-us/what-we-do/our-studies",
     "desc": <>Aims to discover the genes and variants that influence the risk of common, complex diseases. Many common diseases are known as complex, because they are influenced by many genes and environmental factors. Common, complex diseases include diabetes, osteoporosis, stroke, heart disease, myopia, glaucoma and chronic kidney and lung disease. Finding the genes involved is the first step on the road to developing new ways of diagnosing and treating these diseases. From March 2013 to March 2015, the study recruited 2,105 volunteers, with at least two grandparents from Shetland. Each volunteer completed a postal health survey questionnaire and attended a 2-hour measurement clinic. They also attended a 20-minute venepuncture clinic, to give a blood sample. The dedicated research clinic was based in Lerwick.</>
+  },
+  {
+    "src": p6,
+    "title": "The Adult GTEx V8 Study",
+    "labels": ["GTExV8"],
+    "href": "https://www.science.org/doi/10.1126/science.aaz1776",
+    "desc": <>The Genotype-Tissue Expression (GTEx) project was established to characterize genetic effects on the transcriptome across human tissues and to link these regulatory mechanisms to trait and disease associations. Here, we present analyses of the version 8 data, examining 15,201 RNA-sequencing samples from 49 tissues of 838 postmortem donors. We comprehensively characterize genetic associations for gene expression and splicing in cis and trans, showing that regulatory associations are found for almost all genes, and describe the underlying molecular mechanisms and their contribution to allelic heterogeneity and pleiotropy of complex traits. Leveraging the large diversity of tissues, we provide insights into the tissue specificity of genetic effects and show that cell type composition is a key factor in understanding gene regulatory mechanisms in human tissues.</>
   }
 ];
 

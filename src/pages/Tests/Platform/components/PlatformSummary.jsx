@@ -1,5 +1,5 @@
-import { HeaderCard, omicspred_omics_type } from '../../../components/Common';
-import { scoresBadge } from "../../../components/Generic";
+import { HeaderCard, omicspred_omics_type } from '../../../../components/Common';
+import { scoresBadge } from "../../../../components/Generic";
 
 
 const PlatformSummary = (props) => {

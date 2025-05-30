@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-import { ChevronDoubleRight } from 'react-bootstrap-icons';
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { Tooltip } from '@mui/material';
+import { Table } from 'react-bootstrap-icons';
 
 import DocumentTitle from '../../components/DocumentTitle';
 import { metabolomics_columns, metabolomics_column_groups } from '../../components/table/columns/metabolomics';
@@ -12,11 +13,11 @@ import { proteomics_columns, proteomics_column_groups } from '../../components/t
 import { transcriptomics_columns, transcriptomics_column_groups } from '../../components/table/columns/transcriptomics';
 import restApiCall from '../../components/RestAPI';
 import DataTableServer from '../../components/table/DataTableServer';
-import PlatformSummary from './components/PlatformSummary';
-import DatasetCard from './components/DatasetCard';
-import { op_subtitle, op_title, op_count_badge, ancestry_labels } from '../../components/Common'
-import { loading_data } from '../../components/Generic';
+import DatasetTable from './components/DatasetTable';
+import { op_subtitle, op_title, ancestry_labels, Header2Cards, omicspred_omics_type } from '../../components/Common'
+import { loading_data, thousandifyNumber, scoresBadge, add_s_when_plural } from '../../components/Generic';
 import AncestryLegend from '../../components/ancestry/AncestryLegend';
+import Href from '../../components/Href';
 
 
 function Platform() {
@@ -226,6 +227,55 @@ function Platform() {
     //     }
     // }
 
+
+    const get_information_left_content = (platform_sum, platform_versions, scores_count) => {
+        return (
+            <>
+                {/* <tr><td>Omics type</td><td><span className={'badge badge_'+platform_sum.type}>{platform_sum.type}</span></td></tr> */}
+                <tr><td>Omics type</td><td>{omicspred_omics_type(platform_sum.type)}</td></tr>
+                <tr><td>Long Name</td><td>{platform_sum.full_name}</td></tr>
+                { platform_versions != '' ? <tr><td>Version{platform_versions.includes(',') ? 's':''}</td><td>{platform_versions}</td></tr> : ''}
+                <tr><td>Technic</td><td>{platform_sum.technic}</td></tr>
+                <tr><td>Number of scores</td><td>{scoresBadge(scores_count)}</td></tr>
+            </>
+        )
+    }
+
+    const get_information_right_content = (scores_count) => {
+        return (
+            <>
+                { datasetData && datasetData.length ?
+                    <tr>
+						<td>Dataset{add_s_when_plural(datasetData.length)}</td>
+						<td key='dataset_data'>
+							<div className='d-flex justify-content-between'>
+								{datasetData.length}
+								<Tooltip title="See details in the Dataset table at the bottom of the current page">
+									<div className="ms-3" style={{marginTop:"-2px"}}>
+										<Href href="#dataset_table" icon={<Table/>}/>
+									</div>
+								</Tooltip>
+							</div>
+						</td>
+					</tr> : ''
+                }
+                <tr>
+                    <td>Genetic Scores</td>
+                    <td key='score_data'>
+                        <div className='d-flex justify-content-between'>
+                            {thousandifyNumber(scores_count)}
+                            <Tooltip title="See details in the Genetic Score table at the bottom of the current page">
+                                <div className="ms-3" style={{marginTop:"-2px"}}>
+                                    <Href href="#score_table" icon={<Table/>}/>
+                                </div>
+                            </Tooltip>
+                        </div>
+                    </td>
+                </tr>
+            </>
+        )
+    }
+
     const updatePlatformDataEndpoint = () => {
         setPlatformDataEndpoint(get_url_endpoint(platformSumData.type));
     }
@@ -251,18 +301,43 @@ function Platform() {
         <>
             {op_title('platform', platformSumData, platformSumData.name)}
             <div className='d-flex justify-content-start d-flex flex-lg-row flex-column mb-5'>
-                {platformSumData && platformScoresCount ? <div><PlatformSummary metadata={platformSumData} scores_count={platformScoresCount} versions={platformVersions}/></div>: ''}
-                <div className='me-5 d-none d-lg-inline-block'></div>
+                {platformSumData && platformScoresCount ?
+                    <Header2Cards
+                        type_left='Platform'
+                        content_left={get_information_left_content(platformSumData, platformVersions, platformScoresCount)}
+                        type_right='Linked information'
+                        content_right={get_information_right_content(platformScoresCount)}/>
+                : ''
+                }
+                {/* <div><PlatformSummary metadata={platformSumData} scores_count={platformScoresCount} versions={platformVersions}/></div>: ''} */}
+                {/* <div className='me-5 d-none d-lg-inline-block'></div>
                 <div className='pt-3 d-lg-none'></div>
                 { datasetData.length > 0 ?
-                    <div>
-                        <h5><ChevronDoubleRight className="me-2 color_hl" size="0.9rem"/>Dataset{datasetData.length > 1 ? 's': ''}{op_count_badge(datasetData.length)}</h5>
-                        <div className="d-flex flex-column">
-                            { datasetData.map((dataset) => <DatasetCard data={dataset} key={dataset.publication.doi+'_'+dataset.name} />)}
-                        </div>
-                    </div> : ''
-                }
+                    // <div>
+                    //     <h5><ChevronDoubleRight className="me-2 color_hl" size="0.9rem"/>Dataset{datasetData.length > 1 ? 's': ''}{op_count_badge(datasetData.length)}</h5>
+                    //     <div className="d-flex flex-column">
+                    //         { datasetData.map((dataset) => <DatasetTable data={dataset} key={dataset.publication.doi+'_'+dataset.name} />)}
+                    //     </div>
+                    // </div> : ''
+                    <DatasetTable data={datasetData} key='datasets' /> : ''
+                } */}
             </div>
+
+            { datasetData.length > 0 ?
+                // <div>
+                //     <h5><ChevronDoubleRight className="me-2 color_hl" size="0.9rem"/>Dataset{datasetData.length > 1 ? 's': ''}{op_count_badge(datasetData.length)}</h5>
+                //     <div className="d-flex flex-column">
+                //         { datasetData.map((dataset) => <DatasetTable data={dataset} key={dataset.publication.doi+'_'+dataset.name} />)}
+                //     </div>
+                // </div> : ''
+                <>
+                    {op_subtitle('hl','Dataset',datasetData.length)}
+                    <div className='d-flex mb-5' id='dataset_table'>
+                        <DatasetTable data={datasetData} key='datasets' />
+                    </div>
+                </> : ''
+            }
+
             {op_subtitle('score')}
             {/* { platformVersionsList.length > 1 ?
                 <div className="mt-4 me-4 mb-2 sm:mt-0 sm:ml-3">
@@ -278,7 +353,7 @@ function Platform() {
             } */}
             { platformTableColumns && platformDataEndpoint && platformDataEndpoint.includes(platform) ?
                 <>
-                    <div className='d-flex mb-3'>
+                    <div className='d-flex mb-3' id='score_table'>
                         {/* Ancestry Form */}
                         <div className="card p-0 me-3">
                             <div className="card-header"><h6 className="mb-0">Ancestry filter</h6></div>

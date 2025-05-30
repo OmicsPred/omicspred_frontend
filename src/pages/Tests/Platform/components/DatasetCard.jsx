@@ -5,10 +5,10 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { People } from 'react-bootstrap-icons';
 
-import Href from "../../../components/Href";
-import { scoresBadge, TooltipText } from '../../../components/Generic';
-import { SampleTable } from '../../../components/Sample';
-import { ExpandableDownloadButton, get_download_list } from '../../../components/Downloads';
+import Href from "../../../../components/Href";
+import { scoresBadge, TooltipText } from '../../../../components/Generic';
+import { SampleTable } from '../../../../components/Sample';
+import { ExpandableDownloadButton, get_download_list } from '../../../../components/Downloads';
 
 
 const DatasetCard = (props) => {
