@@ -956,7 +956,25 @@ button.MuiButton-root:hover {
     }
 }
 
-
+/* Code highlighting */
+.highlight {
+    background-color: $op_dark2;
+    padding: 1rem;
+    border-radius: 6px;
+    color: $op_white;
+    pre {
+        margin-bottom: 0px;
+    }
+    .shell_cmd {
+        color: #84D5F6; //blue;
+    }
+    .shell_var {
+        color: #BD93E2; //purple;
+    }
+    .shell_varname {
+        color: #DC686B; //red;
+    }
+}
 
 /* Bootstrap overwrite */
 .navbar {

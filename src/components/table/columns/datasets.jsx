@@ -36,7 +36,7 @@ export const datasets_columns = [
     common_cols['publication'],
     {
         field: 'platform',
-        minWidth: 150,
+        minWidth: 130,
         flex: 1,
         renderHeader: () => {
             return (

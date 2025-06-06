@@ -88,7 +88,6 @@ const DataTableServer = (props) => {
         }
     }
     
-    //const rest_api_url = (url,offset,limit,filter) => {
     const rest_api_url = (url,offset,limit) => {
         if (!url.startsWith('http')) {
             url = rest_url+url;
@@ -108,9 +107,6 @@ const DataTableServer = (props) => {
         if (!url.includes('limit=') && limit) {
             url += '&limit='+limit;
         }
-        // if (!url.includes('filter=') && filter) {
-        //   url += '&filter='+filter;
-        // }
         const filter = queryParam.filter;
         consoleDev("FILTER: "+filter)
         if (!url.includes('filter=') && filter) {
@@ -139,16 +135,27 @@ const DataTableServer = (props) => {
 
         const url = rest_api_url(props.url_suffix, offset, paginationModel.pageSize)
         consoleDev("URL: "+url);
-        const response = await fetch(url);
-        const json = await response.json();
-        const results = json.results;
-        if (results && results.length > 0) {
-            setData(results);
-            setRowCountState(json.count);
-            setPaginationModel(old => ({ ...old, total: json.count}))
-        }
-        else {
+        try {
+            const response = await fetch(url)
+            const json = await response.json();
+            const results = json.results;
+            if (results) {
+                if (results.length > 0) {
+                    setData(results);
+                }
+                else {
+                    setData([]);
+                }
+                setRowCountState(json.count);
+                setPaginationModel(old => ({ ...old, total: json.count}))
+            }
+            else {
+                setNoEntry(true);
+            }
+        } catch(error) {
+            console.log('REST API message: '+error.message);
             setNoEntry(true);
+            setData(undefined);
         }
         setIsLoading(false);
     }
@@ -178,7 +185,8 @@ const DataTableServer = (props) => {
 
     return (
         <>
-        { data && data.length > 0 ?
+        {/* { data && data.length > 0 ? */}
+        { data ?
             <div className='d-flex'>
                 <div className="table-responsive">
                     <DataGrid
@@ -236,7 +244,7 @@ const DataTableServer = (props) => {
             </div>
             : noEntry ?
                 // <div>Error: no data found or there is an issue to fetch the data</div> : ''
-                <div>Error: no data found or there is an issue to fetch the data</div> : loading_data()
+                <div>Error: there is an issue to fetch the data</div> : loading_data()
         }
         </>
     )
