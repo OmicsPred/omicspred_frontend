@@ -7,8 +7,8 @@ const ancestry_training_cols = {...ancestry_cols['ancestry_training'], headerCla
 export const transcriptomics_columns = {
     'Illumina RNAseq': [
         common_cols['omicspred_id'],
-        common_cols['gene_id'],
         common_cols['gene_name'],
+        common_cols['gene_id'],
         common_omics_columns['omics_publication'],
         common_omics_columns['omics_platform_version'],
         common_cols['dataset_id'],

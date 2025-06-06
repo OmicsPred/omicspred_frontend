@@ -89,6 +89,7 @@ function OpRouters() {
                 <Route path="/Scores/Nightingale/INTERVAL" element={<Redirect url='/platform/Nightingale'/>}/>
                 <Route path="/Scores/Metabolon/INTERVAL" element={<Redirect url='/platform/Metabolon'/>}/>
                 <Route path="/Scores/Illumina_RNAseq/INTERVAL" element={<Redirect url='/platform/Illumina RNAseq'/>}/>
+                <Route path="/Applications/pathway" element={<Redirect url='/pathways'/>}/>
             </Routes>
         </Router>
     )
