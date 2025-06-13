@@ -21,7 +21,6 @@ import Href from "../../../components/Href"
 // }
 
 
-
 const About = () => {
     const project_name = process.env.PROJECT_NAME;
     return (

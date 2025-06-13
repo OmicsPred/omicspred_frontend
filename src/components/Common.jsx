@@ -10,14 +10,13 @@ export const internal_publication_link = (publication) => {
     const firstauthor = publication.firstauthor;
     const journal = publication.journal;
     const year = publication.date_publication.split('-')[0];
-
-
     return(
         <>
             <Href href={"/publication/"+opp_id} text={<>{firstauthor}{firstauthor.endsWith('.') ? '' : <i>et al.</i>} {journal} ({year})</>}/> <span>({opp_id})</span>
         </>
     )
 }
+
 
 export const tissue_link = (tissue) => {
     return (
@@ -39,6 +38,26 @@ export const get_data_type = (omics_type) => {
         default:
             return 'hl';
     }
+}
+
+
+export const external_sources = {
+    'pgsc_calc': {
+        'label': 'pgsc_calc',
+        'url': 'https://pgsc-calc.readthedocs.io/en/latest/',
+        'desc': 'A reproducible workflow to calculate a genetic score using scoring files published in the Polygenic Score (PGS) Catalog and/or custom scoring files.'
+    },
+    'pgs_catalog': {
+        'label': 'Polygenic Score (PGS) Catalog',
+        'url': process.env.URL_PGS_CATALOG,
+        'desc': 'An open database of polygenic scores and the relevant metadata required for accurate application and evaluation'
+    }
+}
+
+
+export const url_tooltip = (type) => {
+    const link_content = external_sources[type];
+    return <Href href={link_content['url']} text={<TooltipText title={link_content['desc']} ttype='link' text={link_content['label']} />} />
 }
 
 
@@ -90,12 +109,12 @@ export const PageTitle = (props) => {
     )
 }
 
+
 export const BrowseTitle = (props) => {
     const type = props.type;
     const label = props.label;
     const count = props.count;
     const title = props.title;
-
     return <PageTitle type={type} category='Browse' label={label} count={count} title={title}/>;
 }
 
@@ -107,7 +126,6 @@ export const PageTitleSimple = (props) => {
 
 
 export const op_title = (type, data, label, force_use_label) => {
-
     // const type_uc = (type == 'phecode') ? 'PheWAS' : type.charAt(0).toUpperCase() + type.slice(1);
     let type_uc = '';
     switch(type) {
@@ -203,8 +221,6 @@ export const no_entry_found = (type, name, no_title) => {
 }
 
 
-// export const display_information = (type, content) => {
-
 export const HeaderCard = (props) => {
     const type = props.type;
     const content = props.content;
@@ -287,23 +303,12 @@ export const publication_ref = (publication,display_year) => {
 
 
 export const omicspred_omics_type = (type,use_alt) => {
-    if (use_alt) {
-        return (
-            <span key={'omics_'+type} className={'badge badge_border_'+type}>
-                <BoxFill className={"align-middle color_"+type}/>
-                <span className="align-middle ms-2">{type}</span>
-            </span>
-        )
-
-    }
-    else {
-        return (
-            <span className="text-nowrap">
-                <BoxFill className={"align-middle color_"+type}/>
-                <span className="align-middle ms-2">{type}</span>
-            </span>
-        )
-    }
+    return (
+        <span key={'omics_'+type} className={use_alt ? 'badge badge_border_'+type: 'text-nowrap'}>
+            <BoxFill className={"align-middle color_"+type}/>
+            <span className="align-middle ms-2">{type}</span>
+        </span>
+    )
 }
 
 
@@ -387,6 +392,7 @@ export const display_cohort = (cohort, cohort_name) => {
     )
 }
 
+
 /* Format the list of descriptions for the molecular traits */
 export const display_description = (description_list) => {
     if (description_list.length == 1) {
@@ -397,6 +403,7 @@ export const display_description = (description_list) => {
     }
 }
 
+
 export const display_tissue_description = (description) => {
     let descriptions_list = [description]
     if (description.startsWith("[")) {
@@ -405,6 +412,7 @@ export const display_tissue_description = (description) => {
     }
     return display_description(descriptions_list);
 }
+
 
 export const element_icon = (type,use_alt) => {
     const icon_classname = 'element_icon color_'+type;
@@ -445,6 +453,7 @@ export const ancestry_labels = () => {
     }
 };
 
+
 export const ancestry_names = {
     // 'Multi-ancestry (including European)': 'MAE',
     // 'Multi-ancestry (excluding European)': 'MAO',
@@ -462,6 +471,7 @@ export const ancestry_names = {
     'Multi-ancestry': 'MAO'
 };
 
+
 export const get_ancestry_name = (anc_name) => {
 
     if (ancestry_names[anc_name]) {
@@ -477,6 +487,7 @@ export const get_ancestry_name = (anc_name) => {
     }
 }
 
+
 export const ancestry_label = (anc) => {
     const ancestry_labels_data = ancestry_labels()
     if (ancestry_labels_data[anc]) {
@@ -486,6 +497,7 @@ export const ancestry_label = (anc) => {
         return anc;
     }
 }
+
 
 export const display_ancestry = (ancestry) => {
     const ancestry_label = get_ancestry_name(ancestry);
