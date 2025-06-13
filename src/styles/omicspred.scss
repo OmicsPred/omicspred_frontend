@@ -844,6 +844,13 @@ ul.expanded {
     flex: 0 0 2% !important;
 }
 
+.MuiFormControl-root {
+    margin: 18px !important;
+    .MuiCheckbox-root {
+        padding: 4px 9px !important;
+    }
+}
+
 .MuiDataGrid-root .MuiInputBase-root {
     background-color: #FAFAFA !important;
     padding-left: 4px;
@@ -1277,11 +1284,20 @@ ul.example_list {
         padding-left: 1rem;
         margin-left: 1rem;
     }
+    .search_separator_1 {
+        margin-left: 1rem;
+        padding-left: 1rem;
+        border-left: 1px solid $op_grey;
+    }
+    .search_separator_2 {
+        margin: 0px 0.5rem;
+        color: $op_grey;
+    }
 }
 
 fieldset {
     .op_search_feature_legend:not(:first-child) {
-        margin-top:0.5rem;
+        margin-top:0.25rem;
     }
 }
 

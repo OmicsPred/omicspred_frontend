@@ -11,7 +11,7 @@ const OmicsList = (props) =>{
             omics.map((data, index) => {
                 let separator = ''
                 if (index < omics.length-1) {
-                    separator = <span className='mx-2'>/</span>
+                    separator = <span className='search_separator_2'>/</span>
                 }
                 return (<span key={key+'_'+data}>{omicspred_omics_type(data)}{separator}</span>)
             })

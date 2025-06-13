@@ -54,11 +54,29 @@ export default function ResultCard(props) {
 
     const url = '/'+index2url[props.type]+'/'+url_id;
 
+    const separator_tag = <span className='search_separator_2'>/</span>;
+
     const display_phenotype_category = () => {
         if (props.type == 'phenotype') {
-            return (<><span className="px-3">/</span><span className="line_key">Category</span>{data.category}</>)
+            return (<><span className="line_key search_separator_1">Category</span>{data.category}</>)
         }
         else { return ''; }
+    }
+
+    const display_platforms_list = (platforms_list) => {
+        return (
+            <>
+            {
+                platforms_list.map((platform_name, index) => {
+                    let separator = ''
+                    if (index < platforms_list.length-1) {
+                        separator = separator_tag;
+                    }
+                    return (<span key={platform_name}>{platform_name}{separator}</span>)
+                })
+            }
+            </>
+        );
     }
 
     const display_molecular_trait_counts = (data) => {
@@ -85,7 +103,7 @@ export default function ResultCard(props) {
                         {
                             mt_types_with_data.map((mt_type, index) =>
                                 <span key={mt_type}>
-                                    {index != 0 ? <span className="px-2">/</span>:''}
+                                    {index != 0 ? separator_tag:''}
                                     <span>{mt_types_list[mt_type]}{add_s_when_plural(data[mt_type].length)} {numberBadge(data[mt_type].length)}</span>
                                 </span>
                             )
@@ -98,7 +116,7 @@ export default function ResultCard(props) {
 
     const get_source_name = (data) => {
         if (data.external_id_source) {
-            return (<><span className="px-3">/</span><span className="line_key">Source</span>{data.external_id_source}</>)
+            return (<><span className="line_key search_separator_1">Source</span>{data.external_id_source}</>)
         }
         else if (data.source) {
             return <small className="ms-2">(Source: {data.source})</small>
@@ -121,7 +139,7 @@ export default function ResultCard(props) {
                                         { props.type == 'pathway' ? display_molecular_trait_counts(data) : ''}
                                         { data.scores_count && data.scores_count ? <li><span className="line_key">Scores count</span>{scoresBadge(data.scores_count)}</li>:'' }
                                         { data.omics_type && data.omics_type.length > 0 ? <li><span className="line_key">Omics type{data.omics_type.length > 1 && 's'}</span><OmicsList omics={data.omics_type} key_prefix={result_id}/></li> : '' }
-                                        { data.platform_name && data.platform_name.length > 0 ? <li><span className="line_key">Platform{data.platform_name.length > 1 && 's'}</span>{data.platform_name.join(', ')}</li> : '' }
+                                        { data.platform_name && data.platform_name.length > 0 ? <li><span className="line_key">Platform{data.platform_name.length > 1 && 's'}</span>{display_platforms_list(data.platform_name)}</li> : '' }
                                     </ul>
                                 </div>
                                 { props.type == 'score' ? <MolecularTraits data={data}/> : '' }

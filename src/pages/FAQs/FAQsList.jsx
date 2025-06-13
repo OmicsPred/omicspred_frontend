@@ -1,4 +1,5 @@
 import Href from "../../components/Href";
+import { url_tooltip } from "../../components/Common";
 
 export const faqs_categories = {
   "gen_q": "General questions", 
@@ -29,6 +30,11 @@ export const faqs_list = [
         <b key='pgsc_calc_file'>Scoring files<small> (pgsc_calc compatible)</small></b>,
         '. Each of these zipped files contains all the scoring files associated with a dataset/platform.'
       ],
+    },
+    {
+      title: "How to calculate genetic scores on a new cohort?",
+      type: "gen_q",
+      text: <>The {url_tooltip('pgs_catalog')} provides a tool called {url_tooltip('pgsc_calc')} to calculate genetic scores, with extended options.</>
     },
     {
       title: " What method was used for genetic score development and why?",
