@@ -2,7 +2,8 @@ import DPHPC from "../../../assets/supports/DPHPC.png";
 import HDRuk from "../../../assets/supports/HDRuk.png";
 import Baker from "../../../assets/supports/Baker.png";
 
-function Supports() {
+
+const Supports = () => {
   return (
     <div className="odd_section pb-0">
       <div className="op_section_title">Supported by</div>

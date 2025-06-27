@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Doughnut } from "react-chartjs-2";
 import restApiCall from '../../../components/RestAPI';
-import { thousandifyNumber } from '../../../components/Generic';
+import { consoleDev, thousandifyNumber } from '../../../components/Generic';
 
 
 const OPDoughnut = (props) => {
@@ -45,8 +45,8 @@ const OPDoughnut = (props) => {
         else {
             const dataset_data = await restApiCall('dataset/all');
             if (dataset_data.results) {
-                // console.log('# dataset_data:');
-                // console.log(dataset_data);
+                // consoleDev('# dataset_data:');
+                // consoleDev(dataset_data);
                 setDoughnutData(build_omics_distribution(dataset_data.results));
             }
         }
@@ -78,7 +78,7 @@ const OPDoughnut = (props) => {
             new_plugins.tooltip= {enabled: false};
         }
         const new_options_tooltip = { ...default_options, plugins:new_plugins};
-        // console.log(new_options_tooltip.plugins);
+        // consoleDev(new_options_tooltip.plugins);
         setDoughnutOptions(new_options_tooltip);
     }
 
@@ -98,7 +98,7 @@ const OPDoughnut = (props) => {
             const resp = response[i];
             const type = resp.platform.type;
             const count = resp.scores_count;
-            console.log('# '+type+': '+count)
+            consoleDev('# '+type+': '+count)
             if (!tmp_data[type]) {
                 tmp_data[type] = 0;
             }
@@ -106,8 +106,8 @@ const OPDoughnut = (props) => {
         }
 
         const labels = Object.keys(tmp_data).sort();
-        // console.log('# labels:')
-        // console.log(labels);
+        // consoleDev('# labels:')
+        // consoleDev(labels);
         for (let j=0;j<labels.length;j++) {
             const category = labels[j];
             const label_data = tmp_data[category];
@@ -117,8 +117,8 @@ const OPDoughnut = (props) => {
             dataset.backgroundColor.push(bg_colour);
         }
         data.datasets.push(dataset);
-        console.log('plot data:')
-        console.log(data)
+        consoleDev('plot data:')
+        consoleDev(data)
         return data
     }
 

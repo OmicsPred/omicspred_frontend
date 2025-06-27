@@ -845,7 +845,7 @@ ul.expanded {
 }
 
 .MuiFormControl-root {
-    margin: 18px !important;
+    margin: 1rem !important;
     .MuiCheckbox-root {
         padding: 4px 9px !important;
     }
@@ -1273,6 +1273,7 @@ ul.example_list {
     svg {
         margin-top: -4px;
         vertical-align: middle;
+        // filter: drop-shadow( 1px 1px 1px rgba(0, 0, 0, .3));
     }
 }
 
@@ -1302,12 +1303,21 @@ fieldset {
 }
 
 .op_search_feature_legend {
+    // height: 24px;
+    // line-height: 24px;
+    display: flex;
     span {
         display:inline-block;
         vertical-align:top;
     }
-    .op_legend_label:first-letter {
-        text-transform: uppercase;
+    .op_legend_label {
+        white-space: nowrap;
+        &:first-letter {
+            text-transform: uppercase;
+        }
+    }
+    .element_icon {
+        margin-top: 4px !important;
     }
 }
 
@@ -1319,19 +1329,27 @@ fieldset {
         display: flex;
         flex-direction: column;
         background-color: $op_light_grey;
-        padding: 0.5rem 1.5rem;
+        padding: 1rem 1rem 0.5rem;
         margin-right: 3rem;
-        min-width: 250px;
-        legend {
-            font-weight: bold;
-            font-size: 1rem;
-            color: $op_dark;
-        }
+        min-width: 275px;
         fieldset {
-            // min-width: 200px !important;
             label {
                 margin-right: 0px !important;
             }
+            legend {
+                margin-top: 0.75rem;
+            }
+        }
+        fieldset:first-child {
+            margin-top: 0.5rem !important;
+        }
+        fieldset:last-child {
+            margin-bottom: 0.5rem !important;
+        }
+        .search_section_header {
+            font-weight: bold !important;
+            margin-left: 1rem;
+            margin-bottom: 0px;
         }
         .search_selection_container {
             display: flex;
@@ -1341,9 +1359,8 @@ fieldset {
             }
         }
         .search_result_types {
-            display: flex;
             fieldset {
-                margin: 1rem 1.5rem 1.5rem;
+                margin: 1rem;
                 legend {
                     margin-bottom: 1rem;
                 }
@@ -1353,6 +1370,27 @@ fieldset {
                 }
             }
         }
+    }
+}
+.advanced_search_btn_container {
+    display: inline-block;
+    font-size: 16px;
+    font-weight: normal !important;
+    margin-top: 5px !important;
+    >span:first-child {
+        border-left: 1px solid $op_grey;
+        border-right: 1px solid $op_grey;
+        margin: 0rem 1rem;
+        padding: 0rem 1rem;
+    }
+}
+.advanced_search_container {
+    margin-bottom: 1rem;
+    min-width: 275px;
+    background-color: $op_light_grey;
+    border: 1px solid $op_color_2;
+    legend {
+        color: $default_font_color;
     }
 }
 
@@ -1569,6 +1607,19 @@ fieldset {
             margin-left:1rem !important;
             margin-right:1rem !important;
         }
+        .search_section_header {
+            margin-top:0.5rem !important;
+            margin-left:1rem !important;
+        }
+    }
+    .search_query_title {
+        display: block;
+        border: none;
+        padding-right: 0rem;
+        margin: 0.5rem 0rem;
+        > svg {
+            margin-left: 0px;
+        }
     }
     .table-responsive {
         min-width: auto !important;
@@ -1590,6 +1641,20 @@ fieldset {
         &:last-child{
             margin-bottom: 0rem !important;
         }
+    }
+    .advanced_search_btn_container {
+        display: block;
+        // margin-left:0px;
+        // padding-left: 0px;
+        margin-top: 0.5rem;
+         >span:first-child {
+            border-left: none;
+            margin-left: 0rem;
+            padding-left: 0rem;
+        }
+    }
+    .advanced_search_container {
+        margin-top: 0.5rem;
     }
 }
 
@@ -1633,19 +1698,13 @@ fieldset {
         .search_selection_panel {
             margin-bottom: 1rem;
             margin-right: 0rem !important;
-            // hr {
-            //     display: none;
-            // }
-            // .op_search_feature_legend {
-            //     min-width: 150px;
-            // }
             fieldset {
                 margin-top: 0.5rem !important;
                 margin-bottom: 0.5rem !important;
-                label > span:first-child {
-                    padding-top: 0.25rem !important;
-                    padding-bottom: 0.25rem !important;
-                }
+                // label > span:first-child {
+                //     padding-top: 0.25rem !important;
+                //     padding-bottom: 0.25rem !important;
+                // }
             }
             fieldset:not(:last-child) {
                 margin-right: 0rem !important;
@@ -1667,6 +1726,8 @@ fieldset {
                         justify-content: space-between;
                         flex-wrap: wrap !important;
                         .op_search_feature_legend {
+                            height: auto;
+                            line-height: auto;
                             // min-width: 120px !important;
                             background-color: $op_light_grey_3;
                             border-radius: 6px;
@@ -1737,13 +1798,20 @@ fieldset {
         }
     }
     .search_selection_panel {
+        .search_section_header {
+            padding-top: 0.25rem;
+            margin-left: 0.25rem !important;
+        }
         fieldset {
             min-width: 155px;
-            margin-left: 0.5rem !important;
-            margin-right: 0.5rem !important;
+            margin-left: 0.25rem !important;
+            margin-right: 0.25rem !important;
             label > span:first-child {
                 padding-top: 0.25rem !important;
                 padding-bottom: 0.25rem !important;
+            }
+            legend {
+                margin-top: 0.25rem !important;
             }
             .op_search_feature_legend, .MuiTypography-root {
                 font-size: 14px !important;

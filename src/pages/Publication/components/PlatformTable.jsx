@@ -6,7 +6,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import Href from "../../../components/Href";
-import { scoresBadge, ToogleDiv } from '../../../components/Generic';
+import { consoleDev, scoresBadge, ToogleDiv } from '../../../components/Generic';
 import { get_cohorts_cols_list, get_cohorts_col_groups_list, omicspred_omics_type, tissue_link } from '../../../components/Common';
 import {cohort_cols, common_column_groups, cohort_valueGetter} from '../../../components/table/columns/common';
 import { metabolomics_columns,metabolomics_column_groups } from '../../../components/table/columns/metabolomics';
@@ -41,6 +41,8 @@ const PlatformTable = (props) => {
     if (dataset.name) {
         plot_url += '?dataset='+dataset.id;
     }
+
+    const metric_sortable_status = false;
 
     const training_suffix = '__training';
 
@@ -121,12 +123,12 @@ const PlatformTable = (props) => {
                                 training_header_class = ['training_col','col_border_left']
                             }
                             const training_field = cohort_cols[cohort][metric].field+training_suffix;
-                            console.log('- '+training_field);
-                            const cohort_metric_col = {...cohort_cols[cohort][metric], field: training_field, headerClassName: training_header_class, valueGetter: (value, row) => {return cohort_valueGetter(row,cohort,metric,true);}, sortable: false}
+                            consoleDev('- '+training_field);
+                            const cohort_metric_col = {...cohort_cols[cohort][metric], field: training_field, headerClassName: training_header_class, valueGetter: (value, row) => {return cohort_valueGetter(row,cohort,metric,true);}, sortable: metric_sortable_status}
                             columns.push(cohort_metric_col)
                         }
                         else {
-                            const cohort_metric_col = {...cohort_cols[cohort][metric], sortable: false}
+                            const cohort_metric_col = {...cohort_cols[cohort][metric], sortable: metric_sortable_status}
                             columns.push(cohort_metric_col)
                         }
                     }

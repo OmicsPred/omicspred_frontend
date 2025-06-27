@@ -87,6 +87,15 @@ const DataTableServer = (props) => {
             return generateString(20);
         }
     }
+
+    // Remove individual column filtering
+    const get_columns = () => {
+        let columns = props.columns;
+        for (let i=0; i<columns.length; i++) {
+            columns[i]['filterable'] = false;
+        }
+        return columns;
+    }
     
     const rest_api_url = (url,offset,limit) => {
         if (!url.startsWith('http')) {
@@ -193,7 +202,8 @@ const DataTableServer = (props) => {
                         key="server-side"
                         // autoHeight
                         columnGroupingModel={props.groups}
-                        columns={props.columns}
+                        // columns={props.columns}
+                        columns={get_columns()}
                         rows={data}
                         getRowId={(row) => getRowId(row)}
                         getRowHeight={() => row_height_settings}

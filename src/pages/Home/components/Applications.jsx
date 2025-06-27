@@ -4,7 +4,7 @@ import reactome_img from "../../../assets/Reactome.png";
 import { Bezier2 } from "react-bootstrap-icons";
 
 
-function Applications() {
+const Applications = () => {
   const project_name = process.env.PROJECT_NAME;
   return (
     <div className="even_section" >
@@ -41,6 +41,5 @@ function Applications() {
       </div>
     </div>
   );
-};
-
+}
 export default Applications;

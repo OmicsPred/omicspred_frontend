@@ -74,6 +74,7 @@ export const performance_metrics_columns = [
     {
         field: 'sample_number',
         headerName: 'Sample size',
+        type: 'number',
         width: 120,
         renderCell: (params) => {
             return participantsBadge(params.row.sample.sample_number);
@@ -105,6 +106,7 @@ export const performance_metrics_columns = [
     {
         field: 'r2',
         // headerName: <>R<sup>2</sup></>,
+        type: 'number',
         width: 90,
         renderHeader: () => {
             return r2_col_header_label();
@@ -116,6 +118,7 @@ export const performance_metrics_columns = [
     {
         field: 'rho',
         headerName: 'Rho',
+        type: 'number',
         width: 90,
         valueGetter: (value, row) => {
             return metric_valueGetter(row.performance_metrics,'Rho',row.evaluation_type);
@@ -124,6 +127,7 @@ export const performance_metrics_columns = [
     {
         field: 'variant_match_rate',
         headerName: match_rate_col,
+        type: 'number',
         width: 120,
         valueGetter: (value, row) => {
             return metric_valueGetter(row.performance_metrics,match_rate_col,row.evaluation_type);
@@ -132,6 +136,7 @@ export const performance_metrics_columns = [
     {
         field: 'missing_rate',
         headerName: 'Missing Rate',
+        type: 'number',
         width: 120,
         valueGetter: (value, row) => {
             return metric_valueGetter(row.performance_metrics,'Missing Rate',row.evaluation_type);

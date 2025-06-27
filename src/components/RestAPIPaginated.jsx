@@ -21,17 +21,18 @@ const getData = async (url) => {
 }
 
 export default async function restApiCallPaginated(url) {
+    const json_format = 'format=json';
     if (!url.startsWith('http')) {
         url = rest_url+url;
     }
-    if (!url.includes('format=json')) {
+    if (!url.includes(json_format)) {
         if (url.includes('?')) {
             url += '&';
         }
         else {
-            url += '/';
+            url += '?';
         }
-        url += 'format=json';
+        url += json_format;
     }
     const [data_results,next_url] = await getData(url);
     consoleDev("Retreiving data from API for page : " + url);

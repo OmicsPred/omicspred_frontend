@@ -36,6 +36,7 @@ export const ancestry_cols = {
         field: 'ancestry_training',
         headerName: 'Training',
         minWidth: 100,
+        filterable: false,
         resizable: false,
         sortable: false,
         renderCell: (params) => {
@@ -63,6 +64,7 @@ export const ancestry_cols = {
         field: 'ancestry_validation',
         headerName: 'Validation',
         minWidth: 100,
+        filterable: false,
         resizable: false,
         sortable: false,
         renderCell: (params) => {

@@ -1,7 +1,7 @@
 import Href from "../../../components/Href"
 
-function Feedback() {
 
+const Feedback = () => {
   return (
     <div className="even_section" >
       <div className="op_section_title">Questions and Feedback</div>
@@ -14,5 +14,5 @@ function Feedback() {
       </div>
     </div>
   );
-};
+}
 export default Feedback;

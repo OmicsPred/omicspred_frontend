@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { PageTitle, HeaderCard, no_entry_found, op_subtitle } from '../../components/Common';
 import Href from '../../components/Href';
@@ -36,7 +36,6 @@ function Cohort() {
 
     const getImageSource = async (cohort_name) => {
         try {
-            // console.log('IMAGE: ../../assets/cohorts/'+cohort_name.toUpperCase()+'.png')
             const src = await import(`../../assets/cohorts/${cohort_name.toUpperCase()}.png`)
             if (src) {
                 setCohortImageSource(src.default);

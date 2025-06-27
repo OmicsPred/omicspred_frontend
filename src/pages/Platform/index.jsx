@@ -124,7 +124,7 @@ function Platform() {
 
     const get_table_column_groups = (platforms) => {
         const type = platforms[0].platform.type;
-        // console.log('get_table_column_groups: |'+type+'|')
+        // consoleDev('get_table_column_groups: |'+type+'|')
         let col_groups = get_metadata_column_groups(type);
         return col_groups;
     }
@@ -145,7 +145,7 @@ function Platform() {
 
     const fetchDatasetData = async () => {
         const dataset_data = await restApiCall('dataset/search?platform='+platform);
-        // console.log(dataset_data['results']);
+        // consoleDev(dataset_data['results']);
         const dataset_results = dataset_data['results']
         setDatasetData(dataset_results);
         const table_cols = get_table_columns(dataset_results);
@@ -202,8 +202,8 @@ function Platform() {
     //     const class_selected = 'btn-op';
     //     const class_unselected = 'btn-outline-op';
     //     let selected_datasets = [];
-    //     console.log("Dataset "+dataset_name+" selected!");
-    //     console.log("platformDatasetsSelection: "+platformDatasetsSelection);
+    //     consoleDev("Dataset "+dataset_name+" selected!");
+    //     consoleDev("platformDatasetsSelection: "+platformDatasetsSelection);
     //     if (e.target.classList.contains(class_selected)) {
     //         if (platformDatasetsSelection.includes(dataset_name) && platformDatasetsSelection.length > 1) {
     //             e.target.classList.replace(class_selected,class_unselected);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import OPDoughnut from "../../../Plot/components/Doughnut";
 import { thousandifyNumber } from '../../../../components/Generic';
 import { omicspred_omics_type } from '../../../../components/Common';

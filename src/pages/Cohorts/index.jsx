@@ -2,12 +2,12 @@ import { PageTitleSimple } from '../../components/Common';
 import Container from "./components/Container";
 import Href from "../../components/Href"
 
-import p2 from "../../assets/cohorts/FENLAND.png";
-import p1 from "../../assets/cohorts/INTERVAL.png";
-import p4 from "../../assets/cohorts/UKB.png";
-import p3 from "../../assets/cohorts/ORCADES.png";
-import p5 from "../../assets/cohorts/VIKING.png";
-import p6 from "../../assets/cohorts/GTEXV8.png";
+import p2 from "/src/assets/cohorts/FENLAND.png";
+import p1 from "/src/assets/cohorts/INTERVAL.png";
+import p4 from "/src/assets/cohorts/UKB.png";
+import p3 from "/src/assets/cohorts/ORCADES.png";
+import p5 from "/src/assets/cohorts/VIKING.png";
+import p6 from "/src/assets/cohorts/GTEXV8.png";
 
 
 const cohorts_list = [
