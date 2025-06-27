@@ -5,8 +5,6 @@ import SearchBar from "../../../components/SearchBar"
 
 
 const Header = () => {
-
-    // const search_examples = ['COL1A1', 'P16581', 'cholesterol']
     const search_examples = JSON.parse(process.env.SEARCH_EXAMPLES);
 
     const project_name = process.env.PROJECT_NAME
@@ -30,5 +28,4 @@ const Header = () => {
         </div>
     );
 }
-
 export default Header;

@@ -5,7 +5,7 @@ import restApiCall from '../../components/RestAPI';
 import Href from "../../components/Href";
 import PlatformTable from './components/PlatformTable';
 import { op_subtitle_no_asso, op_title, HeaderCard } from '../../components/Common';
-import { loading_data, ToogleText, scoresBadge } from '../../components/Generic';
+import { consoleDev, loading_data, ToogleText, scoresBadge } from '../../components/Generic';
 
 
 function Publication() {
@@ -17,9 +17,9 @@ function Publication() {
 
 
     const fetchPublicationData = async () => {
-        console.log('publication/'+opp_id)
+        consoleDev('publication/'+opp_id)
         const publication_data = await restApiCall('publication/'+opp_id);
-        console.log(publication_data);
+        consoleDev(publication_data);
         setPublicationData(publication_data);
         const year = publication_data.date_publication ? ' ('+publication_data.date_publication.split('-')[0]+')' : undefined
         setPublicationTitle("Publication: "+publication_data.id+' ('+publication_data.firstauthor+' - '+year+')')

@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
 import DocumentTitle from '../../components/DocumentTitle';
-import restApiCallPaginated from '../../components/RestAPIPaginated';
 import Header from "./components/Header"
 import Stats from "./components/Stats"
 import About from "./components/About"
@@ -9,29 +7,17 @@ import Applications from "./components/Applications"
 import DataDownloads from "./components/DataDownloads"
 import Feedback from "./components/Feedback"
 import Citation from "./components/Citation"
-
 import Supports from "./components/Supports"
 
 
-function Home() {
+const Home = () => {
     DocumentTitle('Homepage');
-    const [datasetData, setDatasetData] = useState([])
-
-    const fetchDatasetData = async () => {
-        const dataset_data = await restApiCallPaginated('dataset/all');
-        setDatasetData(dataset_data);
-    }
-
-    useEffect(() => {
-        fetchDatasetData();
-    },[])
-
     return (
         <>
             <Header/>
-            { datasetData && datasetData.length > 0 ? <Stats data={datasetData}/> : ''}
+            <Stats/>
             <About/>
-            { datasetData && datasetData.length > 0 ? <Platforms data={datasetData}/> : ''}
+            <Platforms/>
             <Applications/>
             <DataDownloads/>
             <Feedback/>

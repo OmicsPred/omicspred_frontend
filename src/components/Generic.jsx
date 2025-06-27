@@ -64,6 +64,12 @@ export const add_s_when_plural = function(number) {
     return number > 1 ? 's':''
 }
 
+
+export const firstLetterUc = function(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+
 export const ToogleDiv = (props) => {
     // Toogle element which is the same DOM element as the toogle button
     // (i.e. placed just after the toogle button)

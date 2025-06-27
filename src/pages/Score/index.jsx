@@ -8,7 +8,7 @@ import { performance_metrics_columns } from '../../components/table/columns/scor
 import { score_phenotype_columns } from '../../components/table/columns/phenotype';
 import restApiCall from '../../components/RestAPI';
 import restApiCallPaginated from '../../components/RestAPIPaginated';
-import { ToogleDiv, ToogleText, Note, loading_data, numberBadge, add_s_when_plural } from '../../components/Generic';
+import { consoleDev, ToogleDiv, ToogleText, Note, loading_data, numberBadge, add_s_when_plural } from '../../components/Generic';
 import { DownloadList, get_download_list } from '../../components/Downloads';
 import { MolecularTraitAssociation } from '../MolecularTrait/components/components';
 import AncestryDistribution from '../../components/ancestry/AncestryDistribution';
@@ -72,7 +72,7 @@ function Score() {
 
     const fetchScoreData = async () => {
         const score_data = await restApiCall('score/'+score+'?include_pathway=1');
-        console.log(score_data);
+        consoleDev(score_data);
         if (score_data && Object.keys(score_data).length) {
             setScoreData(score_data);
             if (score_data.platform) {
@@ -121,7 +121,7 @@ function Score() {
 
     const fetchScoreMetrics = async () => {
         const score_metric_data = await restApiCall('performance/search?opgs_id='+score);
-        console.log(score_metric_data);
+        consoleDev(score_metric_data);
         setMetricData(score_metric_data.results);
     }
 

@@ -134,15 +134,15 @@ $type_colors: (
 
 /* Data type colours */
 @each $type_key, $type_color in $type_colors {
-    .color_#{$type_key} {
+    .color_#{$type_key}, .color_#{$type_key}s {
         color: $type_color !important;
     }
 
-    .bg_#{$type_key} {
+    .bg_#{$type_key}, .bg_#{$type_key}s {
         background-color: $type_color;
     }
 
-    .border_color_#{$type_key} {
+    .border_color_#{$type_key}, .border_color_#{$type_key}s {
         border-color: $type_color !important;
     }
 }

@@ -1,7 +1,7 @@
 import Href from "./Href";
 import { Bezier2, Book, ChevronRight, ClipboardData, People, BoxFill, Stack, Hexagon, HexagonFill, Lungs, PersonArmsUp } from 'react-bootstrap-icons';
 import { cohort_cols, common_column_groups } from './table/columns/common';
-import { ToogleDiv, ToogleText, TooltipText, thousandifyNumber } from './Generic';
+import { ToogleDiv, ToogleText, TooltipText, thousandifyNumber, firstLetterUc } from './Generic';
 import DocumentTitle from './DocumentTitle';
 
 
@@ -71,7 +71,7 @@ export const PageTitle = (props) => {
         DocumentTitle(props.title);
     }
 
-    const label_uc = label.charAt(0).toUpperCase() + label.slice(1);
+    const label_uc = firstLetterUc(label);
 
     let color_class = 'color_'+type;
     let prefix = '';
@@ -416,15 +416,18 @@ export const display_tissue_description = (description) => {
 
 export const element_icon = (type,use_alt) => {
     const icon_classname = 'element_icon color_'+type;
+    const omics_icon_classname = 'element_icon color_'+firstLetterUc(type);
     switch(type) {
         case 'score':
             return (<ClipboardData className={icon_classname} />);
-        case 'pathway':
+        case 'pathway': case 'pathways':
             return (<Bezier2 className={icon_classname} />);
-        case 'phenotype':
+        case 'phenotype': case 'phenotypes':
             return (<PersonArmsUp className={icon_classname} />);
-        case 'tissue':
+        case 'tissue': case 'tissues':
             return (<Lungs className={icon_classname} />);
+        case 'transcriptomics': case 'proteomics': case 'metabolomics':
+            return (<BoxFill className={omics_icon_classname} />);
         default:
             if (use_alt) {
                 return (<HexagonFill className={icon_classname} />);

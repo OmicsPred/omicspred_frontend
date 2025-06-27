@@ -44,7 +44,7 @@ export default function ChartPlot(props) {
   
     // const tdata = props.tdata;
   
-    // console.log(
+    // consoleDev(
     //   "circle the lenghts are : " + data1.length + " second " + data2.length
     // );
   
@@ -412,7 +412,7 @@ export default function ChartPlot(props) {
   
     const ExportAsImage = () => {
       const base64Image = ChartRef.current.toBase64Image();
-      console.log("img ", base64Image);
+      // consoleDev("img ", base64Image);
       let fileName = "omicspred_data_plot.png";
       let file = convertBase64ToFile(base64Image, fileName);
       saveAs(file, fileName);
