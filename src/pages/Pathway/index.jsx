@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Tooltip } from '@mui/material';
-import { Table } from 'react-bootstrap-icons';
+import { ArrowUpSquareFill, Table } from 'react-bootstrap-icons';
 import DocumentTitle from '../../components/DocumentTitle';
 import Href from '../../components/Href';
 import DataTable from '../../components/table/DataTable';
@@ -10,6 +10,7 @@ import restApiCall from '../../components/RestAPI';
 import { op_title, op_subtitle_no_asso, Header2Cards, element_icon, no_entry_found } from '../../components/Common';
 import { loading_data } from '../../components/Generic';
 import ReactomeDiagram from './components/Diagram';
+import ReactomeTree from './components/Tree';
 import { display_source, display_superpathways, display_synonyms } from '../MolecularTrait/components/links';
 
 
@@ -86,6 +87,10 @@ function Pathway() {
 				{ superpathwayData.length ?
 					<tr><td>Top Level Pathway{superpathwayData.length > 1 ? 's' : ''}</td><td>{display_superpathways(superpathwayData)}</td></tr>:''
 				}
+				{ elementData.top_level == true ?
+					<tr><td><ArrowUpSquareFill className="color_pathway me-2" size="16"/>Top Level Pathway</td><td>Yes</td></tr>:''
+				}
+				<ReactomeTree pathway={elementData}/>
             </>
         )
     }

@@ -222,14 +222,23 @@ export const no_entry_found = (type, name, no_title) => {
 
 
 export const HeaderCard = (props) => {
-    const type = props.type;
     const content = props.content;
-    const type_uc = type.charAt(0).toUpperCase() + type.slice(1)
+    // Setup card title
+    let title = ''
+    if (props.type) {
+        const type = props.type;
+        const type_uc = type.charAt(0).toUpperCase() + type.slice(1);
+        title = type_uc+' information'
+    }
+    else {
+        title = props.title;
+    }
+
     return (
         <div className='d-flex'>
             <div className="card_containter flex-lg-row flex-md-row">
                 <div className="card op_card mb-3">
-                    <div className="card-header"><h5 className="mb-0">{type_uc} information</h5></div>
+                    <div className="card-header"><h5 className="mb-0">{title}</h5></div>
                     <div className="card-body">
                         <div className="card-text">
                             <table className='table_card table_card_col_centered'>

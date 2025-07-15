@@ -620,6 +620,15 @@ a {
     color: $op_white !important;
 }
 
+.card-sub-header {
+    @include op_dark_bg;
+    color: $op_white !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+    border-radius: 4px;
+}
+
+
 .citation_card {
     padding-left: 3rem;
     padding-right: 3rem;
@@ -747,17 +756,24 @@ ul.expanded {
         }
     }
 }
-.btn-outline-op {
-    @include link_default_color;
-    background-color: $op_white !important;
-    border: 1px solid $op_color_2 !important;
-    &:hover {
-        color: $op_white !important;
-        // background-color: $op_color_3 !important;
-        background-color: $op_color_5 !important;
-        border-color: $op_color_5 !important;
-    }
+// .btn-outline-op {
+//     @include link_default_color;
+//     background-color: $op_white !important;
+//     border: 1px solid $op_color_2 !important;
+//     &:hover {
+//         color: $op_white !important;
+//         // background-color: $op_color_3 !important;
+//         background-color: $op_color_5 !important;
+//         border-color: $op_color_5 !important;
+//     }
+// }
+
+.btn-op-sm {
+    font-size: 12px;
+    padding: 0.25rem 0.5rem !important;
+    border-radius: 4px;
 }
+
 
 .btn-search {
     color: $op_white !important;
@@ -898,7 +914,35 @@ button.MuiButton-root:hover {
     background-color:rgba(25, 118, 210, 0.2);
     // background-color:rgba(25, 118, 210, 0.08) !important;
     &:hover {
-        background-color:rgba(25, 118, 210, 0.1) !important;;
+        background-color:rgba(25, 118, 210, 0.1) !important;
+    }
+}
+
+/* MUI tree overwritting */
+.MuiSimpleTreeView-root {
+    > li:not(:last-child) {
+        margin-bottom: 0.5rem;
+    }
+    > li {
+        background-color: $op_light_grey;
+        text-wrap: wrap !important;
+        border-radius: 6px;
+        > div {
+            background-color: #edf4fb !important;
+            &:hover {
+               background-color: #e3effa !important;
+            }
+        }
+    }
+}
+
+.Mui-expanded {
+    margin-bottom: 0px !important;
+}
+
+.lower_tree_item {
+    span {
+        font-weight: bold !important;
     }
 }
 
@@ -1091,6 +1135,8 @@ a.navbar-brand {
         text-wrap: wrap !important;
         border-radius: 6px;
         padding-right: 6px;
+    }
+    .op_sub_list, .op_sub_tree {
         &:after {
             content: '' !important;
             margin-right: 0rem !important;
@@ -1174,6 +1220,8 @@ ul.example_list {
 .op_toogle_btn {
     display: inline-block !important;
     overflow: hidden;
+    font-weight: normal !important;
+    color: $default_font_color !important;
     background-color: $op_white !important;
     // border: 1px solid $op_blue_2 !important;
     svg {
@@ -1470,6 +1518,10 @@ fieldset {
 }
 .color_hl {
     color: $hl_color !important;
+}
+
+.color_white {
+    color: $op_white !important;
 }
 
 .hl_bb {
