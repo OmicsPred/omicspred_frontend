@@ -2,6 +2,8 @@ import { href } from "react-router";
 import Href from '../../../components/Href';
 import { ToogleDiv, ToogleText } from '../../../components/Generic';
 import { element_icon } from '../../../components/Common';
+import { ArrowUpSquareFill } from "react-bootstrap-icons";
+import { Tooltip } from "@mui/material";
 
 
 const display_omics_link = (data, type, index) => {
@@ -37,11 +39,15 @@ export const display_metabolite_link = (metabolite, index) => {
 
 export const display_pathway_link = (pathway, data_size) => {
     if (data_size > 1) {
-        return <li key={pathway.external_id}><small>{display_omics_link(pathway,'pathway')}</small></li>
+        return <li key={pathway.external_id}><small>{display_omics_link(pathway,'pathway')}</small>{is_pathway_top_level(pathway)}</li>
     }
     else {
-        return display_omics_link(pathway,'pathway')
+        return <>{display_omics_link(pathway,'pathway')}{is_pathway_top_level(pathway)}</>
     }
+}
+
+const is_pathway_top_level = (pathway) => {
+    return <>{pathway.top_level==true? <Tooltip title="Top level pathway in Reactome"><ArrowUpSquareFill className="color_pathway ms-2" size="14"/></Tooltip>:''}</>
 }
 
 export const display_description = (description_list) => {

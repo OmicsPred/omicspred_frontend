@@ -72,6 +72,7 @@ $type_colors: (
 @mixin link_btn_hover {
     color: $op_white !important;
     background-color: $op_color_5 !important;
+    cursor: pointer;
 }
 @mixin note_container {
     border-left: 4px solid $op_color_4;

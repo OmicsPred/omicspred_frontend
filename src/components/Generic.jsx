@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { PlusCircleFill, DashCircleFill, People, InfoCircle, BarChart } from 'react-bootstrap-icons';
+import { PlusCircleFill, DashCircleFill, People, InfoCircle, BarChart, ArrowsExpand, ArrowsCollapse } from 'react-bootstrap-icons';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 
@@ -185,6 +185,18 @@ export const ToogleText = (props) => {
             </p>
         )
     }
+}
+
+
+export const ExpandCollapse = (props) => {
+    const icon_size = "14";
+    return (
+        <div className='btn-sm btn-op-sm op_toogle_btn shadow' onClick={props.handleExpandClick}>
+            { props.data_list.length > 0 ?
+                <><ArrowsCollapse size={icon_size}/> Collapse all</> :<><ArrowsExpand size={icon_size}/> Expand all</>
+            }
+        </div>
+    )
 }
 
 
