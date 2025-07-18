@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import restApiCall from '../../../components/RestAPI';
 import DataTree from '../../../components/DataTree';
-import { build_tree } from '../../MolecularTrait/components/components';
 import { display_pathway_link } from '../../MolecularTrait/components/links';
+import { consoleDev, build_tree } from '../../../components/Generic';
 
 
 const ReactomeTree = (props) => {
@@ -13,16 +13,16 @@ const ReactomeTree = (props) => {
     const top_level_pathway = current_pathway.superpathways.length > 0 ? current_pathway.superpathways[0] : null;
 
 
+    // Function to fetch all the data needed to build a Tree.
+    // It will be used to generate the TreeItem components.
     const fetchPathwayItems = async (pathway, superpathway) => {
         let items_list = {};
         let item_ids_list = new Set();
         let item_external_ids_list = new Set();
         const items = await build_tree_data(pathway, superpathway, items_list, item_ids_list, item_external_ids_list)
-        console.log(" Final items:");
-        console.log(Object.values(items));
         let item_ids = [];
 	    const tree = build_tree(Object.values(items), item_ids);
-        console.log(tree)
+        consoleDev(tree);
         setPathwayTree(tree);
     }
 
@@ -59,10 +59,10 @@ const ReactomeTree = (props) => {
             }
 		}
 
-        // Add to the list of pathway external IDs
+        // Add loaded pathway ID to the list of pathway external IDs
         item_external_ids_list.add(pathway_id)
 
-        // Upper level(s)
+        // Other Upper level(s) - if the loaded pathay has parent ID(s)
         if (parent_ids.length > 0) {
 			for (let i=0;i<parent_ids.length;i++) {
                 const parent_id = parent_ids[i]
@@ -88,6 +88,7 @@ const ReactomeTree = (props) => {
     }
 
 
+    // Generic function to build the data requested to generate a TreeItem (minus the children)
     const generate_item = (pathway_id, pathway, parent_id=null) => {
         const pathway_link = display_pathway_link(pathway,1);
         return ({
@@ -99,6 +100,7 @@ const ReactomeTree = (props) => {
     }
 
 
+    // Fetch pathway data
     const fetchData = async (pathway_id) => {
         const data = await restApiCall('pathway/'+pathway_id+'?include_molecular_traits=0');
         return data;

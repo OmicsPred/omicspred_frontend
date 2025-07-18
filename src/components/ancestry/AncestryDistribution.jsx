@@ -16,6 +16,7 @@ const AncestryDistribution = (props) => {
         }
     }
 
+
     const build_omics_data = (anc_data) => {
         let data = {
             'labels': [],
@@ -65,12 +66,13 @@ const AncestryDistribution = (props) => {
         return data
     }
 
+
     const build_tooltip = (data) => {
         if (data.datasets) {
             const dataset = data.datasets[0];
             return (
                 <div className="op_chart_tooltip">
-                    <div>Distribution</div>
+                    <div>Sample distribution</div>
                     <table>
                         <tbody>
                             { data.labels.map((label,index) =>
@@ -91,6 +93,7 @@ const AncestryDistribution = (props) => {
         }
     }
 
+
     const format_ancestry_sublist = (ancestry_sublist) => {
         return (
             <ul>
@@ -99,10 +102,12 @@ const AncestryDistribution = (props) => {
         )
     }
 
+
     useEffect(() => {
         fetchchartData();
     },[]);
-    
+
+
     return (
         <>
             { chartData && Object.keys(chartData).length > 0 ?

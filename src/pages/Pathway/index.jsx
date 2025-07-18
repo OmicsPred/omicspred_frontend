@@ -8,7 +8,7 @@ import DataTable from '../../components/table/DataTable';
 import { common_cols } from '../../components/table/columns/common';
 import restApiCall from '../../components/RestAPI';
 import { op_title, op_subtitle_no_asso, Header2Cards, element_icon, no_entry_found } from '../../components/Common';
-import { loading_data } from '../../components/Generic';
+import { loading_data, thousandifyNumber } from '../../components/Generic';
 import ReactomeDiagram from './components/Diagram';
 import ReactomeTree from './components/Tree';
 import { display_source, display_superpathways, display_synonyms } from '../MolecularTrait/components/links';
@@ -98,12 +98,13 @@ function Pathway() {
 	const get_information_right_content = () => {
 		return (
 			<>
+				{/* Linked genes */}
 				{ geneData && geneData.length > 0 ?
 					<tr>
 						<td>{element_icon('gene')}<span>Mapped gene{geneData.length > 1 && 's'}</span></td>
 						<td key='genes_data'>
 							<div className='d-flex justify-content-between'>
-								{geneData.length}
+								{thousandifyNumber(geneData.length)}
 								<Tooltip title="See details in the Gene table at the bottom of the current page">
 									<div className="ms-3" style={{marginTop:"-2px"}}>
 										<Href href="#gene_table" icon={<Table/>}/>
@@ -113,12 +114,13 @@ function Pathway() {
 						</td>
 					</tr> : ''
 				}
+				{/* Linked proteins */}
 				{ proteinData && proteinData.length > 0 ?
 					<tr>
 						<td>{element_icon('protein')}<span>Mapped protein{proteinData.length > 1 && 's'}</span></td>
 						<td key='proteins_data'>
 							<div className='d-flex justify-content-between'>
-								{proteinData.length}
+								{thousandifyNumber(proteinData.length)}
 								<Tooltip title="See details in the Protein table at the bottom of the current page">
 									<div className="ms-3" style={{marginTop:"-2px"}}>
 										<Href href="#protein_table" icon={<Table/>}/>
@@ -128,12 +130,13 @@ function Pathway() {
 						</td>
 					</tr> : ''
 				}
+				{/* Linked metabolites */}
 				{ metaboliteData && metaboliteData.length > 0 ?
 					<tr>
 						<td>{element_icon('metabolite')}<span>Mapped metabolite{metaboliteData.length > 1 && 's'}</span></td>
 						<td key='metabolite_data'>
 							<div className='d-flex justify-content-between'>
-								{metaboliteData.length}
+								{thousandifyNumber(metaboliteData.length)}
 								<Tooltip title="See details in theMetabolite table at the bottom of the current page">
 									<div className="ms-3" style={{marginTop:"-2px"}}>
 										<Href href="#metabolite_table" icon={<Table/>}/>

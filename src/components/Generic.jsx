@@ -237,6 +237,39 @@ export const TooltipHtml = styled(({ className, ...props }) => (
 }));
 
 
+// Recursive function to build a tree,
+// by creating a data structure that can be used to build a SimpleTreeView with TreeItem components
+export const build_tree = (data, item_ids, parentId = null) => {
+	let tree = [];
+    data.forEach(item => {
+        // Check if the item belongs to the current parent
+		if (item.parentId === parentId) {
+			let new_item = {...item};
+            // Recursively build the children of the current item
+			let children = build_tree(data, item_ids, item.external_id);
+			// If children exist, assign them to the current item
+			if (children.length) {
+				new_item.children = children;
+			}
+			if (item_ids.includes(new_item.id)) {
+				let suffix = 0
+				let tmp_id = new_item.id+'_'+suffix;
+				while (item_ids.includes(tmp_id)) {
+					suffix += 1;
+					tmp_id = new_item.id+'_'+suffix;
+				}
+				new_item.id = tmp_id
+			}
+			item_ids.push(new_item.id)
+
+            // Add the current item to the tree
+			tree.push(new_item);
+        }
+    });
+    return tree;
+}
+
+
 export const useExternalScript = (url) => {
     let [state, setState] = useState(url ? "loading" : "idle");
 
