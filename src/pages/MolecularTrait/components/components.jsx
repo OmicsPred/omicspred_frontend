@@ -3,7 +3,7 @@ import { Tooltip } from '@mui/material';
 import { Table } from 'react-bootstrap-icons';
 import restApiCall from '../../../components/RestAPI';
 import { op_title, element_icon, Header2Cards } from '../../../components/Common';
-import { ToogleID }  from '../../../components/Generic';
+import { ToogleID, build_tree }  from '../../../components/Generic';
 import { ScoresTable, PerformanceMetricsTable } from './tables';
 import { display_gene_link, display_protein_link, display_metabolite_link, display_phenotype_link, display_pathway_link, sort_data } from './links';
 import Href from '../../../components/Href';
@@ -139,35 +139,6 @@ const build_pathway_tree = (pathways_list) => {
 	return tree;
 }
 
-export const build_tree = (data, item_ids, parentId = null) => {
-	let tree = [];
-    data.forEach(item => {
-        // Check if the item belongs to the current parent
-		if (item.parentId === parentId) {
-			let new_item = {...item};
-            // Recursively build the children of the current item
-			let children = build_tree(data, item_ids, item.external_id);
-			// If children exist, assign them to the current item
-			if (children.length) {
-				new_item.children = children;
-			}
-			if (item_ids.includes(new_item.id)) {
-				let suffix = 0
-				let tmp_id = new_item.id+'_'+suffix;
-				while (item_ids.includes(tmp_id)) {
-					suffix += 1;
-					tmp_id = new_item.id+'_'+suffix;
-				}
-				new_item.id = tmp_id
-			}
-			item_ids.push(new_item.id)
-
-            // Add the current item to the tree
-			tree.push(new_item);
-        }
-    });
-    return tree;
-}
 
 const build_tree_data = (pathways_list) => {
 	let items = [];

@@ -19,6 +19,7 @@ const AncestryLegend = () => {
         }
     }
 
+
     const ancestry_item = (anc) => {
         const ancestry_labels_data = ancestry_labels();
         return(
@@ -28,22 +29,23 @@ const AncestryLegend = () => {
         )
     }
 
+
     return(
-            <div className="card p-0">
-                <div className="card-header"><h6 className="mb-0">Ancestry legend</h6></div>
-                <div className="card-body p-2">
-                    <div className="card-text" style={{ fontSize:"12px" }}>
-                        <div className='d-flex'>
-                            <div className='d-flex flex-column'>
-                                {anc_list_left.map((anc) => ancestry_item(anc))}
-                            </div>
-                            <div className='d-flex flex-column ps-2 ms-2' style={{ borderLeft:"1px solid #CCC" }}>
-                                {anc_list_right.map((anc) => ancestry_item(anc))}
-                            </div>
+        <div className="card p-0">
+            <div className="card-header"><h6 className="mb-0">Ancestry legend</h6></div>
+            <div className="card-body p-2">
+                <div className="card-text" style={{ fontSize:"12px" }}>
+                    <div className='d-flex'>
+                        <div className='d-flex flex-column'>
+                            {anc_list_left.map((anc) => ancestry_item(anc))}
+                        </div>
+                        <div className='d-flex flex-column ps-2 ms-2' style={{ borderLeft:"1px solid #CCC" }}>
+                            {anc_list_right.map((anc) => ancestry_item(anc))}
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     )
 }
 

@@ -2,10 +2,9 @@ import { useState, useEffect } from 'react';
 // import { RichTreeView } from '@mui/x-tree-view/RichTreeView';
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
 import { TreeItem } from '@mui/x-tree-view/TreeItem';
-import Box from '@mui/material/Box';
 import { Tooltip } from "@mui/material";
 import { ArrowRightCircle } from 'react-bootstrap-icons';
-import { ExpandCollapse } from './Generic';
+import { ExpandCollapse, loading_data } from './Generic';
 
 
 const DataTree = (props) => {
@@ -19,7 +18,7 @@ const DataTree = (props) => {
 
     const items = props.tree_items;
 
-
+    // Build tree and setup list of expanded items
     const get_tree = (items) => {
         const tree = build_tree(items);
         if (props.expanded && props.expanded == '0' ) {
@@ -32,7 +31,7 @@ const DataTree = (props) => {
     }
 
 
-    // Recursive method to build the TreeView
+    // Recursive method to build the TreeView using TreeItem for the SimpleTreeView
     const build_tree = (items) => {
         let tree = <></>;
         for (let i=0; i<items.length; i++) {
@@ -102,7 +101,7 @@ const DataTree = (props) => {
                     <tr><td colSpan="2" className='op_sub_tree pb-4'></td></tr>
                     <tr>
                         <td colSpan="2" className='op_sub_tree card-sub-header'>
-                            <div className='d-flex justify-content-between' style={{color:"FFF"}}>
+                            <div className='d-flex justify-content-between'>
                                 {props.title}
                                 <ExpandCollapse data_list={expandedItemsIDs} handleExpandClick={handleExpandClick}/>
                             </div>
@@ -111,8 +110,10 @@ const DataTree = (props) => {
                     <tr>
                         <td colSpan="2" className='op_sub_tree pt-3'><div className='d-flex'>{simple_tree()}</div></td>
                     </tr>
-                </> : <Box>{simple_tree()}</Box>
-            : ''
+                </>
+                : simple_tree()
+            : props.type == 'card' ?
+                <tr><td>{loading_data()}</td></tr> : loading_data()
         }
         </>
     )
