@@ -302,6 +302,48 @@ export const Header2Cards = (props) => {
 }
 
 
+export const TableOfContent = (props) => {
+    const items_per_col_threshold = 8;
+    const prefix = props.prefix ? props.prefix : ''
+
+    // Setup list of data content
+    let items = Object.keys(props.content_headers); // Will be used as "items_right"
+    let items_left = [...items];
+    if (items.length > items_per_col_threshold) {
+        const max_per_col = Math.round(items.length/2);
+        items_left = items.splice(0,max_per_col);
+    }
+    else {
+        items = null;
+    }
+    return (
+        <div className='d-flex mb-5'>
+            <div className="card p-0">
+                <div className="card-header"><h6 className="mb-0">{props.title}</h6></div>
+                <div className="card-body p-2">
+                    <div className='d-flex'>
+                        {/* First half */}
+                        <ul className='mb-0'>
+                            {
+                                items_left.map((header_id) => <li key={"item_"+header_id}><Href href={'#'+prefix+header_id} text={props.content_headers[header_id]}/></li>)
+                            }
+                        </ul>
+                        {/* Second half */}
+                        { items ?
+                            <ul className='mb-0 ms-2'>
+                                {
+                                    items.map((header_id) => <li key={"item_"+header_id}><Href href={'#'+prefix+header_id} text={props.content_headers[header_id]}/></li>)
+                                }
+                            </ul> : ''
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+
 export const publication_ref = (publication,display_year) => {
     let year = undefined;
     if (display_year && publication.date_publication) {

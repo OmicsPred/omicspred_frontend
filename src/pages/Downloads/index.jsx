@@ -2,7 +2,7 @@ import { CodeSlash } from 'react-bootstrap-icons';
 import DataTableFromRestApi from "../../components/table/DataTableFromRestApi";
 import { datasets_columns } from "../../components/table/columns/datasets";
 import Href from '../../components/Href';
-import { PageTitleSimple, op_subtitle_no_asso } from '../../components/Common';
+import { PageTitleSimple, TableOfContent, op_subtitle_no_asso } from '../../components/Common';
 import { Note } from '../../components/Generic';
 import { download_labels, download_applications_labels } from '../../components/Downloads';
 
@@ -10,11 +10,17 @@ import { download_labels, download_applications_labels } from '../../components/
 function Downloads() {
     const url_suffix = 'dataset/all';
 
+    const project_name = process.env.PROJECT_NAME
+
+    const table_of_content = {
+        'genetic_scores': 'Genetic scores',
+        'phewas_associations': 'PheWAS associations'
+    }
 
     const rest_api_doc = () => {
         return (
             <>
-                Programmatic access to the {process.env.PROJECT_NAME} metadata is also available via a REST API.
+                Programmatic access to the {project_name} metadata is also available via a REST API.
                 <div className='mt-2'>
                     <a href={process.env.REST_API_URL_PUBLIC} className="btn btn-op btn-sm shadow"><CodeSlash size='0.9em' className='me-2'/>REST API documentation</a>
                 </div>
@@ -28,15 +34,17 @@ function Downloads() {
         <div>
             <PageTitleSimple title='Downloads'/>
 
-            <div className='mb-4'>
-                {process.env.PROJECT_NAME} metadata and data files downloads.
+            <div className='mb-3'>
+                {project_name} metadata and data files downloads.
             </div>
+
+            <TableOfContent title={project_name+' downloads'} content_headers={table_of_content}/>
 
             <div className='mb-5'>
                 <Note msg={rest_api_doc()}/>
             </div>
 
-            <div>
+            <div id='genetic_scores'>
                 {op_subtitle_no_asso('hl','Genetic scores')}
 
                 <h6 className='mt-4 mb-3'><b>The different data files available are listed below:</b></h6>
@@ -56,7 +64,7 @@ function Downloads() {
                 </div>
             </div>
 
-            <div className='mt-5'>
+            <div className='mt-5' id='phewas_associations'>
                {op_subtitle_no_asso('hl','PheWAS associations')}
                 <ul className='expanded mt-3'>
                     { Object.keys(download_applications_labels).map((type) =>

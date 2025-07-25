@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import restApiCall from '../../../components/RestAPI';
-import DataTree from '../../../components/DataTree';
-import { display_pathway_link } from '../../MolecularTrait/components/links';
-import { consoleDev, build_tree } from '../../../components/Generic';
+import { DataTree, build_tree, generate_item } from '../../../components/DataTree';
+import { consoleDev } from '../../../components/Generic';
 
 
 const ReactomeTree = (props) => {
@@ -85,18 +84,6 @@ const ReactomeTree = (props) => {
             }
         }
         return items;
-    }
-
-
-    // Generic function to build the data requested to generate a TreeItem (minus the children)
-    const generate_item = (pathway_id, pathway, parent_id=null) => {
-        const pathway_link = display_pathway_link(pathway,1);
-        return ({
-            'id': pathway_id,
-            'external_id': pathway.external_id,
-            'label': <small>{pathway_link}</small>,
-            'parentId': parent_id
-        })
     }
 
 

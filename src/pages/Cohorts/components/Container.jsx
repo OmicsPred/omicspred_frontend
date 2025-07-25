@@ -6,7 +6,7 @@ const Container = (props) => {
     const cohort = props.data;
 
     return (
-        <div className="w-full h-auto py-2">
+        <div className="w-full h-auto py-2" id={cohort.labels[0]}>
             <h3 className="hl_grey_box mb-3 p-2">
                 <span>
                     <ChevronRight className='me-1' size='1.4rem'/><Href href={cohort.href} text={cohort.title}/>

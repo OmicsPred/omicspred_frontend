@@ -3,11 +3,12 @@ import { Tooltip } from '@mui/material';
 import { Table } from 'react-bootstrap-icons';
 import restApiCall from '../../../components/RestAPI';
 import { op_title, element_icon, Header2Cards } from '../../../components/Common';
-import { ToogleID, build_tree }  from '../../../components/Generic';
+import { ToogleID, TooltipText }  from '../../../components/Generic';
 import { ScoresTable, PerformanceMetricsTable } from './tables';
 import { display_gene_link, display_protein_link, display_metabolite_link, display_phenotype_link, display_pathway_link, sort_data } from './links';
 import Href from '../../../components/Href';
-import DataTree from '../../../components/DataTree';
+import { DataTree, build_tree, generate_item } from '../../../components/DataTree';
+
 
 export const MolecularTraitContent = (props) => {
 
@@ -80,6 +81,7 @@ export const MolecularTraitAssociation = (props) => {
 			{ transcripts && transcripts.length > 0 ? <tr key='transcripts'><td>{element_icon('transcript')}<span>Transcript{transcripts.length > 1 && 's'}</span></td><td>{transcripts.map((data, index) => <span key={'trans_'+data.name}>{index ? ', ': ''}<span key={data.name}>{data.name}</span></span>)}</td></tr> : '' }
 			{ proteins && proteins.length > 0 ? <tr key='proteins'><td>{element_icon('protein')}<span>Protein{proteins.length > 1 && 's'}</span></td><td>{proteins.map((data, index) => display_protein_link(data,index))}</td></tr> : '' }
 			{ metabolites && metabolites.length > 0 ? <tr key='metabolites'><td>{element_icon('metabolite')}<span>Metabolite{metabolites.length > 1 && 's'}</span></td><td>{metabolites.map((data, index) => display_metabolite_link(data,index))}</td></tr> : '' }
+			{/* Phenotypes */}
 			{ phenotypes && phenotypes.length > 0 ?
 				<>
 					<tr key='phenotypes'><td>{element_icon('phenotype')}<span>PheWAS</span></td><td>
@@ -107,9 +109,11 @@ export const MolecularTraitAssociation = (props) => {
 					}
 				</> : ''
 			}
+			{/* Pathways */}
 			{ pathways && pathways.length > 0 ?
 				<>
-					<tr key='pathways'><td>{element_icon('pathway')}<span>Pathway{pathways.length > 1 && 's'}</span></td><td>
+					{/* <tr key='pathways'><td>{element_icon('pathway')}<span>Pathway{pathways.length > 1 && 's'} <TooltipHelp title='Pathway links provided by Reactome'/></span></td><td> */}
+					<tr key='pathways'><td>{element_icon('pathway')}<span><TooltipText text={<>Pathway{pathways.length > 1 && 's'}</>} title='Pathway links provided by Reactome'/></span></td><td>
 						{
 							pathways.length > 1 ?
 								<ToogleID key={'toggle_pathways'} title={<><span className='font-bold'>{pathways.length}</span> associated pathways</>} id="pathways"/>
@@ -148,25 +152,18 @@ const build_tree_data = (pathways_list) => {
 		const pathway_id = pathway.external_id;
 		const parent_ids = pathway.parent_external_ids;
 
-		const pathway_link = display_pathway_link(pathway,1)
+		// const pathway_link = display_pathway_link(pathway,1)
 
 		if (parent_ids.length > 0) {
 			for (let i=0;i<parent_ids.length;i++) {
-				items.push({
-					'id': pathway_id+"_"+parent_ids[i],
-					'external_id': pathway_id,
-					'label': <small>{pathway_link}</small>,
-					'parentId': parent_ids[i]
-				})
+				const id = pathway_id+"_"+parent_ids[i];
+				const item = generate_item(id, pathway, parent_ids[i]);
+				items.push(item)
 			}
 		}
 		else {
-			items.push({
-				'id': pathway_id,
-				'external_id': pathway_id,
-				'label': <small>{pathway_link}</small>,
-				'parentId': null
-			})
+			const item = generate_item(pathway_id, pathway);
+			items.push(item)
 		}
 	}
 	return items;

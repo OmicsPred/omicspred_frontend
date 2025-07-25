@@ -159,12 +159,7 @@ export const ToogleText = (props) => {
     useEffect(() => {}, [show])
 
     const hideShowDiv = () => {
-        if (show) {
-            setShow(false);
-        }
-        else {
-            setShow(true);
-        }
+        show ? setShow(false) : setShow(true);
     }
 
     let toogle_class = 'op_toogle_text';
@@ -178,9 +173,9 @@ export const ToogleText = (props) => {
         return (
             <p key={displayed_text.replaceAll(/\W+/g,'_')} className='mb-0'>
                 <span>{displayed_text}</span>
-                {show ? hidden_text: '...'}
+                { show ? hidden_text : '...' }
                 <span className={toogle_class} onClick={(e) => {hideShowDiv(e)}}>
-                    {show ? ' [less]':' [more]'}
+                    { show ? ' [less]' : ' [more]' }
                 </span>
             </p>
         )
@@ -193,7 +188,7 @@ export const ExpandCollapse = (props) => {
     return (
         <div className='btn-sm btn-op-sm op_toogle_btn shadow' onClick={props.handleExpandClick}>
             { props.data_list.length > 0 ?
-                <><ArrowsCollapse size={icon_size}/> Collapse all</> :<><ArrowsExpand size={icon_size}/> Expand all</>
+                <><ArrowsCollapse size={icon_size}/> Collapse all</> : <><ArrowsExpand size={icon_size}/> Expand all</>
             }
         </div>
     )
@@ -235,39 +230,6 @@ export const TooltipHtml = styled(({ className, ...props }) => (
         fontSize: '13px'
     },
 }));
-
-
-// Recursive function to build a tree,
-// by creating a data structure that can be used to build a SimpleTreeView with TreeItem components
-export const build_tree = (data, item_ids, parentId = null) => {
-	let tree = [];
-    data.forEach(item => {
-        // Check if the item belongs to the current parent
-		if (item.parentId === parentId) {
-			let new_item = {...item};
-            // Recursively build the children of the current item
-			let children = build_tree(data, item_ids, item.external_id);
-			// If children exist, assign them to the current item
-			if (children.length) {
-				new_item.children = children;
-			}
-			if (item_ids.includes(new_item.id)) {
-				let suffix = 0
-				let tmp_id = new_item.id+'_'+suffix;
-				while (item_ids.includes(tmp_id)) {
-					suffix += 1;
-					tmp_id = new_item.id+'_'+suffix;
-				}
-				new_item.id = tmp_id
-			}
-			item_ids.push(new_item.id)
-
-            // Add the current item to the tree
-			tree.push(new_item);
-        }
-    });
-    return tree;
-}
 
 
 export const useExternalScript = (url) => {

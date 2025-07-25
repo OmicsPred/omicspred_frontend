@@ -2,7 +2,7 @@ import { href } from "react-router";
 import Href from '../../../components/Href';
 import { ToogleDiv, ToogleText } from '../../../components/Generic';
 import { element_icon } from '../../../components/Common';
-import { ArrowUpSquareFill } from "react-bootstrap-icons";
+// import { ArrowUpSquareFill } from "react-bootstrap-icons";
 import { Tooltip } from "@mui/material";
 
 
@@ -47,7 +47,7 @@ export const display_pathway_link = (pathway, data_size) => {
 }
 
 const is_pathway_top_level = (pathway) => {
-    return <>{pathway.top_level==true? <Tooltip title="Top level pathway in Reactome"><ArrowUpSquareFill className="color_pathway ms-2" size="14"/></Tooltip>:''}</>
+    return <>{pathway.top_level==true? <Tooltip title="Top level pathway in Reactome"><span className="badge bg_pathway ms-2">TOP</span></Tooltip>:''}</>
 }
 
 export const display_description = (description_list) => {

@@ -576,6 +576,17 @@ a {
     }
 }
 
+.op_link {
+    @include link_default_color;
+    vertical-align: middle;
+    svg, span {
+        vertical-align: middle;
+    }
+    &:hover {
+       @include link_hover_color;
+    }
+}
+
 .even_section, .odd_section {
     margin: 4rem 0rem 0rem;
     text-align:center;

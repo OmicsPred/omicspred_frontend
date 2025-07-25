@@ -19,7 +19,7 @@ function Pathways() {
     }
 
     const reactome_link_text = () => {
-        return (<>Reactome "Identifier mapping files <ArrowRight /> Lowest level pathway diagram"</>)
+        return (<>Reactome "Identifier mapping files <ArrowRight /> All levels of the pathway hierarchy"</>)
     }
 
     useEffect(() => {
