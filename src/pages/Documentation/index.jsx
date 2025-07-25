@@ -1,5 +1,5 @@
 import { ArrowRight, Hexagon } from 'react-bootstrap-icons';
-import { PageTitleSimple } from '../../components/Common';
+import { PageTitleSimple, TableOfContent } from '../../components/Common';
 import Href from '../../components/Href';
 import Container from "./components/Container";
 
@@ -117,18 +117,20 @@ const documentation_op = {
     'Pathway': {
         'label': 'pathway',
         'desc': <>
-                    <p>The Pathways come from <Href text="Reactome" href="https://reactome.org/"/> and the mapping pathways-genes and pathways-metabolites have be done using the mappings files from the <Href href='https://reactome.org/download-data' text={<>Reactome "Identifier mapping files <ArrowRight /> Lowest level pathway diagram"</>}/>.</p>
-                    <span>From the file category "Lowest level pathway diagram" we used:</span>
+                    <p>The Pathways come from <Href text="Reactome" href="https://reactome.org/"/> and the mapping pathways-genes and pathways-metabolites have be done using the mappings files from the <Href href='https://reactome.org/download-data' text={<>Reactome "Identifier mapping files <ArrowRight /> All levels of the pathway hierarchy"</>}/>.</p>
+                    <span>From the file category "All levels of the pathway hierarchy" we used:</span>
                     <ul>
-                        <li>The <Href text="ENSEMBL to pathways" href="https://reactome.org/download/current/Ensembl2Reactome.txt"/> file to map the genes (Ensembl2Reactome.txt), and to map the proteins by extension.</li>
-                        <li>The <Href text="ChEBI to pathways" href="https://reactome.org/download/current/ChEBI2Reactome.txt"/> file to map the metabolites (ChEBI2Reactome.txt).</li>
+                        <li>The <Href text="Ensembl to pathways" href="https://reactome.org/download/current/Ensembl2Reactome_All_Levels.txt"/> file to map the genes (<i>Ensembl2Reactome_All_Levels.txt</i>), and to map the proteins by extension.</li>
+                        <li>The <Href text="ChEBI to pathways" href="https://reactome.org/download/current/ChEBI2Reactome_All_Levels.txt"/> file to map the metabolites (<i>ChEBI2Reactome_All_Levels.txt</i>).</li>
                     </ul>
                 </>,
         'struct': [
             {'name': 'Name', 'desc': 'Name of the Pathway'},
             {'name': 'External Identifier', 'desc': 'Pathway external identifier (e.g. R-HSA-156582 from Reactome)'},
             {'name': 'External Source', 'desc': 'Pathway external source (e.g. Reactome)'},
-            {'name': 'Super Pathways', 'desc': 'List of parent Pathways'}
+            {'name': 'Parent External Identifier', 'desc': 'List of parent Pathway external ID(s)'},
+            {'name': 'Top Level', 'desc': 'Flag to indicate if the Pathway is top-level or not in Reactome'},
+            {'name': 'Super Pathways', 'desc': 'List of top-level parent Pathway'}
         ]
     },
     'Molecular Trait': {
@@ -196,27 +198,15 @@ const documentation_op = {
     }
 }
 
-// const documentation_app = {
-//     'Phenotype': {
-//         'label': 'phenotype',
-//         'desc': '',
-//         'struct': [
-//         ]
-//     },
-//     'Score Application (Phenotype)': {
-//         'label': 'score_app',
-//         'desc': '',
-//         'struct': [
-//         ]
-//     },
-// }
-
 const data_prefix = "struct_";
 
-const max_per_col = Math.round(Object.keys(documentation_op).length/2);
-
-const items = Object.keys(documentation_op); // Will be used as "items_right"
-const items_left = items.splice(0,max_per_col);
+const items_cat = Object.keys(documentation_op); // Will be used as "items_right"
+let table_of_content = {}
+for (let i=0; i<items_cat.length;i++) {
+    const cat_name = items_cat[i];
+    const cat_id = documentation_op[cat_name].label;
+    table_of_content[cat_id] = cat_name;
+}
 
 function Documentation() {
     return (
@@ -227,27 +217,7 @@ function Documentation() {
                 This page contains information regarding the contents of {project_name} and the data structure of its main components.
             </p>
         </div>
-        <div className='d-flex mb-5'>
-            <div className="card p-0">
-                <div className="card-header"><h6 className="mb-0">List of data structures</h6></div>
-                <div className="card-body p-2">
-                    <div className='d-flex'>
-                        {/* First half */}
-                        <ul className='mb-0'>
-                            {
-                                items_left.map((model_name) => <li key={"item_"+documentation_op[model_name].label}><Href href={'#'+data_prefix+documentation_op[model_name].label} text={model_name}/></li>)
-                            }
-                        </ul>
-                        {/* Second half */}
-                        <ul className='mb-0 ms-2'>
-                            {
-                                items.map((model_name) => <li key={"item_"+documentation_op[model_name].label}><Href href={'#'+data_prefix+documentation_op[model_name].label} text={model_name}/></li>)
-                            }
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <TableOfContent title={'List of data structures'} content_headers={table_of_content} prefix={data_prefix}/>
         {
           Object.keys(documentation_op).map((model_name) => <Container key={data_prefix+documentation_op[model_name].label} title={model_name} content={documentation_op[model_name]} prefix={data_prefix}/>)
         }

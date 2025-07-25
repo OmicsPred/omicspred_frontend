@@ -5,7 +5,7 @@ import Container from "./components/Container";
 import SearchDocs from "./components/SearchDocs";
 import Href from "../../components/Href";
 import CitationCard from "../../components/CitationCard";
-import { PageTitleSimple, url_tooltip, external_sources } from "../../components/Common";
+import { PageTitleSimple, TableOfContent, url_tooltip, external_sources } from "../../components/Common";
 import { Note } from '../../components/Generic';
 import DataTable from "../../components/table/DataTable";
 import { ChevronDoubleRight, ChevronRight } from 'react-bootstrap-icons';
@@ -263,41 +263,19 @@ function About() {
 
 	const about_prefix = "about_";
 
-	// const max_per_col = Math.round(Object.keys(about_op).length/2);
-
-	const items = Object.keys(about_op); // Will be used as "items_right"
-	// const items_left = items.splice(0,max_per_col);
+	let table_of_content = {}
+	const cat_names = Object.keys(about_op)
+	for (let i=0; i<cat_names.length;i++) {
+		const cat_name = cat_names[i];
+		const cat_id = about_op[cat_name].label;
+		table_of_content[cat_id] = cat_name;
+	}
 
 	return (
 		<>
 			<PageTitleSimple title="About"/>
-			<div className="mb-5">The {project_name} Atlas development was led by <Href text="Yu Xu" href="mailto:yx322@medschl.cam.ac.uk"></Href>, under the supervison of <Href text="Michael Inouye" href="https://www.inouyelab.org/home/people" /> at the Department of Public Health and Primary Care, University of Cambridge.</div>
-			<div className='d-flex mb-5'>
-				<div className="card p-0">
-					<div className="card-header"><h6 className="mb-0">About {project_name}</h6></div>
-					<div className="card-body p-2">
-						<div className='d-flex'>
-							<ul className='mb-0'>
-								{
-									items.map((cat_name) => <li key={"item_"+about_op[cat_name].label}><Href href={'#'+about_prefix+about_op[cat_name].label} text={cat_name}/></li>)
-								}
-							</ul>
-							{/* First half */}
-							{/* <ul className='mb-0'>
-								{
-									items_left.map((model_name) => <li key={"item_"+about_op[model_name].label}><Href href={'#'+data_prefix+documentation_op[model_name].label} text={model_name}/></li>)
-								}
-							</ul> */}
-							{/* Second half */}
-							{/* <ul className='mb-0 ms-2'>
-								{
-									items.map((model_name) => <li key={"item_"+about_op[model_name].label}><Href href={'#'+data_prefix+documentation_op[model_name].label} text={model_name}/></li>)
-								}
-							</ul> */}
-						</div>
-					</div>
-				</div>
-			</div>
+			<div className="mb-3">The {project_name} Atlas development was led by <Href text="Yu Xu" href="mailto:yx322@medschl.cam.ac.uk"></Href>, under the supervison of <Href text="Michael Inouye" href="https://www.inouyelab.org/home/people" /> at the Department of Public Health and Primary Care, University of Cambridge.</div>
+			<TableOfContent title={'About '+project_name} content_headers={table_of_content} prefix={about_prefix}/>
 			{
 				Object.keys(about_op).map((cat_name) => <Container key={about_prefix+about_op[cat_name].label} title={cat_name} content={about_op[cat_name].text} prefix={about_prefix}/>)
 			}

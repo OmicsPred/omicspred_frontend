@@ -332,7 +332,7 @@ export const common_cols = {
             return (
                 <div>
                     <Href href={"/publication/"+opp_id} text={opp_id}/>
-                    <div className='small'>{firstauthor}{firstauthor.endsWith('.') ? '' : <i>et al.</i>} {journal} ({year})</div>
+                    <div className='small'>{firstauthor}{firstauthor.endsWith('.') ? '' : <i> et al.</i>} {journal} ({year})</div>
                 </div>
             )
         },
