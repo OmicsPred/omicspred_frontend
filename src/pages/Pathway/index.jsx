@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Tooltip } from '@mui/material';
-import { ArrowUpSquareFill, Table } from 'react-bootstrap-icons';
+import { ArrowUpSquareFill, ArrowRight, Table } from 'react-bootstrap-icons';
 import DocumentTitle from '../../components/DocumentTitle';
 import Href from '../../components/Href';
 import DataTable from '../../components/table/DataTable';
 import { common_cols } from '../../components/table/columns/common';
 import restApiCall from '../../components/RestAPI';
 import { op_title, op_subtitle_no_asso, Header2Cards, element_icon, no_entry_found } from '../../components/Common';
-import { loading_data, thousandifyNumber } from '../../components/Generic';
+import { loading_data, Note, thousandifyNumber } from '../../components/Generic';
 import ReactomeDiagram from './components/Diagram';
 import ReactomeTree from './components/Tree';
 import { display_source, display_superpathways, display_synonyms } from '../MolecularTrait/components/links';
@@ -52,6 +52,17 @@ function Pathway() {
     ]
 
 	const key_cols = ['external_id','name'];
+
+
+	const reactome_link_text = () => {
+        return (<>Reactome "Identifier mapping files <ArrowRight /> All levels of the pathway hierarchy"</>)
+    }
+
+	const reactome_note = () => {
+		return (
+			<>These <span className='fw-bold'>Pathway / Molecular Traits</span> mappings come from Reactome (source: <Href text={reactome_link_text()} href='https://reactome.org/download-data' />).</>
+		)
+	}
 
     const fetchData = async () => {
 		const data = await restApiCall(element+'/'+pathway);
@@ -165,6 +176,10 @@ function Pathway() {
 
 					{/* Reactome Diagram */}
 					<ReactomeDiagram reactome_id={elementData.external_id} />
+
+					<div className='d-flex mt-4'>
+						<Note msg={reactome_note()}/>
+					</div>
 
 					{/* Associated genes */}
 					{
