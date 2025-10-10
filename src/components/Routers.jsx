@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router';
 import About from "../pages/About";
 import Cohort from "../pages/Cohort";
 import Cohorts from "../pages/Cohorts";
+import Dataset from "../pages/Dataset";
 import Documentation from "../pages/Documentation";
 import Downloads from "../pages/Downloads";
 import FAQs from "../pages/FAQs";
@@ -61,6 +62,7 @@ function OpRouters() {
                 
                 {/* Individual pages */}
                 <Route path="/cohort/:cohort" element={<Cohort />} />
+                <Route path="/dataset/:opd_id" element={<Dataset />} />
                 <Route path="/gene/:gene" element={<Gene />} />
                 <Route path="/metabolite/:metabolite" element={<Metabolite />} />
                 <Route path="/pathway/:pathway" element={<Pathway />} />

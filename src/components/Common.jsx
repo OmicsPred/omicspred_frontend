@@ -1,26 +1,61 @@
 import Href from "./Href";
-import { Bezier2, Book, ChevronRight, ClipboardData, People, BoxFill, Stack, Hexagon, HexagonFill, Lungs, PersonArmsUp } from 'react-bootstrap-icons';
+import { Bezier2, Book, ChevronRight, ClipboardData, BoxFill, Stack, Hexagon, HexagonFill, Lungs, PersonArmsUp, LayersFill, PeopleFill } from 'react-bootstrap-icons';
 import { cohort_cols, common_column_groups } from './table/columns/common';
 import { ToogleDiv, ToogleText, TooltipText, thousandifyNumber, firstLetterUc } from './Generic';
 import DocumentTitle from './DocumentTitle';
 
 
-export const internal_publication_link = (publication) => {
+export const internal_publication_link = (publication, show_icon) => {
     const opp_id = publication.id
     const firstauthor = publication.firstauthor;
     const journal = publication.journal;
     const year = publication.date_publication.split('-')[0];
     return(
         <>
+            { show_icon ? <Book className='me-2 color_hl'/> : ''}
             <Href href={"/publication/"+opp_id} text={<>{firstauthor}{firstauthor.endsWith('.') ? '' : <i>et al.</i>} {journal} ({year})</>}/> <span>({opp_id})</span>
         </>
     )
 }
 
 
-export const tissue_link = (tissue) => {
+export const internal_platform_link = (platform, show_icon) => {
+    const name = platform.name
+    const version = platform.version;
+    return(
+        <>
+            { show_icon ? <Stack className={'me-2 color_'+platform.type}/> : ''}
+            <Href href={"/platform/"+name} text={name}/>{version ? <span className='ms-1' title='Platform version'>({version})</span> : ''}<span className='mx-2'>-</span>{omicspred_omics_type(platform.type)}
+        </>
+    )
+}
+
+
+export const internal_dataset_link = (dataset_id, dataset_name, show_icon) => {
+    const link = "/dataset/"+dataset_id;
+    if (dataset_name) {
+        return (
+            <>
+                { show_icon ? <LayersFill className={'me-2 color_hl'}/> : ''}
+                <Href href={link} text={dataset_name}/> ({dataset_id})
+            </>
+        )
+    }
+    else {
+        return(
+            <>
+                { show_icon ? <LayersFill className={'me-2 color_hl'}/> : ''}
+                <Href href={link} text={dataset_id}/>
+            </>
+        )
+    }
+}
+
+
+export const internal_tissue_link = (tissue, show_icon) => {
     return (
         <>
+            { show_icon ? <Lungs className={'me-2 color_tissue'}/> : ''}
             <Href href={'/tissue/'+tissue.id} text={<TooltipText title={tissue.description} text={tissue.label} ttype='link'/>} /> (<Href href={tissue.url} text={tissue.id}/>)
         </>
     )
@@ -61,6 +96,7 @@ export const url_tooltip = (type) => {
 }
 
 
+// Main pages (Browse, all Phenotypes and individual Cohort)
 export const PageTitle = (props) => {
     const type = props.type;
     const category = props.category;
@@ -98,7 +134,7 @@ export const PageTitle = (props) => {
         prefix = <PersonArmsUp className={'op_title_prefix '+color_class}/>
     }
     else if (category == 'Cohort') {
-        prefix = <People className={'op_title_prefix '+color_class}/>
+        prefix = <PeopleFill className={'op_title_prefix '+color_class}/>
     }
     return (
         <h2 className='page_title'>
@@ -125,6 +161,7 @@ export const PageTitleSimple = (props) => {
 }
 
 
+// All other data page title
 export const op_title = (type, data, label, force_use_label) => {
     // const type_uc = (type == 'phecode') ? 'PheWAS' : type.charAt(0).toUpperCase() + type.slice(1);
     let type_uc = '';
@@ -147,6 +184,10 @@ export const op_title = (type, data, label, force_use_label) => {
         value = (data && data.name) ? data.name : label;
     }
     switch(type) {
+         case 'dataset':
+            color_class = 'color_hl';
+            prefix = <LayersFill className={'op_title_prefix '+color_class}/>
+            break;
         case 'score':
             prefix = <ClipboardData className={'op_title_prefix '+color_class}/>
             break;
@@ -476,9 +517,11 @@ export const element_icon = (type,use_alt) => {
         case 'phenotype': case 'phenotypes':
             return (<PersonArmsUp className={icon_classname} />);
         case 'tissue': case 'tissues':
-            return (<Lungs className={icon_classname} />);
+            return (<Lungs className={icon_classname+' me-1'} />);
         case 'transcriptomics': case 'proteomics': case 'metabolomics':
             return (<BoxFill className={omics_icon_classname} />);
+        case 'cohort':
+            return (<PeopleFill className='me-2 color_hl' />);
         default:
             if (use_alt) {
                 return (<HexagonFill className={icon_classname} />);

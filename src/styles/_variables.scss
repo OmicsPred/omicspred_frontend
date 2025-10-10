@@ -97,6 +97,12 @@ $type_colors: (
         }
     }
 }
+@mixin op_separator_1 {
+    margin-left: 1rem;
+    padding-left: 1rem;
+    border-left: 1px solid $op_grey;
+}
+
 
 /* Omics colours */
 @each $omics_key, $omics_color in $omics_colors {

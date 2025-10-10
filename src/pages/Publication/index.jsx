@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import DocumentTitle from '../../components/DocumentTitle';
 import restApiCall from '../../components/RestAPI';
 import Href from "../../components/Href";
 import PlatformTable from './components/PlatformTable';
 import { op_subtitle_no_asso, op_title, HeaderCard } from '../../components/Common';
-import { consoleDev, loading_data, ToogleText, scoresBadge } from '../../components/Generic';
+import { consoleDev, loading_data, ToogleText, scoresBadge, datasetBadge } from '../../components/Generic';
 
 
 function Publication() {
@@ -66,7 +66,7 @@ function Publication() {
                 { publicationData.date_publication ? <tr><td>Publication Date</td><td>{convertPublicationDate()}</td></tr>:''}
                 { publicationData.journal ? <tr><td>Journal</td><td>{publicationData.journal}</td></tr>:''}
                 { publicationData.authors ? <tr><td>Authors</td><td><ToogleText text={publicationData.authors} limit='80' /></td></tr>:''}
-                { datasetsData ? <tr><td>Number of scores</td><td>{get_scores_count()}</td></tr>:''}
+                { datasetsData ? <tr><td>Number of scores</td><td>{get_scores_count()}{ datasetsData.length > 1 ? <span className='fw-bold separator_1'>Datasets: {datasetBadge(datasetsData.length)}</span>:''}</td></tr>:''}
             </>
         )
     }

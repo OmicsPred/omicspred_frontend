@@ -246,7 +246,7 @@ export const common_cols = {
             }
             return (
                 <div>
-                    {dataset_id}
+                    <Href href={'/dataset/'+dataset_id} text={dataset_id}/>
                     {dataset_name ? <div className='small'>({dataset_name})</div> : ''}
                 </div>
             )
@@ -1259,40 +1259,6 @@ export const cohort_cols = {
             }
         }
     },
-    'NSPHS': {
-        'R2': {
-            field: 'NSPHS_R2',
-            type: 'number',
-            // headerName: <>R<sup>2</sup></>,
-            headerClassName: 'col_border_left',
-            // width: 300,
-            renderHeader: () => {
-                return r2_col_header_label();
-            },
-            valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'NSPHS','R2');
-            }
-        },
-        'Rho': {
-            field: 'NSPHS_Rho',
-            type: 'number',
-            // headerName: 'Rho',
-            renderHeader: () => {
-                return rho_col_header_label();
-            },
-            valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'NSPHS','Rho');
-            }
-        },
-        variant_rate_label: {
-            field: 'NSPHS_Match Rate',
-            type: 'number',
-            headerName: variant_rate_label,
-            valueGetter: (value, row) => {
-                return cohort_valueGetter(row,'NSPHS',variant_rate_label);
-            }
-        }
-    },
     'FENLAND': {
         'R2': {
             field: 'FENLAND_R2',
@@ -1328,6 +1294,41 @@ export const cohort_cols = {
             }
         }
     },
+    'GTExV8': {
+        'R2': {
+            field: 'GTExV8_R2',
+            type: 'number',
+            // headerName: <>R<sup>2</sup></>,
+            headerClassName: 'col_border_left',
+            width: 90,
+            renderHeader: () => {
+                return r2_col_header_label();
+            },
+            valueGetter: (value, row) => {
+                return cohort_valueGetter(row,'GTExV8','R2');
+            }
+        },
+        'Rho': {
+            field: 'GTExV8_Rho',
+            type: 'number',
+            // headerName: 'Rho',
+            renderHeader: () => {
+                return rho_col_header_label();
+            },
+            width: 100,
+            valueGetter: (value, row) => {
+                return cohort_valueGetter(row,'GTExV8','Rho');
+            }
+        },
+        variant_rate_label: {
+            field: 'GTExV8_Match Rate',
+            type: 'number',
+            headerName: variant_rate_label,
+            valueGetter: (value, row) => {
+                return cohort_valueGetter(row,'GTExV8',variant_rate_label);
+            }
+        }
+    },
     'JHS': {
         'R2': {
             field: 'JHS_R2',
@@ -1359,6 +1360,40 @@ export const cohort_cols = {
             headerName: variant_rate_label,
             valueGetter: (value, row) => {
                 return cohort_valueGetter(row,'JHS',variant_rate_label);
+            }
+        }
+    },
+    'NSPHS': {
+        'R2': {
+            field: 'NSPHS_R2',
+            type: 'number',
+            // headerName: <>R<sup>2</sup></>,
+            headerClassName: 'col_border_left',
+            // width: 300,
+            renderHeader: () => {
+                return r2_col_header_label();
+            },
+            valueGetter: (value, row) => {
+                return cohort_valueGetter(row,'NSPHS','R2');
+            }
+        },
+        'Rho': {
+            field: 'NSPHS_Rho',
+            type: 'number',
+            // headerName: 'Rho',
+            renderHeader: () => {
+                return rho_col_header_label();
+            },
+            valueGetter: (value, row) => {
+                return cohort_valueGetter(row,'NSPHS','Rho');
+            }
+        },
+        variant_rate_label: {
+            field: 'NSPHS_Match Rate',
+            type: 'number',
+            headerName: variant_rate_label,
+            valueGetter: (value, row) => {
+                return cohort_valueGetter(row,'NSPHS',variant_rate_label);
             }
         }
     },
@@ -1580,6 +1615,11 @@ export const common_column_groups = {
     'INTERVAL': {
         groupId: 'INTERVAL',
         children: [{ field: 'INTERVAL_R2' }, { field: 'INTERVAL_Rho' }],
+        headerClassName: 'col_border_left'
+    },
+    'GTExV8': {
+        groupId: 'GTExV8',
+        children: [{ field: 'GTExV8_R2' }, { field: 'GTExV8_Rho' }],
         headerClassName: 'col_border_left'
     },
     'FENLAND': {
