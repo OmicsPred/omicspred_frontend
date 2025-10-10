@@ -15,7 +15,7 @@ import restApiCall from '../../components/RestAPI';
 import DataTableServer from '../../components/table/DataTableServer';
 import DatasetTable from './components/DatasetTable';
 import { op_subtitle, op_title, ancestry_labels, Header2Cards, omicspred_omics_type } from '../../components/Common'
-import { loading_data, thousandifyNumber, scoresBadge, add_s_when_plural } from '../../components/Generic';
+import { loading_data, scoresBadge, datasetBadge, add_s_when_plural } from '../../components/Generic';
 import AncestryLegend from '../../components/ancestry/AncestryLegend';
 import Href from '../../components/Href';
 
@@ -228,7 +228,7 @@ function Platform() {
     // }
 
 
-    const get_information_left_content = (platform_sum, platform_versions, scores_count) => {
+    const get_information_left_content = (platform_sum, platform_versions) => {
         return (
             <>
                 {/* <tr><td>Omics type</td><td><span className={'badge badge_'+platform_sum.type}>{platform_sum.type}</span></td></tr> */}
@@ -236,7 +236,6 @@ function Platform() {
                 <tr><td>Long Name</td><td>{platform_sum.full_name}</td></tr>
                 { platform_versions != '' ? <tr><td>Version{platform_versions.includes(',') ? 's':''}</td><td>{platform_versions}</td></tr> : ''}
                 <tr><td>Technic</td><td>{platform_sum.technic}</td></tr>
-                <tr><td>Number of scores</td><td>{scoresBadge(scores_count)}</td></tr>
             </>
         )
     }
@@ -249,7 +248,7 @@ function Platform() {
 						<td>Dataset{add_s_when_plural(datasetData.length)}</td>
 						<td key='dataset_data'>
 							<div className='d-flex justify-content-between'>
-								{datasetData.length}
+                                <span>{datasetBadge(datasetData.length)}</span>
 								<Tooltip title="See details in the Dataset table at the bottom of the current page">
 									<div className="ms-3" style={{marginTop:"-2px"}}>
 										<Href href="#dataset_table" icon={<Table/>}/>
@@ -263,7 +262,7 @@ function Platform() {
                     <td>Genetic Scores</td>
                     <td key='score_data'>
                         <div className='d-flex justify-content-between'>
-                            {thousandifyNumber(scores_count)}
+                            <span>{scoresBadge(scores_count)}</span>
                             <Tooltip title="See details in the Genetic Score table at the bottom of the current page">
                                 <div className="ms-3" style={{marginTop:"-2px"}}>
                                     <Href href="#score_table" icon={<Table/>}/>
@@ -304,7 +303,7 @@ function Platform() {
                 {platformSumData && platformScoresCount ?
                     <Header2Cards
                         type_left='Platform'
-                        content_left={get_information_left_content(platformSumData, platformVersions, platformScoresCount)}
+                        content_left={get_information_left_content(platformSumData, platformVersions)}
                         type_right='Linked information'
                         content_right={get_information_right_content(platformScoresCount)}/>
                 : ''

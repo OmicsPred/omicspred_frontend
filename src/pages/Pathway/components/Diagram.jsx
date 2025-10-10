@@ -7,6 +7,7 @@ const ReactomeDiagram = (props) => {
     const reactome_id = props.reactome_id;
     const [showDiagram, setShowDiagram] = useState(false);
 
+    // Reactome DiagramJs
     const diagram_library_url = 'https://reactome.org/DiagramJs/diagram/diagram.nocache.js'
 
     // setState(useExternalScript(diagram_library_url));

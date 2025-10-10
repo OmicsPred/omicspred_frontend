@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Download } from 'react-bootstrap-icons';
 import DocumentTitle from '../../components/DocumentTitle';
-import { internal_publication_link, tissue_link, op_title, op_subtitle_no_asso, no_entry_found, Header2Cards } from '../../components/Common';
+import { internal_publication_link, internal_platform_link, internal_dataset_link, internal_tissue_link, op_title, op_subtitle_no_asso, no_entry_found, Header2Cards, ancestry_label } from '../../components/Common';
 import DataTable from '../../components/table/DataTable';
 import { performance_metrics_columns } from '../../components/table/columns/score';
 import { score_phenotype_columns } from '../../components/table/columns/phenotype';
@@ -13,7 +13,6 @@ import { DownloadList, get_download_list } from '../../components/Downloads';
 import { MolecularTraitAssociation } from '../MolecularTrait/components/components';
 import AncestryDistribution from '../../components/ancestry/AncestryDistribution';
 import AncestryLegend from '../../components/ancestry/AncestryLegend';
-import { ancestry_label, omicspred_omics_type } from '../../components/Common';
 
 
 function Score() {
@@ -129,10 +128,10 @@ function Score() {
 		return (
 			<>
                 { scoreData.name ? <tr><td>Score Name</td><td>{scoreData.name}</td></tr> : ''}
-                { scoreData.publication ? <tr><td>Publication</td><td>{internal_publication_link(scoreData.publication)}</td></tr> : ''}
-                <tr><td>Platform</td><td><a href={'/platform/'+platformData.name}>{platformData.name}</a>{platformData.version ? <span className='ms-1' title='Platform version'>({platformData.version})</span> : ''}<span className='mx-2'>-</span>{omicspred_omics_type(platformData.type)}</td></tr>
-                { tissueData ? <tr><td>Tissue</td><td>{tissue_link(tissueData)}</td></tr> : ''}
-                <tr><td>Dataset</td><td>{ datasetName ? datasetName+' ('+datasetId+')' : datasetId }</td></tr>
+                { scoreData.publication ? <tr><td>Publication</td><td>{internal_publication_link(scoreData.publication,1)}</td></tr> : ''}
+                <tr><td>Platform</td><td>{internal_platform_link(platformData,1)}</td></tr>
+                <tr><td>Dataset</td><td>{ datasetName ? internal_dataset_link(datasetId, datasetName, 1) : internal_dataset_link(datasetId, undefined, 1) }</td></tr>
+                { tissueData ? <tr><td>Tissue</td><td>{internal_tissue_link(tissueData,1)}</td></tr> : ''}
                 <tr><td>Method Name</td><td>{scoreData.method_name}</td></tr>
                 { scoreData.trait_reported ? <tr><td>Reported Trait</td><td>{scoreData.trait_reported}{scoreData.trait_reported_id ? ' ('+scoreData.trait_reported_id+')':''}</td></tr> : ''}
                 <tr><td>Number of Variants</td><td>{numberBadge(scoreData.variants_number)}</td></tr>
@@ -161,14 +160,16 @@ function Score() {
     const get_ancestry_dist = (type) => {
         let ancestry_list = []
         let ancestry_data = undefined;
-        if (type == 'dev') {
-            if (scoreData.ancestry.dev.anc) {
-                ancestry_data = scoreData.ancestry.dev.anc;
+        if (scoreData.ancestry) {
+            if (type == 'dev') {
+                if (scoreData.ancestry.dev.anc) {
+                    ancestry_data = scoreData.ancestry.dev.anc;
+                }
             }
-        }
-        else {
-            if (scoreData.ancestry.eval.anc) {
-                ancestry_data = scoreData.ancestry.eval.anc;
+            else {
+                if (scoreData.ancestry.eval.anc) {
+                    ancestry_data = scoreData.ancestry.eval.anc;
+                }
             }
         }
         if (ancestry_data) {
@@ -213,28 +214,30 @@ function Score() {
                         <div className='mt-5'>
                             {op_subtitle_no_asso('hl','Evaluations',metricData.length)}
                             {/* Ancestry distribution */}
-                            <div className='ancestry_container d-flex mb-3'>
-                                <div className="card p-0">
-                                    <div className="card-header"><h6 className="mb-0">Ancestry distribution</h6></div>
-                                    <div className="card-body p-2">
-                                        <div className='d-flex justify-content-center'>
-                                            { scoreData.ancestry.dev ?
-                                                <div>
-                                                    <div className="text-center small mb-1">Training</div>
-                                                    <AncestryDistribution data={get_ancestry_dist('dev')}/>
-                                                </div> : ''
-                                            }
-                                            { scoreData.ancestry.eval ?
-                                                <div>
-                                                    <div className="text-center small mb-1">Validation</div>
-                                                    <AncestryDistribution data={get_ancestry_dist('eval')}/>
-                                                </div> : ''
-                                            }
+                            { scoreData.ancestry ?
+                                <div className='ancestry_container d-flex mb-3'>
+                                    <div className="card p-0">
+                                        <div className="card-header"><h6 className="mb-0">Ancestry distribution</h6></div>
+                                        <div className="card-body p-2">
+                                            <div className='d-flex justify-content-center'>
+                                                { scoreData.ancestry.dev ?
+                                                    <div>
+                                                        <div className="text-center small mb-1">Training</div>
+                                                        <AncestryDistribution data={get_ancestry_dist('dev')}/>
+                                                    </div> : ''
+                                                }
+                                                { scoreData.ancestry.eval ?
+                                                    <div>
+                                                        <div className="text-center small mb-1">Validation</div>
+                                                        <AncestryDistribution data={get_ancestry_dist('eval')}/>
+                                                    </div> : ''
+                                                }
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <AncestryLegend/>
-                            </div>
+                                    <AncestryLegend/>
+                                </div>: ''
+                            }
                             <DataTable key="performance_metrics" data={metricData} columns={performance_metrics_columns} hidden_columns={{platform__name:false,platform__platform_master__type:false}} col_for_ids={performance_cols_ids}/>
                         </div>:''
                     }

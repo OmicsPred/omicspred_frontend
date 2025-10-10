@@ -31,7 +31,7 @@ footer {
         // color: $op_color_1;
         color: $op_white !important;
         &:hover {
-            @include link_hover_color();
+            @include link_hover_color;
         }
         > svg {
             vertical-align: top !important;
@@ -843,6 +843,10 @@ ul.expanded {
     cursor: pointer;
 }
 
+.separator_1 {
+   @include op_separator_1;
+}
+
 
 
 /* MUI overwriting */
@@ -1153,6 +1157,13 @@ a.navbar-brand {
             margin-right: 0rem !important;
         }
     }
+    .op_header_info_no_col {
+        font-weight: normal !important;
+        &:after {
+            content: '' !important;
+            margin-right: 0rem !important;
+        }
+    }
 }
 
 .table_op {
@@ -1345,9 +1356,7 @@ ul.example_list {
         margin-left: 1rem;
     }
     .search_separator_1 {
-        margin-left: 1rem;
-        padding-left: 1rem;
-        border-left: 1px solid $op_grey;
+       @include op_separator_1;
     }
     .search_separator_2 {
         margin: 0px 0.5rem;

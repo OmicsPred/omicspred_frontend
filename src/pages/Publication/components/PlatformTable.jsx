@@ -7,7 +7,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import Href from "../../../components/Href";
 import { consoleDev, scoresBadge, ToogleDiv } from '../../../components/Generic';
-import { get_cohorts_cols_list, get_cohorts_col_groups_list, omicspred_omics_type, tissue_link } from '../../../components/Common';
+import { get_cohorts_cols_list, get_cohorts_col_groups_list, omicspred_omics_type, internal_tissue_link, internal_dataset_link } from '../../../components/Common';
 import {cohort_cols, common_column_groups, cohort_valueGetter} from '../../../components/table/columns/common';
 import { metabolomics_columns,metabolomics_column_groups } from '../../../components/table/columns/metabolomics';
 import { proteomics_pub_columns } from '../../../components/table/columns/proteomics';
@@ -214,7 +214,7 @@ const PlatformTable = (props) => {
         const dataset = props.data;
         setDatasetName(dataset.name);
         setPlatformName(dataset.platform.name);
-        const url_endpoint = get_url_endpoint(dataset.platform.type, props.opp_id, dataset.name);
+        const url_endpoint = get_url_endpoint(dataset.platform.type, props.opp_id, dataset.id);
         setPlatformDataEndpoint(url_endpoint);
         get_table_columns(dataset);
         const columns_groups = get_table_column_groups(dataset);
@@ -291,8 +291,8 @@ const PlatformTable = (props) => {
                             <ul className='key_val_line'>
                                 { platformInfo.full_name ? <li><span className='line_key'>Full Name</span>{platformInfo.full_name}</li>:''}
                                 { platformInfo.version ? <li><span className='line_key'>Version</span>{platformInfo.version}</li>:''}
-                                <li><span className='line_key'>Dataset</span>{dataset.id}{dataset.name ? ' ('+dataset.name+')' : ''}</li>
-                                { dataset.tissue ? <li><span className='line_key'>Tissue</span>{tissue_link(dataset.tissue)}</li>:''}
+                                <li><span className='line_key'>Dataset</span>{internal_dataset_link(dataset.id,dataset.name)}</li>
+                                { dataset.tissue ? <li><span className='line_key'>Tissue</span>{internal_tissue_link(dataset.tissue)}</li>:''}
                             </ul>:''
                         }
                         <div className="d-flex mb-3">

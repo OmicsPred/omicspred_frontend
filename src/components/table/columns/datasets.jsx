@@ -4,6 +4,7 @@ import { common_cols, common_column_groups, omicspred_internal_link } from './co
 import { ancestry_cols } from './ancestry';
 import { download_labels, ExpandableDownloadButton, get_download_list } from '../../Downloads';
 import { ToogleDiv, TooltipText } from '../../Generic';
+import { internal_dataset_link } from '../../Common';
 import { SampleTable } from '../../Sample';
 import Href from '../../Href';
 
@@ -138,6 +139,9 @@ export const datasets_platform_columns = [
         minWidth: 110,
         // flex: 1,
         hideable: false,
+        renderCell: (params) => {
+            return internal_dataset_link(params.id);
+        },
         valueGetter:  (value) => {
             return value;
         }

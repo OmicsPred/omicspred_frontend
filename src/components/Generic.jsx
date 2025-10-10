@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
-import { PlusCircleFill, DashCircleFill, People, InfoCircle, BarChart, ArrowsExpand, ArrowsCollapse } from 'react-bootstrap-icons';
+import { PlusCircleFill, DashCircleFill, People, InfoCircle, BarChart, ArrowsExpand, ArrowsCollapse, LayersFill } from 'react-bootstrap-icons';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 
+
+const badge_classes = "badge rounded-pill badge-op";
 
 export const consoleDev = function(msg) {
     if (process.env.ENV_TYPE=='dev') {
@@ -33,25 +35,32 @@ export const numberBadge = function(number,title) {
     const num_val = thousandifyNumber(number)
     const num_val_label = thousandifyNumberShort(number)
     if (title) {
-        return <span className="badge rounded-pill badge-op" title={num_val+' '+title}>{num_val_label}</span>
+        return <span className={badge_classes} title={num_val+' '+title}>{num_val_label}</span>
     }
     else {
-        return <span className="badge rounded-pill badge-op" title={num_val}>{num_val_label}</span>
+        return <span className={badge_classes} title={num_val}>{num_val_label}</span>
     }
 }
 
 export const scoresBadge = function(number,in_table) {
-    let class_names = "badge rounded-pill badge-op"
+    let class_names = badge_classes;
     if (in_table) {
         class_names += ' badge-op-table';
     }
     return <span className={class_names} title={thousandifyNumber(number)+" Genetic Score"+add_s_when_plural(number)}><BarChart className='me-1' style={{verticalAlign:'top'}}/>{thousandifyNumberShort(number)}</span>
 }
 
+export const datasetBadge = function(number,in_table) {
+    let class_names = badge_classes;
+    if (in_table) {
+        class_names += ' badge-op-table';
+    }
+    return <span className={class_names} title={thousandifyNumber(number)+" dataset"+add_s_when_plural(number)}><LayersFill className='me-1' style={{verticalAlign:'top'}}/>{thousandifyNumberShort(number)}</span>
+}
 
 export const participantsBadge = function(number) {
     const participants_number = thousandifyNumber(number);
-    return <span className="badge rounded-pill badge-op badge-op-table" title={participants_number+" Participants"}><People className='me-1' style={{verticalAlign:'top'}}/>{participants_number}</span>
+    return <span className={badge_classes+" badge-op-table"} title={participants_number+" Participants"}><People className='me-1' style={{verticalAlign:'top'}}/>{participants_number}</span>
 }
 
 export const participantsHeader = function(number) {

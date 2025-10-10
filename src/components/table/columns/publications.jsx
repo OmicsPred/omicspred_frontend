@@ -1,6 +1,6 @@
 import Href from '../../Href';
 import { common_cols, default_cell_value, omicspred_platform_omics_type } from './common';
-import { numberBadge } from '../../Generic';
+import { datasetBadge } from '../../Generic';
 
 
 export const publications_columns = [
@@ -125,7 +125,7 @@ export const publications_columns = [
             // return scoresBadge(counts, true);
             const datasets_count = params.row.datasets.length;
             return (
-                numberBadge(datasets_count)
+                datasetBadge(datasets_count)
             )
         },
         valueGetter: (value, row) => { return row.datasets.length }
