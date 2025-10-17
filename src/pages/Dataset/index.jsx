@@ -7,11 +7,11 @@ import { metabolomics_columns, metabolomics_column_groups } from '../../componen
 import { proteomics_pub_columns } from '../../components/table/columns/proteomics';
 import { transcriptomics_dataset_columns } from '../../components/table/columns/transcriptomics';
 import DataTableServer from '../../components/table/DataTableServer';
-import { op_title, op_subtitle_no_asso, get_cohorts_cols_list, get_cohorts_col_groups_list, Header2Cards, internal_publication_link, internal_platform_link, internal_tissue_link, no_entry_found, element_icon } from '../../components/Common';
-import { consoleDev, scoresBadge, loading_data, add_s_when_plural } from '../../components/Generic';
+import { op_title, op_subtitle_no_asso, get_cohorts_cols_list, get_cohorts_col_groups_list, Header2Cards, internal_publication_link, internal_platform_link, internal_tissue_link, no_entry_found, element_icon, display_cohort } from '../../components/Common';
+import { consoleDev, scoresBadge, loading_data, add_s_when_plural, ToogleDiv } from '../../components/Generic';
 import AncestryLegend from '../../components/ancestry/AncestryLegend';
 import { DownloadList, get_download_list } from '../../components/Downloads';
-import Href from '../../components/Href';
+// import Href from '../../components/Href';
 // import { ExpandableDownloadButton, get_download_list } from '../../../components/Downloads';
 
 
@@ -44,6 +44,20 @@ function Dataset() {
         }
     }
 
+    const cohorts_list = () => {
+        const cohorts_count = Object.keys(cohortsList).length;
+        if (cohorts_count > 2) {
+            const cohorts_list = <ul>
+                { Object.keys(cohortsList).map((cohort) => <li key={cohort}>{display_cohort(cohortsList[cohort],cohort)}</li>)}
+                </ul>;
+            return <ToogleDiv title={<>{element_icon('cohort')}{cohorts_count} cohorts</>} content={cohorts_list}/>
+        }
+        else {
+            return <>{ Object.keys(cohortsList).map((cohort, index) => <span key={cohort}>{index>0 ? ', ':''}{display_cohort(cohortsList[cohort],cohort)}</span>)}</>
+        }
+    }
+
+
     const get_information_left_content = () => {
         return (
             <>
@@ -51,7 +65,8 @@ function Dataset() {
                 <tr><td>Publication</td><td>{internal_publication_link(datasetData.publication, 1)}</td></tr>
                 <tr><td>Platform</td><td>{internal_platform_link(datasetData.platform, 1)}</td></tr>
                 <tr><td>Tissue </td><td>{internal_tissue_link(datasetData.tissue, 1)}</td></tr>
-                { cohortsList ? <tr><td>Cohort{add_s_when_plural(cohortsList)}</td><td>{element_icon('cohort')}{cohortsList.map((cohort,index) => <span key={cohort}>{index>0 ? ', ':''}<Href href={'/cohort/'+cohort} text={cohort}/></span>)}</td></tr>: ''}
+                <tr><td>Method</td><td>{datasetData.method_name}</td></tr>
+                { cohortsList ? <tr><td>Cohort{add_s_when_plural(Object.keys(cohortsList).length)}</td><td>{cohorts_list()}</td></tr>: ''}
                 <tr><td>Number of scores</td><td>{scoresBadge(datasetData.scores_count)}</td></tr>
             </>
         )
@@ -116,14 +131,16 @@ function Dataset() {
         // Fetch metadata columns for a given platform
         let columns = get_metadata_columns(platform_name,platform_type);
         // Fetch Cohort columns
-        let cohorts = [];
+        let cohorts = {};
         // Training cohorts
         for (let i=0; i<dataset['samples_training'].length; i++) {
             const sample_cohorts = dataset['samples_training'][i]['cohorts'];
             cohorts = get_cohorts_cols_list(sample_cohorts, cohorts);
         }
         // Fetch the training cohorts
-        const cohorts_training = Object.values(cohorts);
+        // const cohorts_training = Object.values(cohorts);
+        const cohorts_training = Object.keys(cohorts);
+
         // Validation cohorts
         for (let i=0; i< dataset['samples_validation'].length;i++) {
             const sample_cohorts = dataset['samples_validation'][i]['cohorts'];
@@ -132,8 +149,9 @@ function Dataset() {
         setCohortsList(cohorts)
         // Fetch columns details
         const metric_cols = ['R2','Rho','Missing Rate'];
-        for (let i=0; i< cohorts.length; i++) {
-            const cohort = cohorts[i];
+        const cohort_names = Object.keys(cohorts);
+        for (let i=0; i < cohort_names.length; i++) {
+            const cohort = cohort_names[i];
             if (cohort_cols[cohort]) {
                 for (let j=0; j<metric_cols.length; j++) {
                     const metric = metric_cols[j];

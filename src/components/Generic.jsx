@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { PlusCircleFill, DashCircleFill, People, InfoCircle, BarChart, ArrowsExpand, ArrowsCollapse, LayersFill } from 'react-bootstrap-icons';
+import { PlusCircleFill, DashCircleFill, People, InfoCircle, BarChart, ArrowsExpand, ArrowsCollapse, LayersFill, ExclamationDiamond } from 'react-bootstrap-icons';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 
@@ -160,6 +160,7 @@ export const ToogleID = (props) => {
 
 
 export const ToogleText = (props) => {
+    // Reduce/expand paragraph text
     const [show, setShow] = useState(false);
 
     const threshold = props.limit ? parseInt(props.limit) : 100;
@@ -307,6 +308,15 @@ export const Note = (props) => {
         <div className={note_class}>
             <div><InfoCircle/><span>Note</span></div>
             <div>{props.msg}</div>
+        </div>
+    )
+}
+
+export const WarningNote = (props) => {
+    let note_class = 'note_warning_container';
+    return (
+        <div className={note_class}>
+            <div><ExclamationDiamond/>{props.msg}</div>
         </div>
     )
 }

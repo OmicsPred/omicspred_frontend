@@ -132,7 +132,7 @@ function Score() {
                 <tr><td>Platform</td><td>{internal_platform_link(platformData,1)}</td></tr>
                 <tr><td>Dataset</td><td>{ datasetName ? internal_dataset_link(datasetId, datasetName, 1) : internal_dataset_link(datasetId, undefined, 1) }</td></tr>
                 { tissueData ? <tr><td>Tissue</td><td>{internal_tissue_link(tissueData,1)}</td></tr> : ''}
-                <tr><td>Method Name</td><td>{scoreData.method_name}</td></tr>
+                <tr><td>Method</td><td>{scoreData.method_name}</td></tr>
                 { scoreData.trait_reported ? <tr><td>Reported Trait</td><td>{scoreData.trait_reported}{scoreData.trait_reported_id ? ' ('+scoreData.trait_reported_id+')':''}</td></tr> : ''}
                 <tr><td>Number of Variants</td><td>{numberBadge(scoreData.variants_number)}</td></tr>
                 <tr><td>Genome Build</td><td>{scoreData.variants_genomebuild}</td></tr>

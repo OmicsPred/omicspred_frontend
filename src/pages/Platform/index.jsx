@@ -13,9 +13,9 @@ import { proteomics_columns, proteomics_column_groups } from '../../components/t
 import { transcriptomics_columns, transcriptomics_column_groups } from '../../components/table/columns/transcriptomics';
 import restApiCall from '../../components/RestAPI';
 import DataTableServer from '../../components/table/DataTableServer';
-import DatasetTable from './components/DatasetTable';
+import DatasetTable from '../../components/DatasetTable';
 import { op_subtitle, op_title, ancestry_labels, Header2Cards, omicspred_omics_type } from '../../components/Common'
-import { loading_data, scoresBadge, datasetBadge, add_s_when_plural } from '../../components/Generic';
+import { loading_data, scoresBadge, datasetBadge, thousandifyNumber, add_s_when_plural, WarningNote } from '../../components/Generic';
 import AncestryLegend from '../../components/ancestry/AncestryLegend';
 import Href from '../../components/Href';
 
@@ -44,6 +44,8 @@ function Platform() {
         't': 'Training',
         'v': 'Validation'
     }
+
+    const scores_threshold = 1000000;
 
     const ancestry_labels_data = ancestry_labels();
 
@@ -263,11 +265,13 @@ function Platform() {
                     <td key='score_data'>
                         <div className='d-flex justify-content-between'>
                             <span>{scoresBadge(scores_count)}</span>
-                            <Tooltip title="See details in the Genetic Score table at the bottom of the current page">
-                                <div className="ms-3" style={{marginTop:"-2px"}}>
-                                    <Href href="#score_table" icon={<Table/>}/>
-                                </div>
-                            </Tooltip>
+                            { scores_count <= scores_threshold ?
+                                <Tooltip title="See details in the Genetic Score table at the bottom of the current page">
+                                    <div className="ms-3" style={{marginTop:"-2px"}}>
+                                        <Href href="#score_table" icon={<Table/>}/>
+                                    </div>
+                                </Tooltip> : ''
+                            }
                         </div>
                     </td>
                 </tr>
@@ -332,7 +336,7 @@ function Platform() {
                 <>
                     {op_subtitle('hl','Dataset',datasetData.length)}
                     <div className='d-flex mb-5' id='dataset_table'>
-                        <DatasetTable data={datasetData} key='datasets' />
+                        <DatasetTable data={datasetData} page="platform" key='datasets' />
                     </div>
                 </> : ''
             }
@@ -350,54 +354,56 @@ function Platform() {
                     {platformDatasetsList.map((dataset) => <button className="btn btn-op shadow btn-sm me-2" data-dataset={dataset} key={platform+'_'+dataset} onClick={handleDatasetSelectionClick}><input type="checkbox" id={dataset+'_check'} name={dataset} defaultChecked/> {dataset}</button>)}
                 </div> :''
             } */}
-            { platformTableColumns && platformDataEndpoint && platformDataEndpoint.includes(platform) ?
-                <>
-                    <div className='d-flex mb-3' id='score_table'>
-                        {/* Ancestry Form */}
-                        <div className="card p-0 me-3">
-                            <div className="card-header"><h6 className="mb-0">Ancestry filter</h6></div>
-                            <div className="card-body p-2">
-                                <div className="card-text">
-                                    <div>
-                                        <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
-                                            <InputLabel id="select_ancestry_label">Ancestry</InputLabel>
-                                            <Select
-                                                labelId="select_ancestry_label"
-                                                id="select_ancestry"
-                                                value={selectedAncestry}
-                                                label="Ancestry"
-                                                onChange={handleAncestryChange}
-                                            >
-                                                <MenuItem key='none_sel' value=''>-</MenuItem>
-                                                {Object.keys(ancestry_labels_data).map((anc) => <MenuItem key={anc+'_sel'} value={anc}>{ancestry_labels_data[anc]}</MenuItem>)}
-                                            </Select>
-                                        </FormControl>
-                                    </div>
-                                    <div>
-                                        <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
-                                            <InputLabel id="select_stage_label">Stage</InputLabel>
-                                            <Select
-                                                labelId="select_stage_label"
-                                                id="select_stage"
-                                                value={selectedStage}
-                                                label="Stage"
-                                                onChange={handleStageChange}
-                                            >
-                                                {/* <MenuItem key='any_sel' value='' selected={true}>Any</MenuItem> */}
-                                                {Object.keys(stages).map((s_type) => <MenuItem key={s_type+'_sel'} value={s_type}>{stages[s_type]}</MenuItem>)}
-                                            </Select>
-                                        </FormControl>
+            { platformScoresCount && platformScoresCount < scores_threshold ?
+                platformTableColumns && platformDataEndpoint && platformDataEndpoint.includes(platform) ?
+                    <>
+                        <div className='d-flex mb-3' id='score_table'>
+                            {/* Ancestry Form */}
+                            <div className="card p-0 me-3">
+                                <div className="card-header"><h6 className="mb-0">Ancestry filter</h6></div>
+                                <div className="card-body p-2">
+                                    <div className="card-text">
+                                        <div>
+                                            <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
+                                                <InputLabel id="select_ancestry_label">Ancestry</InputLabel>
+                                                <Select
+                                                    labelId="select_ancestry_label"
+                                                    id="select_ancestry"
+                                                    value={selectedAncestry}
+                                                    label="Ancestry"
+                                                    onChange={handleAncestryChange}
+                                                >
+                                                    <MenuItem key='none_sel' value=''>-</MenuItem>
+                                                    {Object.keys(ancestry_labels_data).map((anc) => <MenuItem key={anc+'_sel'} value={anc}>{ancestry_labels_data[anc]}</MenuItem>)}
+                                                </Select>
+                                            </FormControl>
+                                        </div>
+                                        <div>
+                                            <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
+                                                <InputLabel id="select_stage_label">Stage</InputLabel>
+                                                <Select
+                                                    labelId="select_stage_label"
+                                                    id="select_stage"
+                                                    value={selectedStage}
+                                                    label="Stage"
+                                                    onChange={handleStageChange}
+                                                >
+                                                    {/* <MenuItem key='any_sel' value='' selected={true}>Any</MenuItem> */}
+                                                    {Object.keys(stages).map((s_type) => <MenuItem key={s_type+'_sel'} value={s_type}>{stages[s_type]}</MenuItem>)}
+                                                </Select>
+                                            </FormControl>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <AncestryLegend />
                         </div>
-                        <AncestryLegend />
-                    </div>
-                    <div>
-                        <DataTableServer key={platformDataEndpoint} url_suffix={platformDataEndpoint} columns={platformTableColumns} groups={platformTableColumnGroups}/>
-                    </div>
-                </>
-                : loading_data()
+                        <div>
+                            <DataTableServer key={platformDataEndpoint} url_suffix={platformDataEndpoint} columns={platformTableColumns} groups={platformTableColumnGroups}/>
+                        </div>
+                    </>
+                    : loading_data()
+                : <WarningNote msg={"There are too many scores to be retrieved and displayed in a table ("+thousandifyNumber(platformScoresCount)+" scores)."}/>
             }
         </>
     );

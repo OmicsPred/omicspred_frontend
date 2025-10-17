@@ -7,7 +7,7 @@ import restApiCall from '../../../components/RestAPI';
 import { display_source, display_synonyms, display_xrefs, sort_data } from '../components/links';
 import { display_description, no_entry_found } from '../../../components/Common';
 import { loading_data } from '../../../components/Generic';
-import { MolecularTraitContent, MolecularTraitAssociation } from '../components/components';
+import { MolecularTraitContent, MolecularTraitAssociation, get_molecular_trait_api_url } from '../components/components';
 
 
 function Metabolite() {
@@ -29,7 +29,8 @@ function Metabolite() {
     }
 
     const fetchSummaryData = async () => {
-        const data = await restApiCall(element+'/'+metabolite);
+        const rest_api_url = get_molecular_trait_api_url(element, metabolite);
+        const data = await restApiCall(rest_api_url);
         if (data && Object.keys(data).length) {
             setElementData(data);
             if (data.pathways) {

@@ -407,18 +407,28 @@ export const omicspred_omics_type = (type,use_alt) => {
 export const get_cohorts_cols_list = (sample_cohorts, cohorts_list) => {
     for (let j=0; j<sample_cohorts.length; j++) {
         const cohort = sample_cohorts[j]['name_short'].replaceAll(' ','_');
+        const cohort_obj = sample_cohorts[j];
         if (cohort_cols[cohort]) {
-            cohorts_list.push(cohort);
+            // cohorts_list.push(cohort);
+            cohorts_list[cohort] = cohort_obj
         }
         else {
             const cohort_col_labels = Object.keys(cohort_cols);
             for (let k=0; k<cohort_col_labels.length; k++) {
                 const cohort_col_label = cohort_col_labels[k];
+                // if (cohort_col_label.toLowerCase() == cohort.toLowerCase() ||
+                //     (cohort_col_label.startsWith(cohort) && !Object.keys(cohorts_list).includes(cohort_col_label))
+                // ) {
+                //     // cohorts_list.push(cohort_col_label);
+                //     cohorts_list[cohort_col_label] = { 'label': cohort_label, 'long_name': cohort_long_name}
+                // }
                 if (cohort_col_label.toLowerCase() == cohort.toLowerCase()) {
-                    cohorts_list.push(cohort_col_label);
+                    cohorts_list[cohort_col_label] = cohort_obj;
+                    // cohorts_list.push(cohort_col_label);
                 }
-                else if (cohort_col_label.startsWith(cohort) && !cohorts_list.includes(cohort_col_label)) {
-                    cohorts_list.push(cohort_col_label);
+                else if (cohort_col_label.startsWith(cohort) && !Object.keys(cohorts_list).includes(cohort_col_label)) {
+                    cohorts_list[cohort_col_label] = cohort_obj;
+                    // cohorts_list.push(cohort_col_label);
                 }
             }
         }
@@ -456,7 +466,8 @@ export const display_cohort = (cohort, cohort_name) => {
         cohort_name = cohort.name_short
     }
     // const cohort_name = cohort.name_short
-    const cohort_url = '/cohort/'+cohort_name;
+    cohort_name = cohort_name.replaceAll('_', ' ');
+    const cohort_url = '/cohort/'+cohort.name_short;
     const cohort_desc = cohort.description
 
     // Text tooltip:
