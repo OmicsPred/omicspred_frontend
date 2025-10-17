@@ -35,8 +35,8 @@ export const publication_score_columns = {
     ],
     'end': [
         common_cols['variants_number'],
-        common_cols['platform_type'],
-        common_cols['platform_name'],
+        platform_type_col,
+        platform_name_col,
         // common_cols['scoring_file']
     ]
 }
@@ -57,10 +57,10 @@ export const publication_metabolomics_columns = [
 
 export const score_molecular_trait_columns = [
     common_cols['omicspred_id'],
-    common_cols['platform_type'],
-    common_cols['platform_name'],
+    platform_type_col,
+    platform_name_col,
     common_cols['dataset_id'],
-    common_cols['publication'],
+    publication_col,
     common_cols['variants_number'],
     ancestry_cols['ancestry_training'],
     ancestry_cols['ancestry_validation']
@@ -71,8 +71,8 @@ export const score_metabolite_columns = [
     common_cols['omicspred_id'],
     common_cols['trait_reported'],
     // common_cols['platform_type'],
-    common_cols['platform_name'],
-    common_cols['publication'],
+    platform_name_col,
+    publication_col,
     common_cols['variants_number'],
     ancestry_cols['ancestry_training'],
     ancestry_cols['ancestry_validation']

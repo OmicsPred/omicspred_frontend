@@ -1,7 +1,5 @@
-import { useState, useEffect } from 'react';
 import { Tooltip } from '@mui/material';
 import { Table } from 'react-bootstrap-icons';
-import restApiCall from '../../../components/RestAPI';
 import { op_title, element_icon, Header2Cards } from '../../../components/Common';
 import { ToogleID, TooltipText }  from '../../../components/Generic';
 import { ScoresTable, PerformanceMetricsTable } from './tables';
@@ -12,9 +10,6 @@ import { DataTree, build_tree, generate_item } from '../../../components/DataTre
 
 export const MolecularTraitContent = (props) => {
 
-    const [scoreData, setScoreData] = useState([])
-	const [performanceMetricData, setPerformanceMetricData] = useState([])
-
     const mt_type = props.type;
     const mt_id = props.id;
     const mt_sum_data = props.sum_data;
@@ -22,26 +17,8 @@ export const MolecularTraitContent = (props) => {
     const mt_sum_display_right = props.sum_display_right;
     const scores_columns = props.scores_columns ? props.scores_columns : undefined;
 
-    const url_score = "score/search/"+mt_type+"/"+mt_id;
-
-    const fetchScoreData = async () => {
-		const data = await restApiCall(url_score);
-		if (data.results) {
-			setScoreData(data.results)
-		}
-	}
-
-    const fetchPerformanceMetrics = async () => {
-		const score_metric_data = await restApiCall('performance/search/'+mt_type+'/'+mt_id);
-		if (score_metric_data.results) {
-			setPerformanceMetricData(score_metric_data.results);
-		}
-    }
-
-    useEffect(() => {
-		fetchScoreData();
-		fetchPerformanceMetrics();
-	},[])
+	const url_score = "score/search/"+mt_type+"/"+mt_id;
+	const url_perf = 'performance/search/'+mt_type+'/'+mt_id;
 
     return (
 		<div>
@@ -54,12 +31,11 @@ export const MolecularTraitContent = (props) => {
 					</div>
 
 					{/* Associated scores */}
-					{ scoreData && scoreData.length ? <ScoresTable data={scoreData} columns={scores_columns} />:'' }
+					<ScoresTable url_score={url_score} columns={scores_columns} count={mt_sum_data.scores_count}/>
 
 					{/* Performance metrics table */}
-					{ performanceMetricData && performanceMetricData.length ? <PerformanceMetricsTable data={performanceMetricData}/>:'' }
-				</>
-				: ''
+					<PerformanceMetricsTable url_perf={url_perf}/>
+				</> : ''
             }
         </div>
 	);
@@ -132,6 +108,11 @@ export const MolecularTraitAssociation = (props) => {
 			}
 		</>
 	)
+}
+
+
+export const get_molecular_trait_api_url = (element, element_id) => {
+	return element+'/'+element_id+'?include_scores_count=1'
 }
 
 

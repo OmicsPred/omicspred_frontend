@@ -3,9 +3,9 @@ import { useParams } from 'react-router';
 import DocumentTitle from '../../components/DocumentTitle';
 import restApiCall from '../../components/RestAPI';
 import Href from "../../components/Href";
-import PlatformTable from './components/PlatformTable';
-import { op_subtitle_no_asso, op_title, HeaderCard } from '../../components/Common';
-import { consoleDev, loading_data, ToogleText, scoresBadge, datasetBadge } from '../../components/Generic';
+import DatasetTable from '../../components/DatasetTable';
+import { op_subtitle, op_title, HeaderCard } from '../../components/Common';
+import { consoleDev, ToogleText, scoresBadge, datasetBadge } from '../../components/Generic';
 
 
 function Publication() {
@@ -23,15 +23,12 @@ function Publication() {
         setPublicationData(publication_data);
         const year = publication_data.date_publication ? ' ('+publication_data.date_publication.split('-')[0]+')' : undefined
         setPublicationTitle("Publication: "+publication_data.id+' ('+publication_data.firstauthor+' - '+year+')')
-        // buildPublicationYear(publication_data.date_publication);
-        publication_data.datasets.sort((a, b) => a.platform.name.localeCompare(b.platform.name))
+        publication_data.datasets.sort((a, b) => a.id.localeCompare(b.id))
+        for (let i=0; i<publication_data.datasets.length;i++) {
+            publication_data.datasets[i]['publication'] = publication_data.id;
+        }
         setDatasetsData(publication_data.datasets);
     }
-
-    // const buildPublicationYear = (date_publication) => {
-    //     const year = date_publication.split('-')[0]
-    //     setPublicationYear(year);
-    // }
 
     // Convert date into DD/MM/YYYY format
     const convertPublicationDate = () => {
@@ -59,10 +56,6 @@ function Publication() {
                     </> : ''
                 }
                 { publicationData.doi ? <tr><td>doi</td><td><Href href={process.env.URL_ROOT_DOI+publicationData.doi} text={publicationData.doi}/></td></tr>:''}
-                {/*
-                { publicationData.pmid ? <tr><td>PubMed ID</td><td><Href href={process.env.URL_ROOT_PUBMED+publicationData.pmid} text={publicationData.pmid}/></td></tr>:''}
-                { publicationData.doi ? <tr><td>doi</td><td><Href href={process.env.URL_ROOT_DOI+publicationData.doi} text={publicationData.doi}/></td></tr>:''}
-                */}
                 { publicationData.date_publication ? <tr><td>Publication Date</td><td>{convertPublicationDate()}</td></tr>:''}
                 { publicationData.journal ? <tr><td>Journal</td><td>{publicationData.journal}</td></tr>:''}
                 { publicationData.authors ? <tr><td>Authors</td><td><ToogleText text={publicationData.authors} limit='80' /></td></tr>:''}
@@ -77,7 +70,7 @@ function Publication() {
 
     return (
         <>
-            {  publicationData ?
+            { publicationData ?
                 <>
                     { DocumentTitle(publicationTitle) }
                     {op_title('publication', publicationData, publicationData.id)}
@@ -87,15 +80,13 @@ function Publication() {
             }
             <div className='mt-5'></div>
 
-            {/* Scores by Platform */}
-            {op_subtitle_no_asso('hl','List of Scores by Platform/Dataset')}
-            { datasetsData ?
-                <div className='d-flex mt-3'>
-                    <div>
-                        { datasetsData && publicationData.id ? datasetsData.map((dataset, index) => <PlatformTable key={index+'_'+dataset.name+'_'+dataset.platform.name+"_platform_table"} data={dataset} opp_id={publicationData.id} />):''}
+            { datasetsData.length > 0 ?
+                <>
+                    {op_subtitle('hl','Dataset',datasetsData.length)}
+                    <div className='d-flex mb-5' id='dataset_table'>
+                        <DatasetTable data={datasetsData} page="publication" key='datasets' />
                     </div>
-                </div>
-                : loading_data()
+                </> : ''
             }
         </>
     )

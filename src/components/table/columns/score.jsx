@@ -23,42 +23,17 @@ const metric_valueGetter = function(performance_metrics,method,eval_type) {
 
 // const score_platform_name = {...common_cols['platform_name'], headerName:'Platform'}
 
-export const performance_metrics_columns = [
-    // {
-    //     field: 'cohort',
-    //     headerName: 'Cohort',
-    //     width: 200,
-    //     renderCell: (params) => {
-    //         let cohort_label = params.row.cohort_label;
-    //         // e.g. MEC_IN -> MEC
-    //         const lastIndexOf = cohort_label.lastIndexOf("_");
-    //         if (lastIndexOf > 0 ) {
-    //             cohort_label = cohort_label.substring(0, lastIndexOf).replaceAll('_',' ');
-    //         }
-    //         // e.g. UKB withheld EUR -> UKB withheld
-    //         else if (cohort_label.match(/\s[A-Z]{3}$/)) {
-    //             const lastIndexOfSpace = cohort_label.lastIndexOf(" ");
-    //             cohort_label = cohort_label.substring(0, lastIndexOfSpace);
-    //         }
-    //         return <Href text={cohort_label} href={'/cohort/'+cohort_label}/>
-    //     },
-    //     valueGetter:  (value, row) => {
-    //         const cohort_label = row.cohort_label;
-    //         const lastIndexOf = cohort_label.lastIndexOf("_");
-    //         if (lastIndexOf > 0 ) {
-    //             return cohort_label.substring(0, lastIndexOf).replaceAll('_',' ');
-    //         }
-    //         else if (cohort_label.match(/\s[A-Z]{3}$/)) {
-    //             const lastIndexOfSpace = cohort_label.lastIndexOf(" ");
-    //             return cohort_label.substring(0, lastIndexOfSpace);
-    //         }
-    //         else {
-    //             return cohort_label;
-    //         }
-    //     }
-    // },
-    {
-        field: 'cohort',
+
+const score_id_col = {...common_cols['omicspred_id'], field: 'score_id'};
+const ancestry_col = {...ancestry_cols['ancestry'], field: 'sample__ancestry_broad'};
+const platform_type_col = {...common_cols['platform_type'],  field: 'dataset__platform__platform_master__type'}
+const platform_name_col = {...common_cols['platform_name'],  field: 'dataset__platform__platform_master__name'}
+
+const score_col = [score_id_col];
+
+const score_cols = {
+    'cohort': {
+        field: 'cohort_label',
         headerName: 'Cohort',
         width: 200,
         renderCell: (params) => {
@@ -70,9 +45,8 @@ export const performance_metrics_columns = [
             return cohort.name_short;
         }
     },
-    ancestry_cols['ancestry'],
-    {
-        field: 'sample_number',
+    'sample_number': {
+        field: 'sample__sample_number',
         headerName: 'Sample size',
         type: 'number',
         width: 120,
@@ -83,8 +57,8 @@ export const performance_metrics_columns = [
             return row.sample.sample_number;
         }
     },
-    {
-        field: 'study_type',
+    'study_type': {
+        field: 'eval_type',
         headerName: 'Study stage',
         width: 180,
         renderCell: (params) => {
@@ -100,10 +74,7 @@ export const performance_metrics_columns = [
             return row.evaluation_type;
         }
     },
-    common_cols['platform_name'],
-    // score_platform_name,
-    common_cols['platform_type'],
-    {
+    'r2': {
         field: 'r2',
         // headerName: <>R<sup>2</sup></>,
         type: 'number',
@@ -115,7 +86,7 @@ export const performance_metrics_columns = [
             return metric_valueGetter(row.performance_metrics,'R2',row.evaluation_type);
         }
     },
-    {
+    'rho': {
         field: 'rho',
         headerName: 'Rho',
         type: 'number',
@@ -124,7 +95,7 @@ export const performance_metrics_columns = [
             return metric_valueGetter(row.performance_metrics,'Rho',row.evaluation_type);
         }
     },
-    {
+    'variant_match_rate': {
         field: 'variant_match_rate',
         headerName: match_rate_col,
         type: 'number',
@@ -133,7 +104,7 @@ export const performance_metrics_columns = [
             return metric_valueGetter(row.performance_metrics,match_rate_col,row.evaluation_type);
         }
     },
-    {
+    'missing_rate': {
         field: 'missing_rate',
         headerName: 'Missing Rate',
         type: 'number',
@@ -142,8 +113,41 @@ export const performance_metrics_columns = [
             return metric_valueGetter(row.performance_metrics,'Missing Rate',row.evaluation_type);
         }
     }
+}
+
+
+
+export const performance_metrics_columns = [
+    score_cols['cohort'],
+    ancestry_col,
+    score_cols['sample_number'],
+    score_cols['study_type'],
+    platform_type_col,
+    platform_name_col,
+    score_cols['r2'],
+    score_cols['rho'],
+    score_cols['variant_match_rate'],
+    score_cols['missing_rate']
 ]
 
-const score_col = [common_cols['omicspred_id']];
+const r2_col = {...score_cols['r2'],  sortable: false}
+const rho_col = {...score_cols['rho'],  sortable: false}
+const variant_match_rate_col = {...score_cols['variant_match_rate'],  sortable: false}
+const missing_rate_col = {...score_cols['missing_rate'],  sortable: false}
+
+export const performance_metrics_columns_large = [
+    score_cols['cohort'],
+    ancestry_col,
+    score_cols['sample_number'],
+    score_cols['study_type'],
+    platform_type_col,
+    platform_name_col,
+    r2_col,
+    rho_col,
+    variant_match_rate_col,
+    missing_rate_col
+]
 
 export const performance_metrics_columns_ext = score_col.concat(performance_metrics_columns);
+
+export const performance_metrics_columns_large_ext = score_col.concat(performance_metrics_columns_large);

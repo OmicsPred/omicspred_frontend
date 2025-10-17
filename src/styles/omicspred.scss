@@ -1503,7 +1503,17 @@ fieldset {
         }
     }
 }
-
+.note_warning_container {
+    border-left: 4px solid $op_amber;
+    background-color: $op_light_grey;
+    padding: 0.5rem 1rem;
+    svg {
+        color: $op_amber;
+        font-size: 18px;
+        margin-right: 0.5rem;
+        vertical-align: middle !important;
+    }
+}
 
 .element_icon {
     font-size: 1em;

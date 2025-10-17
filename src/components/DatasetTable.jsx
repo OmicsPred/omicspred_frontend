@@ -1,11 +1,18 @@
-import DataTable from '../../../components/table/DataTable';
-import { datasets_platform_columns, dataset_column_groups } from '../../../components/table/columns/datasets';
-import { get_ancestry_name } from '../../../components/Common';
-import AncestryLegend from '../../../components/ancestry/AncestryLegend';
+import DataTable from './table/DataTable';
+import { datasets_platform_columns, datasets_publication_columns, dataset_column_groups } from './table/columns/datasets';
+import { get_ancestry_name } from './Common';
+import AncestryLegend from './ancestry/AncestryLegend';
 
 
 const DatasetTable = (props) => {
     const dataset = props.data;
+
+    const columns = {
+        'platform': datasets_platform_columns,
+        'publication': datasets_publication_columns
+    }
+
+    const dataset_columns = columns[props.page];
 
     // Extract the detailled ancestry list for multi-ancestry sample
     const get_multi_ancestry_list = (anc_data) => {
@@ -138,13 +145,13 @@ const DatasetTable = (props) => {
     // }
 
     // const samples_count = samples_training.length + samples_validation.length
-
+    console.log(dataset)
     return (
         <div>
             <div className='d-flex mb-3'>
                 <AncestryLegend />
             </div>
-            <DataTable data={dataset} columns={datasets_platform_columns} groups={dataset_column_groups} hidden_columns={{samples: false}}/>
+            <DataTable data={dataset} columns={dataset_columns} groups={dataset_column_groups} hidden_columns={{samples: false}}/>
         </div>
     )
 };

@@ -25,7 +25,7 @@ const DataTableServer = (props) => {
     }
 
     const [rowCountState, setRowCountState] = useState(0);
-    const [data, setData] = useState([]);
+    const [data, setData] = useState();
     const [queryParam, setQueryParam] = useState({
         filter: '',
         sort_field: '',
@@ -194,64 +194,65 @@ const DataTableServer = (props) => {
 
     return (
         <>
-        {/* { data && data.length > 0 ? */}
-        { data ?
-            <div className='d-flex'>
-                <div className="table-responsive">
-                    <DataGrid
-                        key="server-side"
-                        // autoHeight
-                        columnGroupingModel={props.groups}
-                        // columns={props.columns}
-                        columns={get_columns()}
-                        rows={data}
-                        getRowId={(row) => getRowId(row)}
-                        getRowHeight={() => row_height_settings}
-                        getEstimatedRowHeight={() => 100}
-                        // getRowId={(row) => row.id}
-                        rowCount={rowCountState}
-                        loading={isLoading}
-                        pageSizeOptions={[10, 25, 50, 75, 100]}
-                        paginationModel={paginationModel}
-                        paginationMode="server"
-                        onPaginationModelChange={setPaginationModel}
-                        showToolbar
-                        initialState={{
-                            pagination: {
-                                paginationModel: paginationModel
-                            }
-                        }}
-                        sortingMode="server"
-                        sortingOrder={['asc','desc']}
-                        onSortModelChange={onSortModelChange}
-                        filterMode="server"
-                        onFilterModelChange={onFilterModelChange}
-                        slots={{
-                            toolbar: CustomToolbarLight
-                        }}
-                        // slots={{
-                        //     toolbar: GridToolbar
-                        // }}
-                        slotProps={{
-                            // toolbar: {
+        { data != undefined ?
+            data.length > 0 ?
+                <div className='d-flex'>
+                    <div className="table-responsive">
+                        <DataGrid
+                            key="server-side"
+                            // autoHeight
+                            columnGroupingModel={props.groups}
+                            // columns={props.columns}
+                            columns={get_columns()}
+                            rows={data}
+                            getRowId={(row) => getRowId(row)}
+                            getRowHeight={() => row_height_settings}
+                            getEstimatedRowHeight={() => 100}
+                            // getRowId={(row) => row.id}
+                            rowCount={rowCountState}
+                            loading={isLoading}
+                            pageSizeOptions={[10, 25, 50, 75, 100]}
+                            paginationModel={paginationModel}
+                            paginationMode="server"
+                            onPaginationModelChange={setPaginationModel}
+                            showToolbar
+                            initialState={{
+                                pagination: {
+                                    paginationModel: paginationModel
+                                }
+                            }}
+                            sortingMode="server"
+                            sortingOrder={['asc','desc']}
+                            onSortModelChange={onSortModelChange}
+                            filterMode="server"
+                            onFilterModelChange={onFilterModelChange}
+                            slots={{
+                                toolbar: CustomToolbarLight
+                            }}
+                            // slots={{
+                            //     toolbar: GridToolbar
+                            // }}
+                            slotProps={{
+                                // toolbar: {
+                                //     showQuickFilter: true
+                                // },
+                                loadingOverlay: {
+                                    variant: 'linear-progress',
+                                    noRowsVariant: 'skeleton',
+                                },
+                            }}
+                            // slotProps={{
+                            //   toolbar: {
                             //     showQuickFilter: true
-                            // },
-                            loadingOverlay: {
-                                variant: 'linear-progress',
-                                noRowsVariant: 'skeleton',
-                            },
-                        }}
-                        // slotProps={{
-                        //   toolbar: {
-                        //     showQuickFilter: true
-                        //   }
-                        // }}
-                        // slots={{
-                        //   toolbar: GridToolbarQuickFilter
-                        // }}
-                    />
+                            //   }
+                            // }}
+                            // slots={{
+                            //   toolbar: GridToolbarQuickFilter
+                            // }}
+                        />
+                    </div>
                 </div>
-            </div>
+                : <div>No data found</div>
             : noEntry ?
                 // <div>Error: no data found or there is an issue to fetch the data</div> : ''
                 <div>Error: there is an issue to fetch the data</div> : loading_data()

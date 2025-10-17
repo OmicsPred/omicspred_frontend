@@ -8,7 +8,7 @@ import restApiCallPaginated from '../../../components/RestAPIPaginated';
 import { display_description, no_entry_found } from '../../../components/Common';
 import { loading_data } from '../../../components/Generic';
 import { display_source, display_synonyms } from '../components/links';
-import { MolecularTraitContent, MolecularTraitAssociation } from '../components/components';
+import { MolecularTraitContent, MolecularTraitAssociation, get_molecular_trait_api_url } from '../components/components';
 
 
 function Gene() {
@@ -23,7 +23,8 @@ function Gene() {
 
 	const fetchSummaryData = async () => {
 		// Fetch by external ID (should be used by default, except if the gene has no external ID)
-		const data = await restApiCall(element+'/'+gene);
+		const rest_api_url = get_molecular_trait_api_url(element, gene);
+		const data = await restApiCall(rest_api_url);
 		if (data && Object.keys(data).length) {
 			setElementData(data);
 			if (data.pathways) {
@@ -59,13 +60,18 @@ function Gene() {
 	}
 
 	const get_information_left_content = () => {
+		console.log("GENE: ");
+		console.log(elementData);
 		return (
 			<>
-				{ elementData.name ?
+				{ elementData.name && elementData.external_id ?
 					<tr><td>Identifier</td><td><Href href={get_external_id()} text={elementData.external_id}/>{display_source(elementData.external_id_source)}</td></tr>:''
 				}
+				{ !elementData.external_id ?
+					<tr><td>Identifier</td><td><ExclamationTriangle className='amber_color align-text-top me-2 '/><span>Not Available</span></td></tr>:''
+				}
 				{ elementData.retired_gene_model ?
-					<tr><td>Status</td><td><ExclamationTriangle className='amber_color me-2'/>Gene model removed from Ensembl</td></tr>:''
+					<tr><td>Status</td><td><ExclamationTriangle className='amber_color align-text-top me-2'/>Gene model removed from Ensembl</td></tr>:''
 				}
 				{ elementData.synonyms && elementData.synonyms.length > 0 ?
 					<tr><td>Synonym{elementData.synonyms.length > 1 ? 's' : ''}</td><td>{display_synonyms(elementData.synonyms)}</td></tr>:''

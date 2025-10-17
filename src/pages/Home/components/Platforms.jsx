@@ -121,7 +121,7 @@ const Platforms = () => {
                                             <div style={{textAlign:"left"}}>
                                                 Number of genetic scores: <b>{thousandifyNumber(platform_cat.o_count)}</b>
                                             </div>
-                                            {platform_cat.samples_validation ?
+                                            {platform_cat.samples_validation.length > 0 ?
                                                 <div style={{textAlign:"left"}}>
                                                 Validation cohort{platform_cat.samples_validation.length > 1 && 's'}: <PlatformCohort sample_cohorts={platform_cat.samples_validation}/>
                                                 </div>:''

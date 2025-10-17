@@ -218,6 +218,15 @@ export const common_cols = {
             return <span className="badge rounded-pill badge-op" style={{fontSize:'12px'}} title="# of variants">{thousandifyNumber(params.row.variants_number)}</span>;
         }
     },
+    'method_name': {
+        field: 'method_name',
+        headerName: 'Method',
+        description: 'Method(s) used to develop the scores in the dataset',
+        minWidth: 150,
+        valueGetter: (value, row) => {
+            return row.method_name
+        }
+    },
     'dataset_id': {
         field: 'dataset_id',
         headerName: 'Dataset ID (name)',
@@ -297,8 +306,16 @@ export const common_cols = {
     'platform_name_icon': {
         field: 'platform__name',
         headerName: 'Platform',
-        minWidth: 160,
+        minWidth: 165,
         flex: 0.6,
+        renderHeader: () => {
+            return (
+                <span>
+                    <Stack className="align-middle me-1"/>
+                    <span className="align-middle fw-bold op_col_header">Platform</span>
+                </span>
+            )
+        },
         renderCell: (params) => {
             return omicspred_platform_omics_type(params.row.platform.name,params.row.platform.type)
         },

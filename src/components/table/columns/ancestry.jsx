@@ -35,6 +35,7 @@ export const ancestry_cols = {
     'ancestry_training': {
         field: 'ancestry_training',
         headerName: 'Training',
+        description: 'Ancestry distribution of the training cohort(s)',
         minWidth: 100,
         filterable: false,
         resizable: false,
@@ -67,6 +68,7 @@ export const ancestry_cols = {
     'ancestry_validation': {
         field: 'ancestry_validation',
         headerName: 'Validation',
+        description: 'Ancestry distribution of the validation cohort(s)',
         minWidth: 100,
         filterable: false,
         resizable: false,
