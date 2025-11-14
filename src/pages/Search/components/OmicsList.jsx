@@ -1,6 +1,7 @@
 import { omicspred_omics_type } from '../../../components/Common';
 
 const OmicsList = (props) =>{
+
     const omics = props.omics;
     
     const key = props.key_prefix.replace(' ','_');

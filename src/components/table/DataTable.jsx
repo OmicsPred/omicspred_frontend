@@ -87,6 +87,7 @@ const DataTable = (props) => {
                     ignoreDiacritics // Ignore accents for quick search
                     // columnVisibilityModel={initial_hidden_columns}
                     showToolbar
+                    sortingOrder={['asc','desc']}
                     initialState={{
                         pagination: { paginationModel: { pageSize: default_page_size } },
                         sorting: {

@@ -8,7 +8,7 @@ const metabolite_id_col = {...common_cols['metabolite_id'], renderHeader: () => 
 const platform_type_col = {...common_cols['platform_type'],  field: 'dataset__platform__platform_master__type'}
 const platform_name_col = {...common_cols['platform_name'],  field: 'dataset__platform__platform_master__name'}
 const publication_col = {...common_cols['publication'],  field: 'dataset__publication__firstauthor'}
-
+const tissue_col = {...common_cols['tissue_label'], field: 'dataset__tissue__label'}
 
 // Export Scores columns
 export const scores_columns = [
@@ -59,6 +59,7 @@ export const score_molecular_trait_columns = [
     common_cols['omicspred_id'],
     platform_type_col,
     platform_name_col,
+    tissue_col,
     common_cols['dataset_id'],
     publication_col,
     common_cols['variants_number'],

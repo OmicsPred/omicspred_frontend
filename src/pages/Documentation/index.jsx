@@ -84,6 +84,7 @@ const documentation_op = {
             {'name': 'Publication', 'desc': 'Associated Publication.'},
             {'name': 'Platform', 'desc': 'Associated Platform.'},
             {'name': 'Omics Type', 'desc': 'Data type detected by the platform (e.g. gene, protein, metabolite).'},
+            {'name': 'Genetic Score Development Method', 'desc': 'The name or description of the method or computational algorithm used to develop the Genetic Scores of this dataset.'},
             {'name': 'Genetic Score Count', 'desc': 'Number of Genetic Scores associated with the dataset'},
             {'name': 'Tissue', 'desc': 'Biological tissue collected to be analyzed on the platform'},
             {'name': 'Training Sample(s)', 'desc': 'Set of Samples used to create and train the Genetic Scores in the dataset'},
@@ -97,7 +98,7 @@ const documentation_op = {
         'desc': 'Each evaluation of a Genetic Score is stored as Performance Metric, with information about the linked Genetic Score and Sample information',
         'struct': [
             {'name': 'Genetic Score', 'desc': 'Associated Genetic Score'},
-            {'name': 'Dataset', 'desc': 'Associated Dataset (includes Publication, Platform and Tissue'},
+            {'name': 'Dataset', 'desc': 'Associated Dataset (includes Publication, Platform and Tissue)'},
             {'name': 'Sample', 'desc': 'Associated Sample'},
             {'name': 'Cohort label', 'desc': 'Shortcut to retrieve the cohort short name/label'},
             {'name': 'Metric value', 'desc':

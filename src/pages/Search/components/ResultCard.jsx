@@ -34,7 +34,9 @@ export default function ResultCard(props) {
     }
 
     const data = props.data;
-
+    // Temporary updates - begin
+    const omics_types = Array.isArray(data.omics_type) ? data.omics_type : [data.omics_type];
+    // Temporary updates - end
     let result_id = data.name ? data.name : data.id;
     let url_id = data.id ? data.id : data.name
 
@@ -125,7 +127,7 @@ export default function ResultCard(props) {
     }
 
     return (
-        <div className="op_result_card mb-3" key={key+"_res"} data-omics={data.omics_type} data-platform={data.platform_name} data-type={props.type}>
+        <div className="op_result_card mb-3" key={key+"_res"} data-omics={omics_types} data-platform={data.platform_name} data-type={props.type}>
             <div className="card-deck" key={key+"_card"}>
                 <div className="card ms-2 me-2" style={{padding:"0px", width:"100%"}}>
                     <div className="card-body">
@@ -138,7 +140,7 @@ export default function ResultCard(props) {
                                         { result_id == data.id && data.name ? <li><span className="line_key">Name</span>{data.name}</li> : '' }
                                         { props.type == 'pathway' ? display_molecular_trait_counts(data) : ''}
                                         { data.scores_count && data.scores_count ? <li><span className="line_key">Scores count</span>{scoresBadge(data.scores_count)}</li>:'' }
-                                        { data.omics_type && data.omics_type.length > 0 ? <li><span className="line_key">Omics type{data.omics_type.length > 1 && 's'}</span><OmicsList omics={data.omics_type} key_prefix={result_id}/></li> : '' }
+                                        { omics_types && omics_types.length > 0 ? <li><span className="line_key">Omics type{omics_types.length > 1 && 's'}</span><OmicsList omics={omics_types} key_prefix={result_id}/></li> : '' }
                                         { data.platform_name && data.platform_name.length > 0 ? <li><span className="line_key">Platform{data.platform_name.length > 1 && 's'}</span>{display_platforms_list(data.platform_name)}</li> : '' }
                                     </ul>
                                 </div>
