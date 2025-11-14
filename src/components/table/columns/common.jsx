@@ -379,6 +379,26 @@ export const common_cols = {
         flex: 1,
         hideable: true
     },
+    'tissue_label': {
+        field: 'tissue__label',
+        headerName: 'Tissue',
+        minWidth: 150,
+        // flex: 1,
+        renderCell: (params) => {
+            if (params.row.tissue) {
+                const tissue = params.row.tissue;
+                return omicspred_internal_link({'id': tissue.id, 'label': tissue.label},'tissue');
+            }
+        },
+        valueGetter: (value, row) => {
+            if (row.tissue) {
+                return row.tissue.label;
+            }
+            else {
+                return default_cell_value;
+            }
+        }
+    },
     'protein_id': {
         field: 'proteins__external_id',
         minWidth: 115,

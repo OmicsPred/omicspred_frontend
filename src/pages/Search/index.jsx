@@ -68,8 +68,9 @@ function Search() {
         let options = [];
         for (let i=0; i < results_list.length; i++) {
             // Omics types
+            // /!\ Temporary updates - begin
             if (results_list[i]['_source']['omics_type']) {
-                const res_omics = results_list[i]['_source']['omics_type'];
+                const res_omics = Array.isArray(results_list[i]['_source']['omics_type']) ? results_list[i]['_source']['omics_type'] : [results_list[i]['_source']['omics_type']];
                 for (let j=0; j < res_omics.length; j++) {
                     const omic_label = res_omics[j];
                     if (omics_counts[omic_label]) {
@@ -80,6 +81,19 @@ function Search() {
                     }
                 }
             }
+            // /!\ Temporary updates - end
+            // if (results_list[i]['_source']['omics_type']) {
+            //     const res_omics = results_list[i]['_source']['omics_type'];
+            //     for (let j=0; j < res_omics.length; j++) {
+            //         const omic_label = res_omics[j];
+            //         if (omics_counts[omic_label]) {
+            //             omics_counts[omic_label] += 1;
+            //         }
+            //         else {
+            //             omics_counts[omic_label] = 1;
+            //         }
+            //     }
+            // }
 
             // Platforms
             if (results_list[i]['_source']['platform_name']) {
@@ -183,7 +197,11 @@ function Search() {
             let omics = []
             // Value copy only
             if (result_source.omics_type) {
-                const omics_copy = result_source.omics_type.slice();
+                // /!\ Temporary updates - begin
+                const omics_types = Array.isArray(result_source.omics_type) ? result_source.omics_type : [result_source.omics_type];
+                const omics_copy = omics_types.slice();
+                // /!\ Temporary updates - end
+                // const omics_copy = result_source.omics_type.slice();
                 if (omics_copy) {
                     omics = omics_copy;
                 }

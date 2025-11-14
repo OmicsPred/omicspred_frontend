@@ -195,7 +195,7 @@ const DataTableServer = (props) => {
     return (
         <>
         { data != undefined ?
-            data.length > 0 ?
+            // data.length > 0 ?
                 <div className='d-flex'>
                     <div className="table-responsive">
                         <DataGrid
@@ -252,7 +252,7 @@ const DataTableServer = (props) => {
                         />
                     </div>
                 </div>
-                : <div>No data found</div>
+                // : <div>No data found</div>
             : noEntry ?
                 // <div>Error: no data found or there is an issue to fetch the data</div> : ''
                 <div>Error: there is an issue to fetch the data</div> : loading_data()

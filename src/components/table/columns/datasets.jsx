@@ -54,6 +54,7 @@ export const datasets_columns = [
         valueGetter:  (value, row) => { return row.platform.name }
     },
     common_cols['platform_type'],
+    common_cols['tissue_label'],
     common_cols['dataset_id'],
     common_cols['scores_count'],
     {
@@ -161,26 +162,7 @@ export const datasets_platform_columns = [
         }
     },
     common_cols['publication'],
-    {
-        field: 'tissue__label',
-        headerName: 'Tissue',
-        minWidth: 150,
-        // flex: 1,
-        renderCell: (params) => {
-            if (params.row.tissue) {
-                const tissue = params.row.tissue;
-                return omicspred_internal_link({'id': tissue.id, 'label': tissue.label},'tissue');
-            }
-        },
-        valueGetter: (value, row) => {
-            if (row.tissue) {
-                return row.tissue.label;
-            }
-            else {
-                return default_cell_value;
-            }
-        }
-    },
+    common_cols['tissue_label'],
     {
         field: 'platform__version',
         headerName: 'Platform version',

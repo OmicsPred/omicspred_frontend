@@ -1,9 +1,9 @@
 import { display_gene_link,display_protein_link,display_metabolite_link } from '../../MolecularTrait/components/links'
 
 const MolecularTraits = (props) =>{
-    const genes = props.data.genes;
-    const proteins = props.data.proteins;
-    const metabolites = props.data.metabolites;
+    const genes = props.data.genes_data;
+    const proteins = props.data.proteins_data;
+    const metabolites = props.data.metabolites_data;
 
     return (
         <div>

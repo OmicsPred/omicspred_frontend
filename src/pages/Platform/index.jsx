@@ -354,7 +354,7 @@ function Platform() {
                     {platformDatasetsList.map((dataset) => <button className="btn btn-op shadow btn-sm me-2" data-dataset={dataset} key={platform+'_'+dataset} onClick={handleDatasetSelectionClick}><input type="checkbox" id={dataset+'_check'} name={dataset} defaultChecked/> {dataset}</button>)}
                 </div> :''
             } */}
-            { platformScoresCount && platformScoresCount < scores_threshold ?
+            { platformScoresCount < scores_threshold ?
                 platformTableColumns && platformDataEndpoint && platformDataEndpoint.includes(platform) ?
                     <>
                         <div className='d-flex mb-3' id='score_table'>
