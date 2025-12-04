@@ -6,7 +6,7 @@ import restApiCall from '../../components/RestAPI';
 import { op_title, op_subtitle, HeaderCard, display_tissue_description, no_entry_found } from '../../components/Common';
 import { scoresBadge, loading_data } from '../../components/Generic';
 import AncestryLegend from '../../components/ancestry/AncestryLegend';
-import { scores_columns_with_ancestry } from '../../components/table/columns/scores';
+import { scores_columns_for_tissue } from '../../components/table/columns/scores';
 import DataTableServer from '../../components/table/DataTableServer';
 
 
@@ -65,7 +65,7 @@ function Tissue() {
                             <div className='d-flex mb-3'>
                                 <AncestryLegend />
                             </div>
-                            <DataTableServer table_key="tissue_score" title='score' type='score' url_suffix={urlScore} columns={scores_columns_with_ancestry}/>
+                            <DataTableServer table_key="tissue_score" title='score' type='score' url_suffix={urlScore} columns={scores_columns_for_tissue}/>
                         </div> : ''
                     }
 				</>

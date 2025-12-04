@@ -36,6 +36,11 @@ function Header() {
                                 <NavDropdown.Item href="/platforms">Platforms</NavDropdown.Item>
                                 <NavDropdown.Item href="/pathways">Pathways</NavDropdown.Item>
                                 <NavDropdown.Item href="/tissues">Tissues</NavDropdown.Item>
+                                {/* TEST - begin */}
+                                <NavDropdown.Item href="/test/scores">Genetic Scores - Filter <span className='badge' style={{backgroundColor:'salmon',color:'#FFF'}}>TEST</span></NavDropdown.Item>
+                                <NavDropdown.Item href="/test/platform/Olink">Platform - Filter <span className='badge' style={{backgroundColor:'salmon',color:'#FFF'}}>TEST</span></NavDropdown.Item>
+                                <NavDropdown.Item href="/test/tissue/UBERON_0008952">Tissue - Filter <span className='badge' style={{backgroundColor:'salmon',color:'#FFF'}}>TEST</span></NavDropdown.Item>
+                                {/* TEST - end */}
                             </NavDropdown>
                             <NavDropdown title="Phenotype" id="phenotype-nav-dropdown" renderMenuOnMount={true}>
                                 <NavDropdown.Item href="/applications/phenotype/sum">Summary</NavDropdown.Item>

@@ -8,7 +8,7 @@ import { proteomics_pub_columns } from '../../components/table/columns/proteomic
 import { transcriptomics_dataset_columns } from '../../components/table/columns/transcriptomics';
 import DataTableServer from '../../components/table/DataTableServer';
 import { op_title, op_subtitle_no_asso, get_cohorts_cols_list, get_cohorts_col_groups_list, Header2Cards, internal_publication_link, internal_platform_link, internal_tissue_link, no_entry_found, element_icon, display_cohort } from '../../components/Common';
-import { consoleDev, scoresBadge, loading_data, add_s_when_plural, ToogleDiv } from '../../components/Generic';
+import { consoleDev, scoresBadge, loading_data, add_s_when_plural, ToggleDiv } from '../../components/Generic';
 import AncestryLegend from '../../components/ancestry/AncestryLegend';
 import { DownloadList, get_download_list } from '../../components/Downloads';
 // import Href from '../../components/Href';
@@ -50,7 +50,7 @@ function Dataset() {
             const cohorts_list = <ul>
                 { Object.keys(cohortsList).map((cohort) => <li key={cohort}>{display_cohort(cohortsList[cohort],cohort)}</li>)}
                 </ul>;
-            return <ToogleDiv title={<>{element_icon('cohort')}{cohorts_count} cohorts</>} content={cohorts_list}/>
+            return <ToggleDiv title={<>{element_icon('cohort')}{cohorts_count} cohorts</>} content={cohorts_list}/>
         }
         else {
             return <>{ Object.keys(cohortsList).map((cohort, index) => <span key={cohort}>{index>0 ? ', ':''}{display_cohort(cohortsList[cohort],cohort)}</span>)}</>

@@ -1,7 +1,7 @@
 // import { GridColumnHeaderParams } from '@mui/x-data-grid';
 import { Stack } from "react-bootstrap-icons";
 import Href from '../../Href';
-import { ToogleDiv, thousandifyNumber, participantsHeader, participantsBadge } from '../../../components/Generic';
+import { ToggleDiv, thousandifyNumber, participantsHeader, participantsBadge } from '../../../components/Generic';
 import { display_cohort } from '../../../components/Common';
 import { common_cols, common_data_cols, molecular_trait_header } from "./common";
 
@@ -124,7 +124,7 @@ export const applications_cols = {
             const sample = params.row.sample;
             if (sample && sample.sample_number) {
                 if (sample.sample_cases) {
-                    return <ToogleDiv content={<ul className='ps-3'><li>Cases: {thousandifyNumber(sample.sample_cases)}</li>{sample.sample_controls ? <li>Controls: {thousandifyNumber(sample.sample_controls)}</li>:''}</ul>} title={participantsHeader(sample.sample_number)}/>;
+                    return <ToggleDiv content={<ul className='ps-3'><li>Cases: {thousandifyNumber(sample.sample_cases)}</li>{sample.sample_controls ? <li>Controls: {thousandifyNumber(sample.sample_controls)}</li>:''}</ul>} title={participantsHeader(sample.sample_number)}/>;
                 }
             }
             else {

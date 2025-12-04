@@ -5,7 +5,7 @@ import restApiCall from '../../components/RestAPI';
 import Href from "../../components/Href";
 import DatasetTable from '../../components/DatasetTable';
 import { op_subtitle, op_title, HeaderCard } from '../../components/Common';
-import { consoleDev, ToogleText, scoresBadge, datasetBadge } from '../../components/Generic';
+import { consoleDev, ToggleText, scoresBadge, datasetBadge } from '../../components/Generic';
 
 
 function Publication() {
@@ -58,7 +58,7 @@ function Publication() {
                 { publicationData.doi ? <tr><td>doi</td><td><Href href={process.env.URL_ROOT_DOI+publicationData.doi} text={publicationData.doi}/></td></tr>:''}
                 { publicationData.date_publication ? <tr><td>Publication Date</td><td>{convertPublicationDate()}</td></tr>:''}
                 { publicationData.journal ? <tr><td>Journal</td><td>{publicationData.journal}</td></tr>:''}
-                { publicationData.authors ? <tr><td>Authors</td><td><ToogleText text={publicationData.authors} limit='80' /></td></tr>:''}
+                { publicationData.authors ? <tr><td>Authors</td><td><ToggleText text={publicationData.authors} limit='80' /></td></tr>:''}
                 { datasetsData ? <tr><td>Number of scores</td><td>{get_scores_count()}{ datasetsData.length > 1 ? <span className='fw-bold separator_1'>Datasets: {datasetBadge(datasetsData.length)}</span>:''}</td></tr>:''}
             </>
         )

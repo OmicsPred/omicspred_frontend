@@ -6,7 +6,7 @@ import DocumentTitle from '../../components/DocumentTitle';
 import restApiCall from '../../components/RestAPI';
 import ResultCard from './components/ResultCard';
 import { SidePanelFilter } from './components/SidePanelFilter';
-import { consoleDev, loading_data, ToogleID } from '../../components/Generic';
+import { consoleDev, loading_data, ToggleID } from '../../components/Generic';
 import { element_icon } from '../../components/Common';
 import Href from '../../components/Href';
 import { SearchOptions } from './components/SearchOptions';
@@ -310,7 +310,7 @@ function Search() {
                             { searchOptions && searchOptions.length > 0 ?
                                 <>
                                     <span>
-                                        <ToogleID title='Advanced search' id="advanced_search" key='search_options_side'/>
+                                        <ToggleID title='Advanced search' id="advanced_search" key='search_options_side'/>
                                     </span>
                                     <Tooltip className='ms-2' title="Website search documentation">
                                         <span style={{marginTop:"0px"}}>

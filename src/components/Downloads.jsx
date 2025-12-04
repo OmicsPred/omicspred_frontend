@@ -1,5 +1,5 @@
 import { Download, FileEarmarkZip, FileEarmarkZipFill, FiletypeCsv, FiletypeXlsx, Folder2, InfoCircleFill } from 'react-bootstrap-icons';
-import { ToogleDiv } from './Generic';
+import { ToggleDiv } from './Generic';
 import Href from './Href';
 
 
@@ -106,7 +106,7 @@ export const ExpandableDownloadButton = (props) => {
 
     return (
         <div className='mb-3'>
-            <ToogleDiv key='toggle_downloads_button' type='button' class_name='card px-2 py-1' title={<><Download className='me-2'/>Downloads</>} content={<DownloadList urls={download_urls}/>}/>
+            <ToggleDiv key='toggle_downloads_button' type='button' class_name='card px-2 py-1' title={<><Download className='me-2'/>Downloads</>} content={<DownloadList urls={download_urls}/>}/>
         </div>
     )
 }

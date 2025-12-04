@@ -621,6 +621,10 @@ a {
     justify-content: center;
     flex-direction: column;
 }
+.cards_filter_container_cols_2, .cards_filter_container_cols_3 {
+    display: flex;
+    flex-direction: row;
+}
 
 .card {
     padding: 0rem;
@@ -629,6 +633,24 @@ a {
 .card-header {
     @include op_dark_bg;
     color: $op_white !important;
+}
+
+.card-header-button {
+    @include op_dark_bg;
+    color: $op_white !important;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+}
+.card-header-expanded {
+    @include op_dark_bg;
+    color: $op_white !important;
+    padding: 0.5rem 1rem;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.card-header-button:hover, .card-header-expanded:hover {
+    @include link_btn_hover;
+    cursor: pointer;
 }
 
 .card-sub-header {
@@ -681,6 +703,50 @@ a {
             }
         }
     }
+}
+
+.op_filter_container_2, .op_filter_container_3 {
+    display: flex;
+    flex-direction: row;
+    .compact_form:first-child {
+        .op_form_label {
+            margin-left: 0.5rem;
+        }
+        .MuiFormControl-root {
+            margin-left: 0.5rem !important;
+            .MuiFormControl-root {
+                margin-left: 0rem !important;
+            }
+        }
+    }
+    .compact_form:last-child {
+        .MuiFormControl-root {
+            margin-right: 0.5rem !important;
+            .MuiFormControl-root {
+                margin-right: 0rem !important;
+            }
+        }
+    }
+    > div:not(:first-child) {
+        border-left: 1px solid $op_card_border;
+    }
+}
+.op_form_h_sep {
+    margin-bottom: 0.5rem !important;
+    margin-right: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    border-bottom: 1px dashed $op_card_border;
+}
+.op_form_v_sep {
+    margin-left: 0.5rem !important;
+    padding-left: 0.5rem !important;
+    border-left: 1px solid $op_card_border;
+}
+
+.op_form_label {
+    margin-left: 1rem;
+    margin-top: 0.25rem;
+    // color: $op_dark2 !important;
 }
 
 .op_icon_link {
@@ -880,6 +946,28 @@ ul.expanded {
     .MuiCheckbox-root {
         padding: 4px 9px !important;
     }
+}
+.compact_form {
+    .MuiFormControl-root {
+        margin: 0.5rem 1rem !important;
+        .MuiFormControl-root {
+            margin: 0rem !important;
+        }
+    }
+    .op_radio_button {
+        margin: 0.25rem 1rem 0.5rem !important;
+        .MuiRadio-root {
+            padding:7px;
+        }
+    }
+}
+.no_mt {
+    .MuiFormControl-root {
+        margin-top: 0rem !important;
+    }
+}
+.MuiFormControlLabel-root:hover {
+    background-color: rgba(25, 118, 210, 0.04);
 }
 
 .MuiDataGrid-root .MuiInputBase-root {
@@ -1217,7 +1305,7 @@ ul.example_list {
 
 
 /* Button */
-.op_toogle {
+.op_toggle {
     // display: block !important;
     display: inline-block !important;
     white-space: nowrap;
@@ -1239,7 +1327,7 @@ ul.example_list {
         }
     }
 }
-.op_toogle_btn {
+.op_toggle_btn {
     display: inline-block !important;
     overflow: hidden;
     font-weight: normal !important;
@@ -1263,7 +1351,7 @@ ul.example_list {
         // }
     }
 }
-.op_toogle_btn_blue {
+.op_toggle_btn_blue {
     display: inline-block !important;
     overflow: hidden;
     // border: 1px solid $op_blue_2 !important;
@@ -1321,7 +1409,7 @@ ul.example_list {
     }
 }
 
-.op_toogle_text {
+.op_toggle_text {
     cursor: pointer;
     font-size: 12px;
     font-weight: 500;
@@ -1530,14 +1618,17 @@ fieldset {
 .mt_minus_1 {
     margin-top:-1rem !important;
 }
+.mt_minus_1px {
+    margin-top:-1px !important;
+}
 
 
 /* Colour classes */
 .op_color_1 {
-    color: $op_color_1;
+    color: $op_color_1 !important;
 }
 .op_color_2 {
-    color: $op_color_2;
+    color: $op_color_2 !important;
 }
 .op_color_default_font {
     color: $default_font_color !important;
@@ -1657,6 +1748,15 @@ fieldset {
     }
     .op_card_row {
         flex-direction: column;
+    }
+    .cards_filter_container_cols_3 {
+        display: block;
+        > div {
+            display: inline-block;
+        }
+        > div:not(:first-child) {
+            margin-top: 1rem;
+        }
     }
 }
 
@@ -1826,6 +1926,31 @@ fieldset {
             }
         }
     }
+    .cards_filter_container_cols_2 {
+        display: block;
+        > div {
+            display: inline-block;
+        }
+        > div:not(:first-child) {
+            margin-top: 1rem;
+        }
+    }
+    .op_filter_container_3 {
+        flex-direction: column;
+        > div:not(:first-child) {
+            border-left: none;
+            margin-top: 0.5rem !important;
+            .MuiFormControl-root {
+                margin-left: 0.5rem !important;
+                .MuiFormControl-root {
+                    margin-left: 0rem !important;
+                }
+            }
+        }
+        .op_form_label {
+            margin-left: 0.5rem;
+        }
+    }
 }
 
 @media screen and (max-width: 499px) {
@@ -1910,6 +2035,13 @@ fieldset {
             padding-top: 0.5rem;
             margin-top: 0.5rem;
 
+        }
+    }
+    .op_filter_container_2 {
+        flex-direction: column;
+        > div:not(:first-child) {
+            border-left: none;
+            margin-top: 0.5rem !important;
         }
     }
 }

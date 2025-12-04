@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { DashLg, Stack } from 'react-bootstrap-icons';
 import restApiCallPaginated from '../../../components/RestAPIPaginated';
 import Href from '../../../components/Href';
-import { thousandifyNumber, ToogleDiv } from "../../../components/Generic";
+import { thousandifyNumber, ToggleDiv } from "../../../components/Generic";
 import PlatformCohort from './components/PlatformCohort';
 
 
@@ -94,7 +94,7 @@ const Platforms = () => {
             return tissues_list;
         }
         else {
-            return(<ToogleDiv title={tissues_count+' tissues'}  content={tissues_list}/>)
+            return(<ToggleDiv title={tissues_count+' tissues'}  content={tissues_list}/>)
         }
     }
 

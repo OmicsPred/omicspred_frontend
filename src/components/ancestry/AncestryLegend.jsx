@@ -39,7 +39,7 @@ const AncestryLegend = () => {
                         <div className='d-flex flex-column'>
                             {anc_list_left.map((anc) => ancestry_item(anc))}
                         </div>
-                        <div className='d-flex flex-column ps-2 ms-2' style={{ borderLeft:"1px solid #CCC" }}>
+                        <div className='d-flex flex-column op_form_v_sep'>
                             {anc_list_right.map((anc) => ancestry_item(anc))}
                         </div>
                     </div>

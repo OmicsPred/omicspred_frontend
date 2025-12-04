@@ -3,12 +3,14 @@ import { ancestry_cols } from "./ancestry";
 
 
 const ancestry_training_cols = {...ancestry_cols['ancestry_training'], headerClassName: ['col_border_left']}
+// const tissue_col = {...common_cols['tissue_label'], field: 'dataset__tissue__label'}
 
 export const transcriptomics_columns = {
     'RNAseq - Expression': [
         common_cols['omicspred_id'],
         common_cols['gene_name'],
         common_cols['gene_id'],
+        common_cols['tissue_label'],
         common_omics_columns['omics_publication'],
         common_omics_columns['omics_platform_version'],
         common_cols['dataset_id'],
@@ -25,6 +27,7 @@ export const transcriptomics_columns = {
         common_cols['omicspred_id'],
         common_cols['gene_name'],
         common_cols['gene_id'],
+        common_cols['tissue_label'],
         common_omics_columns['omics_publication'],
         common_omics_columns['omics_platform_version'],
         common_cols['dataset_id'],

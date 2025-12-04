@@ -3,7 +3,7 @@ import { FileEarmarkArrowDown, Stack, People, GraphUp, LayersFill } from 'react-
 import { common_cols, common_column_groups, omicspred_internal_link } from './common';
 import { ancestry_cols } from './ancestry';
 import { download_labels, ExpandableDownloadButton, get_download_list } from '../../Downloads';
-import { ToogleDiv, TooltipText } from '../../Generic';
+import { ToggleDiv, TooltipText } from '../../Generic';
 import { internal_dataset_link } from '../../Common';
 import { SampleTable } from '../../Sample';
 import Href from '../../Href';
@@ -188,7 +188,7 @@ export const datasets_platform_columns = [
             if (params.row.samples_training || params.row.samples_validation) {
                 const sample_key = params.row.name+'_'+params.row.publication.pmid;
                 return(
-                    <ToogleDiv key={'toggle_sample_'+sample_key} type='button' title={<><People className='me-1'/>Sample details</>} content={<SampleTable table_name={'sample_table_'+sample_key} samples_training={params.row.samples_training} samples_validation={params.row.samples_validation}/>}/>
+                    <ToggleDiv key={'toggle_sample_'+sample_key} type='button' title={<><People className='me-1'/>Sample details</>} content={<SampleTable table_name={'sample_table_'+sample_key} samples_training={params.row.samples_training} samples_validation={params.row.samples_validation}/>}/>
                 )
             }
             else {
@@ -316,7 +316,7 @@ export const datasets_publication_columns = [
             if (params.row.samples_training || params.row.samples_validation) {
                 const sample_key = params.row.name+'_'+params.row.publication.pmid;
                 return(
-                    <ToogleDiv key={'toggle_sample_'+sample_key} type='button' title={<><People className='me-1'/>Sample details</>} content={<SampleTable table_name={'sample_table_'+sample_key} samples_training={params.row.samples_training} samples_validation={params.row.samples_validation}/>}/>
+                    <ToggleDiv key={'toggle_sample_'+sample_key} type='button' title={<><People className='me-1'/>Sample details</>} content={<SampleTable table_name={'sample_table_'+sample_key} samples_training={params.row.samples_training} samples_validation={params.row.samples_validation}/>}/>
                 )
             }
             else {
