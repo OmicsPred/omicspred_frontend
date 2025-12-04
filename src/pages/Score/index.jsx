@@ -8,7 +8,7 @@ import { performance_metrics_columns } from '../../components/table/columns/scor
 import { score_phenotype_columns } from '../../components/table/columns/phenotype';
 import restApiCall from '../../components/RestAPI';
 import restApiCallPaginated from '../../components/RestAPIPaginated';
-import { consoleDev, ToogleDiv, ToogleText, Note, loading_data, numberBadge, add_s_when_plural } from '../../components/Generic';
+import { consoleDev, ToggleDiv, ToggleText, Note, loading_data, numberBadge, add_s_when_plural } from '../../components/Generic';
 import { DownloadList, get_download_list } from '../../components/Downloads';
 import { MolecularTraitAssociation } from '../MolecularTrait/components/components';
 import AncestryDistribution from '../../components/ancestry/AncestryDistribution';
@@ -202,11 +202,11 @@ function Score() {
                 <div>
                     {/* Summary data */}
                     <Header2Cards type_left='score' content_left={get_information_left_content()} content_right={get_information_right_content()} />
-                    { scoreData.comment ? <div className='d-flex'><Note msg={<ToogleText text={scoreData.comment} limit='80' />} compact='1'/></div> : ''}
+                    { scoreData.comment ? <div className='d-flex'><Note msg={<ToggleText text={scoreData.comment} limit='80' />} compact='1'/></div> : ''}
                     {/* Download buttons */}
                     { platformData && Object.keys(platformDownloads).length > 0 ?
                         <div>
-                            <ToogleDiv key={'toggle_dowloads'} type='button_blue' class_name='card px-2 py-1' title={<><Download className='me-2'/>Downloads <small>(at platform/dataset level)</small></>} content={<DownloadList urls={platformDownloads}/>}/>
+                            <ToggleDiv key={'toggle_dowloads'} type='button_blue' class_name='card px-2 py-1' title={<><Download className='me-2'/>Downloads <small>(at platform/dataset level)</small></>} content={<DownloadList urls={platformDownloads}/>}/>
                         </div>:''
                     }
                     {/* Performance metrics table */}

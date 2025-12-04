@@ -78,10 +78,16 @@ export const firstLetterUc = function(text) {
     return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
+export const sort_case_insensitive = function(array) {
+    const sorted_array = array.sort(function (a, b) {
+        return a.toLowerCase().localeCompare(b.toLowerCase());
+    });
+    return sorted_array
+}
 
-export const ToogleDiv = (props) => {
-    // Toogle element which is the same DOM element as the toogle button
-    // (i.e. placed just after the toogle button)
+export const ToggleDiv = (props) => {
+    // Toggle element which is the same DOM element as the toggle button
+    // (i.e. placed just after the toggle button)
     const [show, setShow] = useState(false);
 
     useEffect(() => {}, [show])
@@ -95,36 +101,36 @@ export const ToogleDiv = (props) => {
         }
     }
 
-    let toogle_class = 'op_toogle';
+    let toggle_class = 'op_toggle';
     if (props.type == 'button') {
-        toogle_class = 'btn shadow op_toogle_btn';
+        toggle_class = 'btn shadow op_toggle_btn';
     }
     else if (props.type == 'button_blue') {
-        toogle_class = 'btn btn-op shadow op_toogle_btn_blue';
+        toggle_class = 'btn btn-op shadow op_toggle_btn_blue';
     }
 
     return (
         <>
-            {/* Toogle button */}
-            <div className={toogle_class} onClick={() => {
+            {/* Toggle button */}
+            <div className={toggle_class} onClick={() => {
               hideShowDiv()
             }}>{props.title}{show ? <DashCircleFill className="ms-1"/>:<PlusCircleFill className="ms-1"/>}</div>
-            {/* Toogle content */}
+            {/* Toggle content */}
             {show ? <div className="d-flex mt-2"><div className={props.class_name ? props.class_name : ''}>{props.content}</div></div>:null}
         </>
     )
 }
 
 
-export const ToogleID = (props) => {
-    // Toogle element which is NOT directly under the same DOM element as the toogle button
+export const ToggleID = (props) => {
+    // Toggle element which is NOT directly under the same DOM element as the toggle button
     const [show, setShow] = useState(false);
     const element_id = props.id;
 
     useEffect(() => {}, [show])
 
     const hideShowElement = () => {
-        // "element" corresponds to the DOM node containing the "Toogle content".
+        // "element" corresponds to the DOM node containing the "Toggle content".
         const element = document.getElementById(element_id);
         if (show) {
             setShow(false);
@@ -140,18 +146,18 @@ export const ToogleID = (props) => {
         }
     }
 
-    let toogle_class = 'op_toogle';
+    let toggle_class = 'op_toggle';
     if (props.type == 'button') {
-        toogle_class = 'btn shadow op_toogle_btn';
+        toggle_class = 'btn shadow op_toggle_btn';
     }
     else if (props.type == 'button_blue') {
-        toogle_class = 'btn btn-op shadow op_toogle_btn_blue';
+        toggle_class = 'btn btn-op shadow op_toggle_btn_blue';
     }
 
     return (
         <>
-            {/* Toogle button */}
-            <div className={toogle_class} onClick={() => {
+            {/* Toggle button */}
+            <div className={toggle_class} onClick={() => {
               hideShowElement()
             }}>{props.title}{show ? <DashCircleFill className="ms-1"/>:<PlusCircleFill className="ms-1"/>}</div>
         </>
@@ -159,7 +165,49 @@ export const ToogleID = (props) => {
 }
 
 
-export const ToogleText = (props) => {
+export const ToggleCard = (props) => {
+    // Toggle element which is NOT directly under the same DOM element as the toggle button
+    const [show, setShow] = useState(props.open ? true : false);
+    const element_id = props.id;
+
+    useEffect(() => {}, [show])
+
+    const toggle_class_suffix = ' d-flex justify-content-between ';
+    const toggle_class_collapsed = 'card-header-button';
+    const toggle_class_expanded = 'card-header-expanded';
+    const initial_toggle_class = show ? toggle_class_expanded : toggle_class_collapsed
+    const [toggleClass, setToggleClass] = useState(initial_toggle_class + toggle_class_suffix);
+
+    const hideShowElement = () => {
+        // "element" corresponds to the DOM node containing the "Toggle content".
+        const element = document.getElementById(element_id);
+        if (show) {
+            setShow(false);
+            setToggleClass(toggle_class_collapsed + toggle_class_suffix)
+            if (element) {
+                element.classList.replace('d-table-cell','d-none');
+            }
+        }
+        else {
+            setShow(true);
+            setToggleClass(toggle_class_expanded + toggle_class_suffix)
+            if (element) {
+                element.classList.replace('d-none','d-table-cell');
+            }
+        }
+    }
+    return (
+        <>
+            {/* Toggle button */}
+            <div className={toggleClass} onClick={() => {
+              hideShowElement()
+            }}><div>{props.title}</div><div className="ms-2 mt_minus_1px">{show ? <DashCircleFill />:<PlusCircleFill />}</div></div>
+        </>
+    )
+}
+
+
+export const ToggleText = (props) => {
     // Reduce/expand paragraph text
     const [show, setShow] = useState(false);
 
@@ -172,7 +220,7 @@ export const ToogleText = (props) => {
         show ? setShow(false) : setShow(true);
     }
 
-    let toogle_class = 'op_toogle_text';
+    let toggle_class = 'op_toggle_text';
 
     if (whole_text.length <= threshold) {
         return whole_text;
@@ -184,7 +232,7 @@ export const ToogleText = (props) => {
             <p key={displayed_text.replaceAll(/\W+/g,'_')} className='mb-0'>
                 <span>{displayed_text}</span>
                 { show ? hidden_text : '...' }
-                <span className={toogle_class} onClick={(e) => {hideShowDiv(e)}}>
+                <span className={toggle_class} onClick={(e) => {hideShowDiv(e)}}>
                     { show ? ' [less]' : ' [more]' }
                 </span>
             </p>
@@ -196,7 +244,7 @@ export const ToogleText = (props) => {
 export const ExpandCollapse = (props) => {
     const icon_size = "14";
     return (
-        <div className='btn-sm btn-op-sm op_toogle_btn shadow' onClick={props.handleExpandClick}>
+        <div className='btn-sm btn-op-sm op_toggle_btn shadow' onClick={props.handleExpandClick}>
             { props.data_list.length > 0 ?
                 <><ArrowsCollapse size={icon_size}/> Collapse all</> : <><ArrowsExpand size={icon_size}/> Expand all</>
             }

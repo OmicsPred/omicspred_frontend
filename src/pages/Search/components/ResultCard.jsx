@@ -35,7 +35,10 @@ export default function ResultCard(props) {
 
     const data = props.data;
     // Temporary updates - begin
-    const omics_types = Array.isArray(data.omics_type) ? data.omics_type : [data.omics_type];
+    let omics_types = undefined;
+    if (data.omics_type) {
+        omics_types = Array.isArray(data.omics_type) ? data.omics_type : [data.omics_type];
+    }
     // Temporary updates - end
     let result_id = data.name ? data.name : data.id;
     let url_id = data.id ? data.id : data.name

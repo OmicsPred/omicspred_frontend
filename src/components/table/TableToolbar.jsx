@@ -272,3 +272,12 @@ export const CustomToolbarLight = () => {
         </Toolbar>
     );
 }
+
+export const CustomToolbarNoSearch = () => {
+    return (
+        <Toolbar>
+            {/* Columns selection */}
+            <ColumnSelection />
+        </Toolbar>
+    );
+}

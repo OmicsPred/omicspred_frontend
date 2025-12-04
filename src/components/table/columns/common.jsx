@@ -1,6 +1,6 @@
 import { FileEarmarkText, Stack, Hexagon } from 'react-bootstrap-icons';
 import { omicspred_omics_type, display_description } from '../../Common';
-import { thousandifyNumber, ToogleDiv, TooltipText, scoresBadge } from '../../Generic';
+import { thousandifyNumber, ToggleDiv, TooltipText, scoresBadge } from '../../Generic';
 import Href from '../../Href';
 
 export const default_cell_value = process.env.DEFAULT_CELL_VALUE;
@@ -427,7 +427,7 @@ export const common_cols = {
             }
 
             if (pr_ids.length>display_threshold) {
-                return <ToogleDiv content={omicspred_internal_links(pr_ids, 'Protein')} title={pr_ids.length+' proteins'}/>;
+                return <ToggleDiv content={omicspred_internal_links(pr_ids, 'Protein')} title={pr_ids.length+' proteins'}/>;
             }
             else if (pr_ids.length > 0) {
                 return omicspred_internal_links(pr_ids, 'Protein');
@@ -473,7 +473,7 @@ export const common_cols = {
                 pr_desc_list = display_description(params.row.descriptions)
                 return pr_desc_list;
                 // const pr_name = params.row.name ? params.row.name : params.row.external_id;
-                // pr_desc_list = params.row.descriptions.map((desc,index) => <ToogleText key={pr_name+'_'+index} text={desc}/>)
+                // pr_desc_list = params.row.descriptions.map((desc,index) => <ToggleText key={pr_name+'_'+index} text={desc}/>)
             }
             return default_cell_value;
         },
@@ -526,7 +526,7 @@ export const common_cols = {
             gene_names = sort_objects(gene_names,'label');
 
             if (gene_names.length>display_threshold) {
-                return <ToogleDiv content={omicspred_internal_links(gene_names, 'Gene')} title={gene_names.length+' genes'}/>;
+                return <ToggleDiv content={omicspred_internal_links(gene_names, 'Gene')} title={gene_names.length+' genes'}/>;
             }
             else if (gene_names.length > 0) {
                 return omicspred_internal_links(gene_names, 'Gene');
@@ -626,7 +626,7 @@ export const common_cols = {
             }
 
             if (metabolite_ids.length>display_threshold) {
-                return <ToogleDiv content={omicspred_internal_links(metabolite_ids, 'metabolite')} title={metabolite_ids.length+' metabolites'}/>;
+                return <ToggleDiv content={omicspred_internal_links(metabolite_ids, 'metabolite')} title={metabolite_ids.length+' metabolites'}/>;
             }
             else {
                 return omicspred_internal_links(metabolite_ids, 'metabolite');

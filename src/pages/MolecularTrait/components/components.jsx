@@ -1,7 +1,7 @@
 import { Tooltip } from '@mui/material';
 import { Table } from 'react-bootstrap-icons';
 import { op_title, element_icon, Header2Cards } from '../../../components/Common';
-import { ToogleID, TooltipText }  from '../../../components/Generic';
+import { ToggleID, TooltipText }  from '../../../components/Generic';
 import { ScoresTable, PerformanceMetricsTable } from './tables';
 import { display_gene_link, display_protein_link, display_metabolite_link, display_phenotype_link, display_pathway_link, sort_data } from './links';
 import Href from '../../../components/Href';
@@ -64,7 +64,7 @@ export const MolecularTraitAssociation = (props) => {
 						<div className='d-flex'>
 							<div>
 								{ phenotypes.length > 1 ?
-									<ToogleID key={'toggle_phenotypes'} title={<><span className='font-bold'>{phenotypes.length}</span> associated phenotype entries</>} id="phenotypes_list"/>
+									<ToggleID key={'toggle_phenotypes'} title={<><span className='font-bold'>{phenotypes.length}</span> associated phenotype entries</>} id="phenotypes_list"/>
 									: phenotypes.map((data) => display_phenotype_link(data,phenotypes.length))
 								}
 							</div>
@@ -92,7 +92,7 @@ export const MolecularTraitAssociation = (props) => {
 					<tr key='pathways'><td>{element_icon('pathway')}<span><TooltipText text={<>Pathway{pathways.length > 1 && 's'}</>} title='Pathway links provided by Reactome'/></span></td><td>
 						{
 							pathways.length > 1 ?
-								<ToogleID key={'toggle_pathways'} title={<><span className='font-bold'>{pathways.length}</span> associated pathways</>} id="pathways"/>
+								<ToggleID key={'toggle_pathways'} title={<><span className='font-bold'>{pathways.length}</span> associated pathways</>} id="pathways"/>
 								: pathways.map((data) => display_pathway_link(data,pathways.length))
 						}
 					</td></tr>

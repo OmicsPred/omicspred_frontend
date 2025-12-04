@@ -11,23 +11,27 @@ const publication_col = {...common_cols['publication'],  field: 'dataset__public
 const tissue_col = {...common_cols['tissue_label'], field: 'dataset__tissue__label'}
 
 // Export Scores columns
-export const scores_columns = [
+const scores_columns_part_1 = [
     common_cols['omicspred_id'],
     gene_id_col,
     protein_id_col,
     metabolite_id_col,
     common_cols['molecular_trait_name'],
-    common_cols['variants_number'],
+    common_cols['variants_number']
+]
+const scores_columns_part_2 = [
     platform_type_col,
     platform_name_col,
-    publication_col,
-    // common_cols['scoring_file']
+    publication_col
 ]
 
+const ancestry_cols_list = [ancestry_cols['ancestry_training'],ancestry_cols['ancestry_validation']]
 
+export const scores_columns = scores_columns_part_1.concat([tissue_col],scores_columns_part_2);
 const scores_columns_copy = [...scores_columns]
+export const scores_columns_with_ancestry = scores_columns_copy.concat(ancestry_cols_list);
 
-export const scores_columns_with_ancestry = scores_columns_copy.concat([ancestry_cols['ancestry_training'],ancestry_cols['ancestry_validation']]);
+export const scores_columns_for_tissue = scores_columns_part_1.concat(scores_columns_part_2,ancestry_cols_list);
 
 export const publication_score_columns = {
     'start': [

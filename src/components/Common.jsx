@@ -1,9 +1,18 @@
-import Href from "./Href";
 import { Bezier2, Book, ChevronRight, ClipboardData, BoxFill, Stack, Hexagon, HexagonFill, Lungs, PersonArmsUp, LayersFill, PeopleFill } from 'react-bootstrap-icons';
 import { cohort_cols, common_column_groups } from './table/columns/common';
-import { ToogleDiv, ToogleText, TooltipText, thousandifyNumber, firstLetterUc } from './Generic';
+import { ToggleDiv, ToggleText, TooltipText, thousandifyNumber, firstLetterUc } from './Generic';
 import DocumentTitle from './DocumentTitle';
+import Href from "./Href";
 
+
+export const molecular_trait_types = ['Gene','Protein','Metabolite']
+
+export const stages_list = {
+    'a': 'Any stage',
+    'b': 'Both stages',
+    't': 'Training',
+    'v': 'Validation'
+}
 
 export const internal_publication_link = (publication, show_icon) => {
     const opp_id = publication.id
@@ -204,6 +213,9 @@ export const op_title = (type, data, label, force_use_label) => {
         case 'publication':
             color_class = 'color_hl';
             prefix = <Book className={'op_title_prefix '+color_class}/>
+            break;
+        case 'tissue':
+            prefix = <Lungs className={'op_title_prefix '+color_class}/>
             break;
     }
     return <h2 className='page_title'>{prefix}<span>{type_uc}</span><ChevronRight className={'op_title_separator '+color_class}/><span>{value}</span></h2>
@@ -499,10 +511,10 @@ export const display_cohort = (cohort, cohort_name) => {
 /* Format the list of descriptions for the molecular traits */
 export const display_description = (description_list) => {
     if (description_list.length == 1) {
-        return <ToogleText text={description_list[0]} limit='200'/>;
+        return <ToggleText text={description_list[0]} limit='200'/>;
     }
     else {
-        return (<ToogleDiv key={'toggle_description'} title={<><span className='font-bold'>{description_list.length}</span> descriptions</>} content={<ul className='mb-2'>{description_list.map((description,index) => <li key={'description_'+index}><ToogleText text={description}/></li>)}</ul>}/>)
+        return (<ToggleDiv key={'toggle_description'} title={<><span className='font-bold'>{description_list.length}</span> descriptions</>} content={<ul className='mb-2'>{description_list.map((description,index) => <li key={'description_'+index}><ToggleText text={description}/></li>)}</ul>}/>)
     }
 }
 

@@ -8,7 +8,7 @@ import restApiCall from '../../components/RestAPI';
 import { scores_columns } from '../../components/table/columns/scores';
 import { common_column_groups } from '../../components/table/columns/common';
 import DataTableServer from '../../components/table/DataTableServer';
-import { ToogleDiv, consoleDev, loading_data } from '../../components/Generic';
+import { ToggleDiv, consoleDev, loading_data } from '../../components/Generic';
 
 
 function Cohort() {
@@ -96,7 +96,7 @@ function Cohort() {
             const ancestry = ancestries[0];
             return (ancestry);
         }
-        return (<ToogleDiv key={'toggle_ancestries'} title={<><span className='font-bold'>{ancestries.length}</span> ancestries</>} content={<ul className='mb-2'>{ancestries.map((ancestry) => <li key={'synonym_'+ancestry}>{ancestry}</li>)}</ul>}/>)
+        return (<ToggleDiv key={'toggle_ancestries'} title={<><span className='font-bold'>{ancestries.length}</span> ancestries</>} content={<ul className='mb-2'>{ancestries.map((ancestry) => <li key={'synonym_'+ancestry}>{ancestry}</li>)}</ul>}/>)
     }
 
     useEffect(() => {

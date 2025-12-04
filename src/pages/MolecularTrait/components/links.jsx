@@ -1,6 +1,6 @@
 import { href } from "react-router";
 import Href from '../../../components/Href';
-import { ToogleDiv, ToogleText } from '../../../components/Generic';
+import { ToggleDiv, ToggleText } from '../../../components/Generic';
 import { element_icon } from '../../../components/Common';
 // import { ArrowUpSquareFill } from "react-bootstrap-icons";
 import { Tooltip } from "@mui/material";
@@ -52,10 +52,10 @@ const is_pathway_top_level = (pathway) => {
 
 export const display_description = (description_list) => {
     if (description_list.length == 1) {
-        return <ToogleText text={description_list[0]} limit='200'/>;
+        return <ToggleText text={description_list[0]} limit='200'/>;
     }
     else {
-        return (<ToogleDiv key={'toggle_description'} title={<><span className='font-bold'>{description_list.length}</span> descriptions</>} content={<ul className='mb-2'>{description_list.map((description,index) => <li key={'description_'+index}><ToogleText text={description}/></li>)}</ul>}/>)
+        return (<ToggleDiv key={'toggle_description'} title={<><span className='font-bold'>{description_list.length}</span> descriptions</>} content={<ul className='mb-2'>{description_list.map((description,index) => <li key={'description_'+index}><ToggleText text={description}/></li>)}</ul>}/>)
     }
 }
 
@@ -74,7 +74,7 @@ export const display_pathways = (pathways_list) => {
         <tr key='pathways'><td>{element_icon('pathway')}<span>Pathway{pathways_list.length > 1 && 's'}</span></td><td>
             {
                 pathways_list.length > 1 ?
-                    <ToogleDiv key={'toggle_pathways'} title={<><span className='font-bold'>{pathways_list.length}</span> associated pathways</>} content={<ul className="ps-3">{pathways_list.map((data) => display_pathway_link(data,pathways_list.length))}</ul>}/>
+                    <ToggleDiv key={'toggle_pathways'} title={<><span className='font-bold'>{pathways_list.length}</span> associated pathways</>} content={<ul className="ps-3">{pathways_list.map((data) => display_pathway_link(data,pathways_list.length))}</ul>}/>
                     : pathways_list.map((data) => display_pathway_link(data,pathways_list.length))
             }
         </td></tr>
@@ -85,10 +85,10 @@ export const display_pathways = (pathways_list) => {
 /* Format the list of synonyms for the molecular traits */
 export const display_synonyms = (synonyms_list) => {
     if (synonyms_list.length == 1) {
-        return <ToogleText text={synonyms_list[0]} limit='200'/>;
+        return <ToggleText text={synonyms_list[0]} limit='200'/>;
     }
     else {
-        return (<ToogleDiv key={'toggle_synonyms'} title={<><span className='font-bold'>{synonyms_list.length}</span> synonyms</>} content={<ul className='mb-2'>{synonyms_list.map((synonym,index) => <li key={'synonym_'+index}><ToogleText text={synonym}/></li>)}</ul>}/>)
+        return (<ToggleDiv key={'toggle_synonyms'} title={<><span className='font-bold'>{synonyms_list.length}</span> synonyms</>} content={<ul className='mb-2'>{synonyms_list.map((synonym,index) => <li key={'synonym_'+index}><ToggleText text={synonym}/></li>)}</ul>}/>)
     }
 }
 // OLD VERSION using the DB structure, i.e.: [{"name": "<mt_alt_name>"","source": "<name_source>""}]
@@ -97,7 +97,7 @@ export const display_synonyms = (synonyms_list) => {
 //         const synonym = synonyms[0];
 //         return (<>{synonym.name}{synonym.source ? ' ['+synonym.source+']':''}</>);
 //     }
-//     return (<ToogleDiv key={'toggle_synonyms'} title={<><span className='font-bold'>{synonyms.length}</span> synonyms</>} content={<ul className='mb-2'>{synonyms.map((synonym) => <li key={'synonym_'+synonym.name}>{synonym.name}{synonym.source ? <small> [{synonym.source}]</small>:''}</li>)}</ul>}/>)
+//     return (<ToggleDiv key={'toggle_synonyms'} title={<><span className='font-bold'>{synonyms.length}</span> synonyms</>} content={<ul className='mb-2'>{synonyms.map((synonym) => <li key={'synonym_'+synonym.name}>{synonym.name}{synonym.source ? <small> [{synonym.source}]</small>:''}</li>)}</ul>}/>)
 // }
 
 
@@ -106,7 +106,7 @@ export const display_xrefs = (xrefs) => {
         const xref = xrefs[0];
         return (<>{xref.name}{xref.source ? ' ['+xref.source+']':''}</>);
     }
-    return (<ToogleDiv key={'toggle_xrefs'} title={<><span className='font-bold'>{xrefs.length}</span> external references</>} content={<ul className='mb-2'>{xrefs.map((xref) => <li key={'xref_'+xref.name}>{xref.name}{xref.source ? <small> [{xref.source}]</small>:''}</li>)}</ul>}/>)
+    return (<ToggleDiv key={'toggle_xrefs'} title={<><span className='font-bold'>{xrefs.length}</span> external references</>} content={<ul className='mb-2'>{xrefs.map((xref) => <li key={'xref_'+xref.name}>{xref.name}{xref.source ? <small> [{xref.source}]</small>:''}</li>)}</ul>}/>)
 }
 
 export const display_superpathways = (superpathways) => {
@@ -114,7 +114,7 @@ export const display_superpathways = (superpathways) => {
         const superpathway = superpathways[0];
         return (<>{superpathway.name} (<Href key={superpathway.external_id} href={process.env.URL_REACTOME_ENTRY+superpathway.external_id} text={superpathway.external_id}/>)</>);
     }
-    return (<ToogleDiv key={'toggle_superpathwayss'} title={<><span className='font-bold'>{superpathways.length}</span> super pathways</>} content={<ul className='mb-2'>{superpathways.map((superpathway) => <li key={superpathway.name}>{superpathway.name} (<Href key={superpathway.external_id} href={process.env.URL_REACTOME_ENTRY+superpathway.external_id} text={superpathway.external_id}/>)</li>)}</ul>}/>)
+    return (<ToggleDiv key={'toggle_superpathwayss'} title={<><span className='font-bold'>{superpathways.length}</span> super pathways</>} content={<ul className='mb-2'>{superpathways.map((superpathway) => <li key={superpathway.name}>{superpathway.name} (<Href key={superpathway.external_id} href={process.env.URL_REACTOME_ENTRY+superpathway.external_id} text={superpathway.external_id}/>)</li>)}</ul>}/>)
 }
 
 
