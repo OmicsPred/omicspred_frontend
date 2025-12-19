@@ -134,55 +134,6 @@ const QuickFilterComponent = () => {
         <StyledQuickFilter>
             <OPQuickFilterTrigger/>
             <OPQuickFilterControl/>
-            {/* <QuickFilterTrigger
-                render={(triggerProps, state) => (
-                    <Tooltip title="Search" enterDelay={0}>
-                        <StyledToolbarButton
-                            {...triggerProps}
-                            ownerState={{ expanded: state.expanded }}
-                            color="default"
-                            aria-disabled={state.expanded}
-                        >
-                            <SearchIcon fontSize="small" />
-                        </StyledToolbarButton>
-                    </Tooltip>
-                )}
-            /> */}
-            {/* <QuickFilterControl
-            render={({ ref, ...controlProps }, state) => (
-                <StyledTextField
-                {...controlProps}
-                ownerState={{ expanded: state.expanded }}
-                inputRef={ref}
-                aria-label="Search"
-                placeholder="Search..."
-                size="small"
-                slotProps={{
-                    input: {
-                    startAdornment: (
-                        <InputAdornment position="start">
-                        <SearchIcon fontSize="small" />
-                        </InputAdornment>
-                    ),
-                    endAdornment: state.value ? (
-                        <InputAdornment position="end">
-                        <QuickFilterClear
-                            edge="end"
-                            size="small"
-                            aria-label="Clear search"
-                            material={{ sx: { marginRight: -0.75 } }}
-                        >
-                            <CancelIcon fontSize="small" />
-                        </QuickFilterClear>
-                        </InputAdornment>
-                    ) : null,
-                    ...controlProps.slotProps?.input,
-                    },
-                    ...controlProps.slotProps,
-                }}
-                />
-            )}
-            /> */}
         </StyledQuickFilter>
     )
 }
@@ -198,10 +149,9 @@ const QuickFilterComponentExpanded = () => {
 }
 
 
-export const CustomToolbar = () => {
+export const CustomToolbar = (expanded_search) => {
     const [exportMenuOpen, setExportMenuOpen] = React.useState(false);
     const exportMenuTriggerRef = React.useRef(null);
-  
     return (
         <Toolbar>
             {/* Columns selection */}
@@ -210,8 +160,8 @@ export const CustomToolbar = () => {
             {/* Data filter */}
             <Tooltip title="Data Filters">
                 <FilterPanelTrigger
-                    render={(props, state) => (
-                        <ToolbarButton {...props}>
+                    render={(filter_props, state) => (
+                        <ToolbarButton {...filter_props}>
                             <Badge badgeContent={state.filterCount} variant="dot">
                                 <FilterListIcon fontSize="small" />
                             </Badge>
@@ -253,7 +203,7 @@ export const CustomToolbar = () => {
             <VerticalDivider />
 
             {/* Search */}
-            <QuickFilterComponent />
+            { expanded_search ? <QuickFilterComponentExpanded /> : <QuickFilterComponent /> }
         </Toolbar>
     );
 }

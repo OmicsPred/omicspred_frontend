@@ -34,13 +34,16 @@ function Gene() {
 		else {
 			// Fetch by gene name - get the first result
 			const data_name = await restApiCall(element+'/search?gene='+gene);
-			if (data_name) {
+			if (data_name && data_name.results) {
 				if (data_name.results.length) {
 					const data_result = data_name.results[0]
 					setElementData(data_result);
 					if (data_result.pathways) {
 						setPathwayData(data_result.pathways)
 					}
+				}
+				else {
+					setNoEntry(true);
 				}
 			}
 			else {
@@ -60,8 +63,6 @@ function Gene() {
 	}
 
 	const get_information_left_content = () => {
-		console.log("GENE: ");
-		console.log(elementData);
 		return (
 			<>
 				{ elementData.name && elementData.external_id ?

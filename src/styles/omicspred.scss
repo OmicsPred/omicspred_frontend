@@ -1368,6 +1368,27 @@ ul.example_list {
         cursor: pointer;
     }
 }
+.op_toggle_header {
+    // display: inline-block !important;
+    display: flex;
+    white-space: nowrap;
+    // line-height: 24px;
+    // height: 24px;
+    margin-bottom: 0.5rem;
+    svg {
+        @include link_default_color;
+        vertical-align: top;
+        margin-top:5px;
+        margin-left: 0.5rem !important;
+    }
+    &:hover {
+       @include link_default_color;
+        cursor: pointer;
+        svg {
+            @include link_hover_color;
+        }
+    }
+}
 
 
 .op_dwnld_container {

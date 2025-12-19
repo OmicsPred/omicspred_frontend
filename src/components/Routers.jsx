@@ -30,9 +30,9 @@ import Search from "../pages/Search";
 import Plot from "../pages/Plot";
 import { Redirect } from './Generic';
 import { Error404 } from "../pages/Errors";
-import PlatformTest from "../pages/Tests/Platform";
-import ScoresTest from "../pages/Tests/Scores";
-import TissueTest from "../pages/Tests/Tissue";
+import PlatformLegacy from "../pages/Legacy/Platform";
+import ScoresLegacy from "../pages/Legacy/Scores";
+import TissueLegacy from "../pages/Legacy/Tissue";
 
 
 function OpRouters() {
@@ -82,9 +82,9 @@ function OpRouters() {
                 <Route path="/search" element={<Search />} />
 
                 {/* Test pages */}
-                <Route path="/test/platform/:platform" element={<PlatformTest />} />
-                <Route path="/test/scores/" element={<ScoresTest />} />
-                <Route path="/test/tissue/:tissue" element={<TissueTest />} />
+                <Route path="/legacy/platform/:platform" element={<PlatformLegacy />} />
+                <Route path="/legacy/scores/" element={<ScoresLegacy />} />
+                <Route path="/legacy/tissue/:tissue" element={<TissueLegacy />} />
 
                 {/* Errors */}
                 <Route path="*" element={<Error404 />} />

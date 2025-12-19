@@ -1,7 +1,7 @@
 // import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 // import { DataGrid, GridToolbarContainer, GridToolbarColumnsButton, GridToolbarFilterButton, GridToolbarExport, GridToolbarQuickFilter} from '@mui/x-data-grid';
 import { DataGrid } from '@mui/x-data-grid';
-import { CustomToolbar } from "./TableToolbar";
+import { CustomToolbar,  } from "./TableToolbar";
 
 const DataTable = (props) => {
 
@@ -14,6 +14,8 @@ const DataTable = (props) => {
     // if (props.groups) {
     //   display_groups = true;
     // }
+
+    // const expanded = props.expanded ? true : false;
 
     let initial_sorting = {};
     if (props.sorting) {
@@ -72,6 +74,10 @@ const DataTable = (props) => {
         }
     }
 
+    function table_toolbar() {
+        return CustomToolbar(props.expanded_search)
+    }
+
     return (
         <div className="d-flex" >
             <div className="table-responsive">
@@ -99,7 +105,7 @@ const DataTable = (props) => {
                         }
                     }}
                     slots={{
-                        toolbar: CustomToolbar
+                        toolbar: table_toolbar
                     }}
                     // slots={{
                     //     toolbar: GridToolbar

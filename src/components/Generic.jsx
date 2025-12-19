@@ -124,8 +124,9 @@ export const ToggleDiv = (props) => {
 
 export const ToggleID = (props) => {
     // Toggle element which is NOT directly under the same DOM element as the toggle button
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(props.open ? true : false);
     const element_id = props.id;
+    const target = props.target ? props.target : 'content'
 
     useEffect(() => {}, [show])
 
@@ -153,14 +154,16 @@ export const ToggleID = (props) => {
     else if (props.type == 'button_blue') {
         toggle_class = 'btn btn-op shadow op_toggle_btn_blue';
     }
+    else if (props.type == 'header') {
+        toggle_class = 'op_toggle_header';
+    }
 
     return (
-        <>
-            {/* Toggle button */}
+        <Tooltip title={show ? "Collapse "+target: "Expand "+target}>
             <div className={toggle_class} onClick={() => {
-              hideShowElement()
-            }}>{props.title}{show ? <DashCircleFill className="ms-1"/>:<PlusCircleFill className="ms-1"/>}</div>
-        </>
+                hideShowElement()
+                }}>{props.title}{show ? <DashCircleFill className="ms-1"/>:<PlusCircleFill className="ms-1"/>}</div>
+        </Tooltip>
     )
 }
 

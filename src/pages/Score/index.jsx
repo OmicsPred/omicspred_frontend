@@ -206,7 +206,7 @@ function Score() {
                     {/* Download buttons */}
                     { platformData && Object.keys(platformDownloads).length > 0 ?
                         <div>
-                            <ToggleDiv key={'toggle_dowloads'} type='button_blue' class_name='card px-2 py-1' title={<><Download className='me-2'/>Downloads <small>(at platform/dataset level)</small></>} content={<DownloadList urls={platformDownloads}/>}/>
+                            <ToggleDiv key={'toggle_dowloads'} type='button_blue' class_name='card px-2 py-1' title={<><Download className='me-2'/>Downloads <small>(dataset {datasetId})</small></>} content={<DownloadList urls={platformDownloads}/>}/>
                         </div>:''
                     }
                     {/* Performance metrics table */}

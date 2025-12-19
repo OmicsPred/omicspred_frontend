@@ -36,11 +36,11 @@ function Header() {
                                 <NavDropdown.Item href="/platforms">Platforms</NavDropdown.Item>
                                 <NavDropdown.Item href="/pathways">Pathways</NavDropdown.Item>
                                 <NavDropdown.Item href="/tissues">Tissues</NavDropdown.Item>
-                                {/* TEST - begin */}
-                                <NavDropdown.Item href="/test/scores">Genetic Scores - Filter <span className='badge' style={{backgroundColor:'salmon',color:'#FFF'}}>TEST</span></NavDropdown.Item>
-                                <NavDropdown.Item href="/test/platform/Olink">Platform - Filter <span className='badge' style={{backgroundColor:'salmon',color:'#FFF'}}>TEST</span></NavDropdown.Item>
-                                <NavDropdown.Item href="/test/tissue/UBERON_0008952">Tissue - Filter <span className='badge' style={{backgroundColor:'salmon',color:'#FFF'}}>TEST</span></NavDropdown.Item>
-                                {/* TEST - end */}
+                                {/* Legacy - begin */}
+                                <NavDropdown.Item href="/legacy/scores">Genetic Scores <span className='badge' style={{backgroundColor:'grey',color:'#FFF'}}>Legacy</span></NavDropdown.Item>
+                                <NavDropdown.Item href="/legacy/platform/Olink">Platform <span className='badge' style={{backgroundColor:'grey',color:'#FFF'}}>Legacy</span></NavDropdown.Item>
+                                <NavDropdown.Item href="/legacy/tissue/UBERON_0008952">Tissue <span className='badge' style={{backgroundColor:'grey',color:'#FFF'}}>Legacy</span></NavDropdown.Item>
+                                {/* Legacy - end */}
                             </NavDropdown>
                             <NavDropdown title="Phenotype" id="phenotype-nav-dropdown" renderMenuOnMount={true}>
                                 <NavDropdown.Item href="/applications/phenotype/sum">Summary</NavDropdown.Item>
