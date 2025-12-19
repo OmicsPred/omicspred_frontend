@@ -30,7 +30,7 @@ const DataTableFromRestApi = (props) => {
                 (tableData && tableData.length ?
                 <>
                     {props.title && props.type ? op_subtitle(props.type,props.title,tableData.length) : ''}
-                    <DataTable key={props.table_key} data={tableData} columns={props.columns} groups={props.groups} col_for_ids={props.col_for_ids}/>
+                    <DataTable key={props.table_key} data={tableData} columns={props.columns} groups={props.groups} col_for_ids={props.col_for_ids} expanded_search={props.expanded_search}/>
                 </> : <div>No data found</div>
                 ) : loading_data()
             }

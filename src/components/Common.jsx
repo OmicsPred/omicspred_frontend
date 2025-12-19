@@ -71,6 +71,34 @@ export const internal_tissue_link = (tissue, show_icon) => {
 }
 
 
+export const show_test_banner = () => {
+    {/* Test page banner */}
+    const current_url = window.location.href;
+    return (
+        <>
+            { current_url.includes('/test/') ?
+                <div style={{backgroundColor:'salmon',color:'#FFF',padding:'0.25rem 1rem'}}>TEST PAGE</div>
+                : ''
+            }
+        </>
+    )
+}
+
+
+export const show_legacy_banner = () => {
+    {/* Test page banner */}
+    const current_url = window.location.href;
+    return (
+        <>
+            { current_url.includes('/legacy/') ?
+                <div style={{backgroundColor:'grey',color:'#FFF',padding:'0.25rem 1rem'}}>LEGACY PAGE</div>
+                : ''
+            }
+        </>
+    )
+}
+
+
 export const get_data_type = (omics_type) => {
     switch(omics_type) {
         case 'Metabolomics':

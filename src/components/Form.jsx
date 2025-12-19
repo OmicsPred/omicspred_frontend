@@ -12,6 +12,14 @@ import { BoxFill, Stack, Hexagon } from 'react-bootstrap-icons';
 
 // Select form //
 export const select_form = (label,selection,items_data,handleChange,extra_item_data=undefined) => {
+    return select_form_base(label,selection,items_data,handleChange,extra_item_data,true)
+}
+
+export const select_form_no_empty_value = (label,selection,items_data,handleChange,extra_item_data=undefined) => {
+    return select_form_base(label,selection,items_data,handleChange,extra_item_data,false)
+}
+
+const select_form_base = (label,selection,items_data,handleChange,extra_item_data,use_empty_value) => {
     const label_lc = label.toLowerCase().replace(' ','_');
     const sel_id = 'select_'+label_lc;
     const sel_label = sel_id+'_label';
@@ -27,13 +35,15 @@ export const select_form = (label,selection,items_data,handleChange,extra_item_d
                     onChange={handleChange}
                     size="small"
                 >
-                    <MenuItem key='none_sel' value=''>-</MenuItem>
+                    {use_empty_value ? <MenuItem key='none_sel' value=''>-</MenuItem> : ''}
                     {select_items(label,items_data,extra_item_data)}
                 </Select>
             </FormControl>
         </div>
-    )   
+    )
 }
+
+
 // Select form - menu items list
 const select_items = (label, items_data, extra_item_data=undefined) => {
     switch(label) {
