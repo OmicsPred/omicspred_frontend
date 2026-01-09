@@ -42,7 +42,7 @@ export const platforms_columns = [
     {
         field: 'technic',
         headerName: 'Technic',
-        minWidth: 450,
+        minWidth: 325,
         renderCell: (params) => {
             return params.row.technic ? params.row.technic : default_cell_value;
         }

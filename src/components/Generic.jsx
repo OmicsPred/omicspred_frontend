@@ -19,10 +19,13 @@ export const thousandifyNumber = function(number) {
     return ''
 }
 
-export const thousandifyNumberShort = function(number) {
+export const formatNumberShort = function(number) {
     if (number !== undefined) {
         if (9999 < number && number < 1000000) {
             return ((Math.abs(number)/1000).toFixed(1)) + 'k'
+        }
+        else if (number >= 1000000) {
+            return ((Math.abs(number)/1000000).toFixed(2)) + 'M'
         }
         else {
             return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -33,7 +36,7 @@ export const thousandifyNumberShort = function(number) {
 
 export const numberBadge = function(number,title) {
     const num_val = thousandifyNumber(number)
-    const num_val_label = thousandifyNumberShort(number)
+    const num_val_label = formatNumberShort(number)
     if (title) {
         return <span className={badge_classes} title={num_val+' '+title}>{num_val_label}</span>
     }
@@ -47,7 +50,7 @@ export const scoresBadge = function(number,in_table) {
     if (in_table) {
         class_names += ' badge-op-table';
     }
-    return <span className={class_names} title={thousandifyNumber(number)+" Genetic Score"+add_s_when_plural(number)}><BarChart className='me-1' style={{verticalAlign:'top'}}/>{thousandifyNumberShort(number)}</span>
+    return <span className={class_names} title={thousandifyNumber(number)+" Genetic Score"+add_s_when_plural(number)}><BarChart className='me-1' style={{verticalAlign:'top'}}/>{formatNumberShort(number)}</span>
 }
 
 export const datasetBadge = function(number,in_table) {
@@ -55,7 +58,7 @@ export const datasetBadge = function(number,in_table) {
     if (in_table) {
         class_names += ' badge-op-table';
     }
-    return <span className={class_names} title={thousandifyNumber(number)+" dataset"+add_s_when_plural(number)}><LayersFill className='me-1' style={{verticalAlign:'top'}}/>{thousandifyNumberShort(number)}</span>
+    return <span className={class_names} title={thousandifyNumber(number)+" dataset"+add_s_when_plural(number)}><LayersFill className='me-1' style={{verticalAlign:'top'}}/>{formatNumberShort(number)}</span>
 }
 
 export const participantsBadge = function(number) {

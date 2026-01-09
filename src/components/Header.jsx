@@ -37,9 +37,9 @@ function Header() {
                                 <NavDropdown.Item href="/pathways">Pathways</NavDropdown.Item>
                                 <NavDropdown.Item href="/tissues">Tissues</NavDropdown.Item>
                                 {/* Legacy - begin */}
-                                <NavDropdown.Item href="/legacy/scores">Genetic Scores <span className='badge' style={{backgroundColor:'grey',color:'#FFF'}}>Legacy</span></NavDropdown.Item>
+                                {/* <NavDropdown.Item href="/legacy/scores">Genetic Scores <span className='badge' style={{backgroundColor:'grey',color:'#FFF'}}>Legacy</span></NavDropdown.Item>
                                 <NavDropdown.Item href="/legacy/platform/Olink">Platform <span className='badge' style={{backgroundColor:'grey',color:'#FFF'}}>Legacy</span></NavDropdown.Item>
-                                <NavDropdown.Item href="/legacy/tissue/UBERON_0008952">Tissue <span className='badge' style={{backgroundColor:'grey',color:'#FFF'}}>Legacy</span></NavDropdown.Item>
+                                <NavDropdown.Item href="/legacy/tissue/UBERON_0008952">Tissue <span className='badge' style={{backgroundColor:'grey',color:'#FFF'}}>Legacy</span></NavDropdown.Item> */}
                                 {/* Legacy - end */}
                             </NavDropdown>
                             <NavDropdown title="Phenotype" id="phenotype-nav-dropdown" renderMenuOnMount={true}>
