@@ -456,19 +456,12 @@ export const get_cohorts_cols_list = (sample_cohorts, cohorts_list) => {
             const cohort_col_labels = Object.keys(cohort_cols);
             for (let k=0; k<cohort_col_labels.length; k++) {
                 const cohort_col_label = cohort_col_labels[k];
-                // if (cohort_col_label.toLowerCase() == cohort.toLowerCase() ||
-                //     (cohort_col_label.startsWith(cohort) && !Object.keys(cohorts_list).includes(cohort_col_label))
-                // ) {
-                //     // cohorts_list.push(cohort_col_label);
-                //     cohorts_list[cohort_col_label] = { 'label': cohort_label, 'long_name': cohort_long_name}
-                // }
                 if (cohort_col_label.toLowerCase() == cohort.toLowerCase()) {
                     cohorts_list[cohort_col_label] = cohort_obj;
                     // cohorts_list.push(cohort_col_label);
                 }
                 else if (cohort_col_label.startsWith(cohort) && !Object.keys(cohorts_list).includes(cohort_col_label)) {
                     cohorts_list[cohort_col_label] = cohort_obj;
-                    // cohorts_list.push(cohort_col_label);
                 }
             }
         }
@@ -607,6 +600,7 @@ export const ancestry_names = {
     // 'Multi-ancestry (excluding European)': 'MAO',
     'African': 'AFR',
     'African American': 'AFR',
+    'African American or Afro-Caribbean': 'AFR',
     'East Asian': 'EAS',
     'South Asian': 'SAS',
     'Additional Asian Ancestries': 'ASN',

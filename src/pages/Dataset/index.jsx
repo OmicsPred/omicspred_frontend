@@ -34,7 +34,7 @@ function Dataset() {
     const fetchDatasetData = async () => {
         consoleDev(element+'/'+opd_id)
         const dataset_data = await restApiCall(element+'/'+opd_id);
-        consoleDev(dataset_data);
+        // consoleDev(dataset_data);
         if (dataset_data && Object.keys(dataset_data).length) {
             setDatasetData(dataset_data);
             prepareTable(dataset_data);
@@ -164,7 +164,6 @@ function Dataset() {
                                 training_header_class = ['training_col','col_border_left']
                             }
                             const training_field = cohort_cols[cohort][metric].field+training_suffix;
-                            consoleDev('- '+training_field);
                             const cohort_metric_col = {...cohort_cols[cohort][metric], field: training_field, headerClassName: training_header_class, valueGetter: (value, row) => {return cohort_valueGetter(row,cohort,metric,true);}, sortable: metric_sortable_status}
                             columns.push(cohort_metric_col)
                         }

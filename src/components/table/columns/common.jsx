@@ -1270,6 +1270,85 @@ export const cohort_cols = {
             }
         }
     },
+    'MESA': {
+        'R2': {
+            field: 'MESA_R2',
+            type: 'number',
+            minWidth: 130,
+            headerClassName: 'col_border_left',
+            renderHeader: () => {
+                return r2_col_header_label();
+            },
+            valueGetter: (value, row) => {
+                return cohort_valueGetter(row,'MESA','R2');
+            }
+        }
+    },
+    // 'MESA_AFR': {
+    //     'R2': {
+    //         field: 'MESA_AFR_R2',
+    //         type: 'number',
+    //         headerClassName: 'col_border_left',
+    //         renderHeader: () => {
+    //             return r2_col_header_label();
+    //         },
+    //         valueGetter: (value, row) => {
+    //             return cohort_valueGetter(row,'MESA_AFR','R2');
+    //         }
+    //     }
+    // },
+    // 'MESA_ALL': {
+    //     'R2': {
+    //         field: 'MESA_ALL_R2',
+    //         type: 'number',
+    //         headerClassName: 'col_border_left',
+    //         renderHeader: () => {
+    //             return r2_col_header_label();
+    //         },
+    //         valueGetter: (value, row) => {
+    //             return cohort_valueGetter(row,'MESA_ALL','R2');
+    //         }
+    //     }
+    // },
+    // 'MESA_CHN': {
+    //     'R2': {
+    //         field: 'MESA_CHN_R2',
+    //         type: 'number',
+    //         headerClassName: 'col_border_left',
+    //         renderHeader: () => {
+    //             return r2_col_header_label();
+    //         },
+    //         valueGetter: (value, row) => {
+    //             return cohort_valueGetter(row,'MESA_CHN','R2');
+    //         }
+    //     }
+    // },
+    // 'MESA_EUR': {
+    //     'R2': {
+    //         field: 'MESA_EUR_R2',
+    //         type: 'number',
+    //         headerClassName: 'col_border_left',
+    //         renderHeader: () => {
+    //             return r2_col_header_label();
+    //         },
+    //         valueGetter: (value, row) => {
+    //             return cohort_valueGetter(row,'MESA_EUR','R2');
+    //         }
+    //     }
+    // },
+    // 'MESA_HIS': {
+    //     'R2': {
+    //         field: 'MESA_HIS_R2',
+    //         type: 'number',
+    //         headerClassName: 'col_border_left',
+    //         renderHeader: () => {
+    //             return r2_col_header_label();
+    //         },
+    //         valueGetter: (value, row) => {
+    //             return cohort_valueGetter(row,'MESA_HIS','R2');
+    //         }
+    //     }
+    // },
     'INTERVAL_withheld_subset': {
         'R2': {
             field: 'INTERVAL_withheld_subset_R2',
@@ -1741,29 +1820,34 @@ export const common_column_groups = {
         children: [{ field: 'UKB_withheld_SAS_R2' }, { field: 'UKB_withheld_SAS_Rho' }],
         headerClassName: 'col_border_left'
     },
+    'MESA': {
+        groupId: 'MESA',
+        children: [{ field: 'MESA_R2' },],
+        headerClassName: ['training_col','col_border_left']
+    },
     // 'MESA-AFA': {
     //     groupId: 'MESA AFA',
-    //     children: [{ field: 'MESA-AFA_R2' },],
+    //     children: [{ field: 'MESA_AFR_R2' },],
     //     headerClassName: ['training_col','col_border_left']
     // },
     // 'MESA-ALL': {
     //     groupId: 'MESA ALL',
-    //     children: [{ field: 'MESA-ALL_R2' },],
+    //     children: [{ field: 'MESA_ALL_R2' },],
     //     headerClassName: ['training_col','col_border_left']
     // },
     // 'MESA-CHN': {
     //     groupId: 'MESA CHN',
-    //     children: [{ field: 'MESA-CHN_R2' },],
+    //     children: [{ field: 'MESA_CHN_R2' },],
     //     headerClassName: ['training_col','col_border_left']
     // },
     // 'MESA-EUR': {
     //     groupId: 'MESA EUR',
-    //     children: [{ field: 'MESA-EUR_R2' },],
+    //     children: [{ field: 'MESA_EUR_R2' },],
     //     headerClassName: ['training_col','col_border_left']
     // },
     // 'MESA-HIS': {
     //     groupId: 'MESA HIS',
-    //     children: [{ field: 'MESA-HIS_R2' },],
+    //     children: [{ field: 'MESA_HIS_R2' },],
     //     headerClassName: ['training_col','col_border_left']
     // }
 }

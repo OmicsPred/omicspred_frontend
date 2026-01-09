@@ -32,7 +32,7 @@ export const tissues_columns = [
     {
         field: 'description',
         headerName: 'Description',
-        minWidth: 300,
+        minWidth: 400,
         flex: 1,
         sortable: false,
         renderCell: (params) => {
