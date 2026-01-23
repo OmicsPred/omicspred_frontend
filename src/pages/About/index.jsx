@@ -182,10 +182,10 @@ function About() {
 			'text': <div>To provide feedback or ask a question, please contact us <Href href={process.env.PROJECT_EMAIL} role="email" text="here"/>.</div>
 		},
 		'Our Collaborators': {
-			'label': 'collaborators',
+			'label': 'our_collaborators',
 			'text': <ul>
 						<li className="mb-1">
-							<Href text="InouyeLab" href={process.env.URL_INOUYE_LAB} />: <Href text="Scott C. Ritchie" href="https://orcid.org/0000-0002-8454-9548" />, <Href text="Samuel Lambert" href="https://www.phpc.cam.ac.uk/people/ceu-group/ceu-research-staff/sam-lambert/" />, Loïc Lannelongue, Artika Nath, Elodie Persyn, Carles Foguet
+							<Href text="Inouye Lab" href={process.env.URL_INOUYE_LAB} />: <Href text="Scott C. Ritchie" href="https://orcid.org/0000-0002-8454-9548" />, <Href text="Samuel Lambert" href="https://www.phpc.cam.ac.uk/people/ceu-group/ceu-research-staff/sam-lambert/" />, Loïc Lannelongue, Artika Nath, Elodie Persyn, Carles Foguet
 						</li>
 						<li className="mb-1">
 							<Href text="Department of Public Health and Primary Care, University of Cambridge:" href={process.env.URL_CAM_DPHPC+"ceu/"} /> Bram Prins, Praveen Surendran, Dirk Paul, Emanuele Di Angelantonio, Adam Butterworth, John Danesh

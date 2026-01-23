@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-import { Tooltip } from '@mui/material';
+import Tooltip from "@mui/material/Tooltip";
 import { Table } from 'react-bootstrap-icons';
 import { PageTitle, Header2Cards, no_entry_found, op_subtitle_no_asso } from '../../components/Common';
 import Href from '../../components/Href';

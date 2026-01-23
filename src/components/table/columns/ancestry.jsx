@@ -17,6 +17,78 @@ const format_ancestry_data = (anc_data) => {
     return ancestry_list;
 }
 
+
+const render_ancestry = (ancestry_data, type) => {
+    const ancestry_list = format_ancestry_data(ancestry_data);
+    return <AncestryDistribution key={"anc_"+type} data={ancestry_list} size={chart_size}/>
+}
+
+const value_getter_ancestry = (ancestry_data) => {
+    const ancestry_names = Object.keys(ancestry_data)
+    const anc_list = ancestry_names.map((anc_name) => <>{anc_name}:{ancestry_data[anc_name].count}</>);
+    return anc_list.join(',');
+}
+
+
+const get_multi_ancestry_list = (anc_data) => {
+    let label_list = []
+    if (anc_data != 'Multi-ancestry') {
+        const anc_list = anc_data.split(', ');
+        for (let a=0; a<anc_list.length; a++) {
+            const sub_label = get_ancestry_name(anc_list[a]);
+            label_list.push(sub_label)
+        }
+    }
+    return label_list.sort()
+}
+
+
+const compute_sample_dist = (sample_data) => {
+    let sample_total_number = 0;
+    let ancestry_dist = {};
+    let anc_dist = {};
+    for (let j=0; j<sample_data.length; j++) {
+        const sample_entry = sample_data[j];
+        const sample_number = sample_entry.sample_number;
+        const label = get_ancestry_name(sample_entry.ancestry_broad);
+        if (anc_dist[label]) {
+            anc_dist[label]['count'] += sample_number;
+        }
+        else {
+            anc_dist[label] = { 'count': sample_number };
+        }
+        if (label == 'MAO') {
+            const anc_list = get_multi_ancestry_list(sample_entry.ancestry_broad);
+            if (anc_list.length > 0) {
+                anc_dist[label]['anc_list'] = anc_list;
+            }
+        }
+        sample_total_number += sample_number;
+    }
+    // Post-process ancestry distribution
+    if (Object.keys(anc_dist).length > 0) {
+        ancestry_dist = { 'anc': {}, 'count': sample_total_number }
+
+        // Sort distributed ancestries
+        let anc_labels = Object.keys(anc_dist);
+        anc_labels.sort()
+        for (let k=0; k<anc_labels.length; k++) {
+            let anc_label = anc_labels[k];
+            ancestry_dist['anc'][anc_label] = anc_dist[anc_label];
+        }
+
+        // Update distribution
+        const dev_ancestries = Object.keys(ancestry_dist['anc']);
+        for (let l=0; l<dev_ancestries.length; l++) {
+            const anc_label = dev_ancestries[l];
+            let dist = (ancestry_dist['anc'][anc_label]['count'] / sample_total_number)*100
+            ancestry_dist['anc'][anc_label]['dist'] = parseFloat(dist.toFixed(1))
+        }
+    }
+    return ancestry_dist
+}
+
+
 export const ancestry_cols = {
     'ancestry': {
         field: 'ancestry',
@@ -44,9 +116,7 @@ export const ancestry_cols = {
             if (params.row.ancestry) {
                 if (params.row.ancestry.dev) {
                     if (params.row.ancestry.dev.anc) {
-                        const anc_training = params.row.ancestry.dev.anc;
-                        const ancestry_list = format_ancestry_data(anc_training);
-                        return <AncestryDistribution key="anc_training" data={ancestry_list} size={chart_size}/>
+                        return render_ancestry(params.row.ancestry.dev.anc,'training');
                     }
                 }
             }
@@ -56,11 +126,34 @@ export const ancestry_cols = {
             if (row.ancestry) {
                 if (row.ancestry.dev) {
                     if (row.ancestry.dev.anc) {
-                        const anc_training = row.ancestry.dev.anc;
-                        const ancestry_names = Object.keys(anc_training)
-                        const anc_list = ancestry_names.map((anc_name) => <>{anc_name}:{anc_training[anc_name].count}</>);
-                        return anc_list.join(',');
+                        return value_getter_ancestry(row.ancestry.dev.anc);
                     }
+                }
+            }
+        }
+    },
+    'ancestry_training_computed': {
+        field: 'ancestry_training',
+        headerName: 'Training',
+        description: 'Ancestry distribution of the training cohort(s)',
+        minWidth: 100,
+        filterable: false,
+        resizable: false,
+        sortable: false,
+        renderCell: (params) => {
+            const ancestry_data = compute_sample_dist(params.row.samples_training)
+            if (ancestry_data) {
+                if (ancestry_data['anc']) {
+                    return render_ancestry(ancestry_data['anc'],'training');
+                }
+            }
+            return <div className="text-center align-middle" style={{lineHeight:"50px"}}>{default_cell_value}</div>;
+        },
+        valueGetter: (value, row) => {
+            const ancestry_data = compute_sample_dist(row.samples_training)
+            if (ancestry_data) {
+                if (ancestry_data['anc']) {
+                    return value_getter_ancestry(ancestry_data['anc']);
                 }
             }
         }
@@ -77,9 +170,7 @@ export const ancestry_cols = {
             if (params.row.ancestry) {
                 if (params.row.ancestry.eval) {
                     if (params.row.ancestry.eval.anc) {
-                        const anc_validation = params.row.ancestry.eval.anc;
-                        const ancestry_list = format_ancestry_data(anc_validation);
-                        return <AncestryDistribution key="anc_validation" data={ancestry_list} size={chart_size}/>
+                        return render_ancestry(params.row.ancestry.eval.anc,'validation');
                     }
                 }
             }
@@ -89,11 +180,34 @@ export const ancestry_cols = {
             if (row.ancestry) {
                 if (row.ancestry.eval) {
                     if (row.ancestry.eval.anc) {
-                        const anc_validation = row.ancestry.eval.anc;
-                        const ancestry_names = Object.keys(anc_validation)
-                        const anc_list = ancestry_names.map((anc_name) => <>{anc_name}:{anc_validation[anc_name].count}</>);
-                        return anc_list.join(',');
+                        return value_getter_ancestry(row.ancestry.eval.anc);
                     }
+                }
+            }
+        }
+    },
+    'ancestry_validation_computed': {
+        field: 'ancestry_validation',
+        headerName: 'Validation',
+        description: 'Ancestry distribution of the validation cohort(s)',
+        minWidth: 100,
+        filterable: false,
+        resizable: false,
+        sortable: false,
+        renderCell: (params) => {
+            const ancestry_data = compute_sample_dist(params.row.samples_validation)
+            if (ancestry_data) {
+                if (ancestry_data['anc']) {
+                    return render_ancestry(ancestry_data['anc'],'validation');
+                }
+            }
+            return <div className="text-center align-middle" style={{lineHeight:"50px"}}>{default_cell_value}</div>;
+        },
+        valueGetter: (value, row) => {
+            const ancestry_data = compute_sample_dist(row.samples_validation)
+            if (ancestry_data) {
+                if (ancestry_data['anc']) {
+                    return value_getter_ancestry(ancestry_data['anc']);
                 }
             }
         }

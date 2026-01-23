@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-import { Tooltip } from '@mui/material';
+import Tooltip from "@mui/material/Tooltip";
 import { ArrowUpSquareFill, ArrowRight, Table } from 'react-bootstrap-icons';
 import DocumentTitle from '../../components/DocumentTitle';
 import Href from '../../components/Href';

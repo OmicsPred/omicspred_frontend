@@ -30,7 +30,7 @@ export default [
       "array-callback-return": "off",       // map() expects a return value
       "react/jsx-no-target-blank": "off",    // Using target="_blank" without rel="noreferrer"
       "react/jsx-uses-react": "error",
-      "react/jsx-uses-vars": "error",
+      "react/jsx-uses-vars": "error"
     },
   },
 ];

@@ -1,4 +1,4 @@
-import { Tooltip } from '@mui/material';
+import Tooltip from "@mui/material/Tooltip";
 import { Table } from 'react-bootstrap-icons';
 import { op_title, element_icon, Header2Cards } from '../../../components/Common';
 import { ToggleID, TooltipText }  from '../../../components/Generic';

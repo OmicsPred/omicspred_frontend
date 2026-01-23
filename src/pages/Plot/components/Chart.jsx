@@ -6,7 +6,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Tooltip } from '@mui/material';
+import Tooltip from "@mui/material/Tooltip";
 import { InfoCircleFill } from "react-bootstrap-icons";
 import ChartPlot from "./ChartPlot";
 // import ChartDoughnut from "./ChartDoughnut";

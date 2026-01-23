@@ -9,6 +9,7 @@ import { SampleTable } from '../../Sample';
 import Href from '../../Href';
 
 
+
 const default_cell_value = process.env.DEFAULT_CELL_VALUE;
 
 
@@ -240,11 +241,22 @@ const dataset_common_end = [
     columns_for_dataset['platform_version'],
     common_cols['method_name'],
     common_cols['scores_count'],
-    ancestry_cols['ancestry_training'],
-    ancestry_cols['ancestry_validation'],
+    ancestry_cols['ancestry_training_computed'],
+    ancestry_cols['ancestry_validation_computed'],
+    // ancestry_cols['ancestry_training'],
+    // ancestry_cols['ancestry_validation'],
     columns_for_dataset['plot_link'],
     columns_for_dataset['downloads_links']
 ]
+
+const datasets_browse_columns_start = [
+    columns_for_dataset['dataset_id'],
+    columns_for_dataset['dataset_name'],
+    common_cols['tissue_label'],
+    common_cols['publication'],
+    common_cols['platform_name_icon']
+]
+export const datasets_browse_columns = datasets_browse_columns_start.concat(dataset_common_end)
 
 const datasets_platform_columns_start = [
     columns_for_dataset['dataset_id'],

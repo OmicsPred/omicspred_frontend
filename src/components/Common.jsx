@@ -16,13 +16,21 @@ export const stages_list = {
 
 export const internal_publication_link = (publication, show_icon) => {
     const opp_id = publication.id
+    const title = publication.title
     const firstauthor = publication.firstauthor;
     const journal = publication.journal;
     const year = publication.date_publication.split('-')[0];
     return(
         <>
-            { show_icon ? <Book className='me-2 color_hl'/> : ''}
-            <Href href={"/publication/"+opp_id} text={<>{firstauthor}{firstauthor.endsWith('.') ? '' : <i>et al.</i>} {journal} ({year})</>}/> <span>({opp_id})</span>
+            <TooltipText
+                title = {title}
+                text = {
+                    <>
+                        { show_icon ? <Book className='me-2 color_hl'/> : ''}
+                        <Href href={"/publication/"+opp_id} text={<>{firstauthor} {firstauthor.endsWith('.') ? '' : <i>et al.</i>} {journal} ({year})</>}/>
+                    </>
+                }
+            />  <span>({opp_id})</span>
         </>
     )
 }
@@ -150,7 +158,10 @@ export const PageTitle = (props) => {
     let prefix = '';
 
     if (category == 'Browse') {
-        if (label == 'scores' || type == 'score') {
+        if (label == 'datasets') {
+            prefix = <LayersFill className={'op_title_prefix '+color_class}/>
+        }
+        else if (label == 'scores' || type == 'score') {
             // prefix = <Clipboard2Data size="26px" className={'me-3 '+color_class}/>
             prefix = <ClipboardData className={'op_title_prefix '+color_class}/>
         }

@@ -2,8 +2,7 @@ import { href } from "react-router";
 import Href from '../../../components/Href';
 import { ToggleDiv, ToggleText } from '../../../components/Generic';
 import { element_icon } from '../../../components/Common';
-// import { ArrowUpSquareFill } from "react-bootstrap-icons";
-import { Tooltip } from "@mui/material";
+import Tooltip from "@mui/material/Tooltip";
 
 
 const display_omics_link = (data, type, index) => {

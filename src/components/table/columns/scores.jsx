@@ -22,6 +22,7 @@ const scores_columns_part_1 = [
 const scores_columns_part_2 = [
     platform_type_col,
     platform_name_col,
+    common_cols['dataset_id'],
     publication_col
 ]
 

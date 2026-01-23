@@ -4,21 +4,20 @@ import { dependencies } from './package.json';
 import eslint from 'vite-plugin-eslint';
 
 const lib_chunks = {
-  // '@emotion': 'emotion',
   '@emotion': 'libs',
   '@mui/icons-material': 'mui',
   '@mui/material': 'mui',
-  '@mui/styled-engine': 'mui',
+  '@mui/styled-engine': 'mui-grid',
   '@mui/x-data-grid': 'mui-grid',
-  // '@mui': 'mui',
-  // '@popperjs': 'popperjs',
+  '@mui/x-tree-view': 'mui',
   '@popperjs': 'libs',
-  'bootstrap': 'bootstrap',
+  'bootstrap': 'mui-grid',
   'chartjs': 'chartjs',
   'chart.js': 'chartjs',
+  'file-saver': 'libs',
+  'react-ga4': 'libs',
   'sass': 'libs',
-  'underscore': 'libs',
-  'file-saver': 'libs'
+  'underscore': 'libs'
 }
 
 const react_libs_list = ['react', 'react-router', 'react-dom'];
@@ -56,7 +55,10 @@ export default defineConfig(({ mode }) => {
     define: {
       'process.env': env
     },
-    plugins: [react(),eslint()],
+    plugins: [
+      react(),
+      eslint()
+    ],
     server: {
       port: 3000,
       hot: true

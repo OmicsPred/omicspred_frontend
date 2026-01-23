@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import FormLabel from '@mui/material/FormLabel';
-import { Tooltip } from '@mui/material';
+import Tooltip from "@mui/material/Tooltip";
 import { Sliders, Table } from 'react-bootstrap-icons';
 
 import DocumentTitle from '../../components/DocumentTitle';

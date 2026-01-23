@@ -4,7 +4,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Tooltip } from '@mui/material';
+import Tooltip from "@mui/material/Tooltip";
 import { Table } from 'react-bootstrap-icons';
 
 import DocumentTitle from '../../../components/DocumentTitle';

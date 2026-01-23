@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { PersonArmsUp, Lungs, Bezier2, Stack, Book } from 'react-bootstrap-icons';
+import { useState, useEffect } from 'react';
+import { PersonArmsUp, Lungs, Bezier2, Stack, Book, LayersFill } from 'react-bootstrap-icons';
 import restApiCall from '../../../components/RestAPI';
 import { thousandifyNumber } from '../../../components/Generic';
 // import OmicsDistribution from './components/OmicsDistribution';
@@ -7,6 +7,7 @@ import PlatformsDistribution from './components/PlatformsDistribution';
 
 
 const Stats = () => {
+    const [datasetsCount, setDatasetsCount] = useState(0);
     const [scoresCount, setScoresCount] = useState(0);
     const [platformsCount, setPlatformsCount] = useState(0);
     const [publicationsCount, setPublicationsCount] = useState(0);
@@ -32,6 +33,7 @@ const Stats = () => {
             setTissuesCount(count_data.tissues);
             setPlatformsCount(count_data.platforms);
             setPublicationsCount(count_data.publications);
+            setDatasetsCount(count_data.datasets);
         }
     }
 
@@ -56,6 +58,9 @@ const Stats = () => {
                 break;
             case 'Publications':
                 icon = <Book className='me-2' size="20px"/>;
+                break;
+            case 'Datasets':
+                icon = <LayersFill className='me-2' size="20px"/>;
                 break;
             default:
                 icon = '';
@@ -122,6 +127,7 @@ const Stats = () => {
                             { phenotypeAssoCount && phenotypeAssoCount > 0 ? display_count_block('Phenotype associations',phenotypeAssoCount,'/applications/phenotype/full','phenotype') : ''}
                             { pathwaysCount && pathwaysCount > 0 ? display_count_block('Pathways',pathwaysCount,'/pathways') : ''}
                             { platformsCount && platformsCount > 0 ? display_count_block('Platforms',platformsCount,'/platforms') : ''}
+                            { datasetsCount && datasetsCount > 0 ? display_count_block('Datasets',datasetsCount,'/datasets') : ''}
                             { tissuesCount && tissuesCount > 0 ? display_count_block('Tissues',tissuesCount,'/tissues') : ''}
                             { publicationsCount && publicationsCount > 0 ? display_count_block('Publications',publicationsCount,'/publications') : ''}
                         </div>

@@ -1,7 +1,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'react-router';
 import { ChevronRight, InfoCircleFill, Search as SearchIcon } from 'react-bootstrap-icons';
-import { Tooltip } from '@mui/material';
+import Tooltip from "@mui/material/Tooltip";
 import DocumentTitle from '../../components/DocumentTitle';
 import restApiCall from '../../components/RestAPI';
 import ResultCard from './components/ResultCard';
