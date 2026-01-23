@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 // import { RichTreeView } from '@mui/x-tree-view/RichTreeView';
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
 import { TreeItem } from '@mui/x-tree-view/TreeItem';
-import { Tooltip } from "@mui/material";
+import Tooltip from "@mui/material/Tooltip";
 import { ArrowRightCircle } from 'react-bootstrap-icons';
 import { ExpandCollapse, loading_data } from './Generic';
 import { display_pathway_link } from '../pages/MolecularTrait/components/links'

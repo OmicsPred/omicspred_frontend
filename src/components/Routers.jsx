@@ -4,6 +4,7 @@ import About from "../pages/About";
 import Cohort from "../pages/Cohort";
 import Cohorts from "../pages/Cohorts";
 import Dataset from "../pages/Dataset";
+import Datasets from "../pages/Browse/Datasets";
 import Documentation from "../pages/Documentation";
 import Downloads from "../pages/Downloads";
 import FAQs from "../pages/FAQs";
@@ -56,6 +57,7 @@ function OpRouters() {
                 {/* Group pages */}
                 <Route path="/pathways" element={<Pathways />} />
                 <Route path="/publications" element={<Publications />} />
+                <Route path="/datasets" element={<Datasets />} />
                 <Route path="/platforms" element={<Platforms />} />
                 <Route path="/scores" element={<Scores />} />
                 <Route path="/tissues" element={<Tissues />} />

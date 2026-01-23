@@ -135,7 +135,7 @@ a {
     }
     .home_stats_box {
         @include op_light_bg;
-        margin-bottom: 1rem !important;
+        margin-bottom: 0.75rem !important;
         display:flex;
         justify-content: space-between;
         border:none !important;

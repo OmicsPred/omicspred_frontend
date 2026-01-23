@@ -11,12 +11,12 @@ const DataTableFromRestApi = (props) => {
 
     useEffect(() => {
         (async () => {
-            const dataset = await restApiCallPaginated(props.url_suffix);
+            const data = await restApiCallPaginated(props.url_suffix);
             // consoleDev(dataset);
-            if (dataset && dataset.length > 0) {
-                setTableData(dataset);
+            if (data && data.length > 0) {
+                setTableData(data);
                 // Check when the Rest API call is done
-                if (dataset != undefined) {
+                if (data != undefined) {
                     setRestApiDone(true);
                 }
             }

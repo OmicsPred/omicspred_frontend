@@ -36,7 +36,7 @@ const SearchDocs = () => {
                 <li key="tissues">Tissues</li>
             </ul>
             <div className='d-flex mt-3 mb-4'>
-                <Note msg={<>The results are limited to the <span className="fw-bold">25</span> best hits.</>}/>
+                <Note msg={<>The results are limited to the <span className="fw-bold">50</span> best hits.</>}/>
             </div>
             <p>
                 Here are the attributes you can search for each element:

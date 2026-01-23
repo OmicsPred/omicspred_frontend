@@ -95,7 +95,7 @@ function Tissue() {
 				{ tissueData.label ?
 					<tr><td>Identifier</td><td><Href href={tissueData.url} text={tissueData.id}/></td></tr>:''
 				}
-				{ tissueData.description && tissueData.description.length ?
+				{ tissueData.description && tissueData.description != '[]' ?
 					<tr><td>Description</td><td>{display_tissue_description(tissueData.description)}</td></tr>:''
 				}
                 <tr><td># Score{tissueData.scores_count > 1 ? 's' : ''}</td><td>{scoresBadge(tissueData.scores_count)}</td></tr>

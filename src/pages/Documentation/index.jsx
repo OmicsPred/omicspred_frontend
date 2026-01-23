@@ -77,7 +77,7 @@ const documentation_op = {
     },
     'Dataset': {
         'label': 'dataset',
-        'desc': 'A dataset in '+project_name+' helps to separate different groups of data within a same study (e.g. use of different versions of a same platform, or different samples).',
+        'desc': 'In '+project_name+', a dataset is a set of genetic scores, within a same study, that have a common platform and tissue. In most cases, the genetic scores share the same ancestry.',
         'struct': [
             {'name': project_name+' Dataset ID (OPD)', 'desc': 'Unique identifier created for the dataset entries in '+project_name+'.'},
             {'name': 'Dataset Name', 'desc': 'Name of the dataset (if available).'},

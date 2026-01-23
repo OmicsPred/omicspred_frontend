@@ -12,6 +12,7 @@ const metric_valueGetter = function(performance_metrics,method,eval_type) {
     for (let i=0; i<performance_metrics.length; i++) {
         const metric = performance_metrics[i];
         if (metric.name_short == method) {
+            console.log("- Estimate: "+metric.estimate)
             return metric.estimate;
         }
     }
@@ -76,8 +77,6 @@ const score_cols = {
     },
     'r2': {
         field: 'r2',
-        // headerName: <>R<sup>2</sup></>,
-        type: 'number',
         width: 90,
         renderHeader: () => {
             return r2_col_header_label();
@@ -89,7 +88,6 @@ const score_cols = {
     'rho': {
         field: 'rho',
         headerName: 'Rho',
-        type: 'number',
         width: 90,
         valueGetter: (value, row) => {
             return metric_valueGetter(row.performance_metrics,'Rho',row.evaluation_type);
@@ -98,7 +96,6 @@ const score_cols = {
     'variant_match_rate': {
         field: 'variant_match_rate',
         headerName: match_rate_col,
-        type: 'number',
         width: 120,
         valueGetter: (value, row) => {
             return metric_valueGetter(row.performance_metrics,match_rate_col,row.evaluation_type);
@@ -107,7 +104,6 @@ const score_cols = {
     'missing_rate': {
         field: 'missing_rate',
         headerName: 'Missing Rate',
-        type: 'number',
         width: 120,
         valueGetter: (value, row) => {
             return metric_valueGetter(row.performance_metrics,'Missing Rate',row.evaluation_type);

@@ -1,21 +1,9 @@
-// import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-// import { DataGrid, GridToolbarContainer, GridToolbarColumnsButton, GridToolbarFilterButton, GridToolbarExport, GridToolbarQuickFilter} from '@mui/x-data-grid';
 import { DataGrid } from '@mui/x-data-grid';
-import { CustomToolbar,  } from "./TableToolbar";
+import { CustomToolbar } from "./TableToolbar";
 
 const DataTable = (props) => {
 
     const default_page_size = 25;
-
-    // const rowCount = 0;
-    // const [rowCountState, setRowCountState] = useState(rowCount);
-
-    // let display_groups = false;
-    // if (props.groups) {
-    //   display_groups = true;
-    // }
-
-    // const expanded = props.expanded ? true : false;
 
     let initial_sorting = {};
     if (props.sorting) {

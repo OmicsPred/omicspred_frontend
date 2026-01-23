@@ -20,7 +20,7 @@ export const tissues_columns = [
     {
         field: 'id',
         headerName: 'Tissue ID',
-        minWidth: 120,
+        minWidth: 160,
         flex: 1,
         renderCell: (params) => {
             const tissue_id = params.row.id;
@@ -36,7 +36,7 @@ export const tissues_columns = [
         flex: 1,
         sortable: false,
         renderCell: (params) => {
-            if (params.row.description) {
+            if (params.row.description && params.row.description != '[]') {
                 return display_tissue_description(params.row.description);
             }
             return default_cell_value;

@@ -33,6 +33,7 @@ function Header() {
                             <NavDropdown title="Browse" id="browse-nav-dropdown" renderMenuOnMount={true}>
                                 <NavDropdown.Item href="/scores">Genetic Scores</NavDropdown.Item>
                                 <NavDropdown.Item href="/publications">Publications</NavDropdown.Item>
+                                <NavDropdown.Item href="/datasets">Datasets</NavDropdown.Item>
                                 <NavDropdown.Item href="/platforms">Platforms</NavDropdown.Item>
                                 <NavDropdown.Item href="/pathways">Pathways</NavDropdown.Item>
                                 <NavDropdown.Item href="/tissues">Tissues</NavDropdown.Item>
