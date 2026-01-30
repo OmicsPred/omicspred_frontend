@@ -68,6 +68,7 @@ function Dataset() {
                 <tr><td>Method</td><td>{datasetData.method_name}</td></tr>
                 { cohortsList ? <tr><td>Cohort{add_s_when_plural(Object.keys(cohortsList).length)}</td><td>{cohorts_list()}</td></tr>: ''}
                 <tr><td>Number of scores</td><td>{scoresBadge(datasetData.scores_count)}</td></tr>
+                <tr><td>Terms & Licenses</td><td>{datasetData.license}</td></tr>
             </>
         )
     }

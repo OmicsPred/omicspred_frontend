@@ -13,6 +13,7 @@ const tissue_col = {...common_cols['tissue_label'], field: 'dataset__tissue__lab
 // Export Scores columns
 const scores_columns_part_1 = [
     common_cols['omicspred_id'],
+    common_cols['score_name'],
     gene_id_col,
     protein_id_col,
     metabolite_id_col,
@@ -36,7 +37,8 @@ export const scores_columns_for_tissue = scores_columns_part_1.concat(scores_col
 
 export const publication_score_columns = {
     'start': [
-        common_cols['omicspred_id']
+        common_cols['omicspred_id'],
+        common_cols['score_name']
     ],
     'end': [
         common_cols['variants_number'],
@@ -62,6 +64,7 @@ export const publication_metabolomics_columns = [
 
 export const score_molecular_trait_columns = [
     common_cols['omicspred_id'],
+    common_cols['score_name'],
     platform_type_col,
     platform_name_col,
     tissue_col,
@@ -75,6 +78,7 @@ export const score_molecular_trait_columns = [
 
 export const score_metabolite_columns = [
     common_cols['omicspred_id'],
+    common_cols['score_name'],
     common_cols['trait_reported'],
     // common_cols['platform_type'],
     platform_name_col,

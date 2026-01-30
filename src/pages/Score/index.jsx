@@ -124,6 +124,20 @@ function Score() {
         setMetricData(score_metric_data.results);
     }
 
+    const display_trait_reported = () => {
+        let reported_trait = '-'
+        if (scoreData.trait_reported) {
+            // reported_trait = scoreData.trait_reported+' ('+scoreData.trait_reported_id+')'
+            reported_trait = scoreData.trait_reported+scoreData.trait_reported_id ? ' ('+scoreData.trait_reported_id+')':'';
+        }
+        else {
+            if (scoreData.trait_reported_id) {
+                reported_trait = scoreData.trait_reported_id;
+            }
+        }
+        return reported_trait
+    }
+
     const get_information_left_content = () => {
 		return (
 			<>
@@ -133,7 +147,7 @@ function Score() {
                 <tr><td>Dataset</td><td>{ datasetName ? internal_dataset_link(datasetId, datasetName, 1) : internal_dataset_link(datasetId, undefined, 1) }</td></tr>
                 { tissueData ? <tr><td>Tissue</td><td>{internal_tissue_link(tissueData,1)}</td></tr> : ''}
                 <tr><td>Method</td><td>{scoreData.method_name}</td></tr>
-                { scoreData.trait_reported ? <tr><td>Reported Trait</td><td>{scoreData.trait_reported}{scoreData.trait_reported_id ? ' ('+scoreData.trait_reported_id+')':''}</td></tr> : ''}
+                <tr><td>Reported Trait</td><td>{display_trait_reported()}</td></tr>
                 <tr><td>Number of Variants</td><td>{numberBadge(scoreData.variants_number)}</td></tr>
                 <tr><td>Genome Build</td><td>{scoreData.variants_genomebuild}</td></tr>
                 {/* <tr><td>Scoring file</td><td><FileEarmarkText className="hl_color" size={24}/></td></tr> */}

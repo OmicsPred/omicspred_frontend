@@ -183,44 +183,64 @@ function About() {
 		},
 		'Our Collaborators': {
 			'label': 'our_collaborators',
-			'text': <ul>
+			'text':
+				<>
+					<h5 className="mt-4">OmicsPred Portal</h5>
+					<ul>
 						<li className="mb-1">
-							<Href text="Inouye Lab" href={process.env.URL_INOUYE_LAB} />: <Href text="Scott C. Ritchie" href="https://orcid.org/0000-0002-8454-9548" />, <Href text="Samuel Lambert" href="https://www.phpc.cam.ac.uk/people/ceu-group/ceu-research-staff/sam-lambert/" />, Loïc Lannelongue, Artika Nath, Elodie Persyn, Carles Foguet
+							PIs: <Href text="Michael Inouye" href="https://www.inouyelab.org/home/people#h.p_ID_32" />, <Href text="Samuel Lambert" href="https://www.phpc.cam.ac.uk/people/ceu-group/ceu-research-staff/sam-lambert/" />, Yu Xu, <Href text='Hae Kyung Im' href="https://biologicalsciences.uchicago.edu/faculty/hae-kyung-im-phd"/>.
 						</li>
 						<li className="mb-1">
-							<Href text="Department of Public Health and Primary Care, University of Cambridge:" href={process.env.URL_CAM_DPHPC+"ceu/"} /> Bram Prins, Praveen Surendran, Dirk Paul, Emanuele Di Angelantonio, Adam Butterworth, John Danesh
-						</li>
-						<li className="mb-1">
-							<Href text="MRC Epidemiology Unit, University of Cambridge" href="https://www.mrc-epid.cam.ac.uk/" /> : Maik Pietzner, Jian’an Luan, Claudia Langenberg
-						</li>
-						<li className="mb-1">
-							<Href text="MRC Human Genetics Unit, The University of Edinburgh" href="https://www.ed.ac.uk/mrc-human-genetics-unit/research/wilson-group" /> : Paul Timmers, Sebastian May-Wilson, Nicola Pirastu, Jim Wilson
-						</li>
-						<li className="mb-1">
-							<Href text="Saw Swee Hock School of Public Health, National University of Singapore " href="https://sph.nus.edu.sg/" />: Yujian Liang, E Shyong Tai, Rob M van Dam, Xueling Sim
-						</li>
-						<li className="mb-1">
-							<Href text="Beth Israel Deaconess Medical Center, Harvard Medical School" href="https://www.bidmc.org/" />: Usman A. Tahir, Shuliang Deng, Robert E. Gerszten
-						</li>
-						<li className="mb-1">
-							<Href text="Wellcome Sanger Institute" href="https://www.sanger.ac.uk/" />: Lorenzo Bomba, Emma E Davenport, Nicole Soranzo
-						</li>
-						<li className="mb-1">
-							<Href text="European Molecular Biology Laboratory, European Bioinformatics Institute" href="https://www.ebi.ac.uk/"/>: Helen Parkinson
-						</li>
-						<li className="mb-1">
-							<Href text="Imperial College London" href="https://www.imperial.ac.uk/" />: James E. Peters
-						</li>
-						<li className="mb-1">
-							<Href text="Immunology, Genetics and Pathology, IGP, Uppsala University" href="https://igp.uu.se/" /> : Åsa Johansson
-						</li>
-						<li className="mb-1">
-							<Href text="University of Oxford" href="https://www.ox.ac.uk/" />: Christopher Yau
-						</li>
-						<li className="mb-1">
-							<Href text="Karolinska Institutet" href="https://ki.se/" /> : Anders Mälarstig
+							Team: Laurent Gil, Carles Foguet, Sofía Salazar, Helen Parkinson.
 						</li>
 					</ul>
+					<h5 className="mt-4">OmicsPred Scores Collaboration</h5>
+					<p>
+						Scott C. Ritchie, Samuel Lambert, Loïc Lannelongue, Artika Nath, Elodie Persyn, Carles Foguet, Bram Prins, Praveen Surendran,
+						Dirk Paul, Emanuele Di Angelantonio, Adam Butterworth, John Danesh, Maik Pietzner, Jian’an Luan, Claudia Langenberg,
+						Paul Timmers, Sebastian May-Wilson, Nicola Pirastu, Jim Wilson, Yujian Liang, E Shyong Tai, Rob M van Dam, Xueling Sim,
+						Usman A. Tahir, Shuliang Deng, Robert E. Gerszten, Lorenzo Bomba, Emma E Davenport, Nicole Soranzo, Helen Parkinson,
+						James E. Peters, Åsa Johansson, Christopher Yau, Anders Mälarstig.
+					</p>
+						{/* <ul>
+							<li className="mb-1">
+								<Href text="Inouye Lab" href={process.env.URL_INOUYE_LAB} />: <Href text="Scott C. Ritchie" href="https://orcid.org/0000-0002-8454-9548" />, <Href text="Samuel Lambert" href="https://www.phpc.cam.ac.uk/people/ceu-group/ceu-research-staff/sam-lambert/" />, Loïc Lannelongue, Artika Nath, Elodie Persyn, Carles Foguet
+							</li>
+							<li className="mb-1">
+								<Href text="Department of Public Health and Primary Care, University of Cambridge:" href={process.env.URL_CAM_DPHPC+"ceu/"} /> Bram Prins, Praveen Surendran, Dirk Paul, Emanuele Di Angelantonio, Adam Butterworth, John Danesh
+							</li>
+							<li className="mb-1">
+								<Href text="MRC Epidemiology Unit, University of Cambridge" href="https://www.mrc-epid.cam.ac.uk/" /> : Maik Pietzner, Jian’an Luan, Claudia Langenberg
+							</li>
+							<li className="mb-1">
+								<Href text="MRC Human Genetics Unit, The University of Edinburgh" href="https://www.ed.ac.uk/mrc-human-genetics-unit/research/wilson-group" /> : Paul Timmers, Sebastian May-Wilson, Nicola Pirastu, Jim Wilson
+							</li>
+							<li className="mb-1">
+								<Href text="Saw Swee Hock School of Public Health, National University of Singapore " href="https://sph.nus.edu.sg/" />: Yujian Liang, E Shyong Tai, Rob M van Dam, Xueling Sim
+							</li>
+							<li className="mb-1">
+								<Href text="Beth Israel Deaconess Medical Center, Harvard Medical School" href="https://www.bidmc.org/" />: Usman A. Tahir, Shuliang Deng, Robert E. Gerszten
+							</li>
+							<li className="mb-1">
+								<Href text="Wellcome Sanger Institute" href="https://www.sanger.ac.uk/" />: Lorenzo Bomba, Emma E Davenport, Nicole Soranzo
+							</li>
+							<li className="mb-1">
+								<Href text="European Molecular Biology Laboratory, European Bioinformatics Institute" href="https://www.ebi.ac.uk/"/>: Helen Parkinson
+							</li>
+							<li className="mb-1">
+								<Href text="Imperial College London" href="https://www.imperial.ac.uk/" />: James E. Peters
+							</li>
+							<li className="mb-1">
+								<Href text="Immunology, Genetics and Pathology, IGP, Uppsala University" href="https://igp.uu.se/" /> : Åsa Johansson
+							</li>
+							<li className="mb-1">
+								<Href text="University of Oxford" href="https://www.ox.ac.uk/" />: Christopher Yau
+							</li>
+							<li className="mb-1">
+								<Href text="Karolinska Institutet" href="https://ki.se/" /> : Anders Mälarstig
+							</li>
+						</ul> */}
+				</>
 		},
 		"Acknowledgements": {
 			'label': 'acknowledgements',

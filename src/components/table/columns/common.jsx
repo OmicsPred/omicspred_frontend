@@ -10,6 +10,8 @@ const display_threshold = 2;
 
 const variant_rate_label = 'Variant Match Rate'
 
+const license_headers = ['CC BY 4.0', 'CC BY-SA 4.0'];
+
 export const cohort_valueGetter = function(row,cohort,method,is_training) {
     let result = '';
     let cohort_label = cohort+'_'+method;
@@ -205,6 +207,19 @@ export const common_cols = {
                 }
             }
             return op_id
+        }
+    },
+    'score_name': {
+        field: 'name',
+        headerName: 'Score name',
+        minWidth: 150,
+        valueGetter: (value, row) => {
+            if (row.name) {
+                return row.name;
+            }
+            else {
+                return default_cell_value;
+            }
         }
     },
     'variants_number': { 
@@ -918,6 +933,33 @@ export const common_cols = {
             if (row.descriptions) {
                 return row.descriptions.join(data_separator);
             }
+        }
+    },
+    'license': {
+        field: 'license',
+        headerName: 'Terms/License',
+        minWidth: 120,
+        // flex: 1,
+        sortable: false,
+        renderCell: (params) => {
+            const license_text = params.row.license;
+            let header = '';
+            for (let i=0; i<license_headers.length; i++) {
+                const license_header = license_headers[i];
+                if (license_text.includes(license_header)) {
+                    header = license_header;
+                    break;
+                }
+            }
+            if (header) {
+                return ( <TooltipText title={license_text} text={header} /> )
+            }
+            else {
+                return license_text;
+            }
+        },
+        valueGetter: (value, row) => {
+            return row.license;
         }
     },
     'scores_count':{

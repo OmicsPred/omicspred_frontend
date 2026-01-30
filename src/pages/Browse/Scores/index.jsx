@@ -195,15 +195,15 @@ function Scores() {
                                             </div>
                                             {/* Tissue */}
                                             {select_form('Tissue',selectedTissue,tissuesLabels,handleTissueChange,tissues)}
-                                            {/* OmicsPred ID */}
-                                            {input_form('OmicsPred ID','opgs_id',IDInput,handleIDInput)}
+                                            {/* OmicsPred ID / Name */}
+                                            {input_form('OmicsPred ID / Name','opgs_id',IDInput,handleIDInput)}
                                         </div>
                                         <div className='compact_form'>
                                             {/* Molecular Trait - Type */}
                                             {radio_form('Molecular Trait',selectedMolecularTraitType,molecular_trait_types,handleMolecularTraitTypeChange)}
                                             {/* Molecular Trait */}
                                             <div className='no_mt'>
-                                                {input_form('Name / ID','mt_name_id',molecularTrait,handleMolecularTraitInput)}
+                                                {input_form('ID / Name','mt_name_id',molecularTrait,handleMolecularTraitInput)}
                                             </div>
                                         </div>
                                     </div>

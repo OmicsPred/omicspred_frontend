@@ -49,6 +49,18 @@ const cohorts_list = [
     </>
   },
   {
+    "title": "Multi-Ethnic Study of Atherosclerosis",
+    "labels": ["MESA"],
+    "href": "https://mesa-nhlbi.org",
+    "desc": <>
+      This is a study of the characteristics of subclinical cardiovascular disease and the risk factors that predict progression to clinically overt cardiovascular disease or progression of the subclinical disease (<Href href='https://doi.org/10.1093/aje/kwf113' text='Bild et al., 2002'/>).
+      <br />
+      MESA consists of a diverse, population-based sample of an initial 6,814 men and women aged 45-84 without known cardiovascular disease
+      <br />
+      The goal of MESA is to identify factors that contribute to cardiovascular disease that occurs with or without obvious symptoms.
+    </>
+  },
+  {
     "title": "Northern Swedish Population Health Study",
     "labels": ["NSPHS"],
     "href": "https://pubmed.ncbi.nlm.nih.gov/20568910/",
