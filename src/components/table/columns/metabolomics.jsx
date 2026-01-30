@@ -12,6 +12,7 @@ const ancestry_validation_cols = {...ancestry_cols['ancestry_validation'], heade
 export const metabolomics_columns = {
     'Metabolon': [
         common_cols['omicspred_id'],
+        common_cols['score_name'],
         trait_reported_id_col,
         trait_reported_col,
         common_cols['metabolite_id'],
@@ -24,17 +25,10 @@ export const metabolomics_columns = {
         common_cols['variants_number'],
         ancestry_training_cols,
         ancestry_validation_cols,
-        // Cohorts columns
-        // cohort_cols['INTERVAL']['R2'],
-        // cohort_cols['INTERVAL']['Rho'],
-        // cohort_cols['INTERVAL_withheld_subset']['R2'],
-        // cohort_cols['INTERVAL_withheld_subset']['Rho'],
-        // cohort_cols['ORCADES']['R2'],
-        // cohort_cols['ORCADES']['Rho'],
-        // cohort_cols['ORCADES']['Missing Rate'],
     ],
     'Nightingale': [
         common_cols['omicspred_id'],
+        common_cols['score_name'],
         common_cols['trait_reported'],
         common_cols['metabolite_id'],
         common_cols['metabolite_name'],
@@ -46,26 +40,6 @@ export const metabolomics_columns = {
         common_cols['variants_number'],
         ancestry_training_cols,
         ancestry_validation_cols,
-        // Cohorts columns
-        // cohort_cols['INTERVAL']['R2'],
-        // cohort_cols['INTERVAL']['Rho'],
-        // cohort_cols['UKB']['R2'],
-        // cohort_cols['UKB']['Rho'],
-        // cohort_cols['ORCADES']['R2'],
-        // cohort_cols['ORCADES']['Rho'],
-        // cohort_cols['ORCADES']['Missing Rate'],
-        // cohort_cols['VIKING']['R2'],
-        // cohort_cols['VIKING']['Rho'],
-        // cohort_cols['VIKING']['Missing Rate'],
-        // cohort_cols['MEC-CN']['R2'],
-        // cohort_cols['MEC-CN']['Rho'],
-        // cohort_cols['MEC-CN']['Missing Rate'],
-        // cohort_cols['MEC-IN']['R2'],
-        // cohort_cols['MEC-IN']['Rho'],
-        // cohort_cols['MEC-IN']['Missing Rate'],
-        // cohort_cols['MEC-MA']['R2'],
-        // cohort_cols['MEC-MA']['Rho'],
-        // cohort_cols['MEC-MA']['Missing Rate']
     ]
 };
 
@@ -76,21 +50,11 @@ export const metabolomics_column_groups = {
         common_column_groups['metabolomic_mapped_trait'],
         common_column_groups['pathway'],
         common_column_groups['ancestry']
-        // common_column_groups['INTERVAL'],
-        // common_column_groups['INTERVAL_withheld_subset'],
-        // common_column_groups['ORCADES']
     ],
     'Nightingale': [
         // common_column_groups['reported_trait'],
         common_column_groups['metabolomic_mapped_trait'],
         common_column_groups['pathway'],
         common_column_groups['ancestry']
-        // common_column_groups['INTERVAL'],
-        // common_column_groups['UKB'],
-        // common_column_groups['ORCADES'],
-        // common_column_groups['VIKING'],
-        // common_column_groups['MEC-CN'],
-        // common_column_groups['MEC-IN'],
-        // common_column_groups['MEC-MA']
     ]
 };

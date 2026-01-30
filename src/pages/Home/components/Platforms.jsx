@@ -26,7 +26,8 @@ const Platforms = () => {
             data_list.map(data => {
                 const platform_type = data.platform.type;
                 const platform_name = data.platform.name;
-                const samples_validation = data.samples_validation
+                // Use training samples
+                const samples = data.samples_training
                 const platform_tissue = data.tissue;
                 if (!platforms_by_omic[platform_type]) {
                     platforms_by_omic[platform_type] = [];
@@ -42,25 +43,26 @@ const Platforms = () => {
                             if (!Object.keys(platforms_by_omic[platform_type][i].tissues).includes(platform_tissue)) {
                                 platforms_by_omic[platform_type][i].tissues[platform_tissue.label] = platform_tissue; // Label is more convenient for sorting
                             }
-                            // Samples validation - Add cohort names to existing Plaform entry
-                            let existing_samples_validation = platforms_by_omic[platform_type][i].samples_validation;
+                            // Samples training - Add cohort names to existing Plaform entry
+                            let existing_samples = platforms_by_omic[platform_type][i].samples;
                             let existing_cohorts = [];
-                            for (let j=0; j<existing_samples_validation.length;j++) {
-                                const cohort_name = existing_samples_validation[j].cohorts[0].name_short;
+
+                            for (let j=0; j<existing_samples.length;j++) {
+                                const cohort_name = existing_samples[j].cohorts[0].name_short;
                                 if (!existing_cohorts.includes(cohort_name)) {
                                     existing_cohorts.push(cohort_name);
                                 }
                             }
-                            for (let k=0; k<samples_validation.length;k++) {
-                                if (samples_validation[k].cohorts && samples_validation[k].cohorts.length > 0) {
-                                    const cohort_name = samples_validation[k].cohorts[0].name_short;
+                            for (let k=0; k<samples.length;k++) {
+                                if (samples[k].cohorts && samples[k].cohorts.length > 0) {
+                                    const cohort_name = samples[k].cohorts[0].name_short;
                                     if (!existing_cohorts.includes(cohort_name)) {
                                         existing_cohorts.push(cohort_name);
-                                        existing_samples_validation.push(samples_validation[k]);
+                                        existing_samples.push(samples[k]);
                                     }
                                 }
                             }
-                            platforms_by_omic[platform_type][i].samples_validation = existing_samples_validation;
+                            platforms_by_omic[platform_type][i].samples = existing_samples;
                         }
                     }
                 }
@@ -73,7 +75,7 @@ const Platforms = () => {
                     obj['tissues'] = {};
                     obj['tissues'][data.tissue.label] = data.tissue; // Label is more convenient for sorting later on
                     // obj['tissue'] = data.tissue.label;
-                    obj['samples_validation'] = samples_validation;
+                    obj['samples'] = samples;
                     platforms_by_omic[platform_type].push(obj);
                     platforms_seen.push(platform_name);
                 }
@@ -121,9 +123,9 @@ const Platforms = () => {
                                             <div style={{textAlign:"left"}}>
                                                 Number of genetic scores: <b>{thousandifyNumber(platform_cat.o_count)}</b>
                                             </div>
-                                            {platform_cat.samples_validation.length > 0 ?
+                                            {platform_cat.samples.length > 0 ?
                                                 <div style={{textAlign:"left"}}>
-                                                Validation cohort{platform_cat.samples_validation.length > 1 && 's'}: <PlatformCohort sample_cohorts={platform_cat.samples_validation}/>
+                                                    Training cohort{platform_cat.samples.length > 1 && 's'}: <PlatformCohort sample_cohorts={platform_cat.samples}/>
                                                 </div>:''
                                             }
                                             <div className='mt-2 mb-3'>

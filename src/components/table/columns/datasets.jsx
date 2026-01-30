@@ -219,8 +219,9 @@ export const datasets_columns = [
     },
     {
         field: 'gwas_sumstats',
-        headerName: 'GWAS summary stats',
-        minWidth: 170,
+        headerName: 'GWAS sum. stats',
+        description: 'GWAS summary statistics',
+        minWidth: 150,
         flex: 0.5,
         align: 'right',
         renderCell: (params) => {
@@ -233,7 +234,8 @@ export const datasets_columns = [
             }
         },
         valueGetter: (value, row) => { return row.scoring_files_urls.gwas_sumstats }
-    }
+    },
+    common_cols['license']
 ]
 
 

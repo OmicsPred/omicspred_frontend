@@ -90,7 +90,8 @@ const documentation_op = {
             {'name': 'Training Sample(s)', 'desc': 'Set of Samples used to create and train the Genetic Scores in the dataset'},
             {'name': 'Validation Sample(s)', 'desc': 'Set of Samples used to validate the Genetic Scores in the dataset'},
             // {'name': 'Species', 'desc': 'Species targeted in this study'},
-            {'name': 'Data files URLs', 'desc': 'JSON structure listing the URLs of the different types of datafiles available for download.'}
+            {'name': 'Data files URLs', 'desc': 'JSON structure listing the URLs of the different types of datafiles available for download.'},
+            {'name': 'License/Terms of Use', 'desc': 'License/Terms of Use that applies to the Genetic Scores of the Dataset.'}
         ]
     },
     'Performance Metrics': {

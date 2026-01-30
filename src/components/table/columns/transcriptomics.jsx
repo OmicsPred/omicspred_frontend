@@ -5,26 +5,9 @@ import { ancestry_cols } from "./ancestry";
 const ancestry_training_cols = {...ancestry_cols['ancestry_training'], headerClassName: ['col_border_left']}
 // const tissue_col = {...common_cols['tissue_label'], field: 'dataset__tissue__label'}
 
-export const transcriptomics_columns = {
-    'RNAseq - Expression': [
-        common_cols['omicspred_id'],
-        common_cols['gene_name'],
-        common_cols['gene_id'],
-        common_cols['tissue_label'],
-        common_omics_columns['omics_publication'],
-        common_omics_columns['omics_platform_version'],
-        common_cols['dataset_id'],
-        common_cols['variants_number'],
-        ancestry_training_cols,
-        ancestry_cols['ancestry_validation'],
-        // Cohorts columns
-        // cohort_cols['INTERVAL']['R2'],
-        // cohort_cols['INTERVAL']['Rho'],
-        // cohort_cols['INTERVAL_withheld_subset']['R2'],
-        // cohort_cols['INTERVAL_withheld_subset']['Rho']
-    ],
-    'RNAseq - Splicing': [
-        common_cols['omicspred_id'],
+const default_transcriptomics_cols = [
+         common_cols['omicspred_id'],
+        common_cols['score_name'],
         common_cols['gene_name'],
         common_cols['gene_id'],
         common_cols['tissue_label'],
@@ -34,33 +17,28 @@ export const transcriptomics_columns = {
         common_cols['variants_number'],
         ancestry_training_cols,
         ancestry_cols['ancestry_validation']
-    ]
+]
+
+const default_transcriptomics_dataset_cols = [
+    common_cols['omicspred_id'],
+    common_cols['score_name'],
+    common_cols['gene_name'],
+    common_cols['gene_id'],
+    common_cols['variants_number'],
+    ancestry_training_cols,
+    ancestry_cols['ancestry_validation']
+]
+
+
+export const transcriptomics_columns = {
+    'RNAseq - Expression': default_transcriptomics_cols,
+    'RNAseq - Splicing': default_transcriptomics_cols
 };
 
 export const transcriptomics_dataset_columns = {
-    'RNAseq - Expression': [
-        common_cols['omicspred_id'],
-        common_cols['gene_name'],
-        common_cols['gene_id'],
-        common_cols['variants_number'],
-        ancestry_training_cols,
-        ancestry_cols['ancestry_validation'],
-        // Cohorts columns
-        // cohort_cols['INTERVAL']['R2'],
-        // cohort_cols['INTERVAL']['Rho'],
-        // cohort_cols['INTERVAL_withheld_subset']['R2'],
-        // cohort_cols['INTERVAL_withheld_subset']['Rho']
-    ],
-    'RNAseq - Splicing': [
-        common_cols['omicspred_id'],
-        common_cols['gene_name'],
-        common_cols['gene_id'],
-        common_cols['variants_number'],
-        ancestry_training_cols,
-        ancestry_cols['ancestry_validation']
-    ]
+    'RNAseq - Expression': default_transcriptomics_dataset_cols,
+    'RNAseq - Splicing': default_transcriptomics_dataset_cols
 };
-
 
 
 export const transcriptomics_column_groups = {
