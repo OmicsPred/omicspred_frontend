@@ -178,7 +178,7 @@ function About() {
 			'text': <SearchDocs/>
 		},
 		'Feedback & Contact Information': {
-			'label': 'feedback',
+			'label': 'feedback_&_contact_information',
 			'text': <div>To provide feedback or ask a question, please contact us <Href href={process.env.PROJECT_EMAIL} role="email" text="here"/>.</div>
 		},
 		'Our Collaborators': {

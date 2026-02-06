@@ -126,10 +126,10 @@ export const performance_metrics_columns = [
     score_cols['missing_rate']
 ]
 
-const r2_col = {...score_cols['r2'],  sortable: false}
-const rho_col = {...score_cols['rho'],  sortable: false}
-const variant_match_rate_col = {...score_cols['variant_match_rate'],  sortable: false}
-const missing_rate_col = {...score_cols['missing_rate'],  sortable: false}
+// const r2_col = {...score_cols['r2'],  sortable: false}
+// const rho_col = {...score_cols['rho'],  sortable: false}
+// const variant_match_rate_col = {...score_cols['variant_match_rate'],  sortable: false}
+// const missing_rate_col = {...score_cols['missing_rate'],  sortable: false}
 
 export const performance_metrics_columns_large = [
     score_cols['cohort'],
@@ -138,10 +138,10 @@ export const performance_metrics_columns_large = [
     score_cols['study_type'],
     platform_type_col,
     platform_name_col,
-    r2_col,
-    rho_col,
-    variant_match_rate_col,
-    missing_rate_col
+    score_cols['r2'], // r2_col,
+    score_cols['rho'], // rho_col,
+    score_cols['variant_match_rate'], //variant_match_rate_col,
+    score_cols['missing_rate'], //missing_rate_col
 ]
 
 export const performance_metrics_columns_ext = score_col.concat(performance_metrics_columns);
