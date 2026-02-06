@@ -1,4 +1,5 @@
 import DataTableServer from '../../../components/table/DataTableServer';
+import DataTableFromRestApi from '../../../components/table/DataTableFromRestApi';
 import AncestryLegend from '../../../components/ancestry/AncestryLegend';
 import { performance_metrics_columns_large_ext } from '../../../components/table/columns/score';
 import { score_molecular_trait_columns } from '../../../components/table/columns/scores';
@@ -23,7 +24,7 @@ export const PerformanceMetricsTable = (props) => {
     return (
         <div className='mt-5'>
             {op_subtitle_no_asso('hl','Performance metrics')}
-            <DataTableServer key="performance_metrics" url_suffix={props.url_perf} columns={performance_metrics_columns_large_ext} hidden_columns={{platform__name:false,platform__platform_master__type:false}} col_for_ids={cols_ids}/>
+            <DataTableFromRestApi key="performance_metrics" url_suffix={props.url_perf} columns={performance_metrics_columns_large_ext} hidden_columns={{platform__name:false,platform__platform_master__type:false}} col_for_ids={cols_ids}/>
         </div>
     )
 }

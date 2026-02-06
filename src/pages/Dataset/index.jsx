@@ -23,6 +23,8 @@ function Dataset() {
     const [scoreTableColumns, setScoreTableColumns] = useState([])
     const [scoreTableColumnGroups, setScoreTableColumnGroups] = useState([])
     const [cohortsList, setCohortsList] = useState([])
+    const [cohortsTrainingList, setCohortsTrainingList] = useState([])
+    const [cohortsValidationList, setCohortsValidationList] = useState([])
     const [noEntry, setNoEntry] = useState(false)
 
     const element = 'dataset';
@@ -44,16 +46,18 @@ function Dataset() {
         }
     }
 
-    const cohorts_list = () => {
-        const cohorts_count = Object.keys(cohortsList).length;
-        if (cohorts_count > 2) {
+
+    const cohorts_list = (sample_cohorts_list, eval_type) => {
+        const cohorts_count = Object.keys(sample_cohorts_list).length;
+        if (cohorts_count != 0) {
             const cohorts_list = <ul>
-                { Object.keys(cohortsList).map((cohort) => <li key={cohort}>{display_cohort(cohortsList[cohort],cohort)}</li>)}
+                { Object.keys(sample_cohorts_list).map((cohort) => <li key={cohort}>{display_cohort(sample_cohorts_list[cohort],cohort)}</li>)}
                 </ul>;
-            return <ToggleDiv title={<>{element_icon('cohort')}{cohorts_count} cohorts</>} content={cohorts_list}/>
-        }
-        else {
-            return <>{ Object.keys(cohortsList).map((cohort, index) => <span key={cohort}>{index>0 ? ', ':''}{display_cohort(cohortsList[cohort],cohort)}</span>)}</>
+            return (
+                <div className={eval_type=='Training' && Object.keys(cohortsValidationList).length > 0 ? 'mb-1' : ''}>
+                    <ToggleDiv title={<>{element_icon('cohort')}{cohorts_count} {eval_type} cohort{add_s_when_plural(cohorts_count)}</>} content={cohorts_list}/>
+                </div>
+            )
         }
     }
 
@@ -66,12 +70,13 @@ function Dataset() {
                 <tr><td>Platform</td><td>{internal_platform_link(datasetData.platform, 1)}</td></tr>
                 <tr><td>Tissue </td><td>{internal_tissue_link(datasetData.tissue, 1)}</td></tr>
                 <tr><td>Method</td><td>{datasetData.method_name}</td></tr>
-                { cohortsList ? <tr><td>Cohort{add_s_when_plural(Object.keys(cohortsList).length)}</td><td>{cohorts_list()}</td></tr>: ''}
+                { cohortsList ? <tr><td>Cohort{add_s_when_plural(Object.keys(cohortsList).length)}</td><td>{cohorts_list(cohortsTrainingList,'Training')}{cohorts_list(cohortsValidationList,'Validation')}</td></tr>: ''}
                 <tr><td>Number of scores</td><td>{scoresBadge(datasetData.scores_count)}</td></tr>
                 <tr><td>Terms & Licenses</td><td>{datasetData.license}</td></tr>
             </>
         )
     }
+
 
     const get_information_right_content = () => {
         const download_urls = get_download_list(datasetData.scoring_files_urls);
@@ -89,6 +94,7 @@ function Dataset() {
         }
     }
 
+
     const get_url_endpoint = (dataset) => {
         let endpoint_suffix = dataset.platform.name+"?dataset="+opd_id;
         const type = dataset.platform.type;
@@ -103,6 +109,7 @@ function Dataset() {
                 return ''
         }
     }
+
 
     const get_metadata_columns = (platform_name,type) => {
         switch(type) {
@@ -126,6 +133,7 @@ function Dataset() {
         }
     }
 
+
     const get_table_columns = (dataset) => {
         const platform_name = dataset.platform.name;
         const platform_type = dataset.platform.type;
@@ -134,19 +142,32 @@ function Dataset() {
         // Fetch Cohort columns
         let cohorts = {};
         // Training cohorts
+        let training_cohorts = []
         for (let i=0; i<dataset['samples_training'].length; i++) {
             const sample_cohorts = dataset['samples_training'][i]['cohorts'];
             cohorts = get_cohorts_cols_list(sample_cohorts, cohorts);
+            // Get simple list of validation cohorts
+            for (let j=0; j<sample_cohorts.length; j++) {
+                const sample_t_cohort = sample_cohorts[j];
+                training_cohorts[sample_t_cohort['name_short']] = sample_t_cohort;
+            }
         }
+        setCohortsTrainingList(training_cohorts);
         // Fetch the training cohorts
-        // const cohorts_training = Object.values(cohorts);
         const cohorts_training = Object.keys(cohorts);
 
         // Validation cohorts
+        let validation_cohorts = {};
         for (let i=0; i< dataset['samples_validation'].length;i++) {
             const sample_cohorts = dataset['samples_validation'][i]['cohorts'];
             cohorts = get_cohorts_cols_list(sample_cohorts, cohorts);
+            // Get simple list of validation cohorts
+            for (let j=0; j<sample_cohorts.length; j++) {
+                const sample_v_cohort = sample_cohorts[j];
+                validation_cohorts[sample_v_cohort['name_short']] = sample_v_cohort;
+            }
         }
+        setCohortsValidationList(validation_cohorts);
         setCohortsList(cohorts)
         // Fetch columns details
         const metric_cols = ['R2','Rho','Missing Rate'];
@@ -179,6 +200,7 @@ function Dataset() {
         setScoreTableColumns(columns)
     }
 
+
     const get_metadata_column_groups = (platform_name,type) => {
         switch(type) {
             case 'Metabolomics':
@@ -200,6 +222,7 @@ function Dataset() {
                 return [];
         }
     }
+
 
     const get_table_column_groups = (dataset) => {
         const platform_name = dataset.platform.name;
@@ -248,6 +271,7 @@ function Dataset() {
         return col_groups;
     }
 
+
     const prepareTable = (dataset) => {
         const url_endpoint = get_url_endpoint(dataset);
         setScoreDataEndpoint(url_endpoint);
@@ -260,9 +284,11 @@ function Dataset() {
         // }
     }
 
+
     useEffect(() => {
         fetchDatasetData();
     },[])
+
 
     return (
         <>
