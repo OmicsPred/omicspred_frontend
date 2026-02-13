@@ -1,4 +1,4 @@
-import { Download, FileEarmarkZip, FileEarmarkZipFill, FiletypeCsv, FiletypeXlsx, Folder2, InfoCircleFill } from 'react-bootstrap-icons';
+import { Download, FileEarmarkSpreadsheet, FileEarmarkZip, FileEarmarkZipFill, FiletypeCsv, FiletypeXlsx, Folder2, InfoCircleFill } from 'react-bootstrap-icons';
 import { ToggleDiv } from './Generic';
 import Href from './Href';
 
@@ -22,6 +22,11 @@ export const download_labels = {
         "sub_label": "lifted over to GRCh38",
         "title": "Download zipped file - lifted over to GRCh38 (harmonized)",
         "icon": <FileEarmarkZipFill className="hl_color" size={icon_size}/>
+    },
+    "metadata": {
+        "label": "Metadata",
+        "title": "Download Excel spreadsheet",
+        "icon": <FileEarmarkSpreadsheet className="hl_color" size={icon_size}/>
     },
     "validation_results": {
         "label": "Validation results",

@@ -56,18 +56,18 @@ const SearchDocs = () => {
                             <ul className="ps-4 mb-0">
                                 <li>{project_name} Score ID</li>
                                 <li>Score name</li>
-                                <li>Linked Genes {parse_list(['name','ID','synonyms','description'])}</li>
+                                {/* <li>Linked Genes {parse_list(['name','ID','synonyms','description'])}</li>
                                 <li>Linked Proteins {parse_list(['name','ID','synonyms','description(s)'])}</li>
-                                <li>Linked Metabolites {parse_list(['name','ID','synonyms','description'])}</li>
+                                <li>Linked Metabolites {parse_list(['name','ID','synonyms','description'])}</li> */}
                             </ul>
                         </td>
                         <td>
                             <ul className="example_list">
                                 <li>{seach_example('OPGS000002')}</li>
                                 <li>{seach_example('MST1.4407.10.1')}</li>
-                                <li>{seach_example('COL1A1','name')}</li>
+                                {/* <li>{seach_example('COL1A1','name')}</li>
                                 <li>{seach_example('Visceral adipose-specific serpin', 'synonym')}</li>
-                                <li>{seach_example('N-acetyltyrosine', 'name')}</li>
+                                <li>{seach_example('N-acetyltyrosine', 'name')}</li> */}
                             </ul>
                         </td>
                     </tr>

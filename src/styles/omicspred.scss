@@ -81,6 +81,10 @@ a {
     }
 }
 
+sup {
+    font-size:0.6rem !important;//10px;
+}
+
 #content {
     width:100vw;
 }
@@ -1117,7 +1121,7 @@ button.MuiButton-root:hover {
     border-radius: 6px;
     color: $op_white;
     pre {
-        margin-bottom: 0px;
+        margin-bottom: 0px !important;
     }
     .shell_cmd {
         color: #84D5F6; //blue;
@@ -1127,6 +1131,21 @@ button.MuiButton-root:hover {
     }
     .shell_varname {
         color: #DC686B; //red;
+    }
+}
+
+.highlight2 {
+    background-color: $op_white;
+    color: $op_dark2 !important;
+    padding: 1rem;
+    border-radius: 6px;
+    color: $op_white;
+    pre {
+        overflow-x: auto !important;
+        margin-bottom: 0px !important;
+        code {
+            word-break: break-all;
+        }
     }
 }
 
@@ -1677,6 +1696,10 @@ fieldset {
 
 .amber_color {
     color: $op_amber;
+}
+
+.grey_color {
+    color: $op_grey;
 }
 
 .bg_white {

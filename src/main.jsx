@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Google Analytics 4
 const ga4_tracking_id = process.env.GA4_TRACKING_ID
-if (ga4_tracking_id) {
+if (ga4_tracking_id && ga4_tracking_id != '') {
   ReactGA.initialize(ga4_tracking_id);
 }
 
