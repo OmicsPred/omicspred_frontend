@@ -184,6 +184,23 @@ export const datasets_columns = [
         valueGetter: (value, row) => { return row.scoring_files_urls.scoring_files_pgsc_calc }
     },
     {
+        field: 'metadata',
+        headerName: 'Metadata',
+        minWidth: 100,
+        flex: 0.5,
+        align: 'right',
+        renderCell: (params) => {
+            const files_urls = params.row.scoring_files_urls
+            if (files_urls.metadata) {
+                return download_link(files_urls.metadata,'metadata');
+            }
+            else {
+                return default_cell_value
+            }
+        },
+        valueGetter: (value, row) => { return row.scoring_files_urls.metadata }
+    },
+    {
         field: 'validation_results',
         headerName: 'Validation results',
         minWidth: 150,
