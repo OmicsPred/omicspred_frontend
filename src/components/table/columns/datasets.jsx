@@ -184,6 +184,37 @@ export const datasets_columns = [
         valueGetter: (value, row) => { return row.scoring_files_urls.scoring_files_pgsc_calc }
     },
     {
+        field: 'predictdb',
+        headerName: 'PredictDB format',
+        minWidth: 140,
+        flex: 0.5,
+        align: 'right',
+        renderCell: (params) => {
+            const files_urls = params.row.scoring_files_urls
+            if (files_urls.predictdb) {
+                let link = download_link(files_urls.predictdb,'predictdb');
+                let link2 = ''
+                if (files_urls.covariance) {
+                    link2 = <span className='ms-1'>{download_link(files_urls.covariance,'covariance')}</span>;
+                }
+                return <>{link}{link2}</>;
+            }
+            else {
+                return default_cell_value
+            }
+        },
+        valueGetter: (value, row) => {
+            let files = row.scoring_files_urls.predictdb;
+            if (row.scoring_files_urls.covariance) {
+                if (files) {
+                    files = files + ', ';
+                }
+                files = files + row.scoring_files_urls.covariance;
+            }
+            return files
+        }
+    },
+    {
         field: 'metadata',
         headerName: 'Metadata',
         minWidth: 100,
