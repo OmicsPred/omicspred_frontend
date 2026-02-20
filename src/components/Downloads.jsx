@@ -1,4 +1,4 @@
-import { Download, FileEarmarkSpreadsheet, FileEarmarkZip, FileEarmarkZipFill, FiletypeCsv, FiletypeXlsx, Folder2, InfoCircleFill } from 'react-bootstrap-icons';
+import { Database, Download, FileEarmarkSpreadsheet, FileEarmarkZip, FileEarmarkZipFill, FiletypeCsv, FiletypeXlsx, Folder2, InfoCircleFill } from 'react-bootstrap-icons';
 import { ToggleDiv } from './Generic';
 import Href from './Href';
 
@@ -22,6 +22,17 @@ export const download_labels = {
         "sub_label": "lifted over to GRCh38",
         "title": "Download zipped file - lifted over to GRCh38 (harmonized)",
         "icon": <FileEarmarkZipFill className="hl_color" size={icon_size}/>
+    },
+    "predictdb": {
+        "label": "PredictDB",
+        "sub_label": "SQLite",
+        "title": "Download SQLite zipped file",
+        "icon": <Database className="hl_color" size={icon_size}/>
+    },
+    "covariance": {
+        "label": "Covariance",
+        "title": "Download covariance zipped file",
+        "icon": <FileEarmarkZip className="hl_color" size={icon_size}/>
     },
     "metadata": {
         "label": "Metadata",
