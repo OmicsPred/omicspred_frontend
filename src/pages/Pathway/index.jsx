@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import Tooltip from "@mui/material/Tooltip";
 import { ArrowUpSquareFill, ArrowRight, Table } from 'react-bootstrap-icons';
-import DocumentTitle from '../../components/DocumentTitle';
 import Href from '../../components/Href';
 import DataTable from '../../components/table/DataTable';
 import { common_cols } from '../../components/table/columns/common';
@@ -16,7 +15,6 @@ import { display_source, display_superpathways, display_synonyms } from '../Mole
 
 function Pathway() {
 	let { pathway } = useParams();
-	DocumentTitle('Pathway '+pathway);
 	const [elementData, setElementData] = useState()
 	const [noEntry, setNoEntry] = useState(false)
 	const [geneData, setGeneData] = useState([])

@@ -2,7 +2,7 @@ import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'react-router';
 import { ChevronRight, InfoCircleFill, Search as SearchIcon } from 'react-bootstrap-icons';
 import Tooltip from "@mui/material/Tooltip";
-import DocumentTitle from '../../components/DocumentTitle';
+import DocumentHead from '../../components/DocumentHead';
 import restApiCall from '../../components/RestAPI';
 import ResultCard from './components/ResultCard';
 import { SidePanelFilter } from './components/SidePanelFilter';
@@ -41,7 +41,6 @@ function Search() {
             }
         }
     }
-    DocumentTitle('Search "'+query+'"');
 
     const es_url = process.env.OMICSPRED_ES_URL+'?q='+query;
     const entities = {
@@ -296,6 +295,7 @@ function Search() {
 
     return (
         <>
+            <DocumentHead title={'Search "'+query+'"'} standard_desc='1'/>
             <div className='d-flex'>
                 <h2 className='page_title' style={{verticalAlign:"middle"}}>
                     <SearchIcon size="0.9em" className="color_hl me-3"/>

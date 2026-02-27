@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Download } from 'react-bootstrap-icons';
-import DocumentTitle from '../../components/DocumentTitle';
 import { internal_publication_link, internal_platform_link, internal_dataset_link, internal_tissue_link, op_title, op_subtitle_no_asso, no_entry_found, Header2Cards, ancestry_label } from '../../components/Common';
 import DataTable from '../../components/table/DataTable';
 import { performance_metrics_columns } from '../../components/table/columns/score';
@@ -17,7 +16,6 @@ import AncestryLegend from '../../components/ancestry/AncestryLegend';
 
 function Score() {
     const { score } = useParams();
-    DocumentTitle('Score '+score);
     const [scoreData, setScoreData] = useState()
     const [noEntry, setNoEntry] = useState(false)
     const [datasetId, setDatasetId] = useState()
@@ -210,63 +208,63 @@ function Score() {
 
     return (
         <>
-        { scoreData ?
-            <>
-                {op_title('score', scoreData, score, 'id')}
-                <div>
-                    {/* Summary data */}
-                    <Header2Cards type_left='score' content_left={get_information_left_content()} content_right={get_information_right_content()} />
-                    { scoreData.comment ? <div className='d-flex'><Note msg={<ToggleText text={scoreData.comment} limit='80' />} compact='1'/></div> : ''}
-                    {/* Download buttons */}
-                    { platformData && Object.keys(platformDownloads).length > 0 ?
-                        <div>
-                            <ToggleDiv key={'toggle_dowloads'} type='button_blue' class_name='card px-2 py-1' title={<><Download className='me-2'/>Downloads <small>(dataset {datasetId})</small></>} content={<DownloadList urls={platformDownloads}/>}/>
-                        </div>:''
-                    }
-                    {/* Performance metrics table */}
-                    { metricData && metricData.length ?
-                        <div className='mt-5'>
-                            {op_subtitle_no_asso('hl','Evaluations',metricData.length)}
-                            {/* Ancestry distribution */}
-                            { scoreData.ancestry ?
-                                <div className='ancestry_container d-flex mb-3'>
-                                    <div className="card p-0">
-                                        <div className="card-header"><h6 className="mb-0">Ancestry distribution</h6></div>
-                                        <div className="card-body p-2">
-                                            <div className='d-flex justify-content-center'>
-                                                { scoreData.ancestry.dev ?
-                                                    <div>
-                                                        <div className="text-center small mb-1">Training</div>
-                                                        <AncestryDistribution data={get_ancestry_dist('dev')}/>
-                                                    </div> : ''
-                                                }
-                                                { scoreData.ancestry.eval ?
-                                                    <div>
-                                                        <div className="text-center small mb-1">Validation</div>
-                                                        <AncestryDistribution data={get_ancestry_dist('eval')}/>
-                                                    </div> : ''
-                                                }
+            { scoreData ?
+                <>
+                    {op_title('score', scoreData, score, 'id')}
+                    <div>
+                        {/* Summary data */}
+                        <Header2Cards type_left='score' content_left={get_information_left_content()} content_right={get_information_right_content()} />
+                        { scoreData.comment ? <div className='d-flex'><Note msg={<ToggleText text={scoreData.comment} limit='80' />} compact='1'/></div> : ''}
+                        {/* Download buttons */}
+                        { platformData && Object.keys(platformDownloads).length > 0 ?
+                            <div>
+                                <ToggleDiv key={'toggle_dowloads'} type='button_blue' class_name='card px-2 py-1' title={<><Download className='me-2'/>Downloads <small>(dataset {datasetId})</small></>} content={<DownloadList urls={platformDownloads}/>}/>
+                            </div>:''
+                        }
+                        {/* Performance metrics table */}
+                        { metricData && metricData.length ?
+                            <div className='mt-5'>
+                                {op_subtitle_no_asso('hl','Evaluations',metricData.length)}
+                                {/* Ancestry distribution */}
+                                { scoreData.ancestry ?
+                                    <div className='ancestry_container d-flex mb-3'>
+                                        <div className="card p-0">
+                                            <div className="card-header"><h6 className="mb-0">Ancestry distribution</h6></div>
+                                            <div className="card-body p-2">
+                                                <div className='d-flex justify-content-center'>
+                                                    { scoreData.ancestry.dev ?
+                                                        <div>
+                                                            <div className="text-center small mb-1">Training</div>
+                                                            <AncestryDistribution data={get_ancestry_dist('dev')}/>
+                                                        </div> : ''
+                                                    }
+                                                    { scoreData.ancestry.eval ?
+                                                        <div>
+                                                            <div className="text-center small mb-1">Validation</div>
+                                                            <AncestryDistribution data={get_ancestry_dist('eval')}/>
+                                                        </div> : ''
+                                                    }
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <AncestryLegend/>
-                                </div>: ''
-                            }
-                            <DataTable key="performance_metrics" data={metricData} columns={performance_metrics_columns} hidden_columns={{platform__name:false,platform__platform_master__type:false}} col_for_ids={performance_cols_ids}/>
-                        </div>:''
-                    }
-                    {/* Phenotype association table */}
-                    { scorePhenotypeData && scorePhenotypeData.length ?
-                        <div className='mt-5' id="phenotype_table">
-                            {op_subtitle_no_asso('phenotype',<>Linked phenotype{add_s_when_plural(scorePhenotypeData.length)}</>, scorePhenotypeData.length)}
-                            <DataTable key="phenotype" data={scorePhenotypeData} columns={score_phenotype_columns} col_for_ids={phenotype_cols_ids} sorting='phenotype_name'/>
-                        </div>:''
-                    }
-                </div>
-            </>
-            : noEntry ?
-                <>{ no_entry_found('score',score) }</> : loading_data()
-        }
+                                        <AncestryLegend/>
+                                    </div>: ''
+                                }
+                                <DataTable key="performance_metrics" data={metricData} columns={performance_metrics_columns} hidden_columns={{platform__name:false,platform__platform_master__type:false}} col_for_ids={performance_cols_ids}/>
+                            </div>:''
+                        }
+                        {/* Phenotype association table */}
+                        { scorePhenotypeData && scorePhenotypeData.length ?
+                            <div className='mt-5' id="phenotype_table">
+                                {op_subtitle_no_asso('phenotype',<>Linked phenotype{add_s_when_plural(scorePhenotypeData.length)}</>, scorePhenotypeData.length)}
+                                <DataTable key="phenotype" data={scorePhenotypeData} columns={score_phenotype_columns} col_for_ids={phenotype_cols_ids} sorting='phenotype_name'/>
+                            </div>:''
+                        }
+                    </div>
+                </>
+                : noEntry ?
+                    <>{ no_entry_found('score',score) }</> : loading_data()
+            }
         </>
     );
 }

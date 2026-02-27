@@ -4,7 +4,6 @@ import FormLabel from '@mui/material/FormLabel';
 import Tooltip from "@mui/material/Tooltip";
 import { Sliders, Table } from 'react-bootstrap-icons';
 
-import DocumentTitle from '../../components/DocumentTitle';
 import { metabolomics_columns, metabolomics_column_groups } from '../../components/table/columns/metabolomics';
 import { proteomics_columns, proteomics_column_groups } from '../../components/table/columns/proteomics';
 import { transcriptomics_columns, transcriptomics_column_groups } from '../../components/table/columns/transcriptomics';
@@ -20,7 +19,6 @@ import { select_form, select_form_no_empty_value, input_form, radio_form } from 
 
 function Platform() {
     let { platform } = useParams();
-    DocumentTitle('Platform '+platform);
     const [platformSumData, setPlatformSumData] = useState([])
     const [platformType, setPlatformType] = useState('')
     const [datasetData, setDatasetData] = useState([])

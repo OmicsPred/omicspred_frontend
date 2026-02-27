@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-import DocumentTitle from '../../../components/DocumentTitle';
 import DataTableFromRestApi from '../../../components/table/DataTableFromRestApi';
 import DataTable from '../../../components/table/DataTable';
 import { common_cols, common_data_cols } from '../../../components/table/columns/common';
@@ -21,7 +20,6 @@ function Phenotype() {
     const [noEntry, setNoEntry] = useState(false)
 
     const phenotype_id = phenotype.replace('_','.');
-    DocumentTitle('Phenotype '+phenotype_id);
     const url_suffix = "applications_score/search?phenotype_id="+phenotype_id;
     const columns = [
         common_cols['omicspred_id'],

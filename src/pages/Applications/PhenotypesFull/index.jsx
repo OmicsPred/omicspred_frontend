@@ -5,8 +5,6 @@ import { get_information_content, PheWASDownloadButton } from '../components/com
 
 
 function PhenotypesFull() {
-    // DocumentTitle('PheWAS - All Associations');
-
     const url_suffix = "applications_score/all";
 
     const column_keys = ['phenotype__id', 'score_id', 'data_values__FDR'];

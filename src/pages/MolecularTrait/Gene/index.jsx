@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { ExclamationTriangle } from 'react-bootstrap-icons';
-import DocumentTitle from '../../../components/DocumentTitle';
 import Href from '../../../components/Href';
 import restApiCall from '../../../components/RestAPI';
 import restApiCallPaginated from '../../../components/RestAPIPaginated';
@@ -13,7 +12,6 @@ import { MolecularTraitContent, MolecularTraitAssociation, get_molecular_trait_a
 
 function Gene() {
 	let { gene } = useParams();
-	DocumentTitle('Gene '+gene);
 	const [elementData, setElementData] = useState()
 	const [noEntry, setNoEntry] = useState(false)
 	const [proteinsData, setProteinsData] = useState([])

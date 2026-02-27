@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-import DocumentTitle from '../../components/DocumentTitle';
 import restApiCall from '../../components/RestAPI';
 import {cohort_cols, common_column_groups, cohort_valueGetter} from '../../components/table/columns/common';
 import { metabolomics_columns, metabolomics_column_groups } from '../../components/table/columns/metabolomics';
@@ -17,7 +16,6 @@ import { DownloadList, get_download_list } from '../../components/Downloads';
 
 function Dataset() {
     const { opd_id } = useParams();
-    DocumentTitle('Dataset '+opd_id) 
     const [datasetData, setDatasetData] = useState()
     const [scoreDataEndpoint, setScoreDataEndpoint] = useState()
     const [scoreTableColumns, setScoreTableColumns] = useState([])
@@ -325,7 +323,6 @@ function Dataset() {
             {/* <div className='table_container'>
                 <DataTableServer key={'scores'} url_suffix={platformDataEndpoint} columns={platformTableColumns} groups={platformTableColumnGroups}/>
             </div> */}
-        
         </>
     )
 }

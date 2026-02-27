@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-import DocumentTitle from '../../../components/DocumentTitle';
 import Href from '../../../components/Href';
 import {score_metabolite_columns}  from "../../../components/table/columns/scores";
 import restApiCall from '../../../components/RestAPI';
@@ -12,7 +11,6 @@ import { MolecularTraitContent, MolecularTraitAssociation, get_molecular_trait_a
 
 function Metabolite() {
     let { metabolite } = useParams();
-    DocumentTitle('Metabolite '+metabolite);
     const [elementData, setElementData] = useState()
     const [noEntry, setNoEntry] = useState(false)
     const [pathwayData, setPathwayData] = useState([])

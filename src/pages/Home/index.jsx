@@ -1,4 +1,4 @@
-import DocumentTitle from '../../components/DocumentTitle';
+import DocumentHead from '../../components/DocumentHead';
 import Header from "./components/Header"
 import Stats from "./components/Stats"
 import About from "./components/About"
@@ -11,9 +11,9 @@ import Supports from "./components/Supports"
 
 
 const Home = () => {
-    DocumentTitle('Homepage');
     return (
         <>
+            <DocumentHead title='Homepage'/>
             <Header/>
             <Stats/>
             <About/>

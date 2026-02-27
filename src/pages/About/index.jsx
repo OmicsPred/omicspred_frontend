@@ -132,22 +132,22 @@ function About() {
 										<div><span className="shell_cmd">$</span> plink2</div>
 										<div>
 											<span className="shell_cmd">  --bfile</span>{" "}
-											<span class="shell_var">
+											<span className="shell_var">
 												{"${"}<span className="shell_varname">bed_file</span>{"}"}
 											</span>
 										</div>
 										<div>
 											<span className="shell_cmd">  --score</span>{" "}
-											<span class="shell_var">
-												{"${"}<span class="shell_varname">genetic_score_file</span>{"}"}
+											<span className="shell_var">
+												{"${"}<span className="shell_varname">genetic_score_file</span>{"}"}
 											</span>{" "}1 4 6 header list-variants{" "}
-											<span class="shell_varname">cols</span>
-											<span class="shell_cmd">=</span>scoresums
+											<span className="shell_varname">cols</span>
+											<span className="shell_cmd">=</span>scoresums
 										</div>
 										<div>
-											<span class="shell_cmd">  --out</span>{" "}
-											<span class="shell_var">
-												{"${"}<span class="shell_varname">results</span>{"}"}
+											<span className="shell_cmd">  --out</span>{" "}
+											<span className="shell_var">
+												{"${"}<span className="shell_varname">results</span>{"}"}
 											</span>
 										</div>
 									</code>
