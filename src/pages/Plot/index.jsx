@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { ChevronRight, GraphUp } from 'react-bootstrap-icons';
-import DocumentTitle from '../../components/DocumentTitle';
+import DocumentHead from '../../components/DocumentHead';
 import restApiCall from '../../components/RestAPI';
 import Charts from "./components/Chart";
 import { get_data_type, publication_ref } from '../../components/Common';
@@ -14,7 +14,6 @@ import { loading_data } from '../../components/Generic';
 
 const Plot = () => {
     let { platform, opp_id } = useParams();
-    DocumentTitle('Plot | '+opp_id+' / '+platform);
     const [searchParams] = useSearchParams();
     const [platformSumData, setPlatformSumData] = useState([])
     const [publicationSumData, setPublicationSumData] = useState([])
@@ -128,6 +127,7 @@ const Plot = () => {
 
     return (
         <>
+            <DocumentHead title={'Plot | '+opp_id+' / '+platform} standard_desc='1'/>
             {platformSumData ? <h2 className='page_title'><GraphUp className={'op_title_prefix color_'+get_data_type(platformSumData.type)}/><span>Visualize performance of genetic scores</span><ChevronRight className={'op_title_separator color_'+get_data_type(platformSumData.type)}/><span>{platformSumData.name}</span></h2>:''}
             {publicationSumData ? <h4 className='page_subtitle'>Publication:{publication_ref(publicationSumData,true)}</h4>: ''}
 

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import FormLabel from '@mui/material/FormLabel';
 import { Sliders } from 'react-bootstrap-icons';
-import DocumentTitle from '../../components/DocumentTitle';
 import Href from '../../components/Href';
 import restApiCall from '../../components/RestAPI';
 import { op_title, op_subtitle, HeaderCard, display_tissue_description, no_entry_found, molecular_trait_types, ancestry_labels, stages_list } from '../../components/Common';
@@ -16,7 +15,6 @@ import { select_form, select_form_no_empty_value, input_form, radio_form } from 
 
 function Tissue() {
 	let { tissue } = useParams();
-	DocumentTitle('Tissue '+tissue);
 	const [tissueData, setTissueData] = useState()
 	const [noEntry, setNoEntry] = useState(false)
 	const [urlScore, setUrlScore] = useState('')
@@ -207,10 +205,10 @@ function Tissue() {
 					}
 
 					{/* Associated scores */}
-                    { tissueData.scores_count > 0 && scoreEndpoint && scoreEndpoint != '' ?
-                        <div className="mt-5">
-                            {op_subtitle('score', undefined, tissueData.scores_count)}
-                            <div className='cards_filter_container_cols_3 mb-3'>
+					{ tissueData.scores_count > 0 && scoreEndpoint && scoreEndpoint != '' ?
+						<div className="mt-5">
+							{op_subtitle('score', undefined, tissueData.scores_count)}
+							<div className='cards_filter_container_cols_3 mb-3'>
 								{/* Filter Form */}
 								<div>
 									<div className="card p-0 me-3">
@@ -260,17 +258,17 @@ function Tissue() {
 								<div>
 									<AncestryLegend />
 								</div></div>
-                            </div>
+							</div>
 							<div>
 								<DataTableServer key={scoreEndpoint} table_key="tissue_score" title='score' type='score' url_suffix={scoreEndpoint} columns={scores_columns_for_tissue} nosearchbar='1'/>
 							</div>
 						</div> : ''
-                    }
+					}
 				</>
 				: noEntry ?
 					<>{ no_entry_found(element, tissue) }</> : loading_data()
 			}
-        </div>
+		</div>
 	);
 }
 

@@ -1,7 +1,7 @@
 import { Bezier2, Book, ChevronRight, ClipboardData, BoxFill, Stack, Hexagon, HexagonFill, Lungs, PersonArmsUp, LayersFill, PeopleFill } from 'react-bootstrap-icons';
 import { cohort_cols, common_column_groups } from './table/columns/common';
 import { ToggleDiv, ToggleText, TooltipText, thousandifyNumber, firstLetterUc } from './Generic';
-import DocumentTitle from './DocumentTitle';
+import DocumentHead from './DocumentHead';
 import Href from "./Href";
 
 
@@ -148,10 +148,6 @@ export const PageTitle = (props) => {
     const label = props.label ? props.label : type+'s';
     const count = props.count;
 
-    if (props.title) {
-        DocumentTitle(props.title);
-    }
-
     const label_uc = firstLetterUc(label);
 
     let color_class = 'color_'+type;
@@ -185,11 +181,14 @@ export const PageTitle = (props) => {
         prefix = <PeopleFill className={'op_title_prefix '+color_class}/>
     }
     return (
-        <h2 className='page_title'>
-            {prefix}<span>{category}</span>
-            <ChevronRight className={'op_title_separator '+color_class}/>
-            <span>{label_uc}{count ? <span className="badge rounded-pill badge-op-sm ms-3">{thousandifyNumber(count)}</span>:''}</span>
-        </h2>
+        <>
+            <DocumentHead title={props.title} description={props.desc}/>
+            <h2 className='page_title'>
+                {prefix}<span>{category}</span>
+                <ChevronRight className={'op_title_separator '+color_class}/>
+                <span>{label_uc}{count ? <span className="badge rounded-pill badge-op-sm ms-3">{thousandifyNumber(count)}</span>:''}</span>
+            </h2>
+        </>
     )
 }
 
@@ -204,13 +203,17 @@ export const BrowseTitle = (props) => {
 
 
 export const PageTitleSimple = (props) => {
-    DocumentTitle(props.title);
-    return <h2 className='page_title'>{props.title}</h2>
+    return (
+        <>
+            <DocumentHead title={props.title} description={props.desc}/>
+            <h2 className='page_title'>{props.title}</h2>
+        </>
+    )
 }
 
 
 // All other data page title
-export const op_title = (type, data, label, force_use_label) => {
+export const op_title = (type, data, label, force_use_label, document_title) => {
     // const type_uc = (type == 'phecode') ? 'PheWAS' : type.charAt(0).toUpperCase() + type.slice(1);
     let type_uc = '';
     switch(type) {
@@ -257,7 +260,13 @@ export const op_title = (type, data, label, force_use_label) => {
             prefix = <Lungs className={'op_title_prefix '+color_class}/>
             break;
     }
-    return <h2 className='page_title'>{prefix}<span>{type_uc}</span><ChevronRight className={'op_title_separator '+color_class}/><span>{value}</span></h2>
+    const page_title = document_title ? document_title : type_uc+': '+value;
+    return (
+        <>
+            <DocumentHead title={page_title} standard_desc='1'/>
+            <h2 className='page_title'>{prefix}<span>{type_uc}</span><ChevronRight className={'op_title_separator '+color_class}/><span>{value}</span></h2>
+        </>
+    )
 }
 
 

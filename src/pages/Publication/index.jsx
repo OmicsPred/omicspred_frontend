@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-import DocumentTitle from '../../components/DocumentTitle';
 import restApiCall from '../../components/RestAPI';
 import Href from "../../components/Href";
 import DatasetTable from '../../components/DatasetTable';
@@ -21,7 +20,7 @@ function Publication() {
         const publication_data = await restApiCall('publication/'+opp_id);
         consoleDev(publication_data);
         setPublicationData(publication_data);
-        const year = publication_data.date_publication ? ' ('+publication_data.date_publication.split('-')[0]+')' : undefined
+        const year = publication_data.date_publication ? publication_data.date_publication.split('-')[0] : undefined
         setPublicationTitle("Publication: "+publication_data.id+' ('+publication_data.firstauthor+' - '+year+')')
         publication_data.datasets.sort((a, b) => a.id.localeCompare(b.id))
         for (let i=0; i<publication_data.datasets.length;i++) {
@@ -70,10 +69,9 @@ function Publication() {
 
     return (
         <>
-            { publicationData ?
+            { publicationData && publicationTitle ?
                 <>
-                    { DocumentTitle(publicationTitle) }
-                    {op_title('publication', publicationData, publicationData.id)}
+                    {op_title('publication', publicationData, publicationData.id, false, publicationTitle)}
                     <HeaderCard type='publication' content={get_information_content()} />
                 </>
                 :''
