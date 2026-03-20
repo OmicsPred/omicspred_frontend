@@ -1409,21 +1409,23 @@ ul.example_list {
     }
 }
 
-
 .op_dwnld_container {
     > div:not(:last-child) {
-        border-bottom: 1px solid $op_grey;
+        margin-bottom: 0.5rem;
+        border-radius: 10px !important;
     }
     div > a {
         display:flex;
-        height: 40px!important;
-        line-height: 40px!important;
+        height: 34px!important;
+        line-height: 34px!important;
         div {
+            padding: 0rem 0.5rem;
             display: inline-block !important;
         }
         div:first-child {
-            width: 40px;
-            // background-color: $op_light_grey;
+            width: 34px;
+            border-top-left-radius: 4px !important;
+            border-bottom-left-radius: 4px !important;
             background-color: $op_color_2;
             svg {
                 color: $op_white;
@@ -1431,23 +1433,21 @@ ul.example_list {
         }
         div:last-child {
             width: 100%;
+            border-top-right-radius: 4px !important;
+            border-bottom-right-radius: 4px !important;
             color: $op_black !important;
+            background-color: $op_hover_grey;
             font-weight: 400;
         }
         &:hover {
-            div:first-child {
-                // background-color: $op_blue_2;
-                background-color: $op_color_5;
-                svg {
-                    color: $op_white;
-                }
-            }
             div:last-child {
-                background-color: $op_hover_grey;
+                background-color: $op_color_5;
+                color: $op_white !important;
             }
         }
     }
 }
+
 
 .op_toggle_text {
     cursor: pointer;

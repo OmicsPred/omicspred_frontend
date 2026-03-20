@@ -1,9 +1,32 @@
+import { useState, useEffect } from 'react';
 import { ChevronRight } from 'react-bootstrap-icons';
 import Href from "../../../components/Href";
-import { add_s_when_plural } from '../../../components/Generic';
+import { add_s_when_plural, consoleDev } from '../../../components/Generic';
 
 const Container = (props) => {
+    const [cohortImageSource, setCohortImageSource] = useState();
+
     const cohort = props.data;
+
+    const not_found = 'not found';
+
+    const getImageSource = async (cohort_name) => {
+        try {
+            const src = await import(`../../../assets/cohorts/${cohort_name.toUpperCase()}.png`)
+            if (src) {
+                setCohortImageSource(src.default);
+            }
+        }
+        catch(err){
+            // Image not found
+            consoleDev("Error: "+err)
+            setCohortImageSource(not_found);
+        }
+    }
+
+    useEffect(() => {
+        getImageSource(cohort.labels[0]);
+    },[])
 
     return (
         <div className="w-full h-auto py-2" id={cohort.labels[0]}>
@@ -21,7 +44,7 @@ const Container = (props) => {
                 </div>
                 <div className="ps-3">
                     {
-                        cohort.src ? (<img style={{maxHeight:"150px", maxWidth:"150px"}} src={cohort.src} alt={cohort.title}/>) : ''
+                        cohortImageSource && cohortImageSource != not_found ? (<img style={{maxHeight:"150px", maxWidth:"150px"}} src={cohortImageSource} alt={cohort.title}/>) : ''
                     }
                 </div>
             </div>

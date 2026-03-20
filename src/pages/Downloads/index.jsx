@@ -42,10 +42,10 @@ function Downloads() {
                         <div className='grey_color'>...,</div>
                         <div className='op_color_2'>"<b>scoring_files_urls</b>": &#123;
                             <div className='ms-3'>
-                                <div>"covariance": "{box_prefix}24avhdwb2gfo083oz3r6j8w6qqburbp2",</div>
+                                <div>"covariance": "{box_prefix}3ag9r684h83riq093g7oc8916dicjud9",</div>
                                 <div>"gwas_sumstats": "{box_prefix}u3flbp13zjydegrxjb2uepagp1vb6bj2",</div>
                                 <div>"metadata": "{box_prefix}anwpkxcpaixbfj67vd6odzqbsb7rk8a8",</div>
-                                <div>"predictdb": "{box_prefix}unjn1bmt2xhwkd33pp0wczldfzrkevu2",</div>
+                                <div>"predictdb": "{box_prefix}06ugvdomcsalytpuocbywn60qvibcyl4",</div>
                                 <div>"scoring_files": "{box_prefix}z86fg93jg5gwdmmu4xn6u287mre2g5o7",</div>
                                 <div>"score_variant_info": "{box_prefix}eac8psw30dxh9evwu9z0bj8hncru2ioa",</div>
                                 <div>"validation_results": "{box_prefix}7j7233otah0yxl4rypqx44wzsj7xywxp",</div>
@@ -91,7 +91,7 @@ function Downloads() {
                 <ul className='expanded'>
                     <li><span className='line_key'>{download_labels['scoring_files_pgsc_calc']['icon']} Scoring files</span>Collection of tab-delimited text files containing the list of variant information and effect alleles/weights of each genetic score. See more information about the file format in the <Href text='Polygenic Score (PGS) Catalog' href='https://www.pgscatalog.org/downloads/#dl_ftp_scoring'/> documentation.</li>
                     <li><span className='line_key'>{download_labels['scoring_files_hm_38']['icon']} Harmonised scoring files</span>Collection of tab-delimited text files containing the list of variant information and effect alleles/weights of each genetic score. The variants locations have been lifted/mapped to the <b>GRCh38</b> genome build. See more information about the file format in the <Href text='Polygenic Score (PGS) Catalog' href='https://www.pgscatalog.org/downloads/#dl_ftp_scoring_hm_pos'/> documentation.</li>
-                    <li><span className='line_key'>{download_labels['predictdb']['icon']} PredictDB SQLite</span>SQLite database compatible with the <Href text='PredictDB' href='https://predictdb.org/'/> prediction weigths format.</li>
+                    <li><span className='line_key'>{download_labels['predictdb']['icon']} PredictDB SQLite</span>SQLite database compatible with the <Href text='PredictDB' href='https://predictdb.org/'/> prediction weights format.</li>
                     <li><span className='line_key'>{download_labels['covariance']['icon']} Covariance</span>Covariance file to be used with the <Href text='PredictDB' href='https://predictdb.org/'/> SQLite databases in <Href text='MetaXcan' href='https://github.com/hakyimlab/MetaXcan'/> set of tools (PrediXcan, SPrediXcan, MultiXcan and SMultiXcan).</li>
                     <li><span className='line_key'>{download_labels['metadata']['icon']} Metadata</span>Excel spreadsheet containing the metadata of the dataset (Publication, Scores, Samples, Performances and Cohort(s)).</li>
                     <li><span className='line_key'>{download_labels['validation_results']['icon']} Validation results</span>CSV file containing the metadata information and performance metrics associated with each genetic score.</li>
