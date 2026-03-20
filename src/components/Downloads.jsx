@@ -14,24 +14,24 @@ export const download_labels = {
     "scoring_files_pgsc_calc": {
         "label": "Scoring files",
         "sub_label": "pgsc_calc compatible",
-        "title": "Download zipped file - pgsc_calc compatible",
+        "title": "Download compresssed file - pgsc_calc compatible",
         "icon": <FileEarmarkZip className="hl_color" size={icon_size}/>
     },
     "scoring_files_hm_38": {
         "label": "Scoring files",
         "sub_label": "lifted over to GRCh38",
-        "title": "Download zipped file - lifted over to GRCh38 (harmonized)",
+        "title": "Download compresssed file - lifted over to GRCh38 (harmonized)",
         "icon": <FileEarmarkZipFill className="hl_color" size={icon_size}/>
     },
     "predictdb": {
         "label": "PredictDB",
         "sub_label": "SQLite",
-        "title": "Download SQLite zipped file",
+        "title": "Download SQLite compressed file",
         "icon": <Database className="hl_color" size={icon_size}/>
     },
     "covariance": {
         "label": "Covariance",
-        "title": "Download covariance zipped file",
+        "title": "Download covariance compressed text file",
         "icon": <FileEarmarkZip className="hl_color" size={icon_size}/>
     },
     "metadata": {
@@ -88,10 +88,6 @@ export const get_download_list = (scoring_files_urls) => {
 }
 
 export const DownloadList = (props) => {
-
-    // const icon_size = 24;
-    // const div_size = icon_size + (8 * 2); // 40
-
     return (
         <>
             { props.urls ? 
@@ -99,8 +95,8 @@ export const DownloadList = (props) => {
                     { Object.keys(props.urls).map((entry) =>
                         <div key={entry}>
                             <a href={props.urls[entry]['url']} title={download_labels[entry]['title']} target="_blank" rel="noreferrer">
-                                <div className="px-2">{download_labels[entry]['icon']}</div>
-                                <div className="px-2">{props.urls[entry]['label']}{props.urls[entry]['sub_label'] ? <small> ({props.urls[entry]['sub_label']})</small>:''}</div>
+                                <div>{download_labels[entry]['icon']}</div>
+                                <div>{props.urls[entry]['label']}{props.urls[entry]['sub_label'] ? <small> ({props.urls[entry]['sub_label']})</small>:''}</div>
                             </a>
                        </div>
                     )}
@@ -122,7 +118,7 @@ export const ExpandableDownloadButton = (props) => {
 
     return (
         <div className='mb-3'>
-            <ToggleDiv key='toggle_downloads_button' type='button' class_name='card px-2 py-1' title={<><Download className='me-2'/>Downloads</>} content={<DownloadList urls={download_urls}/>}/>
+            <ToggleDiv key='toggle_downloads_button' type='button' class_name='card px-2 pt-2 pb-1' title={<><Download className='me-2'/>Downloads</>} content={<DownloadList urls={download_urls}/>}/>
         </div>
     )
 }
