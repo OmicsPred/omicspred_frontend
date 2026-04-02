@@ -154,24 +154,28 @@ export const PageTitle = (props) => {
     let prefix = '';
 
     if (category == 'Browse') {
-        if (label == 'datasets') {
-            prefix = <LayersFill className={'op_title_prefix '+color_class}/>
-        }
-        else if (label == 'scores' || type == 'score') {
-            // prefix = <Clipboard2Data size="26px" className={'me-3 '+color_class}/>
-            prefix = <ClipboardData className={'op_title_prefix '+color_class}/>
-        }
-        else if (label == 'pathways') {
-            prefix = <Bezier2 className={'op_title_prefix '+color_class}/>
-        }
-        else if (label == 'platforms') {
-            prefix = <Stack className={'op_title_prefix '+color_class}/>
-        }
-        else if (label == 'publications') {
-            prefix = <Book className={'op_title_prefix '+color_class}/>
-        }
-        else if (label == 'tissues') {
-            prefix = <Lungs className={'op_title_prefix '+color_class}/>
+        switch(label) {
+            case 'datasets':
+                prefix = <LayersFill className={'op_title_prefix '+color_class}/>
+                break;
+            case 'scores'|'score':
+                prefix = <ClipboardData className={'op_title_prefix '+color_class}/>
+                break;
+            case 'pathways':
+                prefix = <Bezier2 className={'op_title_prefix '+color_class}/>
+                break;
+            case 'platforms':
+                prefix = <Stack className={'op_title_prefix '+color_class}/>
+                break;
+            case 'publications':
+                prefix = <Book className={'op_title_prefix '+color_class}/>
+                break;
+            case 'tissues':
+                prefix = <Lungs className={'op_title_prefix '+color_class}/>
+                break;
+            case 'phenotypes':
+                prefix = <PersonArmsUp className={'op_title_prefix '+color_class}/>
+                break;
         }
     }
     else if (type == 'phenotype') {
@@ -409,6 +413,9 @@ export const TableOfContent = (props) => {
 
     // Setup list of data content
     let items = Object.keys(props.content_headers); // Will be used as "items_right"
+    if (props.tosort) {
+        items = items.sort()
+    }
     let items_left = [...items];
     if (items.length > items_per_col_threshold) {
         const max_per_col = Math.round(items.length/2);
@@ -560,7 +567,7 @@ export const display_description = (description_list) => {
 }
 
 
-export const display_tissue_description = (description) => {
+export const display_efo_description = (description) => {
     let descriptions_list = [description]
     if (description.startsWith("[")) {
         let desc = description.replace("['","").replace("']","");

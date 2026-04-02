@@ -12,7 +12,6 @@ const metric_valueGetter = function(performance_metrics,method,eval_type) {
     for (let i=0; i<performance_metrics.length; i++) {
         const metric = performance_metrics[i];
         if (metric.name_short == method) {
-            console.log("- Estimate: "+metric.estimate)
             return metric.estimate;
         }
     }

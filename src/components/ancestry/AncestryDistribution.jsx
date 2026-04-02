@@ -10,6 +10,10 @@ const AncestryDistribution = (props) => {
 
     const chart_size = props.size ? props.size : 100;
 
+    const multi_eur_maj = ['OPP000002','OPP000003'];
+    const publication_id = props.publication_id ? props.publication_id : '';
+
+
     const fetchchartData = async () => {
         if (props.data) {
             setChartData(build_omics_data(props.data))
@@ -66,6 +70,14 @@ const AncestryDistribution = (props) => {
         return data
     }
 
+    const display_label = (label) => {
+        const ma_string = 'Multi-ancestry';
+        if (label.includes(ma_string) && multi_eur_maj.includes(publication_id)) {
+            return label.replace(ma_string, ma_string+' [largely European]');
+        }
+        return label;
+    }
+
 
     const build_tooltip = (data) => {
         if (data.datasets) {
@@ -78,7 +90,7 @@ const AncestryDistribution = (props) => {
                             { data.labels.map((label,index) =>
                                 <tr key={label}>
                                     <td>
-                                        <span className={"anc_label anc_"+data.names[index]+" me-1"}></span><span>{label}</span>
+                                        <span className={"anc_label anc_"+data.names[index]+" me-1"}></span><span>{display_label(label)}</span>
                                         {
                                             dataset.extra_info[index].length ? format_ancestry_sublist(dataset.extra_info[index]) :''
                                         }

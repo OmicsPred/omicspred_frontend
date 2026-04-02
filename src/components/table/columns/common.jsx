@@ -186,24 +186,34 @@ export const common_cols = {
         hideable: false,
         renderCell: (params) => {
             let op_id = params.row.id;
-            if (params.row.associated_opgs_id) {
-                op_id = params.row.associated_opgs_id;
+            if (params.row.score) {
+                op_id = params.row.score.id;
             }
             else {
-                if (params.row.score_id) {
-                    op_id = params.row.score_id;
+                if (params.row.associated_opgs_id) {
+                    op_id = params.row.associated_opgs_id;
+                }
+                else {
+                    if (params.row.score_id) {
+                        op_id = params.row.score_id;
+                    }
                 }
             }
             return omicspred_internal_link({'label': op_id},'score')
         },
         valueGetter: (value, row) => {
             let op_id = row.id;
-            if (row.associated_opgs_id) {
-                op_id = row.associated_opgs_id;
+            if (row.score) {
+                op_id = row.score.id;
             }
             else {
-                if (row.score_id) {
-                    op_id = row.score_id;
+                if (row.associated_opgs_id) {
+                    op_id = row.associated_opgs_id;
+                }
+                else {
+                    if (row.score_id) {
+                        op_id = row.score_id;
+                    }
                 }
             }
             return op_id
@@ -214,16 +224,21 @@ export const common_cols = {
         headerName: 'Score name',
         minWidth: 150,
         valueGetter: (value, row) => {
-            if (row.name) {
-                return row.name;
+            if (row.score) {
+                return row.score.name;
             }
             else {
-                return default_cell_value;
+                if (row.name) {
+                    return row.name;
+                }
+                else {
+                    return default_cell_value;
+                }
             }
         }
     },
-    'variants_number': { 
-        field: 'variants_number', 
+    'variants_number': {
+        field: 'variants_number',
         headerName: '#SNPs',
         type: 'number',
         minWidth: 70,
@@ -296,9 +311,19 @@ export const common_cols = {
         minWidth: 150,
         flex: 1,
         renderCell: (params) => {
-            return omicspred_omics_type(params.row.platform.type);
+            let platform = params.row.platform;
+            if (!platform) {
+                platform = params.row.score.platform;
+            }
+            return omicspred_omics_type(platform.type);
         },
-        valueGetter: (value, row) => { return row.platform.type }
+        valueGetter: (value, row) => {
+            let platform = row.platform;
+            if (!platform) {
+                platform = row.score.platform;
+            }
+            return platform
+        }
     },
     'platform_name': {
         field: 'platform__name',
@@ -314,9 +339,19 @@ export const common_cols = {
             )
         },
         renderCell: (params) => {
-            return omicspred_internal_link({'label': params.row.platform.name},'platform');
+            let platform = params.row.platform;
+            if (!platform) {
+                platform = params.row.score.platform;
+            }
+            return omicspred_internal_link({'label': platform.name},'platform');
         },
-        valueGetter: (value, row) => { return row.platform.name }
+        valueGetter: (value, row) => {
+            let platform = row.platform;
+            if (!platform) {
+                platform = row.score.platform;
+            }
+            return platform
+        }
     },
     'platform_name_icon': {
         field: 'platform__name',
@@ -764,42 +799,84 @@ export const common_cols = {
     'phenotype_id': {
         field: 'phenotype_id',
         headerName: 'Phenotype ID',
-        minWidth: 120,
+        minWidth: 150,
         // flex: 0.5,
         hideable: false,
         renderCell: (params) => {
-            let phe_id = params.row.id;
-            if (params.row.phenotype) {
-                phe_id = params.row.phenotype.id;
+            let phenotypes = []
+            if (params.row.phenotypes) {
+                phenotypes = params.row.phenotypes.map((phenotype) => ({'label': phenotype.id}))
             }
-            return omicspred_internal_link({'label': phe_id},'phenotype')
+            // Old phenotype - to be removed
+            else {
+                phenotypes = [{'label': params.row.phenotype.id}]
+            }
+            //////////////////////////////////
+
+            if (phenotypes.length > 0) {
+                return omicspred_internal_links(phenotypes,'phenotype')
+            }
+            else {
+                return default_cell_value;
+            }
         },
         valueGetter: (value, row) => {
-            let phe_id = row.id;
-            if (row.phenotype) {
-                phe_id = row.phenotype.id;
+            if (row.phenotypes) {
+                const phenotypes = row.phenotypes.map((phenotype) => phenotype.id)
+                return phenotypes.join(', ')
             }
-            return phe_id
+            // Old phenotype - to be removed
+            else {
+                return row.phenotype.id;
+            }
+            //////////////////////////////////
         }
     },
     'phenotype_name': {
         field: 'phenotype_name',
         headerName: 'Phenotype name',
-        minWidth: 300,
+        minWidth: 200,
         // flex: 1,
         renderCell: (params) => {
-            let phe_name = params.row.name;
-            if (params.row.phenotype) {
-                phe_name = params.row.phenotype.name;
+            let phenotype_names = [];
+            if (params.row.phenotypes) {
+                phenotype_names = params.row.phenotypes.map((phenotype) => phenotype.label)
             }
-            return phe_name;
+            else {
+                if (params.row.label) {
+                    phenotype_names = [params.row.label];
+                }
+                // Old phenotype - to be removed
+                if (params.row.phenotype.name) {
+                    phenotype_names = [params.row.phenotype.name];
+                }
+                //////////////////////////////////
+            }
+            if (phenotype_names.length > 1) {
+                return phenotype_names.map((phenotype_name, index) => <div key={'phenotype_'+index}>{phenotype_name}{index < phenotype_names.length -1 ? ',':''}</div>);
+            }
+            else {
+                if (phenotype_names.length == 1) {
+                    return phenotype_names[0];
+                }
+                return default_cell_value;
+            }
         },
         valueGetter: (value, row) => {
-            let phe_name = row.name;
-            if (row.phenotype) {
-                phe_name = row.phenotype.name;
+            if (row.phenotypes) {
+                const phenotypes = row.phenotypes.map((phenotype) => phenotype.label)
+                return phenotypes.join(', ')
             }
-            return phe_name;
+            else {
+                if (row.label) {
+                    return row.label;
+                }
+                // Old phenotype - to be removed
+                if (row.phenotype) {
+                    return row.phenotype.name;
+                }
+                /////////////////////////////////
+            }
         }
     },
     'phenotype_category': {
@@ -808,18 +885,36 @@ export const common_cols = {
         minWidth: 180,
         // flex: 0.8,
         renderCell: (params) => {
-            let phe_cat = params.row.category;
-            if (params.row.phenotype) {
-                phe_cat = params.row.phenotype.category;
+            let phenotypes = []
+            if (params.row.phenotypes) {
+                phenotypes = params.row.phenotypes.map((phenotype) => phenotype.category);
+
             }
-            return phe_cat;
+            else {
+                phenotypes = [params.row.phenotype.category]
+            }
+
+            if (phenotypes.length > 0) {
+                if (phenotypes.length > 1) {
+                    const unique_categories = [...new Set(phenotypes)];
+                    return unique_categories.join(', ')
+                }
+                else {
+                    return phenotypes[0]
+                }
+            }
+            else {
+                return default_cell_value;
+            }
         },
         valueGetter: (value, row) => {
-            let phe_cat = row.category;
-            if (row.phenotype) {
-                phe_cat = row.phenotype.category;
+            if (row.phenotypes) {
+                const phenotypes = row.phenotypes.map((phenotype) => phenotype.category)
+                return phenotypes.join(', ')
             }
-            return phe_cat;
+            else {
+                return row.category;
+            }
         }
     },
     'pathway_group': {
@@ -1006,21 +1101,22 @@ export const common_omics_columns = {
 
 
 export const common_data_cols = {
-//    'r2': {
-//         field: 'r2',
-//         width: 90,
-//         renderHeader: () => {
-//             return r2_col_header_label();
-//         },
-//         valueGetter: (value, row) => {
-//             if (row.data_values) {
-//                 if (row.data_values.R2 || row.data_values.R2==0) {
-//                     return row.data_values.R2;
-//                 }
-//             }
-//             return default_cell_value;
-//         }
-//     },
+   'r2': {
+        field: 'r2',
+        width: 90,
+        renderHeader: () => {
+            return r2_col_header_label();
+        },
+        valueGetter: (value, row) => {
+            if (row.data_values) {
+                const data_value = row.data_values.R2;
+                if (data_value || data_value==0) {
+                    return data_value.toPrecision(3);
+                }
+            }
+            return default_cell_value;
+        }
+    },
     'hazard_ratio': {
         field: 'hr',
         headerName: 'Hazard Ratio',
@@ -1035,24 +1131,102 @@ export const common_data_cols = {
                     return hr;
                 }
             }
+            return default_cell_value;
         }
     },
     'fdr': {
         field: 'fdr',
         headerName: 'FDR',
-        description: 'False Discovery Rate (FDR) adjusted P-value',
+        description: 'Significant False Discovery Rate (FDR) adjusted P-value (FDR < 0.05)',
         width: 100,
         valueGetter: (value, row) => {
             if (row.data_values) {
-                if (row.data_values.FDR || row.data_values.FDR==0) {
-                    return row.data_values.FDR;
-                }
-                else {
-                    return default_cell_value;
+                const data_value = row.data_values.FDR;
+                if (data_value || data_value) {
+                    return data_value.toPrecision(3);
                 }
             }
+            return default_cell_value;
         }
-    }
+    },
+    'z-score' : {
+        field: 'z-score',
+        headerName: 'z-score',
+        description: 'z-score (or standard score)',
+        width: 100,
+        valueGetter: (value, row) => {
+            if (row.data_values) {
+                const data_value = row.data_values['z-score'];
+                if (data_value || data_value==0) {
+                    return data_value.toPrecision(3);
+                }
+            }
+            return default_cell_value;
+        }
+    },
+    'p-value' : {
+        field: 'p-value',
+        headerName: 'p-value',
+        // description: 'p-value',
+        width: 100,
+        valueGetter: (value, row) => {
+            if (row.data_values) {
+                const data_value = row.data_values['p-value'];
+                if (data_value || data_value==0) {
+                    return data_value.toPrecision(3);
+                }
+            }
+            return default_cell_value;
+        }
+    },
+    'bonferroni' : {
+        field: 'bonferroni',
+        headerName: 'Bonferroni',
+        // description: 'Bonferroni',
+        width: 100,
+        valueGetter: (value, row) => {
+            if (row.data_values) {
+                const data_value = row.data_values.bonferroni;
+                if (data_value || data_value==0) {
+                    return data_value.toPrecision(3);
+                }
+            }
+            return default_cell_value;
+        }
+    },
+    'effect_size' : {
+        field: 'effect_size',
+        headerName: 'Effect Size',
+        // description: 'Bonferroni',
+        width: 100,
+        valueGetter: (value, row) => {
+            if (row.data_values) {
+                const data_value = row.data_values.effect_size;
+                if (data_value || data_value==0) {
+                    return data_value.toPrecision(3);
+                }
+            }
+            return default_cell_value;
+        }
+    },
+    'var_gene_exp' : {
+        field: 'var_gene_exp',
+        headerName: 'Variant Gene Exp',
+        description: 'Represents the estimated variance of the genetically predicted gene expression (or splicing)',
+        width: 100,
+        valueGetter: (value, row) => {
+            if (row.data_values) {
+                const data_value = row.data_values.var_gene_exp;
+                if (data_value || data_value==0) {
+                    return data_value.toPrecision(3);
+                }
+            }
+            return default_cell_value;
+        }
+    },
+                // "bonferroni": 0.705247659922332,
+                // "effect_size": -0.0406449860833116,
+                // "var_gene_exp": 0.595037987945459
 }
 
 

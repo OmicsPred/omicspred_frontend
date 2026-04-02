@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { PlusCircleFill, DashCircleFill, People, InfoCircle, BarChart, ArrowsExpand, ArrowsCollapse, LayersFill, ExclamationDiamond } from 'react-bootstrap-icons';
+import { PlusCircleFill, DashCircleFill, People, InfoCircle, BarChart, PersonArmsUp, ArrowsExpand, ArrowsCollapse, LayersFill, ExclamationDiamond } from 'react-bootstrap-icons';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 
@@ -53,6 +53,14 @@ export const scoresBadge = function(number,in_table) {
     return <span className={class_names} title={thousandifyNumber(number)+" Genetic Score"+add_s_when_plural(number)}><BarChart className='me-1' style={{verticalAlign:'top'}}/>{formatNumberShort(number)}</span>
 }
 
+export const phenotypesBadge = function(number,in_table) {
+    let class_names = badge_classes;
+    if (in_table) {
+        class_names += ' badge-op-table';
+    }
+    return <span className={class_names} title={thousandifyNumber(number)+" Phenotype association"+add_s_when_plural(number)}><PersonArmsUp className='me-1' style={{verticalAlign:'top'}}/>{formatNumberShort(number)}</span>
+}
+
 export const datasetBadge = function(number,in_table) {
     let class_names = badge_classes;
     if (in_table) {
@@ -66,9 +74,10 @@ export const participantsBadge = function(number) {
     return <span className={badge_classes+" badge-op-table"} title={participants_number+" Participants"}><People className='me-1' style={{verticalAlign:'top'}}/>{participants_number}</span>
 }
 
-export const participantsHeader = function(number) {
+export const participantsHeader = function(number,m_align) {
     const participants_number = thousandifyNumber(number);
-    return <span title="Participants"><People className='me-1 op_color_2' style={{verticalAlign:'top'}}/>{participants_number}</span>
+    const valign = m_align ? 'middle' : 'top';
+    return <span title="Participants"><People className='me-1 op_color_2' style={{verticalAlign: valign}}/>{participants_number}</span>
 }
 
 

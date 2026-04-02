@@ -24,7 +24,7 @@ export const PerformanceMetricsTable = (props) => {
     return (
         <div className='mt-5'>
             {op_subtitle_no_asso('hl','Performance metrics')}
-            <DataTableFromRestApi key="performance_metrics" url_suffix={props.url_perf} columns={performance_metrics_columns_large_ext} hidden_columns={{platform__name:false,platform__platform_master__type:false}} col_for_ids={cols_ids}/>
+            <DataTableFromRestApi key="performance_metrics" url_suffix={props.url_perf} columns={performance_metrics_columns_large_ext} hidden_columns={['platform__name','platform__platform_master__type']} col_for_ids={cols_ids}/>
         </div>
     )
 }

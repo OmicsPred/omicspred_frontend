@@ -10,7 +10,7 @@ import { op_title, op_subtitle_no_asso, HeaderCard, no_entry_found } from '../..
 import { display_source } from '../../MolecularTrait/components/links';
 
 
-function Phenotype() {
+function PhenotypeOld() {
     const { phenotype } = useParams();
     const [phenotypeData, setPhenotypeData] = useState()
     // Temporary
@@ -47,7 +47,7 @@ function Phenotype() {
     const column_keys = ['score_id'];
 
     const fetchSummaryData = async () => {
-        const data = await restApiCall('phenotype/'+phenotype_id+'?include_children=1');
+        const data = await restApiCall('phenotype_old/'+phenotype_id+'?include_children=1');
         if (data && Object.keys(data).length) {
             setPhenotypeData(data);
         }
@@ -130,4 +130,4 @@ function Phenotype() {
     );
 }
 
-export default Phenotype
+export default PhenotypeOld

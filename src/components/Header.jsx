@@ -37,6 +37,7 @@ function Header() {
                                 <NavDropdown.Item href="/platforms">Platforms</NavDropdown.Item>
                                 <NavDropdown.Item href="/pathways">Pathways</NavDropdown.Item>
                                 <NavDropdown.Item href="/tissues">Tissues</NavDropdown.Item>
+                                <NavDropdown.Item href="/phenotypes">Phenotypes</NavDropdown.Item>
                                 {/* Legacy - begin */}
                                 {/* <NavDropdown.Item href="/legacy/scores">Genetic Scores <span className='badge' style={{backgroundColor:'grey',color:'#FFF'}}>Legacy</span></NavDropdown.Item>
                                 <NavDropdown.Item href="/legacy/platform/Olink">Platform <span className='badge' style={{backgroundColor:'grey',color:'#FFF'}}>Legacy</span></NavDropdown.Item>
@@ -44,10 +45,10 @@ function Header() {
                                 {/* Legacy - end */}
                             </NavDropdown>
                             <NavDropdown title="Phenotype" id="phenotype-nav-dropdown" renderMenuOnMount={true}>
-                                <NavDropdown.Item href="/applications/phenotype/sum">Summary</NavDropdown.Item>
-                                <NavDropdown.Item href="/applications/phenotype/full">All Associations</NavDropdown.Item>
+                                <NavDropdown.Item href="/applications/phenotype/sum">Summary [DEPRECATED]</NavDropdown.Item>
+                                <NavDropdown.Item href="/applications/phenotype/full">All Associations [DEPRECATED]</NavDropdown.Item>
                             </NavDropdown>
-                            <Nav.Link href='/submit' target="_blank">Submit Score</Nav.Link>
+                            <Nav.Link href='/submit' target="_blank">Submit Data</Nav.Link>
                             <NavDropdown title="Downloads" id="download-nav-dropdown" renderMenuOnMount={true}>
                                 <NavDropdown.Item href="/downloads">Data files</NavDropdown.Item>
                                 <NavDropdown.Item href={process.env.REST_API_URL_PUBLIC}>REST API</NavDropdown.Item>

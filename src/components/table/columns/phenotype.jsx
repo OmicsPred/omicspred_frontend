@@ -2,14 +2,21 @@
 import { Stack } from "react-bootstrap-icons";
 import Href from '../../Href';
 import { ToggleDiv, thousandifyNumber, participantsHeader, participantsBadge } from '../../../components/Generic';
-import { display_cohort } from '../../../components/Common';
-import { common_cols, common_data_cols, molecular_trait_header } from "./common";
+import { display_cohort, display_efo_description } from '../../../components/Common';
+import { common_cols, common_data_cols, molecular_trait_header, omicspred_internal_link } from "./common";
+import { ancestry_cols } from './ancestry';
+
 
 export const default_cell_value = process.env.DEFAULT_CELL_VALUE;
 
 const data_separator = ', ';
 
-const omicspred_id_col = {...common_cols['omicspred_id'], field: 'score_id'}
+const omicspred_id_old_col = {...common_cols['omicspred_id'], field: 'score_id'}
+
+const omicspred_id_col = {...common_cols['omicspred_id'], field: 'score__id'}
+const platform_type_col = {...common_cols['platform_type'], field: 'dataset__platform__platform_master__type'}
+const platform_name_col = {...common_cols['platform_name'], field: 'dataset__platform__name'}
+const ancestry_col = {...ancestry_cols['ancestry'], field: 'sample__ancestry_broad'};
 
 
 const application_molecular_traits = function(mt_entry, mt_type, index) {
@@ -118,8 +125,8 @@ export const applications_cols = {
     },
     'sample_number': {
         field: 'sample_number',
-        headerName: 'Samples',
-        width: 150,
+        headerName: 'Sample',
+        width: 125,
         renderCell: (params) => {
             const sample = params.row.sample;
             if (sample && sample.sample_number) {
@@ -128,7 +135,7 @@ export const applications_cols = {
                 }
             }
             else {
-                return participantsBadge(sample.sample_number)
+                return participantsBadge(sample.sample_number,true)
             }
         },
         valueGetter: (value, row) => {
@@ -166,8 +173,259 @@ export const applications_cols = {
         valueGetter: (value, row) => {
             return row.cohort.name_short;
         }
-    },
+    }
 }
+
+
+export const phenotypes_columns = [
+    {
+        field: 'label',
+        headerName: 'Phenotype name',
+        minWidth: 150,
+        flex: 1,
+        renderCell: (params) => {
+            const phenotype = params.row;
+            return omicspred_internal_link({'id': phenotype.id, 'label': phenotype.label},'phenotype');
+        },
+        valueGetter: (value) => { return value }
+    },
+    {
+        field: 'id',
+        headerName: 'Phenotype ID',
+        minWidth: 160,
+        flex: 1,
+        renderCell: (params) => {
+            const tissue_id = params.row.id;
+            const tissue_url = params.row.url;
+            return <Href href={tissue_url} text={tissue_id} />;
+        },
+        valueGetter: (value) => { return value }
+    },
+    {
+        field: 'category',
+        headerName: 'Category',
+        minWidth: 160,
+        flex: 1,
+        renderCell: (params) => {
+            if (params.row.category) {
+                return params.row.category;
+            }
+            return default_cell_value;
+        },
+        valueGetter: (value) => { return value }
+    },
+    {
+        field: 'description',
+        headerName: 'Description',
+        minWidth: 450,
+        flex: 1,
+        sortable: false,
+        renderCell: (params) => {
+            if (params.row.description && params.row.description != '[]') {
+                return display_efo_description(params.row.description);
+            }
+            return default_cell_value;
+        },
+        valueGetter: (value) => { return value }
+    },
+    common_cols['scores_count']
+]
+
+
+export const score_phewas_cols = {
+    'omicspred_id': omicspred_id_col,
+    'gene': {
+        field: 'score__genes__name',
+        minWidth: 150,
+        flex: 0.5,
+        headerName: 'Gene name',
+        renderHeader: () => {
+            return (molecular_trait_header('Gene'))
+        },
+        renderCell: (params) => {
+            const genes_list =  params.row.score.genes;
+            // const genes_list =  params.row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'gene'});
+            if (genes_list.length > 0) {
+                const genes = genes_list.map((gene, index) => application_molecular_traits(gene, 'gene', index))
+                return <div className="d-inline">{genes}</div>;
+            }
+            return default_cell_value;
+        },
+        valueGetter: (value, row) => {
+            let gene_names = [];
+            // const genes_list =  row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'gene'});
+            const genes_list =  row.score.genes;
+            gene_names = genes_list.map((gene) => gene.name ? gene.name : gene.external_id);
+            return gene_names.join(data_separator);
+        }
+    },
+    'protein': {
+        field: 'score__proteins__name',
+        minWidth: 150,
+        flex: 0.5,
+        headerName: 'Protein name',
+        renderHeader: () => {
+            return (molecular_trait_header('Protein'))
+        },
+        renderCell: (params) => {
+            // const proteins_list =  params.row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'protein'});
+            const proteins_list =  params.row.score.proteins;
+            if (proteins_list.length > 0) {
+                const proteins = proteins_list.map((protein, index) => application_molecular_traits(protein, 'protein', index))
+                return <div className="d-inline">{proteins}</div>;
+            }
+            return default_cell_value;
+        },
+        valueGetter: (value, row) => {
+            let protein_names = [];
+            // const proteins_list =  row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'protein'});
+            const proteins_list =  row.score.proteins
+            protein_names = proteins_list.map((protein) => protein.name ? protein.name : protein.external_id);
+            return protein_names.join(data_separator);
+        }
+    },
+    'metabolite': {
+        field: 'score__metabolites__name',
+        minWidth: 150,
+        flex: 0.5,
+        headerName: 'Metabolite name',
+        renderHeader: () => {
+            return (molecular_trait_header('Metabolite'))
+        },
+        renderCell: (params) => {
+            // const metabolites_list =  params.row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'metabolite'});
+            const metabolites_list =  params.row.score.metabolites;
+            if (metabolites_list.length > 0) {
+                const metabolites = metabolites_list.map((metabolite, index) => application_molecular_traits(metabolite, 'metabolite', index))
+                return <div className="d-inline">{metabolites}</div>;
+            }
+            return default_cell_value;
+        },
+        valueGetter: (value, row) => {
+            let metabolite_names = [];
+            // const metabolites_list = row.molecular_traits.filter(molecular_trait => { return molecular_trait.type == 'metabolite'});
+            const metabolites_list = row.score.metabolites;
+            metabolite_names = metabolites_list.map((metabolite) => metabolite.name ? metabolite.name : metabolite.external_id);
+            return metabolite_names.join(data_separator);
+        }
+    },
+    'sample_age': {
+        field: 'sample__sample_age',
+        headerName: 'Mean Age',
+        width: 120,
+        renderCell: (params) => {
+            const sample = params.row.sample;
+            if (sample.sample_age) {
+                let value = sample.sample_age;
+                if (sample.sample_age_sd) {
+                    value += ' ± '+sample.sample_age_sd;
+                }
+                return value;
+            }
+            return default_cell_value;
+        },
+        valueGetter: (value, row) => {
+            return row.sample.sample_age;
+        }
+    },
+    'sample_number': {
+        field: 'sample__sample_number',
+        headerName: 'Sample',
+        width: 120,
+        renderCell: (params) => {
+            const sample = params.row.sample;
+            if (sample && sample.sample_number) {
+                if (sample.sample_cases) {
+                    return <ToggleDiv content={<ul className='ps-3'><li>Cases: {thousandifyNumber(sample.sample_cases)}</li>{sample.sample_controls ? <li>Controls: {thousandifyNumber(sample.sample_controls)}</li>:''}</ul>} title={participantsHeader(sample.sample_number)}/>;
+                }
+            }
+            return participantsHeader(sample.sample_number,true)
+        },
+        valueGetter: (value, row) => {
+            return row.sample.sample_number;
+        }
+    },
+    'sample_percent_male': {
+        field: 'sample__sample_percent_male',
+        headerName: '%Male',
+        width: 80,
+        renderCell: (params) => {
+            if (params.row.sample.sample_percent_male) {
+                return params.row.sample.sample_percent_male+'%';
+            }
+            return default_cell_value;
+        },
+        valueGetter: (value, row) => {
+            return row.sample.sample_percent_male;
+        }
+    },
+    'cohort': {
+        field: 'sample__cohorts',
+        headerName: 'Cohort',
+        width: 80,
+        renderCell: (params) => {
+            const cohort = params.row.sample.cohorts[0];
+            if (cohort.name_short == cohort.name_full) {
+                return display_cohort(cohort)
+            }
+            else {
+                return <span>{display_cohort(cohort)}</span>;
+            }
+        }
+        ,
+        valueGetter: (value, row) => {
+            const cohort = row.sample.cohorts[0];
+            return cohort.name_short;
+        }
+    },
+    'platform_type': platform_type_col,
+    'platform_name': platform_name_col
+}
+
+
+
+
+export const phenotype_dataset_cols = [
+    score_phewas_cols['omicspred_id'],
+    common_cols['phenotype_name'],
+    common_cols['phenotype_id'],
+    ancestry_col,
+    score_phewas_cols['gene'],
+    score_phewas_cols['protein'],
+    score_phewas_cols['metabolite'],
+    score_phewas_cols['sample_age'],
+    score_phewas_cols['sample_number'],
+    score_phewas_cols['sample_percent_male'],
+    score_phewas_cols['cohort'],
+    common_data_cols['r2'],
+    common_data_cols['fdr'],
+    common_data_cols['hazard_ratio'],
+    common_data_cols['z-score'],
+    common_data_cols['p-value'],
+    common_data_cols['bonferroni'],
+    common_data_cols['effect_size'],
+    common_data_cols['var_gene_exp']
+]
+
+
+export const phenotype_score_cols = [
+    common_cols['phenotype_name'],
+    common_cols['phenotype_id'],
+    ancestry_col,
+    score_phewas_cols['sample_age'],
+    score_phewas_cols['sample_number'],
+    score_phewas_cols['sample_percent_male'],
+    score_phewas_cols['cohort'],
+    common_data_cols['r2'],
+    common_data_cols['fdr'],
+    common_data_cols['hazard_ratio'],
+    common_data_cols['z-score'],
+    common_data_cols['p-value'],
+    common_data_cols['bonferroni'],
+    common_data_cols['effect_size'],
+    common_data_cols['var_gene_exp']
+]
+
 
 // const gene_no_sort = {...applications_cols['gene'], sortable: false}
 // const protein_no_sort = {...applications_cols['protein'], sortable: false}
@@ -178,7 +436,7 @@ let base_phenotype_columns = {
         common_cols['phenotype_id'],
         common_cols['phenotype_name'],
         common_cols['phenotype_category'],
-        omicspred_id_col,
+        omicspred_id_old_col,
         // common_data_cols['r2'],
         applications_cols['cohort'],
         common_cols['platform_type'],

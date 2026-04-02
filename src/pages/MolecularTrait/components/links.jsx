@@ -121,10 +121,10 @@ export const display_phenotype_link = (phenotype, data_size) => {
     let id = phenotype.id;
     id = id.replace('.','_');
     if (data_size > 1) {
-        return <li key={phenotype.id}><small><span key={phenotype.id}>{phenotype.name} (<Href href={'/phenotype/'+id} text={phenotype.id} title={phenotype.source+' ID'}/>)</span></small></li>
+        return <li key={phenotype.id}><small><span key={phenotype.id}>{phenotype.label} (<Href href={'/phenotype/'+id} text={phenotype.id} title={phenotype.source+' ID'}/>)</span></small></li>
     }
     else {
-        return <span key={phenotype.id}>{phenotype.name} (<Href href={'/phenotype/'+id} text={phenotype.id} title={phenotype.source+' ID'}/>)</span>
+        return <span key={phenotype.id}>{phenotype.label} (<Href href={'/phenotype/'+id} text={phenotype.id} title={phenotype.source+' ID'}/>)</span>
     }
 }
 

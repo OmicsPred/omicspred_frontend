@@ -1,6 +1,6 @@
 import Href from "../../Href";
 import { common_cols, omicspred_internal_link } from "./common";
-import { display_tissue_description } from '../../Common';
+import { display_efo_description } from '../../Common';
 
 const default_cell_value = process.env.DEFAULT_CELL_VALUE;
 
@@ -32,12 +32,12 @@ export const tissues_columns = [
     {
         field: 'description',
         headerName: 'Description',
-        minWidth: 400,
+        minWidth: 450,
         flex: 1,
         sortable: false,
         renderCell: (params) => {
             if (params.row.description && params.row.description != '[]') {
-                return display_tissue_description(params.row.description);
+                return display_efo_description(params.row.description);
             }
             return default_cell_value;
         },
