@@ -1,6 +1,3 @@
-// import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
-// import bash from 'react-syntax-highlighter/dist/esm/languages/hljs/bash';
-// import { qtcreatorDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import Container from "./components/Container";
 import SearchDocs from "./components/SearchDocs";
 import Href from "../../components/Href";
@@ -10,8 +7,6 @@ import { Note } from '../../components/Generic';
 import DataTable from "../../components/table/DataTable";
 import { ChevronDoubleRight, ChevronRight } from 'react-bootstrap-icons';
 
-
-// SyntaxHighlighter.registerLanguage('bash', bash);
 
 function About() {
 
@@ -166,6 +161,42 @@ function About() {
 						</div>
 					</div>
 		},
+		'Inclusion Criteria': {
+			'label': 'inclusion_criteria',
+			'text': <div>
+						For a publication's data to be included in {project_name} it must contain one of the following:
+						<ul className="mt-1">
+							<li className="mb-1">
+								<span className="fw-bold">Newly developed genetic scores</span>. This includes the following information about the score and its predictive ability (evaluated on samples not used to develop the score):
+								<ul>
+									<li>
+										Variant information necessary to apply the score to new samples (variant rsID and/or genomic position, weights/effect sizes, effect allele, genome build).
+										<div className="ms-3">
+											<i>Optional</i>: covariance matrix for variants to support summary-statistics based analyses (e.g. MetaXcan).
+										</div>
+									</li>
+									<li>
+										Information about score development (computational method, variant selection, relevant parameters).
+									</li>
+									<li>
+										Description of the samples used to develop and evaluate each score.
+									</li>
+									<li>
+										Establishment of analytic validity and a description of each score’s predictive performance, typically the proportion of the variance explained (R2).
+									</li>
+								</ul>
+							</li>
+							<li className="mb-1">
+								<span className="fw-bold">An evaluation of a previously developed {project_name} score or dataset</span>, for instance on samples not used for development. The requirements for description would be the same as for the evaluation of a new genetic score.
+							</li>
+							<li>
+								<span className="fw-bold">PheWAS results of genetic scores</span> for organismal phenotypes (e.g. disease traits) can also be accepted, provided submitters can demonstrate impact to downstream users.
+							</li>
+						</ul>
+						<div>A complete description of the metadata captured can be found in the <Href text='Data description' href='/docs'/> page.</div>
+						<div>A filled version of the <Href text={project_name+' metadata template'} href={process.env.PROJECT_METADATA_TEMPLATE_URL}/> needs to be sent to us, along with the required data files.</div>
+					</div>
+		},
 		'Metadata': {
 			'label': 'metadata',
 			'text': <div>
@@ -185,7 +216,7 @@ function About() {
 			'label': 'our_collaborators',
 			'text':
 				<>
-					<h5 className="mt-4">OmicsPred Portal</h5>
+					<h5 className="mt-4">{project_name} Portal</h5>
 					<ul>
 						<li className="mb-1">
 							PIs: <Href text="Michael Inouye" href="https://www.inouyelab.org/home/people#h.p_ID_32" />, <Href text="Samuel Lambert" href="https://www.phpc.cam.ac.uk/people/ceu-group/ceu-research-staff/sam-lambert/" />, Yu Xu, <Href text='Hae Kyung Im' href="https://biologicalsciences.uchicago.edu/faculty/hae-kyung-im-phd"/>.
@@ -194,7 +225,7 @@ function About() {
 							Team: Laurent Gil, Carles Foguet, Sofía Salazar, Helen Parkinson.
 						</li>
 					</ul>
-					<h5 className="mt-4">OmicsPred Scores Collaboration</h5>
+					<h5 className="mt-4">{project_name} Scores Collaboration</h5>
 					<p>
 						Scott C. Ritchie, Samuel Lambert, Loïc Lannelongue, Artika Nath, Elodie Persyn, Carles Foguet, Bram Prins, Praveen Surendran,
 						Dirk Paul, Emanuele Di Angelantonio, Adam Butterworth, John Danesh, Maik Pietzner, Jian’an Luan, Claudia Langenberg,
