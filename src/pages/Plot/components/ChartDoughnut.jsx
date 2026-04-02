@@ -49,7 +49,7 @@ export default function ChartDoughnut(props) {
     },
     plugins: {
       datalabels: {
-        formatter: function (value, context) {
+        formatter: function (value) {
           return value;
         },
         color: "#fff",
