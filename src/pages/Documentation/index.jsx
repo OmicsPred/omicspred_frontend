@@ -66,7 +66,7 @@ const documentation_op = {
             {'name': project_name+' name', 'desc': 'Name used by the author to refer to the genetic score before an '+project_name+' identifier has been assigned.'},
             {'name': 'Reported Molecular Trait', 'desc': 'Molecular trait (Gene, Protein, Metabolite, ...) identifier and/or name as reported by the author.'},
             {'name': 'Original Genome Build', 'desc': 'The version of the genome that the variants present in the Genetic Score are associated with.'},
-            {'name': 'Number of Variants', 'desc': 'Number of variants used to calculate the PGS. In the future this will include a more detailed description of the types of variants present.'},
+            {'name': 'Number of Variants', 'desc': 'Number of variants used to calculate the Genetic Score. In the future this will include a more detailed description of the types of variants present.'},
             {'name': 'Genetic Score Development Method', 'desc': 'The name or description of the method or computational algorithm used to develop the Genetic Score.'},
             // {'name': 'Genetic Score Development Details/Relevant Parameters', 'desc': 'A description of the relevant inputs and parameters relevant to the Genetic Score development method/process.'},
             // {'name': 'Species', 'desc': 'Species targeted in this Genetic Score'},
@@ -170,32 +170,45 @@ const documentation_op = {
             {'name': 'URL', 'desc': 'External URL to the ontology entry'}
         ]
     },
-    'Phenotype [Applications]': {
+    'Phenotype': {
         'label': 'phenotype',
-        'desc': 'Phenotypes used in the Applications part of '+project_name+', i.e. Phenome-wide association analysis (PheWAS). All the phenotypes are associated to an ontology to facilitate grouping and comparability.',
+        'desc': 'Phenotypes used in the Phenome-wide association analysis (PheWAS) part of '+project_name+'. All the phenotypes are associated to an ontology to facilitate grouping and comparability.',
         'struct': [
-            {'name': 'Identifier', 'desc': 'External identifier of the Phenotype.'},
-            {'name': 'Name', 'desc': 'Phenotype name/label.'},
+            {'name': 'Identifier', 'desc': 'External identifier of the Phenotype from an ontology (e.g. EFO).'},
+            {'name': 'Label', 'desc': 'Phenotype name/label.'},
+            {'name': 'Description', 'desc': 'Detailed description of the Phenotype'},
             {'name': 'Category', 'desc': 'Phenotype category.'},
             {'name': 'Source', 'desc': 'External source of the Phenotype (e.g. PheCode).'},
-            {'name': 'Child phenotype(s)', 'desc': 'Children entries of the Phenotype from the ontology.'}
+            {'name': 'URL', 'desc': 'External URL to the ontology entry'}
+            // {'name': 'Child phenotype(s)', 'desc': 'Children entries of the Phenotype from the ontology.'}
         ]
     },
-    'Genetic Score [Applications]': {
-        'label': 'score_app',
-        'desc': 'This data structure is similar to the `Genetic Score` but for the Applications part of '+project_name+', i.e. Phenome-wide association analysis (PheWAS).',
+    'Score PheWAS': {
+        'label': 'score_phewas',
+        'desc': 'This data structure is similar to the `Genetic Score` but for the Phenome-wide association analysis (PheWAS) part of '+project_name+'.',
         'struct': [
-            {'name': project_name+' ID', 'desc': project_name+' Score Identifier.'},
-            {'name': 'Phenotype', 'desc': 'Associated Phenotype.'},
-            {'name': 'Publication', 'desc': 'Associated Publication.'},
-            {'name': 'Platform', 'desc': 'Associated Platform.'},
-            {'name': 'Sample', 'desc': 'Associated Sample (control/cases, percentage female participants).'},
-            {'name': 'Cohort', 'desc': 'Cohort use to evaluate the Score/Phenotype association.'},
-            {'name': 'Molecular Traits', 'desc': 'List of linked Molecular Traits (genes, transcripts, protein, metabolites) - simplifed structure with only `External ID` and `name`.'},
+            {'name': 'Score', 'desc': 'Associated Score.'},
+            {'name': 'Phenotypes', 'desc': 'List of associated Phenotypes.'},
+            {'name': 'Dataset', 'desc': 'Associated Dataset.'},
+            {'name': 'Sample', 'desc': 'Associated Sample (control/cases, percentage male participants, cohorts).'},
             // {'name': <>R<sup>2</sup></>, 'desc': 'Proportion of the variance explained.'},
-            {'name': 'HR', 'desc': 'Hazard Ratio with confidence interval.'},
             {'name': 'FDR', 'desc': 'False Discovery Rate-adjusted P-value (<0.5).'},
-
+            {'name': 'Other data values', 'desc':
+                <div>
+                    <div className='mb-2'>A list of data used to evaluate the association between a Genetic Score and a phenotype</div>
+                    <ul className='mb-0'>
+                        <li key="r2"><span className='fw-bold'><>R<sup>2</sup></></span>: Proportion of the variance explained.</li>
+                        <li key="hr"><span className='fw-bold'>HR</span>: Hazard Ratio with confidence interval.</li>
+                        <li key="z-score"><span className='fw-bold'>Z-score</span> or Standard score.</li>
+                        <li key="p-value"><span className='fw-bold'>P-value</span></li>
+                        <li key="bonferroni"><span className='fw-bold'>Bonferroni</span>: Bonferroni correction</li>
+                        <li key="effect_size"><span className='fw-bold'>Effect size</span></li>
+                        <li key="var_gene_exp"><span className='fw-bold'>Var Gene Exp</span>: Gene expression variance</li>
+                    </ul>
+                </div>
+            },
+            {'name': 'Variants number used', 'desc': 'Number of variants from the genetic score used in the PheWAS.'},
+            {'name': 'Variants fraction found', 'desc': 'Fraction of variants used from the genetic score used in the PheWAS.'}
         ]
     }
 }
@@ -219,9 +232,9 @@ function Documentation() {
                 This page contains information regarding the contents of {project_name} and the data structure of its main components.
             </p>
         </div>
-        <TableOfContent title={'List of data structures'} content_headers={table_of_content} prefix={data_prefix}/>
+        <TableOfContent title={'List of data structures'} content_headers={table_of_content} prefix={data_prefix} tosort='true'/>
         {
-          Object.keys(documentation_op).map((model_name) => <Container key={data_prefix+documentation_op[model_name].label} title={model_name} content={documentation_op[model_name]} prefix={data_prefix}/>)
+          Object.keys(documentation_op).sort().map((model_name) => <Container key={data_prefix+documentation_op[model_name].label} title={model_name} content={documentation_op[model_name]} prefix={data_prefix}/>)
         }
       </>
     );

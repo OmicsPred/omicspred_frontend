@@ -124,7 +124,7 @@ const Stats = () => {
                     <div className='d-flex flex-column'>
                         <h5 className='mt-2 mb-4'>{project_name} data summary</h5>
                         <div className='op_stats2'>
-                            { phenotypeAssoCount && phenotypeAssoCount > 0 ? display_count_block('Phenotype associations',phenotypeAssoCount,'/applications/phenotype/full','phenotype') : ''}
+                            { phenotypeAssoCount && phenotypeAssoCount > 0 ? display_count_block('Phenotype associations',phenotypeAssoCount,'/phenotypes','phenotype') : ''}
                             { pathwaysCount && pathwaysCount > 0 ? display_count_block('Pathways',pathwaysCount,'/pathways') : ''}
                             { platformsCount && platformsCount > 0 ? display_count_block('Platforms',platformsCount,'/platforms') : ''}
                             { datasetsCount && datasetsCount > 0 ? display_count_block('Datasets',datasetsCount,'/datasets') : ''}

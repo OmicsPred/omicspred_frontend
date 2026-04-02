@@ -4,6 +4,7 @@ import About from "../pages/About";
 import Cohort from "../pages/Cohort";
 import Cohorts from "../pages/Cohorts";
 import Dataset from "../pages/Dataset";
+// import DatasetPhenotype from "../pages/DatasetPhenotype";
 import Datasets from "../pages/Browse/Datasets";
 import Documentation from "../pages/Documentation";
 import Downloads from "../pages/Downloads";
@@ -13,7 +14,9 @@ import Home from "../pages/Home";
 import Metabolite from "../pages/MolecularTrait/Metabolite";
 import Pathway from "../pages/Pathway";
 import Pathways from "../pages/Browse/Pathways";
-import Phenotype from "../pages/Applications/Phenotype";
+import Phenotype from "../pages/Phenotype";
+import Phenotypes from "../pages/Browse/Phenotypes";
+import PhenotypeOld from "../pages/Applications/Phenotype";
 import PhenotypesFull from "../pages/Applications/PhenotypesFull";
 import PhenotypesSum from "../pages/Applications/PhenotypesSum";
 import Platform from "../pages/Platform";
@@ -61,16 +64,19 @@ function OpRouters() {
                 <Route path="/platforms" element={<Platforms />} />
                 <Route path="/scores" element={<Scores />} />
                 <Route path="/tissues" element={<Tissues />} />
+                <Route path="/phenotypes" element={<Phenotypes />} />
                 <Route path="/applications/phenotype/full" element={<PhenotypesFull />} />
                 <Route path="/applications/phenotype/sum" element={<PhenotypesSum />} />
                 
                 {/* Individual pages */}
                 <Route path="/cohort/:cohort" element={<Cohort />} />
                 <Route path="/dataset/:opd_id" element={<Dataset />} />
+                {/* <Route path="/dataset/phenotype/:opd_id" element={<DatasetPhenotype/>} /> */}
                 <Route path="/gene/:gene" element={<Gene />} />
                 <Route path="/metabolite/:metabolite" element={<Metabolite />} />
                 <Route path="/pathway/:pathway" element={<Pathway />} />
                 <Route path="/phenotype/:phenotype" element={<Phenotype />} />
+                <Route path="/phenotype_old/:phenotype" element={<PhenotypeOld />} />
                 <Route path="/platform/:platform" element={<Platform />} />
                 <Route path="/protein/:protein" element={<Protein />} />
                 <Route path="/publication/:opp_id" element={<Publication />} />

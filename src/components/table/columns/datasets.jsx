@@ -3,7 +3,7 @@ import { FileEarmarkArrowDown, Stack, People, GraphUp, LayersFill } from 'react-
 import { common_cols, common_column_groups } from './common';
 import { ancestry_cols } from './ancestry';
 import { download_labels, ExpandableDownloadButton, get_download_list } from '../../Downloads';
-import { ToggleDiv, TooltipText } from '../../Generic';
+import { ToggleDiv, TooltipText, phenotypesBadge } from '../../Generic';
 import { internal_dataset_link } from '../../Common';
 import { SampleTable } from '../../Sample';
 import Href from '../../Href';
@@ -77,7 +77,7 @@ const columns_for_dataset = {
     },
     'samples': { // Not used at the moment
         field: 'samples',
-        headerName: ' Samples',
+        headerName: 'Samples',
         minWidth: 320,
         sortable: false,
         flex: 1,
@@ -92,6 +92,24 @@ const columns_for_dataset = {
                 return default_cell_value;
             }
         }
+    },
+    'phenotypes_count': {
+        field: 'phenotypes_count',
+        headerName: 'PheWAS Asso.',
+        description: 'Number of PheWAS associations in the dataset',
+        type: 'number',
+        minWidth: 120,
+        align: 'right',
+        renderCell: (params) => {
+            const phenotypes_count = params.row.phenotypes_count
+            if (phenotypes_count && phenotypes_count != 0) {
+                return phenotypesBadge(phenotypes_count,1);
+            }
+            else {
+                return default_cell_value;
+            }
+        },
+        valueGetter:  (value, row) => { return row.phenotypes_count }
     },
     'plot_link': {
         field: 'plots',
@@ -291,6 +309,7 @@ const dataset_common_end = [
     columns_for_dataset['platform_version'],
     common_cols['method_name'],
     common_cols['scores_count'],
+    columns_for_dataset['phenotypes_count'],
     ancestry_cols['ancestry_training_computed'],
     ancestry_cols['ancestry_validation_computed'],
     // ancestry_cols['ancestry_training'],

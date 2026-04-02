@@ -18,10 +18,11 @@ const format_ancestry_data = (anc_data) => {
 }
 
 
-const render_ancestry = (ancestry_data, type) => {
+const render_ancestry = (ancestry_data, publication_id, type) => {
     const ancestry_list = format_ancestry_data(ancestry_data);
-    return <AncestryDistribution key={"anc_"+type} data={ancestry_list} size={chart_size}/>
+    return <AncestryDistribution key={"anc_"+type} data={ancestry_list} publication_id={publication_id} size={chart_size}/>
 }
+
 
 const value_getter_ancestry = (ancestry_data) => {
     const ancestry_names = Object.keys(ancestry_data)
@@ -116,7 +117,7 @@ export const ancestry_cols = {
             if (params.row.ancestry) {
                 if (params.row.ancestry.dev) {
                     if (params.row.ancestry.dev.anc) {
-                        return render_ancestry(params.row.ancestry.dev.anc,'training');
+                        return render_ancestry(params.row.ancestry.dev.anc,params.row.publication.id,'training');
                     }
                 }
             }
@@ -144,7 +145,7 @@ export const ancestry_cols = {
             const ancestry_data = compute_sample_dist(params.row.samples_training)
             if (ancestry_data) {
                 if (ancestry_data['anc']) {
-                    return render_ancestry(ancestry_data['anc'],'training');
+                    return render_ancestry(ancestry_data['anc'],params.row.publication,'training');
                 }
             }
             return <div className="text-center align-middle" style={{lineHeight:"50px"}}>{default_cell_value}</div>;
@@ -170,7 +171,7 @@ export const ancestry_cols = {
             if (params.row.ancestry) {
                 if (params.row.ancestry.eval) {
                     if (params.row.ancestry.eval.anc) {
-                        return render_ancestry(params.row.ancestry.eval.anc,'validation');
+                        return render_ancestry(params.row.ancestry.eval.anc,params.row.publication.id,'validation');
                     }
                 }
             }
@@ -198,7 +199,7 @@ export const ancestry_cols = {
             const ancestry_data = compute_sample_dist(params.row.samples_validation)
             if (ancestry_data) {
                 if (ancestry_data['anc']) {
-                    return render_ancestry(ancestry_data['anc'],'validation');
+                    return render_ancestry(ancestry_data['anc'],params.row.publication,'validation');
                 }
             }
             return <div className="text-center align-middle" style={{lineHeight:"50px"}}>{default_cell_value}</div>;

@@ -23,6 +23,14 @@ const DataTableServer = (props) => {
         // 'metabolite_name':  'metabolites__name',
     }
 
+     // Format expected: [<col_1_name>,<col_2_name>]
+    let initial_hidden_columns = {};
+    if (props.hidden_columns) {
+        for (let i=0; i < props.hidden_columns.length; i++) {
+            initial_hidden_columns[props.hidden_columns[i]] = false;
+        }
+    }
+
     const [rowCountState, setRowCountState] = useState(0);
     const [data, setData] = useState();
     const [queryParam, setQueryParam] = useState({
@@ -218,6 +226,10 @@ const DataTableServer = (props) => {
                             initialState={{
                                 pagination: {
                                     paginationModel: paginationModel
+                                },
+                                columns: {
+                                    // Hide columns listed in the model. the other columns will remain visible
+                                    columnVisibilityModel: initial_hidden_columns
                                 }
                             }}
                             sortingMode="server"

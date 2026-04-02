@@ -5,11 +5,14 @@ import {cohort_cols, common_column_groups, cohort_valueGetter} from '../../compo
 import { metabolomics_columns, metabolomics_column_groups } from '../../components/table/columns/metabolomics';
 import { proteomics_pub_columns } from '../../components/table/columns/proteomics';
 import { transcriptomics_dataset_columns } from '../../components/table/columns/transcriptomics';
+import { phenotype_dataset_cols } from '../../components/table/columns/phenotype';
 import DataTableServer from '../../components/table/DataTableServer';
 import { op_title, op_subtitle_no_asso, get_cohorts_cols_list, get_cohorts_col_groups_list, Header2Cards, internal_publication_link, internal_platform_link, internal_tissue_link, no_entry_found, element_icon, display_cohort } from '../../components/Common';
-import { consoleDev, scoresBadge, loading_data, add_s_when_plural, ToggleDiv } from '../../components/Generic';
+import { consoleDev, scoresBadge, phenotypesBadge, loading_data, add_s_when_plural, ToggleDiv } from '../../components/Generic';
 import AncestryLegend from '../../components/ancestry/AncestryLegend';
+import Href from '../../components/Href';
 import { DownloadList, get_download_list } from '../../components/Downloads';
+import { Table } from 'react-bootstrap-icons';
 // import Href from '../../components/Href';
 // import { ExpandableDownloadButton, get_download_list } from '../../../components/Downloads';
 
@@ -30,6 +33,10 @@ function Dataset() {
     const metric_sortable_status = false;
 
     const training_suffix = '__training';
+
+    const phewas_endpoint_url = 'score/phenotype/search?opd_id='+opd_id;
+    const phewas_column_keys = ['score__id','sample__sample_number','fdr'];
+
 
     const fetchDatasetData = async () => {
         consoleDev(element+'/'+opd_id)
@@ -58,7 +65,7 @@ function Dataset() {
             )
         }
     }
-
+ 
 
     const get_information_left_content = () => {
         return (
@@ -69,7 +76,8 @@ function Dataset() {
                 <tr><td>Tissue </td><td>{internal_tissue_link(datasetData.tissue, 1)}</td></tr>
                 <tr><td>Method</td><td>{datasetData.method_name}</td></tr>
                 { cohortsList ? <tr><td>Cohort{add_s_when_plural(Object.keys(cohortsList).length)}</td><td>{cohorts_list(cohortsTrainingList,'Training')}{cohorts_list(cohortsValidationList,'Validation')}</td></tr>: ''}
-                <tr><td>Number of scores</td><td>{scoresBadge(datasetData.scores_count)}</td></tr>
+                <tr><td>Number of scores</td><td>{scoresBadge(datasetData.scores_count)}<span className='ps-3'><Href href="#linked_scores" text="See linked Scores" icon={<Table/>}/></span></td></tr>
+                <tr><td>Number of phenotypes</td><td>{phenotypesBadge(datasetData.phenotypes_count)}{datasetData.phenotypes_count != 0 ? <span className='ps-3'><Href href="#linked_phewas_data" text="See linked Phenotypes" icon={<Table/>}/></span>:''}</td></tr>
                 <tr><td>Terms & Licenses</td><td>{datasetData.license}</td></tr>
             </>
         )
@@ -82,12 +90,12 @@ function Dataset() {
         consoleDev(download_urls)
         if (Object.keys(download_urls).length > 0) {
             return (
-                <tr><td className='op_header_info_no_col' colSpan="2"><DownloadList urls={download_urls}/></td></tr>
+                <tr><td className='op_header_info_no_col p-0' colSpan="2"><DownloadList urls={download_urls}/></td></tr>
             )
         }
         else {
             return (
-                <tr><td className='op_header_info_no_col' colSpan="2">No downloads available</td></tr>
+                <tr><td className='op_header_info_no_col p-0' colSpan="2">No downloads available</td></tr>
             ) 
         }
     }
@@ -308,21 +316,19 @@ function Dataset() {
                         <AncestryLegend />
                     </div>
                     <div className='table_container'>
-                        <DataTableServer key={'scores'} url_suffix={scoreDataEndpoint} columns={scoreTableColumns} groups={scoreTableColumnGroups}/>
+                        <DataTableServer key='scores' url_suffix={scoreDataEndpoint} columns={scoreTableColumns} groups={scoreTableColumnGroups}/>
                     </div>
                 </div> : ''
             }
-            {/*{ datasetData ?
-                <div className='d-flex mt-3'>
-                    <div>
-                        { datasetsData && publicationData.id ? datasetsData.map((dataset, index) => <PlatformTable key={index+'_'+dataset.name+'_'+dataset.platform.name+"_platform_table"} data={dataset} opp_id={publicationData.id} />):''}
+            {/* Phenotypes */}
+            { datasetData && datasetData.phenotypes_count != 0 ?
+                <div className='mt-5'>
+                    {op_subtitle_no_asso('phenotype','Linked PheWAS data', datasetData.phenotypes_count)}
+                    <div className='table_container'>
+                        <DataTableServer key='phenotypes' url_suffix={phewas_endpoint_url} columns={phenotype_dataset_cols} col_for_ids={phewas_column_keys} hidden_columns={['sample__ancestry_broad']}/>
                     </div>
-                </div>
-                : loading_data()
-            } */}
-            {/* <div className='table_container'>
-                <DataTableServer key={'scores'} url_suffix={platformDataEndpoint} columns={platformTableColumns} groups={platformTableColumnGroups}/>
-            </div> */}
+                </div> : ''
+            }
         </>
     )
 }

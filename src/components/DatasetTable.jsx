@@ -21,7 +21,7 @@ const DatasetTable = (props) => {
             <div className='d-flex mb-3'>
                 <AncestryLegend />
             </div>
-            <DataTable data={dataset} columns={dataset_columns} groups={dataset_column_groups} hidden_columns={{samples: false}}/>
+            <DataTable data={dataset} columns={dataset_columns} groups={dataset_column_groups}/>
         </div>
     )
 };

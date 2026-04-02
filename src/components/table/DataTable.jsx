@@ -10,9 +10,12 @@ const DataTable = (props) => {
         initial_sorting = { field: props.sorting, sort: 'asc' }
     }
 
+    // Format expected: [<col_1_name>,<col_2_name>]
     let initial_hidden_columns = {};
     if (props.hidden_columns) {
-        initial_hidden_columns = props.hidden_columns;
+        for (let i=0; i < props.hidden_columns.length; i++) {
+            initial_hidden_columns[props.hidden_columns[i]] = false;
+        }
     }
 
     const row_height_settings = 'auto';
@@ -79,7 +82,6 @@ const DataTable = (props) => {
                     // sx={{ '--DataGrid-overlayHeight': '200px' }}
                     getRowClassName={(params) => params.row.evaluation_type && params.row.evaluation_type == 'Training' ? 'training_row':''} // Highlight the training rows
                     ignoreDiacritics // Ignore accents for quick search
-                    // columnVisibilityModel={initial_hidden_columns}
                     showToolbar
                     sortingOrder={['asc','desc']}
                     initialState={{

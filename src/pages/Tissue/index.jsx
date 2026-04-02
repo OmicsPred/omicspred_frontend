@@ -4,7 +4,7 @@ import FormLabel from '@mui/material/FormLabel';
 import { Sliders } from 'react-bootstrap-icons';
 import Href from '../../components/Href';
 import restApiCall from '../../components/RestAPI';
-import { op_title, op_subtitle, HeaderCard, display_tissue_description, no_entry_found, molecular_trait_types, ancestry_labels, stages_list } from '../../components/Common';
+import { op_title, op_subtitle, HeaderCard, display_efo_description, no_entry_found, molecular_trait_types, ancestry_labels, stages_list } from '../../components/Common';
 import { ToggleCard, ToggleID, scoresBadge, loading_data } from '../../components/Generic';
 import AncestryLegend from '../../components/ancestry/AncestryLegend';
 import { scores_columns_for_tissue } from '../../components/table/columns/scores';
@@ -94,7 +94,7 @@ function Tissue() {
 					<tr><td>Identifier</td><td><Href href={tissueData.url} text={tissueData.id}/></td></tr>:''
 				}
 				{ tissueData.description && tissueData.description != '[]' ?
-					<tr><td>Description</td><td>{display_tissue_description(tissueData.description)}</td></tr>:''
+					<tr><td>Description</td><td>{display_efo_description(tissueData.description)}</td></tr>:''
 				}
                 <tr><td># Score{tissueData.scores_count > 1 ? 's' : ''}</td><td>{scoresBadge(tissueData.scores_count)}</td></tr>
 			</>
