@@ -105,6 +105,28 @@ export const ancestry_cols = {
             return row.sample.ancestry_broad;
         }
     },
+    'ancestries': {
+        field: 'ancestries',
+        headerName: 'Ancestry',
+        width: 200,
+        renderCell: (params) => {
+            const samples = params.row.samples;
+            let ancestries = {}
+            for (let i=0; i<samples.length; i++) {
+                const ancestry = samples[i].ancestry_broad;
+                const ancestry_label = get_ancestry_name(ancestry);
+                ancestries[ancestry_label] = ancestry
+            }
+            // const anc_display = Object.keys(ancestries).map((anc_label) => <><span className={'me-2 align-middle anc_label anc_'+anc_label} title={ anc_label == 'MAO' &&  ancestries[anc_label] != 'Multi-ancestry' ? 'Multi-ancestry': ancestries[anc_label]} style={{lineHeight:"16px",marginBottom:"1px"}}></span><span className='align-middle'>{ancestries[anc_label]}</span></>);
+            // return anc_display.join(', ')
+            return Object.keys(ancestries).map((anc_label) => <span key={anc_label}><span className={'me-2 align-middle anc_label anc_'+anc_label} title={ anc_label == 'MAO' &&  ancestries[anc_label] != 'Multi-ancestry' ? 'Multi-ancestry': ancestries[anc_label]} style={{lineHeight:"16px",marginBottom:"1px"}}></span><span className='align-middle'>{ancestries[anc_label]}</span></span>);
+
+        },
+        valueGetter: (value, row) => {
+            const ancestries = row.samples.map((sample) => sample.ancestry_broad);
+            return ancestries.join(', ');
+        }
+    },
     'ancestry_training': {
         field: 'ancestry_training',
         headerName: 'Training',

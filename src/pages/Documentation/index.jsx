@@ -197,7 +197,7 @@ const documentation_op = {
                 <div>
                     <div className='mb-2'>A list of data used to evaluate the association between a Genetic Score and a phenotype</div>
                     <ul className='mb-0'>
-                        <li key="r2"><span className='fw-bold'><>R<sup>2</sup></></span>: Proportion of the variance explained.</li>
+                        {/* <li key="r2"><span className='fw-bold'><>R<sup>2</sup></></span>: Proportion of the variance explained.</li> */}
                         <li key="hr"><span className='fw-bold'>HR</span>: Hazard Ratio with confidence interval.</li>
                         <li key="z-score"><span className='fw-bold'>Z-score</span> or Standard score.</li>
                         <li key="p-value"><span className='fw-bold'>P-value</span></li>

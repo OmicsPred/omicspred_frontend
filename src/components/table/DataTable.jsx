@@ -41,7 +41,14 @@ const DataTable = (props) => {
                 const cols = ids[i].split('__');
                 let additional_key = '';
                 if (cols.length == 2) {
-                    additional_key = String(row[cols[0]][cols[1]]);
+                    const col_suffix = '_LIST';
+                    if (cols[0].endsWith(col_suffix)) {
+                        const col = cols[0].replace(col_suffix,'');
+                        additional_key = String(row[col][0][cols[1]]);
+                    }
+                    else {
+                        additional_key = String(row[cols[0]][cols[1]]);
+                    }
                 }
                 else {
                     additional_key = String(row[cols[0]]);
