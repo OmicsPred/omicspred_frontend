@@ -35,7 +35,7 @@ function Dataset() {
     const training_suffix = '__training';
 
     const phewas_endpoint_url = 'score/phenotype/search?opd_id='+opd_id;
-    const phewas_column_keys = ['score__id','sample__sample_number','fdr'];
+    const phewas_column_keys = ['score__id','phenotypes_LIST__id','samples_LIST__sample_number','data_values__FDR'];
 
 
     const fetchDatasetData = async () => {
@@ -325,7 +325,7 @@ function Dataset() {
                 <div className='mt-5'>
                     {op_subtitle_no_asso('phenotype','Linked PheWAS data', datasetData.phenotypes_count)}
                     <div className='table_container'>
-                        <DataTableServer key='phenotypes' url_suffix={phewas_endpoint_url} columns={phenotype_dataset_cols} col_for_ids={phewas_column_keys} hidden_columns={['sample__ancestry_broad']}/>
+                        <DataTableServer key='phenotypes' url_suffix={phewas_endpoint_url} columns={phenotype_dataset_cols} col_for_ids={phewas_column_keys} hidden_columns={['sample__ancestry_broad','var_gene_exp']}/>
                     </div>
                 </div> : ''
             }

@@ -392,10 +392,17 @@ export const common_cols = {
         minWidth: 220,
         // flex: 0.8,
         renderCell: (params) => {
-            const opp_id = params.row.publication.id;
-            const firstauthor = params.row.publication.firstauthor;
-            const journal = params.row.publication.journal;
-            const year = params.row.publication.date_publication.split('-')[0];
+            let publication = undefined;
+            if (params.row.score) {
+                publication = params.row.score.publication;
+            }
+            else {
+                publication = params.row.publication;
+            }
+            const opp_id = publication.id;
+            const firstauthor = publication.firstauthor;
+            const journal = publication.journal;
+            const year = publication.date_publication.split('-')[0];
             return (
                 <div>
                     <Href href={"/publication/"+opp_id} text={opp_id}/>
@@ -403,7 +410,14 @@ export const common_cols = {
                 </div>
             )
         },
-        valueGetter: (value, row) => { return row.publication.id }
+        valueGetter: (value, row) => {
+            if (row.score) {
+                return row.score.publication.id
+            }
+            else {
+                return row.publication.id
+            }
+        }
     },
     'scoring_file': {
         field: 'scoring_file',
@@ -1137,7 +1151,7 @@ export const common_data_cols = {
     'fdr': {
         field: 'fdr',
         headerName: 'FDR',
-        description: 'Significant False Discovery Rate (FDR) adjusted P-value (FDR < 0.05)',
+        description: 'Significant False Discovery Rate (FDR) adjusted p-value (FDR < 0.05)',
         width: 100,
         valueGetter: (value, row) => {
             if (row.data_values) {
@@ -1182,7 +1196,7 @@ export const common_data_cols = {
     'bonferroni' : {
         field: 'bonferroni',
         headerName: 'Bonferroni',
-        // description: 'Bonferroni',
+        description: 'Bonferroni adjusted p-value',
         width: 100,
         valueGetter: (value, row) => {
             if (row.data_values) {
@@ -1211,7 +1225,7 @@ export const common_data_cols = {
     },
     'var_gene_exp' : {
         field: 'var_gene_exp',
-        headerName: 'Variant Gene Exp',
+        headerName: 'Variance of Gene Expression',
         description: 'Represents the estimated variance of the genetically predicted gene expression (or splicing)',
         width: 100,
         valueGetter: (value, row) => {
@@ -1223,10 +1237,7 @@ export const common_data_cols = {
             }
             return default_cell_value;
         }
-    },
-                // "bonferroni": 0.705247659922332,
-                // "effect_size": -0.0406449860833116,
-                // "var_gene_exp": 0.595037987945459
+    }
 }
 
 

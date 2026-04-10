@@ -73,7 +73,14 @@ const DataTableServer = (props) => {
             for (let i=0; i<ids.length; i++) {
                 const cols = ids[i].split('__');
                 if (cols.length == 2) {
-                    row_key = row_key+'_'+row[cols[0]][cols[1]];
+                    const col_suffix = '_LIST';
+                    if (cols[0].endsWith(col_suffix)) {
+                        const col = cols[0].replace(col_suffix,'');
+                        row_key = row_key+'_'+row[col][0][cols[1]];
+                    }
+                    else {
+                        row_key = row_key+'_'+row[cols[0]][cols[1]];
+                    }
                 }
                 else {
                     row_key = row_key+'_'+row[cols[0]];
