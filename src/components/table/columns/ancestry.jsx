@@ -94,7 +94,7 @@ export const ancestry_cols = {
     'ancestry': {
         field: 'ancestry',
         headerName: 'Ancestry',
-        width: 200,
+        width: 175,
         renderCell: (params) => {
             const ancestry = params.row.sample.ancestry_broad;
             const ancestry_label = get_ancestry_name(ancestry);
@@ -108,7 +108,7 @@ export const ancestry_cols = {
     'ancestries': {
         field: 'ancestries',
         headerName: 'Ancestry',
-        width: 200,
+        width: 150,
         renderCell: (params) => {
             const samples = params.row.samples;
             let ancestries = {}

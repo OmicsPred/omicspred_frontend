@@ -1,5 +1,5 @@
 import Href from "../../../components/Href"
-import { numberBadge, scoresBadge, add_s_when_plural } from '../../../components/Generic';
+import { numberBadge, scoresBadge, add_s_when_plural, phewasBadge } from '../../../components/Generic';
 import { element_icon } from '../../../components/Common';
 import OmicsList from "./OmicsList"
 import MolecularTraits from './MolecularTraits';
@@ -47,9 +47,9 @@ export default function ResultCard(props) {
         result_id = data.id;
     }
 
-    if (props.type == 'phenotype'){
-        url_id = url_id.replace('.','_');
-    }
+    // if (props.type == 'phenotype'){
+    //     url_id = url_id.replace('.','_');
+    // }
 
     if (data.platform_name) {
         data.platform_name.sort();
@@ -142,7 +142,8 @@ export default function ResultCard(props) {
                                         { result_id == data.name && data.id ? <li><span className="line_key">{index2id[props.type]}</span>{data.id}{get_source_name(data)}{display_phenotype_category()}</li> : '' }
                                         { result_id == data.id && data.name ? <li><span className="line_key">Name</span>{data.name}</li> : '' }
                                         { props.type == 'pathway' ? display_molecular_trait_counts(data) : ''}
-                                        { data.scores_count && data.scores_count ? <li><span className="line_key">Scores count</span>{scoresBadge(data.scores_count)}</li>:'' }
+                                        { data.scores_count && data.scores_count > 0 ? <li><span className="line_key">Scores count</span>{scoresBadge(data.scores_count)}</li>:'' }
+                                        { data.phewas_count && data.phewas_count > 0 ? <li><span className="line_key">PheWAS associations</span>{phewasBadge(data.phewas_count)}</li>:'' }
                                         { omics_types && omics_types.length > 0 ? <li><span className="line_key">Omics type{omics_types.length > 1 && 's'}</span><OmicsList omics={omics_types} key_prefix={result_id}/></li> : '' }
                                         { data.platform_name && data.platform_name.length > 0 ? <li><span className="line_key">Platform{data.platform_name.length > 1 && 's'}</span>{display_platforms_list(data.platform_name)}</li> : '' }
                                     </ul>

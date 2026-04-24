@@ -3,7 +3,6 @@ import Header from "./components/Header"
 import Stats from "./components/Stats"
 import About from "./components/About"
 import Platforms from "./components/Platforms"
-import Applications from "./components/Applications"
 import DataDownloads from "./components/DataDownloads"
 import Feedback from "./components/Feedback"
 import Citation from "./components/Citation"
@@ -18,10 +17,9 @@ const Home = () => {
             <Stats/>
             <About/>
             <Platforms/>
-            <Applications/>
             <DataDownloads/>
-            <Feedback/>
             <Citation/>
+            <Feedback/>
             <Supports/>
         </>
     );

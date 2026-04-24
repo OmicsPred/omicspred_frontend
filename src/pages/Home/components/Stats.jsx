@@ -11,7 +11,8 @@ const Stats = () => {
     const [scoresCount, setScoresCount] = useState(0);
     const [platformsCount, setPlatformsCount] = useState(0);
     const [publicationsCount, setPublicationsCount] = useState(0);
-    const [phenotypeAssoCount, setPhenotypeAssoCount] = useState(0);
+    const [pheWASCount, setPheWASCount] = useState(0);
+    const [phenotypeCount, setPhenotypeCount] = useState(0);
     const [pathwaysCount, setPathwaysCount] = useState(0);
     const [tissuesCount, setTissuesCount] = useState(0);
 
@@ -27,7 +28,8 @@ const Stats = () => {
         const data = await restApiCall('info');
         if (data) {
             const count_data = data.data_count;
-            setPhenotypeAssoCount(count_data.phenotype_associations);
+            setPheWASCount(count_data.phewas);
+            setPhenotypeCount(count_data.phenotypes)
             setPathwaysCount(count_data.pathways);
             setScoresCount(count_data.scores);
             setTissuesCount(count_data.tissues);
@@ -124,7 +126,9 @@ const Stats = () => {
                     <div className='d-flex flex-column'>
                         <h5 className='mt-2 mb-4'>{project_name} data summary</h5>
                         <div className='op_stats2'>
-                            { phenotypeAssoCount && phenotypeAssoCount > 0 ? display_count_block('Phenotype associations',phenotypeAssoCount,'/phenotypes','phenotype') : ''}
+                            { phenotypeCount && phenotypeCount > 0 ? display_count_block('Phenotypes',phenotypeCount,'/phenotypes','phenotype') : ''}
+                            { pheWASCount && pheWASCount > 0 ? display_count_block('PheWAS associations',pheWASCount,'/phewas','phenotype') : ''}
+                            <hr className='mt-0' style={{marginBottom:'0.75rem'}}/>
                             { pathwaysCount && pathwaysCount > 0 ? display_count_block('Pathways',pathwaysCount,'/pathways') : ''}
                             { platformsCount && platformsCount > 0 ? display_count_block('Platforms',platformsCount,'/platforms') : ''}
                             { datasetsCount && datasetsCount > 0 ? display_count_block('Datasets',datasetsCount,'/datasets') : ''}

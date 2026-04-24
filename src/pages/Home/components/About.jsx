@@ -16,7 +16,7 @@ const About = () => {
                     <ul>
                         <li><Href href='/scores' text='Genetic prediction models'/> of multi-omic traits, and links to.</li>
                         <li>Methodological details, validation metrics, and <Href href='/publications' text='links to source studies'/>.</li>
-                        <li>Summary statistics of <Href href='/applications/phenotype/full' text='trait–disease associations'/>, primarily generated using these multi-omic scores.</li>
+                        <li>Summary statistics of <Href href='/applications/phewas' text='trait–disease associations'/> (PheWAS), primarily generated using these multi-omic scores.</li>
                     </ul>
                 </div>
             </div>

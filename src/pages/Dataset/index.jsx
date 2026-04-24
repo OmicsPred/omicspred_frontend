@@ -8,7 +8,7 @@ import { transcriptomics_dataset_columns } from '../../components/table/columns/
 import { phenotype_dataset_cols } from '../../components/table/columns/phenotype';
 import DataTableServer from '../../components/table/DataTableServer';
 import { op_title, op_subtitle_no_asso, get_cohorts_cols_list, get_cohorts_col_groups_list, Header2Cards, internal_publication_link, internal_platform_link, internal_tissue_link, no_entry_found, element_icon, display_cohort } from '../../components/Common';
-import { consoleDev, scoresBadge, phenotypesBadge, loading_data, add_s_when_plural, ToggleDiv } from '../../components/Generic';
+import { consoleDev, scoresBadge, phewasBadge, loading_data, add_s_when_plural, ToggleDiv } from '../../components/Generic';
 import AncestryLegend from '../../components/ancestry/AncestryLegend';
 import Href from '../../components/Href';
 import { DownloadList, get_download_list } from '../../components/Downloads';
@@ -34,7 +34,7 @@ function Dataset() {
 
     const training_suffix = '__training';
 
-    const phewas_endpoint_url = 'score/phenotype/search?opd_id='+opd_id;
+    const phewas_endpoint_url = 'score/phewas/search?opd_id='+opd_id;
     const phewas_column_keys = ['score__id','phenotypes_LIST__id','samples_LIST__sample_number','data_values__FDR'];
 
 
@@ -77,7 +77,7 @@ function Dataset() {
                 <tr><td>Method</td><td>{datasetData.method_name}</td></tr>
                 { cohortsList ? <tr><td>Cohort{add_s_when_plural(Object.keys(cohortsList).length)}</td><td>{cohorts_list(cohortsTrainingList,'Training')}{cohorts_list(cohortsValidationList,'Validation')}</td></tr>: ''}
                 <tr><td>Number of scores</td><td>{scoresBadge(datasetData.scores_count)}<span className='ps-3'><Href href="#linked_scores" text="See linked Scores" icon={<Table/>}/></span></td></tr>
-                <tr><td>Number of phenotypes</td><td>{phenotypesBadge(datasetData.phenotypes_count)}{datasetData.phenotypes_count != 0 ? <span className='ps-3'><Href href="#linked_phewas_data" text="See linked Phenotypes" icon={<Table/>}/></span>:''}</td></tr>
+                <tr><td>Number of linked PheWAS</td><td>{phewasBadge(datasetData.phewas_count)}{datasetData.phewas_count != 0 ? <span className='ps-3'><Href href="#linked_phewas_data" text="See linked PheWAS" icon={<Table/>}/></span>:''}</td></tr>
                 <tr><td>Terms & Licenses</td><td>{datasetData.license}</td></tr>
             </>
         )
@@ -321,11 +321,11 @@ function Dataset() {
                 </div> : ''
             }
             {/* Phenotypes */}
-            { datasetData && datasetData.phenotypes_count != 0 ?
+            { datasetData && datasetData.phewas_count != 0 ?
                 <div className='mt-5'>
-                    {op_subtitle_no_asso('phenotype','Linked PheWAS data', datasetData.phenotypes_count)}
+                    {op_subtitle_no_asso('phenotype','Linked PheWAS data', datasetData.phewas_count)}
                     <div className='table_container'>
-                        <DataTableServer key='phenotypes' url_suffix={phewas_endpoint_url} columns={phenotype_dataset_cols} col_for_ids={phewas_column_keys} hidden_columns={['sample__ancestry_broad','var_gene_exp']}/>
+                        <DataTableServer key='phenotypes' url_suffix={phewas_endpoint_url} columns={phenotype_dataset_cols} col_for_ids={phewas_column_keys} hidden_columns={['samples__ancestry_broad','z-score','var_gene_exp']}/>
                     </div>
                 </div> : ''
             }

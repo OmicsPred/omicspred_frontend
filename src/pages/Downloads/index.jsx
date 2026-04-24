@@ -1,14 +1,15 @@
 import { ChevronRight, CodeSlash } from 'react-bootstrap-icons';
 import DataTableFromRestApi from "../../components/table/DataTableFromRestApi";
-import { datasets_columns } from "../../components/table/columns/datasets";
+import { datasets_columns, datasets_phewas_columns } from "../../components/table/columns/datasets";
 import Href from '../../components/Href';
 import { PageTitleSimple, TableOfContent, op_subtitle_no_asso } from '../../components/Common';
 import { Note, ToggleDiv } from '../../components/Generic';
-import { download_labels, download_applications_labels } from '../../components/Downloads';
+import { download_labels } from '../../components/Downloads';
 
 
 function Downloads() {
     const url_suffix = 'dataset/all';
+    const url_suffix_phewas = 'dataset/all?only_phewas=1';
 
     const project_name = process.env.PROJECT_NAME
 
@@ -45,6 +46,7 @@ function Downloads() {
                                 <div>"covariance": "{box_prefix}3ag9r684h83riq093g7oc8916dicjud9",</div>
                                 <div>"gwas_sumstats": "{box_prefix}u3flbp13zjydegrxjb2uepagp1vb6bj2",</div>
                                 <div>"metadata": "{box_prefix}anwpkxcpaixbfj67vd6odzqbsb7rk8a8",</div>
+                                <div>"phewas": "{box_prefix}u4gq3qypwley3m0wfduuisrou3ij0iso",</div>
                                 <div>"predictdb": "{box_prefix}06ugvdomcsalytpuocbywn60qvibcyl4",</div>
                                 <div>"scoring_files": "{box_prefix}z86fg93jg5gwdmmu4xn6u287mre2g5o7",</div>
                                 <div>"score_variant_info": "{box_prefix}eac8psw30dxh9evwu9z0bj8hncru2ioa",</div>
@@ -94,26 +96,32 @@ function Downloads() {
                     <li><span className='line_key'>{download_labels['predictdb']['icon']} PredictDB SQLite</span>SQLite database compatible with the <Href text='PredictDB' href='https://predictdb.org/'/> prediction weights format.</li>
                     <li><span className='line_key'>{download_labels['covariance']['icon']} Covariance</span>Covariance file to be used with the <Href text='PredictDB' href='https://predictdb.org/'/> SQLite databases in <Href text='MetaXcan' href='https://github.com/hakyimlab/MetaXcan'/> set of tools (PrediXcan, SPrediXcan, MultiXcan and SMultiXcan).</li>
                     <li><span className='line_key'>{download_labels['metadata']['icon']} Metadata</span>Excel spreadsheet containing the metadata of the dataset (Publication, Scores, Samples, Performances and Cohort(s)).</li>
+                    {/* <li><span className='line_key'>{download_labels['phewas']['icon']} PheWAS</span>Tab-delimited file containing Phenome-wide association studies information linked to {project_name} Genetic Scores. It only contains the significant associations (FDR Adjusted P-value&lt;0.05)</li> */}
                     <li><span className='line_key'>{download_labels['validation_results']['icon']} Validation results</span>CSV file containing the metadata information and performance metrics associated with each genetic score.</li>
                     <li><span className='line_key'>{download_labels['score_variant_info']['icon']} Score variant information</span>CSV file containing information (rsID, location, alleles) about each variant retained in the dataset.</li>
                     <li><span className='line_key'>{download_labels['gwas_sumstats']['icon']} GWAS summary stats</span>List of GWAS summary stats files used to build the genetic score models.</li>
                 </ul>
 
-                <p>The data files are publicly accessible on the <Href href={process.env.URL_DOWNLOADS} text={<>Box<sup>TM</sup></>}/> platform.</p>
+                <p>The data files are publicly accessible on the <Href href={process.env.URL_DOWNLOADS} text={<>Box<sup>TM</sup></>}/> platform (this includes the PheWAS data files listed at the bottom of the page).</p>
 
                 <div className='mb-3'>
                     <Note msg={file_links_in_rest_api_endpoint()}/>
                 </div>
 
-                <h6 className='mt-4 mb-3'><b>Data files availability by dataset:</b></h6>
+                <h6 className='mt-4 mb-3' id='data_files'><b>Data files availability by dataset:</b></h6>
                 <div className='mt-2'>
                     <DataTableFromRestApi table_key="datasets" url_suffix={url_suffix} columns={datasets_columns} col_for_ids={dataset_cols_ids} expanded_search="1"/>
                 </div>
             </div>
 
             <div className='mt-5' id='phewas_associations'>
-               {op_subtitle_no_asso('hl','PheWAS associations')}
-                <ul className='expanded mt-3'>
+                {op_subtitle_no_asso('hl','PheWAS associations')}
+                <h6 className='mt-4 mb-3'>Tab-delimited files containing Phenome-wide association studies information linked to {project_name} Genetic Scores. It only contains the significant associations (FDR Adjusted P-value&lt;0.05)</h6>
+                <h6 className='mt-4 mb-3' id='data_files'><b>Downloadable data files by dataset:</b></h6>
+                <div>
+                    <DataTableFromRestApi table_key="datasets_phewas" url_suffix={url_suffix_phewas} columns={datasets_phewas_columns} col_for_ids={dataset_cols_ids} expanded_search="1"/>
+                </div>
+                {/* <ul className='expanded mt-3'>
                     { Object.keys(download_applications_labels).map((type) =>
                         <li key={type}>
                             <a href={download_applications_labels[type]['url']} title={download_applications_labels[type]['title']} target="_blank">
@@ -121,7 +129,7 @@ function Downloads() {
                             </a><span className='align-middle'>: {download_applications_labels[type]['desc']}</span>
                         </li>)
                     }
-                </ul>
+                </ul> */}
             </div>
         </div>
     )

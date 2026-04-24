@@ -144,13 +144,15 @@ export const url_tooltip = (type) => {
 // Main pages (Browse, all Phenotypes and individual Cohort)
 export const PageTitle = (props) => {
     const type = props.type;
+    const type_label = type.toLowerCase().endsWith('s') ? type : type+'s';
     const category = props.category;
-    const label = props.label ? props.label : type+'s';
+    const label = props.label ? props.label : type_label;
+    // const label = props.label ? props.label.toLowerCase() : type.toLowerCase()+'s';
     const count = props.count;
 
     const label_uc = firstLetterUc(label);
 
-    let color_class = 'color_'+type;
+    let color_class = 'color_'+type.toLowerCase();
     let prefix = '';
 
     if (category == 'Browse') {
@@ -158,7 +160,7 @@ export const PageTitle = (props) => {
             case 'datasets':
                 prefix = <LayersFill className={'op_title_prefix '+color_class}/>
                 break;
-            case 'scores'|'score':
+            case 'Genetic Scores':
                 prefix = <ClipboardData className={'op_title_prefix '+color_class}/>
                 break;
             case 'pathways':
@@ -178,12 +180,13 @@ export const PageTitle = (props) => {
                 break;
         }
     }
-    else if (type == 'phenotype') {
+    else if (type == 'phenotype' || type.toLowerCase() == 'phewas') {
         prefix = <PersonArmsUp className={'op_title_prefix '+color_class}/>
     }
     else if (category == 'Cohort') {
         prefix = <PeopleFill className={'op_title_prefix '+color_class}/>
     }
+
     return (
         <>
             <DocumentHead title={props.title} description={props.desc}/>
@@ -191,7 +194,7 @@ export const PageTitle = (props) => {
                 {prefix}<span>{category}</span>
                 <ChevronRight className={'op_title_separator '+color_class}/>
                 <span>{label_uc}{count ? <span className="badge rounded-pill badge-op-sm ms-3">{thousandifyNumber(count)}</span>:''}</span>
-            </h2>
+           </h2>
         </>
     )
 }

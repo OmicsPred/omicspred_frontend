@@ -16,6 +16,7 @@ import Pathway from "../pages/Pathway";
 import Pathways from "../pages/Browse/Pathways";
 import Phenotype from "../pages/Phenotype";
 import Phenotypes from "../pages/Browse/Phenotypes";
+import PheWAS from "../pages/Browse/PheWAS";
 import PhenotypeOld from "../pages/Applications/Phenotype";
 import PhenotypesFull from "../pages/Applications/PhenotypesFull";
 import PhenotypesSum from "../pages/Applications/PhenotypesSum";
@@ -65,6 +66,7 @@ function OpRouters() {
                 <Route path="/scores" element={<Scores />} />
                 <Route path="/tissues" element={<Tissues />} />
                 <Route path="/phenotypes" element={<Phenotypes />} />
+                <Route path="/phewas" element={<PheWAS />} />
                 <Route path="/applications/phenotype/full" element={<PhenotypesFull />} />
                 <Route path="/applications/phenotype/sum" element={<PhenotypesSum />} />
                 

@@ -39,6 +39,11 @@ export const download_labels = {
         "title": "Download Excel spreadsheet",
         "icon": <FileEarmarkSpreadsheet className="hl_color" size={icon_size}/>
     },
+    "phewas": {
+        "label": "PheWAS",
+        "title": "Download PheWAS compressed text file",
+        "icon": <FileEarmarkZip className="hl_color" size={icon_size}/>
+    },
     "validation_results": {
         "label": "Validation results",
         "title": "Download CSV file",

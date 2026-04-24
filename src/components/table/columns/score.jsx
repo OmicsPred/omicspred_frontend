@@ -35,7 +35,7 @@ const score_cols = {
     'cohort': {
         field: 'cohort_label',
         headerName: 'Cohort',
-        width: 200,
+        width: 180,
         renderCell: (params) => {
             const cohort = params.row.sample.cohorts[0];
             return display_cohort(cohort);
@@ -49,7 +49,7 @@ const score_cols = {
         field: 'sample__sample_number',
         headerName: 'Sample size',
         type: 'number',
-        width: 120,
+        width: 100,
         renderCell: (params) => {
             return participantsBadge(params.row.sample.sample_number);
         },
@@ -60,7 +60,7 @@ const score_cols = {
     'study_type': {
         field: 'eval_type',
         headerName: 'Study stage',
-        width: 180,
+        width: 160,
         renderCell: (params) => {
             const stype = params.row.evaluation_type;
             if (stype == 'Training') {
@@ -95,7 +95,7 @@ const score_cols = {
     'variant_match_rate': {
         field: 'variant_match_rate',
         headerName: match_rate_col,
-        width: 120,
+        width: 100,
         valueGetter: (value, row) => {
             return metric_valueGetter(row.performance_metrics,match_rate_col,row.evaluation_type);
         }
@@ -103,7 +103,7 @@ const score_cols = {
     'missing_rate': {
         field: 'missing_rate',
         headerName: 'Missing Rate',
-        width: 120,
+        width: 105,
         valueGetter: (value, row) => {
             return metric_valueGetter(row.performance_metrics,'Missing Rate',row.evaluation_type);
         }
