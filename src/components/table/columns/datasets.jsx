@@ -3,7 +3,7 @@ import { FileEarmarkArrowDown, Stack, People, GraphUp, LayersFill } from 'react-
 import { common_cols, common_column_groups } from './common';
 import { ancestry_cols } from './ancestry';
 import { download_labels, ExpandableDownloadButton, get_download_list } from '../../Downloads';
-import { ToggleDiv, TooltipText, phenotypesBadge } from '../../Generic';
+import { ToggleDiv, TooltipText, phewasBadge } from '../../Generic';
 import { internal_dataset_link } from '../../Common';
 import { SampleTable } from '../../Sample';
 import Href from '../../Href';
@@ -80,7 +80,7 @@ const columns_for_dataset = {
         headerName: 'Samples',
         minWidth: 320,
         sortable: false,
-        flex: 1,
+        // flex: 1,
         renderCell: (params) => {
             if (params.row.samples_training || params.row.samples_validation) {
                 const sample_key = params.row.name+'_'+params.row.publication.pmid;
@@ -93,23 +93,23 @@ const columns_for_dataset = {
             }
         }
     },
-    'phenotypes_count': {
-        field: 'phenotypes_count',
+    'phewas_count': {
+        field: 'phewas_count',
         headerName: 'PheWAS Asso.',
         description: 'Number of PheWAS associations in the dataset',
         type: 'number',
         minWidth: 120,
         align: 'right',
         renderCell: (params) => {
-            const phenotypes_count = params.row.phenotypes_count
-            if (phenotypes_count && phenotypes_count != 0) {
-                return phenotypesBadge(phenotypes_count,1);
+            const phewas_count = params.row.phewas_count
+            if (phewas_count && phewas_count != 0) {
+                return phewasBadge(phewas_count,1);
             }
             else {
                 return default_cell_value;
             }
         },
-        valueGetter:  (value, row) => { return row.phenotypes_count }
+        valueGetter:  (value, row) => { return row.phewas_count }
     },
     'plot_link': {
         field: 'plots',
@@ -139,9 +139,9 @@ const columns_for_dataset = {
     'downloads_links': {
         field: 'downloads',
         headerName: 'Genetic Scores Downloads',
-        minWidth: 320,
+        minWidth: 300,
         sortable: false,
-        flex: 1,
+        // flex: 1,
         renderCell: (params) => {
             if (params.row.scoring_files_urls) {
                 if (Object.keys(params.row.scoring_files_urls).length > 0) {
@@ -151,13 +151,8 @@ const columns_for_dataset = {
             }
             return default_cell_value;
         }
-    }
-}
-
-
-export const datasets_columns = [
-    common_cols['publication'],
-    {
+    },
+    'platform': {
         field: 'platform',
         minWidth: 130,
         flex: 1,
@@ -175,6 +170,12 @@ export const datasets_columns = [
         },
         valueGetter:  (value, row) => { return row.platform.name }
     },
+}
+
+
+export const datasets_columns = [
+    common_cols['publication'],
+    columns_for_dataset['platform'],
     common_cols['platform_type'],
     common_cols['tissue_label'],
     common_cols['dataset_id'],
@@ -182,7 +183,7 @@ export const datasets_columns = [
     {
         field: 'scoring_files',
         headerName: 'Scoring files',
-        minWidth: 120,
+        minWidth: 110,
         flex: 0.5,
         align: 'right',
         renderCell: (params) => {
@@ -235,7 +236,7 @@ export const datasets_columns = [
     {
         field: 'metadata',
         headerName: 'Metadata',
-        minWidth: 100,
+        minWidth: 80,
         flex: 0.5,
         align: 'right',
         renderCell: (params) => {
@@ -252,7 +253,7 @@ export const datasets_columns = [
     {
         field: 'validation_results',
         headerName: 'Validation results',
-        minWidth: 150,
+        minWidth: 140,
         flex: 0.5,
         align: 'right',
         renderCell: (params) => {
@@ -269,7 +270,7 @@ export const datasets_columns = [
     {
         field: 'score_variant_info',
         headerName: 'Score variant info',
-        minWidth: 150,
+        minWidth: 140,
         flex: 0.5,
         align: 'right',
         renderCell: (params) => {
@@ -287,7 +288,7 @@ export const datasets_columns = [
         field: 'gwas_sumstats',
         headerName: 'GWAS sum. stats',
         description: 'GWAS summary statistics',
-        minWidth: 150,
+        minWidth: 140,
         flex: 0.5,
         align: 'right',
         renderCell: (params) => {
@@ -305,11 +306,39 @@ export const datasets_columns = [
 ]
 
 
+export const datasets_phewas_columns = [
+    common_cols['publication'],
+    columns_for_dataset['platform'],
+    common_cols['platform_type'],
+    common_cols['tissue_label'],
+    common_cols['dataset_id'],
+    common_cols['scores_count'],
+    columns_for_dataset['phewas_count'],
+    {
+        field: 'phewas',
+        headerName: 'PheWAS',
+        minWidth: 80,
+        flex: 0.5,
+        align: 'right',
+        renderCell: (params) => {
+            const files_urls = params.row.scoring_files_urls
+            if (files_urls.phewas) {
+                return download_link(files_urls.phewas,'phewas');
+            }
+            else {
+                return default_cell_value
+            }
+        },
+        valueGetter: (value, row) => { return row.scoring_files_urls.phewas }
+    }
+]
+
+
 const dataset_common_end = [
     columns_for_dataset['platform_version'],
     common_cols['method_name'],
     common_cols['scores_count'],
-    columns_for_dataset['phenotypes_count'],
+    columns_for_dataset['phewas_count'],
     ancestry_cols['ancestry_training_computed'],
     ancestry_cols['ancestry_validation_computed'],
     // ancestry_cols['ancestry_training'],

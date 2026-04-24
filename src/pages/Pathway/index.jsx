@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import Tooltip from "@mui/material/Tooltip";
 import { ArrowUpSquareFill, ArrowRight, Table } from 'react-bootstrap-icons';
 import Href from '../../components/Href';
-import DataTable from '../../components/table/DataTable';
+import DataTableServer from '../../components/table/DataTableServer';
 import { common_cols } from '../../components/table/columns/common';
 import restApiCall from '../../components/RestAPI';
 import { op_title, op_subtitle_no_asso, Header2Cards, element_icon, no_entry_found } from '../../components/Common';
@@ -17,12 +17,16 @@ function Pathway() {
 	let { pathway } = useParams();
 	const [elementData, setElementData] = useState()
 	const [noEntry, setNoEntry] = useState(false)
-	const [geneData, setGeneData] = useState([])
-	const [proteinData, setProteinData] = useState([])
-	const [metaboliteData, setMetaboliteData] = useState([])
+	const [geneCount, setGeneCount] = useState([])
+	const [proteinCount, setProteinCount] = useState([])
+	const [metaboliteCount, setMetaboliteCount] = useState([])
 	const [superpathwayData, setSuperpathwayData] = useState([])
 
     const element = 'pathway';
+
+	const gene_search_url = 'gene/search?include_scores_count=1&'+element+'='+pathway;
+	const protein_search_url = 'protein/search?include_scores_count=1&'+element+'='+pathway;
+	const metabolite_search_url = 'metabolite/search?include_scores_count=1&'+element+'='+pathway;
 
 	const gene_scores_count_col = {...common_cols['scores_count'], field: 'pathway_genes__gene_score'}
 	const protein_scores_count_col = {...common_cols['scores_count'], field: 'pathway_proteins__protein_score'}
@@ -62,19 +66,13 @@ function Pathway() {
 		)
 	}
 
-    const fetchData = async () => {
+    const fetchPathwayData = async () => {
 		const data = await restApiCall(element+'/'+pathway);
 		if (data && Object.keys(data).length) {
 			setElementData(data);
-			if (data.genes) {
-				setGeneData(data.genes)
-			}
-			if (data.proteins) {
-				setProteinData(data.proteins)
-			}
-			if (data.metabolites) {
-				setMetaboliteData(data.metabolites)
-			}
+			setGeneCount(data.genes_count)
+			setProteinCount(data.proteins_count)
+			setMetaboliteCount(data.metabolites_count)
 			if (data.superpathways) {
 				setSuperpathwayData(data.superpathways)
 			}
@@ -108,12 +106,12 @@ function Pathway() {
 		return (
 			<>
 				{/* Linked genes */}
-				{ geneData && geneData.length > 0 ?
+				{ geneCount > 0 ?
 					<tr>
-						<td>{element_icon('gene')}<span>Mapped gene{geneData.length > 1 && 's'}</span></td>
+						<td>{element_icon('gene')}<span>Mapped gene{geneCount > 1 && 's'}</span></td>
 						<td key='genes_data'>
 							<div className='d-flex justify-content-between'>
-								{thousandifyNumber(geneData.length)}
+								{thousandifyNumber(geneCount)}
 								<Tooltip title="See details in the Gene table at the bottom of the current page">
 									<div className="ms-3" style={{marginTop:"-2px"}}>
 										<Href href="#gene_table" icon={<Table/>}/>
@@ -124,12 +122,12 @@ function Pathway() {
 					</tr> : ''
 				}
 				{/* Linked proteins */}
-				{ proteinData && proteinData.length > 0 ?
+				{ proteinCount > 0 ?
 					<tr>
-						<td>{element_icon('protein')}<span>Mapped protein{proteinData.length > 1 && 's'}</span></td>
+						<td>{element_icon('protein')}<span>Mapped protein{proteinCount > 1 && 's'}</span></td>
 						<td key='proteins_data'>
 							<div className='d-flex justify-content-between'>
-								{thousandifyNumber(proteinData.length)}
+								{thousandifyNumber(proteinCount)}
 								<Tooltip title="See details in the Protein table at the bottom of the current page">
 									<div className="ms-3" style={{marginTop:"-2px"}}>
 										<Href href="#protein_table" icon={<Table/>}/>
@@ -140,12 +138,12 @@ function Pathway() {
 					</tr> : ''
 				}
 				{/* Linked metabolites */}
-				{ metaboliteData && metaboliteData.length > 0 ?
+				{ metaboliteCount > 0 ?
 					<tr>
-						<td>{element_icon('metabolite')}<span>Mapped metabolite{metaboliteData.length > 1 && 's'}</span></td>
+						<td>{element_icon('metabolite')}<span>Mapped metabolite{metaboliteCount > 1 && 's'}</span></td>
 						<td key='metabolite_data'>
 							<div className='d-flex justify-content-between'>
-								{thousandifyNumber(metaboliteData.length)}
+								{thousandifyNumber(metaboliteCount)}
 								<Tooltip title="See details in theMetabolite table at the bottom of the current page">
 									<div className="ms-3" style={{marginTop:"-2px"}}>
 										<Href href="#metabolite_table" icon={<Table/>}/>
@@ -160,7 +158,7 @@ function Pathway() {
 	}
 
     useEffect(() => {
-		fetchData();
+		fetchPathwayData();
 	},[])
 
     return (
@@ -181,18 +179,26 @@ function Pathway() {
 
 					{/* Associated genes */}
 					{
-						geneData.length ? <div key="gene_table" id="gene_table" className="mt-4">{op_subtitle_no_asso('gene','Mapped genes',geneData.length)}<DataTable key="gene" data={geneData} columns={gene_columns} col_for_ids={key_cols}/></div> : ''
+						geneCount > 0 ?
+							<div key="gene_table" id="gene_table" className="mt-4">{op_subtitle_no_asso('gene','Mapped genes',geneCount)}
+							<DataTableServer key="gene" url_suffix={gene_search_url} columns={gene_columns} col_for_ids={key_cols}/></div>
+						: ''
 					}
 
 					{/* Associated protein */}
 					{
-						proteinData.length ? <div key="protein_table" id="protein_table" className="mt-4">{op_subtitle_no_asso('protein','Mapped proteins',proteinData.length)}<DataTable key="protein" data={proteinData} columns={protein_columns} col_for_ids={key_cols}/></div> : ''
+						proteinCount > 0 ?
+							<div key="protein_table" id="protein_table" className="mt-4">{op_subtitle_no_asso('protein','Mapped proteins',proteinCount)}
+							<DataTableServer key="protein" url_suffix={protein_search_url} columns={protein_columns} col_for_ids={key_cols}/></div>
+						: ''
 					}
 
 
 					{/* Associated metabolites */}
 					{
-						metaboliteData.length ? <div key="metabolite_table" id="metabolite_table" className="mt-4">{op_subtitle_no_asso('metabolite','Mapped metabolites',metaboliteData.length)}<DataTable key="metabolite" data={metaboliteData} columns={metabolite_columns} col_for_ids={key_cols}/></div> : ''
+						metaboliteCount > 0 ?
+							<div key="metabolite_table" id="metabolite_table" className="mt-4">{op_subtitle_no_asso('metabolite','Mapped metabolites',metaboliteCount)}
+							<DataTableServer key="metabolite"  url_suffix={metabolite_search_url} columns={metabolite_columns} col_for_ids={key_cols}/></div> : ''
 					}
 				</>
 				: noEntry ?

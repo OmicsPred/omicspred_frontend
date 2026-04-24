@@ -81,7 +81,7 @@ export const phenotypes_columns = [
         },
         valueGetter: (value) => { return value }
     },
-    common_cols['scores_count']
+    common_cols['phewas_count']
 ]
 
 
@@ -180,7 +180,7 @@ const score_phewas_cols = {
     'gwas_catalog': {
         field: 'samples__gwas_catalog',
         headerName: 'GWAS Catalog',
-        width: 150,
+        width: 145,
         renderCell: (params) => {
             const gcst_ids = params.row.samples.reduce(function(result, sample) {
                 const gcst = sample.source_gwas_catalog;
@@ -199,6 +199,15 @@ const score_phewas_cols = {
         valueGetter: (value, row) => {
             const gcst_ids = row.samples.map((sample) => sample.source_gwas_catalog);
             return gcst_ids.join(', ');
+        }
+    },
+    'method_description': {
+        field: 'method_description',
+        headerName: 'Method Description',
+        description: 'Method used to calculate the PheWAS',
+        width: 150,
+         valueGetter: (value) => {
+            return value;
         }
     },
     // 'sample_age': {
@@ -223,7 +232,7 @@ const score_phewas_cols = {
     'sample_number': {
         field: 'samples__sample_number',
         headerName: 'Sample',
-        width: 120,
+        width: 115,
         renderCell: (params) => {
             const samples = params.row.samples;
             let sample_number = 0;
@@ -297,13 +306,14 @@ const score_phewas_cols = {
 
 const values_cols = [
     // common_data_cols['r2'],
-    common_data_cols['p-value'],
-    common_data_cols['fdr'],
-    common_data_cols['bonferroni'],
-    common_data_cols['z-score'],
+    // common_data_cols['bonferroni'],
     common_data_cols['effect_size'],
     common_data_cols['hazard_ratio'],
-    common_data_cols['var_gene_exp']
+    common_data_cols['z-score'],
+    common_data_cols['p-value'],
+    common_data_cols['fdr'],
+    common_data_cols['var_gene_exp'],
+    score_phewas_cols['method_description']
 ]
 
 
@@ -313,16 +323,31 @@ const phenotype_dataset_cols_prefix = [
     common_cols['phenotype_id'],
     score_phewas_cols['reported_trait'],
     score_phewas_cols['gwas_catalog'],
+    common_cols['publication'],
     ancestry_col,
     score_phewas_cols['gene'],
     score_phewas_cols['protein'],
     score_phewas_cols['metabolite'],
-    // score_phewas_cols['sample_age'],
-    // score_phewas_cols['sample_number'],
-    // score_phewas_cols['sample_percent_male'],
     score_phewas_cols['cohort'],
 ]
 export const phenotype_dataset_cols = phenotype_dataset_cols_prefix.concat(values_cols)
+
+
+const phewas_cols_prefix = [
+    score_phewas_cols['omicspred_id'],
+    score_phewas_cols['gene'],
+    score_phewas_cols['protein'],
+    score_phewas_cols['metabolite'],
+    common_cols['phenotype_name'],
+    common_cols['phenotype_id'],
+    score_phewas_cols['reported_trait'],
+    score_phewas_cols['gwas_catalog'],
+    common_cols['publication'],
+    ancestry_col,
+    score_phewas_cols['sample_number'],
+    score_phewas_cols['cohort']
+]
+export const phewas_cols = phewas_cols_prefix.concat(values_cols)
 
 
 const phenotype_score_cols_prefix = [
@@ -330,6 +355,7 @@ const phenotype_score_cols_prefix = [
     common_cols['phenotype_id'],
     score_phewas_cols['reported_trait'],
     score_phewas_cols['gwas_catalog'],
+    common_cols['publication'],
     ancestry_col,
     // score_phewas_cols['sample_age'],
     score_phewas_cols['sample_number'],
@@ -344,16 +370,17 @@ const phenotype_cols_prefix = [
     score_phewas_cols['gene'],
     score_phewas_cols['protein'],
     score_phewas_cols['metabolite'],
+    score_phewas_cols['platform_type'],
+    score_phewas_cols['platform_name'],
     score_phewas_cols['reported_trait'],
     score_phewas_cols['gwas_catalog'],
+    common_cols['publication'],
     ancestry_col,
     // score_phewas_cols['sample_age'],
     score_phewas_cols['sample_number'],
     // score_phewas_cols['sample_percent_male'],
     score_phewas_cols['cohort'],
-    publication_col,
-    score_phewas_cols['platform_type'],
-    score_phewas_cols['platform_name']
+    publication_col
 ]
 export const phenotype_cols = phenotype_cols_prefix.concat(values_cols)
 

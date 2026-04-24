@@ -883,6 +883,18 @@ ul.expanded {
     @include op_dark_bg;
 }
 
+.badge-sq-op {
+    color: $op_white !important;
+    @include op_dark_bg;
+    border-radius: 4px !important;
+    &:hover {
+        @include link_btn_hover;
+        .extra_icon > svg {
+            @include link_hover_color;
+        }
+    }
+}
+
 .badge-sq-op-sm {
     font-size:12px !important;
     // border:1px solid $op_dark !important;

@@ -1,6 +1,6 @@
 import { FileEarmarkText, Stack, Hexagon } from 'react-bootstrap-icons';
 import { omicspred_omics_type, display_description } from '../../Common';
-import { thousandifyNumber, ToggleDiv, TooltipText, scoresBadge } from '../../Generic';
+import { thousandifyNumber, ToggleDiv, TooltipText, scoresBadge, phewasBadge, phewasButton } from '../../Generic';
 import Href from '../../Href';
 
 export const default_cell_value = process.env.DEFAULT_CELL_VALUE;
@@ -308,7 +308,7 @@ export const common_cols = {
     'platform_type': {
         field: 'platform__platform_master__type',
         headerName: 'Omics',
-        minWidth: 150,
+        minWidth: 145,
         flex: 1,
         renderCell: (params) => {
             let platform = params.row.platform;
@@ -328,7 +328,7 @@ export const common_cols = {
     'platform_name': {
         field: 'platform__name',
         headerName: 'Platform', // Kept for the column filtering
-        minWidth: 140,
+        minWidth: 160,
         flex: 0.6,
         renderHeader: () => {
             return (
@@ -392,13 +392,14 @@ export const common_cols = {
         minWidth: 220,
         // flex: 0.8,
         renderCell: (params) => {
-            let publication = undefined;
-            if (params.row.score) {
-                publication = params.row.score.publication;
-            }
-            else {
-                publication = params.row.publication;
-            }
+            // let publication = undefined;
+            // if (params.row.score) {
+            //     publication = params.row.score.publication;
+            // }
+            // else {
+            //     publication = params.row.publication;
+            // }
+            const publication = params.row.publication;
             const opp_id = publication.id;
             const firstauthor = publication.firstauthor;
             const journal = publication.journal;
@@ -411,12 +412,13 @@ export const common_cols = {
             )
         },
         valueGetter: (value, row) => {
-            if (row.score) {
-                return row.score.publication.id
-            }
-            else {
-                return row.publication.id
-            }
+            return row.publication.id;
+            // if (row.score) {
+            //     return row.score.publication.id
+            // }
+            // else {
+            //     return row.publication.id
+            // }
         }
     },
     'scoring_file': {
@@ -813,7 +815,7 @@ export const common_cols = {
     'phenotype_id': {
         field: 'phenotype_id',
         headerName: 'Phenotype ID',
-        minWidth: 150,
+        minWidth: 145,
         // flex: 0.5,
         hideable: false,
         renderCell: (params) => {
@@ -1089,7 +1091,10 @@ export const common_cols = {
                     counts += datasets[i].scores_count;
                 }
             }
-            return scoresBadge(counts, true);
+            if (counts > 0) {
+                return scoresBadge(counts, true);
+            }
+            return default_cell_value;
         },
         valueGetter: (value, row) => {
             let counts = 0;
@@ -1103,6 +1108,30 @@ export const common_cols = {
                 }
             }
             return counts;
+        }
+    },
+    'phewas_count':{
+        field: 'phewas_count',
+        headerName: '#PheWAS',
+        description: 'Number of linked PheWAS data',
+        type: 'number',
+        minWidth: 100,
+        // flex: 0.5,
+        align: 'right',
+        renderCell: (params) => {
+            const phewas_count = params.row.phewas_count;
+            if (phewas_count != 0) {
+                if (params.row.publication_type) {
+                    return phewasButton(phewas_count,params.row.id,true);
+                }
+                else {
+                    return phewasBadge(phewas_count, true);
+                }
+            }
+            return default_cell_value;
+        },
+        valueGetter: (value) => {
+            return value;
         }
     }
 }
@@ -1133,8 +1162,9 @@ export const common_data_cols = {
     },
     'hazard_ratio': {
         field: 'hr',
-        headerName: 'Hazard Ratio',
-        width: 140,
+        headerName: 'HR / OR',
+        description: 'Hazard Ratio / Odds Ratio',
+        width: 135,
         valueGetter: (value, row) => {
             if (row.data_values) {
                 if (row.data_values.HR) {
@@ -1150,8 +1180,8 @@ export const common_data_cols = {
     },
     'fdr': {
         field: 'fdr',
-        headerName: 'FDR',
-        description: 'Significant False Discovery Rate (FDR) adjusted p-value (FDR < 0.05)',
+        headerName: 'Adj P-Value',
+        description: 'Adjusted P-Value (Publication-Specific)',
         width: 100,
         valueGetter: (value, row) => {
             if (row.data_values) {
@@ -1165,9 +1195,9 @@ export const common_data_cols = {
     },
     'z-score' : {
         field: 'z-score',
-        headerName: 'z-score',
-        description: 'z-score (or standard score)',
-        width: 100,
+        headerName: 'Z-Score',
+        description: 'Z-Score (or standard score)',
+        width: 80,
         valueGetter: (value, row) => {
             if (row.data_values) {
                 const data_value = row.data_values['z-score'];
@@ -1180,9 +1210,9 @@ export const common_data_cols = {
     },
     'p-value' : {
         field: 'p-value',
-        headerName: 'p-value',
+        headerName: 'P-Value',
         // description: 'p-value',
-        width: 100,
+        width: 90,
         valueGetter: (value, row) => {
             if (row.data_values) {
                 const data_value = row.data_values['p-value'];
@@ -1211,8 +1241,7 @@ export const common_data_cols = {
     'effect_size' : {
         field: 'effect_size',
         headerName: 'Effect Size',
-        // description: 'Bonferroni',
-        width: 100,
+        width: 95,
         valueGetter: (value, row) => {
             if (row.data_values) {
                 const data_value = row.data_values.effect_size;

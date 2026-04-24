@@ -94,7 +94,7 @@ function Score() {
             setTranscriptsData(score_data.transcripts);
             setProteinsData(score_data.proteins);
             setMetabolitesData(score_data.metabolites);
-            const score_app_data = await restApiCallPaginated('score/phenotype/'+score);
+            const score_app_data = await restApiCallPaginated('score/phewas/'+score);
             score_app_data.sort((a, b) => (b.phenotypes[0].label > a.phenotypes[0].label) ? 1 : -1)
             setScorePhenotypeData(score_app_data);
             setPhenotypeData(get_phenotypes(score_app_data));

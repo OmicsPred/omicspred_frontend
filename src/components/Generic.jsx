@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react';
 import { PlusCircleFill, DashCircleFill, People, InfoCircle, BarChart, PersonArmsUp, ArrowsExpand, ArrowsCollapse, LayersFill, ExclamationDiamond } from 'react-bootstrap-icons';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
+import Href from './Href';
 
 
 const badge_classes = "badge rounded-pill badge-op";
+const badge_sq_classes = "badge badge-sq-op shadow";
 
 export const consoleDev = function(msg) {
     if (process.env.ENV_TYPE=='dev') {
@@ -34,6 +36,8 @@ export const formatNumberShort = function(number) {
     return ''
 }
 
+// Badges //
+
 export const numberBadge = function(number,title) {
     const num_val = thousandifyNumber(number)
     const num_val_label = formatNumberShort(number)
@@ -53,12 +57,12 @@ export const scoresBadge = function(number,in_table) {
     return <span className={class_names} title={thousandifyNumber(number)+" Genetic Score"+add_s_when_plural(number)}><BarChart className='me-1' style={{verticalAlign:'top'}}/>{formatNumberShort(number)}</span>
 }
 
-export const phenotypesBadge = function(number,in_table) {
+export const phewasBadge = function(number,in_table) {
     let class_names = badge_classes;
     if (in_table) {
         class_names += ' badge-op-table';
     }
-    return <span className={class_names} title={thousandifyNumber(number)+" Phenotype association"+add_s_when_plural(number)}><PersonArmsUp className='me-1' style={{verticalAlign:'top'}}/>{formatNumberShort(number)}</span>
+    return <span className={class_names} title={thousandifyNumber(number)+" PheWAS association"+add_s_when_plural(number)}><PersonArmsUp className='me-1' style={{verticalAlign:'top'}}/>{formatNumberShort(number)}</span>
 }
 
 export const datasetBadge = function(number,in_table) {
@@ -78,6 +82,20 @@ export const participantsHeader = function(number,m_align) {
     const participants_number = thousandifyNumber(number);
     const valign = m_align ? 'middle' : 'top';
     return <span title="Participants"><People className='me-1 op_color_2' style={{verticalAlign: valign}}/>{participants_number}</span>
+}
+
+
+export const phewasButton = function(number,opp_id,in_table) {
+    let class_names = badge_sq_classes;
+    if (in_table) {
+        class_names += ' badge-op-table';
+    }
+    return (
+        <Href
+            href={'/phewas?opp_id='+opp_id}
+            text={<span className={class_names} title={thousandifyNumber(number)+" PheWAS association"+add_s_when_plural(number)}><PersonArmsUp className='me-1' style={{verticalAlign:'top'}}/>{formatNumberShort(number)}</span>}
+        />
+    )
 }
 
 

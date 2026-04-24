@@ -7,7 +7,7 @@ export const publications_columns = [
     {
         field: 'opp_id',
         headerName: 'Publication ID',
-        minWidth: 150,
+        minWidth: 120,
         // flex: 1,
           renderCell: (params) => {
               return (<a href={"/publication/"+params.row.id}>{params.row.id}</a>);
@@ -27,7 +27,7 @@ export const publications_columns = [
     {
         field: 'pmid',
         headerName: 'PubMed ID',
-        minWidth: 110,
+        minWidth: 105,
         // flex: 1,
         renderCell: (params) => {
             // TEMPORARY
@@ -52,7 +52,7 @@ export const publications_columns = [
     {
         field: 'doi',
         headerName: 'Digital object identifier (doi)',
-        minWidth: 240,
+        minWidth: 230,
         // flex: 1,
         renderCell: (params) => {
              // TEMPORARY
@@ -74,12 +74,12 @@ export const publications_columns = [
             }
         }
     },
-    { field: 'title', headerName: 'Title', minWidth: 450 },
-    { field: 'journal', headerName: 'Journal', minWidth: 120 },
+    { field: 'title', headerName: 'Title', minWidth: 400 },
+    { field: 'journal', headerName: 'Journal', minWidth: 110 },
     {
         field: 'date_publication',
         headerName: 'Publication Date',
-        minWidth: 150 ,
+        minWidth: 130 ,
         renderCell: (params) => {
             // Change date format to DD/MM/YYYY
             if (params.row.date_publication) {
@@ -87,14 +87,14 @@ export const publications_columns = [
                 return date_array[2]+"/"+date_array[1]+"/"+date_array[0];
             }
             else {
-                return '-';
+                return default_cell_value;
             }
         }
     },
     {
         field: 'platforms',
         headerName: 'Platform(s)',
-        width: 175,
+        width: 180,
         renderCell: (params) => {
             // Identify and list distinct platforms
             var unique_platforms = [];
@@ -107,28 +107,35 @@ export const publications_columns = [
                 }
             });
             const platforms_list = unique_platforms.sort().map((platform_name) => omicspred_platform_omics_type(platform_name,platforms_types[platform_name]))
-            return (
-                <div className="d-flex flex-column">
-                {
-                    platforms_list.map((platform) => platform)
-                }
-                </div>
-            )
+            if (platforms_list.length) {
+                return (
+                    <div className="d-flex flex-column">
+                    {
+                        platforms_list.map((platform) => platform)
+                    }
+                    </div>
+                )
+            }
+            return default_cell_value;
         },
         valueGetter: (value, row) => { return row.datasets.map((dataset) => dataset.platform.name) }
     },
     {
         field: 'datasets',
         headerName: '#Datasets',
-        width: 100,
+        width: 90,
         renderCell: (params) => {
             // return scoresBadge(counts, true);
             const datasets_count = params.row.datasets.length;
-            return (
-                datasetBadge(datasets_count)
-            )
+            if (datasets_count != 0) {
+                return (
+                    datasetBadge(datasets_count)
+                )
+            }
+            return default_cell_value;
         },
         valueGetter: (value, row) => { return row.datasets.length }
     },
-    common_cols['scores_count']
+    common_cols['scores_count'],
+    common_cols['phewas_count']
 ]

@@ -4,7 +4,7 @@ import Href from "../../../components/Href";
 const DataDownloads = () => {
     const project_name = process.env.PROJECT_NAME;
     return (
-        <div className="odd_section">
+        <div className="even_section">
             <div className="op_section_title">Data downloads</div>
                 <div className="card_containter flex-lg-row flex-md-row">
                     {/* Downloads */}

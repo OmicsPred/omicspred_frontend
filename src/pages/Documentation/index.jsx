@@ -86,6 +86,7 @@ const documentation_op = {
             {'name': 'Omics Type', 'desc': 'Data type detected by the platform (e.g. gene, protein, metabolite).'},
             {'name': 'Genetic Score Development Method', 'desc': 'The name or description of the method or computational algorithm used to develop the Genetic Scores of this dataset.'},
             {'name': 'Genetic Score Count', 'desc': 'Number of Genetic Scores associated with the dataset'},
+            {'name': 'PheWAS Count', 'desc': 'Number of PheWAS associated with the Genetic Scores of the dataset'},
             {'name': 'Tissue', 'desc': 'Biological tissue collected to be analyzed on the platform'},
             {'name': 'Training Sample(s)', 'desc': 'Set of Samples used to create and train the Genetic Scores in the dataset'},
             {'name': 'Validation Sample(s)', 'desc': 'Set of Samples used to validate the Genetic Scores in the dataset'},
@@ -179,31 +180,32 @@ const documentation_op = {
             {'name': 'Description', 'desc': 'Detailed description of the Phenotype'},
             {'name': 'Category', 'desc': 'Phenotype category.'},
             {'name': 'Source', 'desc': 'External source of the Phenotype (e.g. PheCode).'},
-            {'name': 'URL', 'desc': 'External URL to the ontology entry'}
+            {'name': 'URL', 'desc': 'External URL to the ontology entry'},
+            {'name': 'Reported traits', 'desc': 'List of traits mapped to the phenotype ontology'}
             // {'name': 'Child phenotype(s)', 'desc': 'Children entries of the Phenotype from the ontology.'}
         ]
     },
     'Score PheWAS': {
         'label': 'score_phewas',
-        'desc': 'This data structure is similar to the `Genetic Score` but for the Phenome-wide association analysis (PheWAS) part of '+project_name+'.',
+        'desc': 'Phenome-wide association studies (PheWAS) data, using Genetic Scores from '+project_name+'.',
         'struct': [
             {'name': 'Score', 'desc': 'Associated Score.'},
             {'name': 'Phenotypes', 'desc': 'List of associated Phenotypes.'},
             {'name': 'Dataset', 'desc': 'Associated Dataset.'},
-            {'name': 'Sample', 'desc': 'Associated Sample (control/cases, percentage male participants, cohorts).'},
-            // {'name': <>R<sup>2</sup></>, 'desc': 'Proportion of the variance explained.'},
-            {'name': 'FDR', 'desc': 'False Discovery Rate-adjusted P-value (<0.5).'},
+            {'name': 'Publication', 'desc': 'Publication of the PheWAS.'},
+            {'name': 'Samples', 'desc': 'Associated Sample(s) (control/cases, percentage male participants, cohorts).'},
+            {'name': 'Method description', 'desc': 'Description of the method/tool used to calculate the PheWAS.'},
             {'name': 'Other data values', 'desc':
                 <div>
                     <div className='mb-2'>A list of data used to evaluate the association between a Genetic Score and a phenotype</div>
                     <ul className='mb-0'>
-                        {/* <li key="r2"><span className='fw-bold'><>R<sup>2</sup></></span>: Proportion of the variance explained.</li> */}
                         <li key="hr"><span className='fw-bold'>HR</span>: Hazard Ratio with confidence interval.</li>
                         <li key="z-score"><span className='fw-bold'>Z-score</span> or Standard score.</li>
                         <li key="p-value"><span className='fw-bold'>P-value</span></li>
-                        <li key="bonferroni"><span className='fw-bold'>Bonferroni</span>: Bonferroni correction</li>
+                        <li key="fdr"><span className='fw-bold'>FDR</span>: False Discovery Rate adjusted P-value (&lt;0.5).</li>
+                        <li key="bonferroni"><span className='fw-bold'>Bonferroni</span>: Bonferroni adjusted P-value</li>
                         <li key="effect_size"><span className='fw-bold'>Effect size</span></li>
-                        <li key="var_gene_exp"><span className='fw-bold'>Var Gene Exp</span>: Gene expression variance</li>
+                        <li key="var_gene_exp"><span className='fw-bold'>Variance Gene Expression</span>: Variance of the gene expression</li>
                     </ul>
                 </div>
             },

@@ -8,8 +8,8 @@ import DataTableServer from '../../components/table/DataTableServer';
 
 import { phenotype_cols } from '../../components/table/columns/phenotype';
 import restApiCall from '../../components/RestAPI';
-import { scoresBadge, loading_data, add_s_when_plural } from '../../components/Generic';
-import { op_title, HeaderCard, no_entry_found } from '../../components/Common';
+import { phewasBadge, loading_data, add_s_when_plural } from '../../components/Generic';
+import { op_title, op_subtitle_no_asso, HeaderCard, no_entry_found } from '../../components/Common';
 import { display_source } from '../MolecularTrait/components/links';
 
 
@@ -23,7 +23,7 @@ function Phenotype() {
     const [noEntry, setNoEntry] = useState(false)
 
     const phenotype_id = phenotype;
-    const url_suffix = "score/phenotype/search?phenotype_id="+phenotype_id;
+    const url_suffix = "score/phewas/search?phenotype_id="+phenotype_id;
     // const child_columns = [
     //     common_cols['phenotype_id'],
     //     common_cols['phenotype_name'],
@@ -69,7 +69,7 @@ function Phenotype() {
         if (reported_traits.length != 0) {
             if (reported_traits.length > 1) {
                 return (
-                    <ul>
+                    <ul className='mb-0'>
                         {reported_traits.map((reported_trait) => <li key={reported_trait.id}>{reported_trait.label} ({reported_trait.source} {reported_trait.id})</li>)}
                     </ul>
                 )
@@ -87,7 +87,7 @@ function Phenotype() {
                 <tr><td>Identifier</td><td><Href href={phenotypeData.url} text={phenotypeData.id}/>{display_source(phenotypeData.source)}</td></tr>
                 <tr><td>Category</td><td>{phenotypeData.category.join(', ')}</td></tr>
                 {phenotypeData.traits_reported ? <tr><td>Trait{add_s_when_plural(phenotypeData.traits_reported.length)} reported</td><td>{display_reported_traits(phenotypeData.traits_reported)}</td></tr>:''}
-                <tr><td># Score{phenotypeData.scores_count > 1 ? 's' : ''}</td><td>{scoresBadge(phenotypeData.scores_count)}</td></tr>
+                <tr><td>Number of linked PheWAS</td><td>{phewasBadge(phenotypeData.phewas_count)}</td></tr>
                 {/* Temporary */}
                 {/* { sampleData ? <>{display_sample_info()}</> : '' } */}
                 {/* --------- */}
@@ -113,10 +113,10 @@ function Phenotype() {
                     <div className='mt-5'></div>
 
                     {/* Score association */}
-                    { phenotypeData.scores_count > 0 ?
+                    { phenotypeData.phewas_count > 0 ?
                         <div className='d-flex' style={{flexDirection:'column'}}>
-                            <DataTableServer table_key="phenotype" title='score' type='score' url_suffix={url_suffix} columns={phenotype_cols} col_for_ids={column_keys} hidden_columns={['var_gene_exp']}/>
-                            {/* <DataTableFromRestApi table_key="phenotype" title='score' type='score' url_suffix={url_suffix} columns={columns} col_for_ids={column_keys}/> */}
+                            {op_subtitle_no_asso('phenotype','Linked PheWAS data', phenotypeData.phewas_count)}
+                            <DataTableServer table_key="phenotype" title='score' type='score' url_suffix={url_suffix} columns={phenotype_cols} col_for_ids={column_keys} hidden_columns={['z-score','var_gene_exp']}/>
                         </div> : ''
                     }
                     {/* Phenotype child terms */}
