@@ -331,7 +331,7 @@ function Score() {
     }
 
     const performance_cols_ids = ['id','cohort_label','sample__ancestry_broad','sample__sample_number','evaluation_type'];
-    const phenotype_cols_ids = ['phenotypes_LIST__id','data_values__FDR'];
+    const phenotype_cols_ids = ['phenotypes_LIST__id','data_values__adjusted_p-value'];
 
     useEffect(() => {
         fetchScoreData();
@@ -387,7 +387,7 @@ function Score() {
                         { scorePhenotypeData && scorePhenotypeData.length ?
                             <div className='mt-5' id="phenotype_table">
                                 {op_subtitle_no_asso('phenotype','Linked PheWAS data', scorePhenotypeData.length)}
-                                <DataTable key="phenotype" data={scorePhenotypeData} columns={phenotype_score_cols} col_for_ids={phenotype_cols_ids} sorting='phenotype_name' hidden_columns={['sample__ancestry_broad','var_gene_exp']}/>
+                                <DataTable key="phenotype" data={scorePhenotypeData} columns={phenotype_score_cols} col_for_ids={phenotype_cols_ids} sorting='data_values__p-value' hidden_columns={['sample__ancestry_broad','var_gene_exp']}/>
                             </div>:''
                         }
                     </div>

@@ -5,7 +5,7 @@ import { Sliders, Download } from 'react-bootstrap-icons';
 import DataTableServer from '../../../components/table/DataTableServer';
 import { phewas_cols } from '../../../components/table/columns/phenotype';
 import Href from '../../../components/Href';
-import { PageTitle } from '../../../components/Common';
+import { PageTitle, phewas_mention } from '../../../components/Common';
 import { ToggleCard, consoleDev } from '../../../components/Generic';
 import { fetch_count_data } from '../components/Browse';
 import { select_form, input_form, radio_form } from '../../../components/Form';
@@ -120,7 +120,7 @@ function PheWAS() {
         <div>
             <PageTitle type={data_type} category="Results" label='PheWAS' title={page_label} count={phenotypeCount}/>
             <div className="mt_minus_1">
-                All the PheWAS results available in {process.env.PROJECT_NAME}.
+                All the PheWAS results available in {process.env.PROJECT_NAME} (with {phewas_mention()}).
             </div>
             <div className="mt-4">
                 {/* Filter Form */}

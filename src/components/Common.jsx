@@ -135,6 +135,11 @@ export const external_sources = {
 }
 
 
+export const phewas_mention = () => {
+    return 'adjusted P-value < 0.05';
+}
+
+
 export const url_tooltip = (type) => {
     const link_content = external_sources[type];
     return <Href href={link_content['url']} text={<TooltipText title={link_content['desc']} ttype='link' text={link_content['label']} />} />

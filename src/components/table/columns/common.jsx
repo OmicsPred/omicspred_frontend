@@ -848,32 +848,32 @@ export const common_cols = {
             //////////////////////////////////
         }
     },
-    'phenotype_name': {
-        field: 'phenotype_name',
+    'phenotype_label': {
+        field: 'phenotype_label',
         headerName: 'Phenotype name',
         minWidth: 200,
         // flex: 1,
         renderCell: (params) => {
-            let phenotype_names = [];
+            let phenotype_labels = [];
             if (params.row.phenotypes) {
-                phenotype_names = params.row.phenotypes.map((phenotype) => phenotype.label)
+                phenotype_labels = params.row.phenotypes.map((phenotype) => phenotype.label)
             }
             else {
                 if (params.row.label) {
-                    phenotype_names = [params.row.label];
+                    phenotype_labels = [params.row.label];
                 }
                 // Old phenotype - to be removed
                 if (params.row.phenotype.name) {
-                    phenotype_names = [params.row.phenotype.name];
+                    phenotype_labels = [params.row.phenotype.name];
                 }
                 //////////////////////////////////
             }
-            if (phenotype_names.length > 1) {
-                return phenotype_names.map((phenotype_name, index) => <div key={'phenotype_'+index}>{phenotype_name}{index < phenotype_names.length -1 ? ',':''}</div>);
+            if (phenotype_labels.length > 1) {
+                return phenotype_labels.map((phenotype_label, index) => <div key={'phenotype_'+index}>{phenotype_label}{index < phenotype_labels.length -1 ? ',':''}</div>);
             }
             else {
-                if (phenotype_names.length == 1) {
-                    return phenotype_names[0];
+                if (phenotype_labels.length == 1) {
+                    return phenotype_labels[0];
                 }
                 return default_cell_value;
             }
@@ -1178,23 +1178,33 @@ export const common_data_cols = {
             return default_cell_value;
         }
     },
-    'fdr': {
-        field: 'fdr',
+    'adjusted_p-value': {
+        field: 'adjusted_pvalue',
         headerName: 'Adj P-Value',
         description: 'Adjusted P-Value (Publication-Specific)',
         width: 100,
+        renderCell: (params) => {
+            if (params.row.data_values) {
+                const data_value = params.row.data_values['adjusted_p-value'];
+                const data_method = params.row.adjusted_pvalue_method;
+                if (data_value || data_value==0) {
+                    return <TooltipText title={data_method} text={data_value.toPrecision(3)}/>;
+                }
+            }
+            return default_cell_value;
+        },
         valueGetter: (value, row) => {
             if (row.data_values) {
-                const data_value = row.data_values.FDR;
-                if (data_value || data_value) {
-                    return data_value.toPrecision(3);
+                const data_value = row.data_values['adjusted_p-value'];
+                if (data_value || data_value==0) {
+                    data_value.toPrecision(3);
                 }
             }
             return default_cell_value;
         }
     },
     'z-score' : {
-        field: 'z-score',
+        field: 'zscore',
         headerName: 'Z-Score',
         description: 'Z-Score (or standard score)',
         width: 80,
@@ -1209,7 +1219,7 @@ export const common_data_cols = {
         }
     },
     'p-value' : {
-        field: 'p-value',
+        field: 'pvalue',
         headerName: 'P-Value',
         // description: 'p-value',
         width: 90,

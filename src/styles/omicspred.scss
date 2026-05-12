@@ -1161,6 +1161,10 @@ button.MuiButton-root:hover {
     }
 }
 
+.highlight_section {
+    @include op_light_bg;
+}
+
 /* Bootstrap overwrite */
 .navbar {
     background-color: $op_color_2;

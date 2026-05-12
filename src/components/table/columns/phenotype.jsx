@@ -18,6 +18,11 @@ const publication_col = {...common_cols['publication'], field: 'dataset__publica
 const platform_type_col = {...common_cols['platform_type'], field: 'dataset__platform__platform_master__type'}
 const platform_name_col = {...common_cols['platform_name'], field: 'dataset__platform__name'}
 const ancestry_col = {...ancestry_cols['ancestries'], field: 'samples__ancestry_broad'};
+const publication_phewas_col = {...common_cols['publication'], headerName: 'PheWAS Publication'}
+// const phewas_count_col = {...common_cols['phewas_count'], sortable: false}
+// const phewas_count_col = {...common_cols['phewas_count'], field: 'phenotype_scores_count'}
+const phewas_phenotype_label_col = {...common_cols['phenotype_label'], field: 'phenotypes__label'}
+const phewas_phenotype_id_col = {...common_cols['phenotype_id'], field: 'phenotypes__id'}
 
 
 const molecular_traits = function(mt_entry, mt_type, index) {
@@ -178,7 +183,7 @@ const score_phewas_cols = {
         }
     },
     'gwas_catalog': {
-        field: 'samples__gwas_catalog',
+        field: 'samples__source_gwas_catalog',
         headerName: 'GWAS Catalog',
         width: 145,
         renderCell: (params) => {
@@ -311,7 +316,7 @@ const values_cols = [
     common_data_cols['hazard_ratio'],
     common_data_cols['z-score'],
     common_data_cols['p-value'],
-    common_data_cols['fdr'],
+    common_data_cols['adjusted_p-value'],
     common_data_cols['var_gene_exp'],
     score_phewas_cols['method_description']
 ]
@@ -319,11 +324,11 @@ const values_cols = [
 
 const phenotype_dataset_cols_prefix = [
     score_phewas_cols['omicspred_id'],
-    common_cols['phenotype_name'],
-    common_cols['phenotype_id'],
+    phewas_phenotype_label_col,
+    phewas_phenotype_id_col,
     score_phewas_cols['reported_trait'],
     score_phewas_cols['gwas_catalog'],
-    common_cols['publication'],
+    publication_phewas_col,
     ancestry_col,
     score_phewas_cols['gene'],
     score_phewas_cols['protein'],
@@ -338,8 +343,8 @@ const phewas_cols_prefix = [
     score_phewas_cols['gene'],
     score_phewas_cols['protein'],
     score_phewas_cols['metabolite'],
-    common_cols['phenotype_name'],
-    common_cols['phenotype_id'],
+    phewas_phenotype_label_col,
+    phewas_phenotype_id_col,
     score_phewas_cols['reported_trait'],
     score_phewas_cols['gwas_catalog'],
     common_cols['publication'],
@@ -351,11 +356,11 @@ export const phewas_cols = phewas_cols_prefix.concat(values_cols)
 
 
 const phenotype_score_cols_prefix = [
-    common_cols['phenotype_name'],
-    common_cols['phenotype_id'],
+    phewas_phenotype_label_col,
+    phewas_phenotype_id_col,
     score_phewas_cols['reported_trait'],
     score_phewas_cols['gwas_catalog'],
-    common_cols['publication'],
+    publication_phewas_col,
     ancestry_col,
     // score_phewas_cols['sample_age'],
     score_phewas_cols['sample_number'],
@@ -374,7 +379,7 @@ const phenotype_cols_prefix = [
     score_phewas_cols['platform_name'],
     score_phewas_cols['reported_trait'],
     score_phewas_cols['gwas_catalog'],
-    common_cols['publication'],
+    publication_phewas_col,
     ancestry_col,
     // score_phewas_cols['sample_age'],
     score_phewas_cols['sample_number'],
@@ -545,7 +550,7 @@ export const applications_cols = {
 let base_phenotype_columns = {
     'Full': [
         common_cols['phenotype_id'],
-        common_cols['phenotype_name'],
+        common_cols['phenotype_label'],
         common_cols['phenotype_category'],
         omicspred_id_old_col,
         // common_data_cols['r2'],
@@ -563,7 +568,7 @@ let base_phenotype_columns = {
     ],
     'Sum': [
         common_cols['phenotype_id'],
-        common_cols['phenotype_name'],
+        common_cols['phenotype_label'],
         common_cols['phenotype_category'],
         {
             field: 'sample_age',
@@ -653,7 +658,7 @@ export const phenotype_columns = build_columns();
 
 export const score_phenotype_columns = [
     common_cols['phenotype_id'],
-    common_cols['phenotype_name'],
+    common_cols['phenotype_label'],
     common_cols['phenotype_category'],
     applications_cols['cohort'],
     // common_data_cols['r2'],

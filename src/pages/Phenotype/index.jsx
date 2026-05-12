@@ -26,7 +26,7 @@ function Phenotype() {
     const url_suffix = "score/phewas/search?phenotype_id="+phenotype_id;
     // const child_columns = [
     //     common_cols['phenotype_id'],
-    //     common_cols['phenotype_name'],
+    //     common_cols['phenotype_label'],
     //     common_cols['phenotype_category'],
     //     common_cols['scores_count']
     // ]
