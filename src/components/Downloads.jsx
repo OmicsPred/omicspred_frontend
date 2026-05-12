@@ -1,5 +1,6 @@
 import { Database, Download, FileEarmarkSpreadsheet, FileEarmarkZip, FileEarmarkZipFill, FiletypeCsv, FiletypeXlsx, Folder2, InfoCircleFill } from 'react-bootstrap-icons';
 import { ToggleDiv } from './Generic';
+import { phewas_mention } from './Common';
 import Href from './Href';
 
 
@@ -41,7 +42,12 @@ export const download_labels = {
     },
     "phewas": {
         "label": "PheWAS",
-        "title": "Download PheWAS compressed text file",
+        "title": "Download PheWAS compressed text file ("+phewas_mention()+")",
+        "icon": <FileEarmarkZip className="hl_color" size={icon_size}/>
+    },
+    "phewas_full": {
+        "label": "PheWAS Full",
+        "title": "Download PheWAS compressed text file (full set)",
         "icon": <FileEarmarkZip className="hl_color" size={icon_size}/>
     },
     "validation_results": {
