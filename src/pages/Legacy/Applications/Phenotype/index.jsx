@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-import DataTableFromRestApi from '../../../components/table/DataTableFromRestApi';
-import DataTable from '../../../components/table/DataTable';
-import { common_cols, common_data_cols } from '../../../components/table/columns/common';
-import { applications_cols } from '../../../components/table/columns/phenotype';
-import restApiCall from '../../../components/RestAPI';
-import { scoresBadge, participantsBadge, thousandifyNumber, loading_data } from '../../../components/Generic';
-import { op_title, op_subtitle_no_asso, HeaderCard, no_entry_found } from '../../../components/Common';
-import { display_source } from '../../MolecularTrait/components/links';
+import DataTableFromRestApi from '../../../../components/table/DataTableFromRestApi';
+import DataTable from '../../../../components/table/DataTable';
+import { common_cols, common_data_cols } from '../../../../components/table/columns/common';
+import { applications_cols } from '../../../../components/table/columns/phenotype';
+import restApiCall from '../../../../components/RestAPI';
+import { scoresBadge, participantsBadge, thousandifyNumber, loading_data } from '../../../../components/Generic';
+import { op_title, op_subtitle_no_asso, HeaderCard, no_entry_found } from '../../../../components/Common';
+import { display_source } from '../../../MolecularTrait/components/links';
 
 
 function PhenotypeOld() {

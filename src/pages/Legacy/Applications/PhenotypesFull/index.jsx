@@ -1,6 +1,6 @@
-import DataTableServer from '../../../components/table/DataTableServer';
-import { phenotype_columns } from '../../../components/table/columns/phenotype'
-import { PageTitle, HeaderCard } from '../../../components/Common';
+import DataTableServer from '../../../../components/table/DataTableServer';
+import { phenotype_columns } from '../../../../components/table/columns/phenotype'
+import { PageTitle, HeaderCard } from '../../../../components/Common';
 import { get_information_content, PheWASDownloadButton } from '../components/components';
 
 
