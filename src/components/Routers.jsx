@@ -17,9 +17,6 @@ import Pathways from "../pages/Browse/Pathways";
 import Phenotype from "../pages/Phenotype";
 import Phenotypes from "../pages/Browse/Phenotypes";
 import PheWAS from "../pages/Browse/PheWAS";
-import PhenotypeOld from "../pages/Applications/Phenotype";
-import PhenotypesFull from "../pages/Applications/PhenotypesFull";
-import PhenotypesSum from "../pages/Applications/PhenotypesSum";
 import Platform from "../pages/Platform";
 import Platforms from "../pages/Browse/Platforms";
 import Protein from "../pages/MolecularTrait/Protein";
@@ -35,9 +32,11 @@ import Search from "../pages/Search";
 import Plot from "../pages/Plot";
 import { Redirect } from './Generic';
 import { Error404 } from "../pages/Errors";
-// import PlatformLegacy from "../pages/Legacy/Platform";
-// import ScoresLegacy from "../pages/Legacy/Scores";
-// import TissueLegacy from "../pages/Legacy/Tissue";
+
+// Legacy pages
+import PhenotypeOld from "../pages/Legacy/Applications/Phenotype";
+import PhenotypesFull from "../pages/Legacy/Applications/PhenotypesFull";
+import PhenotypesSum from "../pages/Legacy/Applications/PhenotypesSum";
 
 
 function OpRouters() {
@@ -67,8 +66,10 @@ function OpRouters() {
                 <Route path="/tissues" element={<Tissues />} />
                 <Route path="/phenotypes" element={<Phenotypes />} />
                 <Route path="/phewas" element={<PheWAS />} />
-                <Route path="/applications/phenotype/full" element={<PhenotypesFull />} />
-                <Route path="/applications/phenotype/sum" element={<PhenotypesSum />} />
+
+                {/* Legacy pages */}
+                <Route path="/legacy/phenotype/full" element={<PhenotypesFull />} />
+                <Route path="/legacy/phenotype/sum" element={<PhenotypesSum />} />
                 
                 {/* Individual pages */}
                 <Route path="/cohort/:cohort" element={<Cohort />} />
@@ -91,11 +92,6 @@ function OpRouters() {
                 {/* Search page */}
                 <Route path="/search" element={<Search />} />
 
-                {/* Test/Legacy pages */}
-                {/* <Route path="/legacy/platform/:platform" element={<PlatformLegacy />} />
-                <Route path="/legacy/scores/" element={<ScoresLegacy />} />
-                <Route path="/legacy/tissue/:tissue" element={<TissueLegacy />} /> */}
-
                 {/* Errors */}
                 <Route path="*" element={<Error404 />} />
 
@@ -106,6 +102,8 @@ function OpRouters() {
                 <Route path="/Scores/Metabolon/INTERVAL" element={<Redirect url='/platform/Metabolon'/>}/>
                 <Route path="/Scores/Illumina_RNAseq/INTERVAL" element={<Redirect url='/platform/RNAseq - Expression'/>}/>
                 <Route path="/Applications/pathway" element={<Redirect url='/pathways'/>}/>
+                <Route path="/applications/phenotype/full" element={<Redirect url='/phewas'/>}/>
+                <Route path="/applications/phenotype/sum" element={<Redirect url='/phewas'/>}/>
             </Routes>
         </Router>
     )
