@@ -1,7 +1,7 @@
 import { Book, Download } from 'react-bootstrap-icons';
-import { TooltipText } from '../../../components/Generic';
-import { download_applications_labels } from '../../../../src/components/Downloads';
-import Href from '../../../components/Href';
+import { TooltipText } from '../../../../components/Generic';
+import { download_applications_labels } from '../../../../components/Downloads';
+import Href from '../../../../components/Href';
 
 
 // /!\ Hard coded information /!\
