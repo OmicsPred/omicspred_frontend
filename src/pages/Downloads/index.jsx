@@ -155,13 +155,14 @@ function Downloads() {
             <div className='mt-5' id='phewas_associations'>
                 {op_subtitle_no_asso('hl','PheWAS associations')}
                 <div className='mt-4'>
-                    <p><span className='fw-bold'>Tab-delimited</span> files containing Phenome-wide association studies information linked to {project_name} Genetic Scores.<br />
+                    <div><span className='fw-bold'>Tab-delimited</span> files containing Phenome-wide association studies information linked to {project_name} Genetic Scores.</div>
+                    <div className='mt-1'>
                         Two types of export files are available:
                         <ul className='mt-2'>
                             <li>PheWAS file containing only the filtered associations, i.e. {phewas_mention()} (<span className='fw-bold'>PheWAS</span> column).</li>
                             <li>PheWAS file containing all the associations (<span className='fw-bold'>PheWAS Full</span> column).</li>
                         </ul>
-                    </p>
+                    </div>
                     <div className='mb-3'>
                         <Note msg={phewas_note}/>
                     </div>

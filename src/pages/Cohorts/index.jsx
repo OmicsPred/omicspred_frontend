@@ -9,6 +9,8 @@ import Href from "../../components/Href"
 // import p5 from "/src/assets/cohorts/VIKING.png";
 // import p6 from "/src/assets/cohorts/GTEXV8.png";
 
+const project_name = process.env.PROJECT_NAME
+
 
 const cohorts_list = [
   {
@@ -58,6 +60,18 @@ const cohorts_list = [
       MESA consists of a diverse, population-based sample of an initial 6,814 men and women aged 45-84 without known cardiovascular disease
       <br />
       The goal of MESA is to identify factors that contribute to cardiovascular disease that occurs with or without obvious symptoms.
+    </>
+  },
+  {
+    "title": "Million Veteran Program",
+    "labels": ["MVP"],
+    "href": "	https://www.mvp.va.gov/pwa/",
+    "desc": <>
+      This is a national research program looking at how genes, lifestyle, military experiences, and exposures affect health and wellness in Veterans.
+      <br />
+      Since launching in 2011, 1 million Veterans have joined MVP. It's the largest research effort at VA to improve health care for Veterans and one of the largest research programs in the world studying genes and health.
+      <br />
+      <span className='fw-bold'>Presently in {project_name}, it is only used in PheWAS.</span>
     </>
   },
   {

@@ -94,8 +94,8 @@ const score_phewas_cols = {
     'omicspred_id': omicspred_id_col,
     'gene': {
         field: 'score__genes__name',
-        minWidth: 150,
-        flex: 0.5,
+        minWidth: 125,
+        // flex: 0.5,
         headerName: 'Gene name',
         renderHeader: () => {
             return (molecular_trait_header('Gene'))
@@ -119,8 +119,8 @@ const score_phewas_cols = {
     },
     'protein': {
         field: 'score__proteins__name',
-        minWidth: 150,
-        flex: 0.5,
+        minWidth: 125,
+        // flex: 0.5,
         headerName: 'Protein name',
         renderHeader: () => {
             return (molecular_trait_header('Protein'))
@@ -144,8 +144,8 @@ const score_phewas_cols = {
     },
     'metabolite': {
         field: 'score__metabolites__name',
-        minWidth: 150,
-        flex: 0.5,
+        minWidth: 125,
+        // flex: 0.5,
         headerName: 'Metabolite name',
         renderHeader: () => {
             return (molecular_trait_header('Metabolite'))
@@ -347,7 +347,7 @@ const phewas_cols_prefix = [
     phewas_phenotype_id_col,
     score_phewas_cols['reported_trait'],
     score_phewas_cols['gwas_catalog'],
-    common_cols['publication'],
+    publication_phewas_col,
     ancestry_col,
     score_phewas_cols['sample_number'],
     score_phewas_cols['cohort']

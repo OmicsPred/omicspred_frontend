@@ -4,7 +4,6 @@ import About from "../pages/About";
 import Cohort from "../pages/Cohort";
 import Cohorts from "../pages/Cohorts";
 import Dataset from "../pages/Dataset";
-// import DatasetPhenotype from "../pages/DatasetPhenotype";
 import Datasets from "../pages/Browse/Datasets";
 import Documentation from "../pages/Documentation";
 import Downloads from "../pages/Downloads";

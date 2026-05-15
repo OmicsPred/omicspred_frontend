@@ -35,7 +35,7 @@ function Dataset() {
     const training_suffix = '__training';
 
     const phewas_endpoint_url = 'score/phewas/search?opd_id='+opd_id;
-    const phewas_column_keys = ['score__id','phenotypes_LIST__id','samples_LIST__sample_number','data_values__FDR'];
+    const phewas_column_keys = ['score__id','phenotypes_LIST__id','samples_LIST__sample_number','data_values__adjusted_p-value','data_values__effect_size'];
 
 
     const fetchDatasetData = async () => {
