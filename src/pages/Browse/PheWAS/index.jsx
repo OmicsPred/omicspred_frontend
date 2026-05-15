@@ -18,6 +18,7 @@ function PheWAS() {
     const [publications, setPublications] = useState({});
     const [IDInput, setIDInput] = useState('');
     const [phenotypeInput, setPhenotypeInput] = useState('');
+    const [gwasInput, setGwasInput] = useState('');
     const [molecularTraitInput, setMolecularTraitInput] = useState('');
     const [selectedMolecularTraitType, setSelectedMolecularTraitType] = useState('Gene');
 
@@ -69,6 +70,9 @@ function PheWAS() {
         if (phenotypeInput && phenotypeInput.length > 0) {
             filters_list.push(`phenotype:${phenotypeInput}`)
         }
+        if (gwasInput && gwasInput.length > 0) {
+            filters_list.push(`gwas:${gwasInput}`)
+        }
         if (selectedPublication && selectedPublication.length > 0) {
             filters_list.push(`phewas_publication:${selectedPublication}`)
         }
@@ -99,6 +103,10 @@ function PheWAS() {
         setPhenotypeInput(event.target.value.trim());
     }
 
+    const handleGWASInput = async (event) => {
+        setGwasInput(event.target.value.trim());
+    }
+
     const handleMolecularTraitTypeChange = async (event) => {
         setSelectedMolecularTraitType(event.target.value);
     }
@@ -114,13 +122,13 @@ function PheWAS() {
 
     useEffect(() => {
         updateScorePheWASEndpoint();
-    },[selectedPublication, IDInput, phenotypeInput, molecularTraitInput, selectedMolecularTraitType]);
+    },[selectedPublication, IDInput, phenotypeInput, gwasInput, molecularTraitInput, selectedMolecularTraitType]);
 
     return (
         <div>
             <PageTitle type={data_type} category="Results" label='PheWAS' title={page_label} count={phenotypeCount}/>
             <div className="mt_minus_1">
-                All the PheWAS results available in {process.env.PROJECT_NAME} (with {phewas_mention()}).
+                All the Phenome-wide association studies (PheWAS) results available in {process.env.PROJECT_NAME} (with {phewas_mention()}).
             </div>
             <div className="mt-4">
                 {/* Filter Form */}
@@ -137,13 +145,19 @@ function PheWAS() {
                                             </div>
                                             {/* Publication */}
                                             {select_form('Publication',selectedPublication,publications,handlePublicationChange)}
+                                            {/* GWAS Catalog Study ID */}
+                                            <div className='mt-2'>
+                                                <FormLabel id="gwas_label" className='op_form_label'>GWAS Catalog</FormLabel>
+                                            </div>
+                                            {input_form('GCST ID','gwas',gwasInput,handleGWASInput)}
                                         </div>
                                         <div className='compact_form'>
                                             <div>
                                                 <FormLabel id="phenotype_label" className='op_form_label'>Phenotype</FormLabel>
                                             </div>
                                             {/* Tissue */}
-                                            {input_form('Phenotype ID / Name','phenotype',phenotypeInput,handlePhenotypeInput)}                                            {/* OmicsPred ID / Name */}
+                                            {input_form('Phenotype ID / Name','phenotype',phenotypeInput,handlePhenotypeInput)}
+                                            {/* OmicsPred ID / Name */}
                                             <div className='mt-2'>
                                                 <FormLabel id="score_label" className='op_form_label'>Genetic Score</FormLabel>
                                             </div>
@@ -162,7 +176,7 @@ function PheWAS() {
                             </div>
                         </div>
                         <div className='ms-2'>
-                            <Href role='button' text='Downloads page' href='/downloads#data_files' title='PheWAS data is downloadable by dataset in the Downloads page' icon={<Download/> }/>
+                            <Href role='button' text='Downloads page' href='/downloads' title='PheWAS data is downloadable by dataset in the Downloads page' icon={<Download/> }/>
                         </div>
                     </div>
                      : ''

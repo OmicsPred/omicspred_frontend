@@ -180,7 +180,7 @@ export const common_cols = {
     'omicspred_id': {
         field: 'id',
         headerName: 'OmicsPred ID',
-        minWidth: 130,
+        minWidth: 125,
         flex: 0.5,
         resizable: false,
         hideable: false,
@@ -659,7 +659,7 @@ export const common_cols = {
     'protein_name_from_list': {
         field: 'protein_name',
         minWidth: 120,
-        flex: 0.5,
+        // flex: 0.5,
         headerName: 'Protein',
         renderHeader: () => {
             return (molecular_trait_header('Protein'))
@@ -678,8 +678,8 @@ export const common_cols = {
     'metabolite_id': {
         field: 'metabolite_id',
         headerClassName: 'col_border_left',
-        minWidth: 150,
-        flex: 0.6,
+        minWidth: 130,
+        // flex: 0.6,
         hideable: false,
         headerName: 'Metabolite ID',
         renderHeader: () => {
@@ -851,7 +851,7 @@ export const common_cols = {
     'phenotype_label': {
         field: 'phenotype_label',
         headerName: 'Phenotype name',
-        minWidth: 200,
+        minWidth: 180,
         // flex: 1,
         renderCell: (params) => {
             let phenotype_labels = [];

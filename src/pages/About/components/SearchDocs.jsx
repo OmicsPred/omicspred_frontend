@@ -115,18 +115,18 @@ const SearchDocs = () => {
                         <td className="fw-bold">{element_icon('phenotype')}Phenotypes</td>
                         <td>
                             <ul className="ps-4 mb-0">
-                                <li>Phenotype ID (e.g. PheCode ID)</li>
+                                <li>Phenotype ID (e.g. EFO ID, Mondo ID, ...)</li>
                                 <li>Name</li>
                                 <li>Category</li>
-                                <li>Linked {project_name} Score ID(s)</li>
+                                <li>Mapped PheCode</li>
                             </ul>
                         </td>
                         <td>
                             <ul className="example_list">
+                                <li>{seach_example('MONDO_0005148')}</li>
+                                <li>{seach_example('type 2 diabetes mellitus')}</li>
+                                <li>{seach_example('Metabolic disorder')}</li>
                                 <li>{seach_example('250.2')}</li>
-                                <li>{seach_example('Type 2 diabetes')}</li>
-                                <li>{seach_example('endocrine/metabolic')}</li>
-                                <li>{seach_example('OPGS001665')}</li>
                             </ul>
                         </td>
                     </tr>

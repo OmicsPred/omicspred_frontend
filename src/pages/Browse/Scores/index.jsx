@@ -62,7 +62,9 @@ function Scores() {
             let publications_data = {};
             for (let i=0; i<publications.results.length; i++) {
                 const publication = publications.results[i];
-                publications_data[publication.id] = publication.id+' - '+publication.firstauthor
+                if (publication.publication_type != 'PheWAS') {
+                    publications_data[publication.id] = publication.id+' - '+publication.firstauthor;
+                }
             }
             setPublications(publications_data);
         }

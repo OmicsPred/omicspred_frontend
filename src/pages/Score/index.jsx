@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Download } from 'react-bootstrap-icons';
 import { internal_publication_link, internal_platform_link, internal_dataset_link, internal_tissue_link, op_title, op_subtitle_no_asso, no_entry_found, Header2Cards, ancestry_label } from '../../components/Common';
@@ -34,6 +34,7 @@ function Score() {
     const [radarData, setRadarData] = useState({})
     const [platformDownloads, setPlatformDownloads] = useState({})
 
+    const is_dev = (!process.env.GA4_TRACKING_ID || process.env.GA4_TRACKING_ID == '') ? true : false;
 
     const get_pathways = (data) => {
         let pathways = []
@@ -361,10 +362,10 @@ function Score() {
                                 {/* Ancestry distribution */}
                                 { scoreData.ancestry ?
                                     <div className='ancestry_container d-flex mb-3'>
-                                        { radarData && Object.keys(radarData).length > 0 ?
+                                        { is_dev && radarData && Object.keys(radarData).length > 0 ?
                                             <div>{ancestry_dist(true)}</div> : <>{ancestry_dist()}</>
                                         }
-                                        { radarData && Object.keys(radarData).length > 0 ?
+                                        { is_dev && radarData && Object.keys(radarData).length > 0 ?
                                             // <div className='ms-3'>
                                             <div className='ancestry_container d-flex mb-3'>
                                                 <div className="card p-0">
