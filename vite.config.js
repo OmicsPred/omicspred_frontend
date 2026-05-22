@@ -32,6 +32,7 @@ const lib_chunks = {
 
 
 const build_code_splitting_groups = () => {
+	// node_modules
 	const lib_group_names = Object.keys(lib_chunks);
 	let lib_groups = []
 	for (let i=0; i<lib_group_names.length; i++) {
@@ -42,6 +43,30 @@ const build_code_splitting_groups = () => {
 		}
 		lib_groups.push(group)
 	}
+
+	// src/components
+	const components_group = {
+		name: 'components',
+		test: '/src/components/table|ancestry'
+	}
+	lib_groups.push(components_group)
+
+	// - TESTS - //
+	// const components = ['table','ancestry']
+	// for (let j=0; j<components.length; j++) {
+	// 	const name = components[j]
+	// 	const component_group = {
+	// 		name: name,
+	// 		test: '/src/components/'+name
+	// 	}
+	// 	lib_groups.push(component_group)
+	// }
+	// const browse_group = {
+	// 	name: 'browse',
+	// 	test: '/src/pages/Browse'
+	// }
+	// lib_groups.push(browse_group)
+
 	return lib_groups
 }
 

@@ -16,19 +16,24 @@ export const faqs_list = [
     {
       title: "What can we do with these genetic score models?",
       type: "gen_q",
-      text: "These genetic score models can be used to predict levels of biomolecular traits in genotyped cohorts. The predicted levels can be associated with complex phenotypes, which offers as a useful tool to investigate the molecular underpinnings of these phenotypes. The predicted levels can also allow integrative analyses with other available biomolecular traits in the cohort.",
+      text: <>
+        These genetic score models can be used to predict levels of biomolecular traits in genotyped cohorts. The predicted levels can be associated with complex phenotypes, which offer a useful tool to investigate the molecular underpinnings of these phenotypes. The predicted levels can also allow integrative analyses with other available biomolecular traits in the cohort.<br />
+        Alternatively, genetic score models can be applied directly to genome-wide association study (GWAS) summary statistics without the need for individual-level data using tools like S-PrediXcan.
+      </>
     },
     {
       title: "How can I download model files of these genetic scores?",
       type: "gen_q",
       text: [
-        "You can find a download links on the Score, Platform and Publication pages. You can also find the links on the ",
+        "You can find download links on the Dataset, Platform and Publication pages. You can also find the links on the ",
         <Href key='download' href='/downloads' text='Downloads page'/>,
-        ". The genetic scores are under the categories ",
-        <b key='scoring_file'>Scoring files</b>,
-        ' and ',
+        <>.<br />The genetic scores are mainly under the category </>,
         <b key='pgsc_calc_file'>Scoring files<small> (pgsc_calc compatible)</small></b>,
-        '. Each of these zipped files contains all the scoring files associated with a dataset/platform.'
+        '. Each of these zipped files contains all the scoring files associated with a dataset/platform and are compatible with the ',
+        <><Href href='https://pgsc-calc.readthedocs.io/en/latest/' text='pgsc_calc'/> tool.<br/></>,
+        'The genetic scores are also available in ',
+        <><Href href='https://predictdb.org/' text='PredictDB'/> SQLite format, compatible with the </>,
+        <><Href href='https://github.com/hakyimlab/MetaXcan' text='MetaXcan'/> tools.</>
       ],
     },
     {
@@ -37,7 +42,12 @@ export const faqs_list = [
       text: <>The {url_tooltip('pgs_catalog')} provides a tool called {url_tooltip('pgsc_calc')} to calculate genetic scores, with extended options.</>
     },
     {
-      title: " What method was used for genetic score development and why?",
+      title: "How to apply the score models with GWAS summary stats?",
+      type: "gen_q",
+      text: <><Href href='https://github.com/hakyimlab/MetaXcan' text='Metaxcan'/> provides a tool called S-PrediXcan to calculate score association results directly from GWAS summary statistics.  Metaxcan-compatible PredictDB SQLite and covariance files are available in the <Href href='/downloads#genetic_scores' text='Downloads - Genetic scores'/> section.</>
+    },
+    {
+      title: "What method was used for genetic score development and why?",
       type: "score_dev",
       text: "The machine learning method Bayesian Ridge(BR), that based on individual - level genotype data, was used to construct genetic scores of biomolecular traits in the Atlas. Because it has been shown to perform well relative to other genetic score development approaches in both the previous study (Xu et al. Cell Genomics, 2022) and the benchmark carried out in this study. Additionally, Bayesian ridge has been shown to scale well to large numbers of traits, thus improving computational efficiency and consistency with green computing (Lannelongue et al. Advanced Science, 2021).",
     },
