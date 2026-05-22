@@ -159,6 +159,8 @@ function About() {
 								<Note msg={<>PLINK2 is not compatible with the file header (lines starting with the character <code>#</code>), therefore these lines need to be removed from the {project_name} genetic score files before running the PLINK2 command.</>} />
 							</div>
 						</div>
+						<h5 className="mt-5 mb-3"><ChevronRight size="18" className='hl_color align-top me-1' style={{marginTop:"1px"}}/>How to apply the score models with GWAS summary stats ?</h5>
+						<p><Href href='https://github.com/hakyimlab/MetaXcan' text='Metaxcan'/> provides a tool called S-PrediXcan to calculate score association results directly from GWAS summary statistics.  Metaxcan-compatible PredictDB SQLite and covariance files are available in the <Href href='/downloads#genetic_scores' text='Downloads - Genetic scores'/> section.</p>
 					</div>
 		},
 		'Inclusion Criteria': {
