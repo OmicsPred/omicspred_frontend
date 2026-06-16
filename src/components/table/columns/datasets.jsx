@@ -1,6 +1,6 @@
 
 import { FileEarmarkArrowDown, Stack, People, GraphUp, LayersFill } from 'react-bootstrap-icons';
-import { common_cols, common_column_groups } from './common';
+import { common_cols, common_column_groups, data_separator } from './common';
 import { ancestry_cols } from './ancestry';
 import { download_labels, ExpandableDownloadButton, get_download_list } from '../../Downloads';
 import { ToggleDiv, TooltipText, phewasBadge } from '../../Generic';
@@ -31,6 +31,15 @@ const download_link = (url,type=undefined) => {
                 </a>}
         />
     );
+}
+
+
+const phewas_publication_link = (publication) => {
+    const year = publication.date_publication.split('-')[0];
+    const tooltip_title = <>{publication.firstauthor}{publication.firstauthor.endsWith('.') ? '' : <i> et al. </i>}{publication.journal} ({year})</>
+    return (
+        <Href href={"/publication/"+publication.id} text={<TooltipText title={tooltip_title} text={publication.id} ttype='link'/>}/>
+    )
 }
 
 
@@ -237,7 +246,7 @@ export const datasets_columns = [
     {
         field: 'metadata',
         headerName: 'Metadata',
-        minWidth: 75,
+        minWidth: 70,
         // flex: 0.5,
         align: 'right',
         renderCell: (params) => {
@@ -313,13 +322,31 @@ export const datasets_phewas_columns = [
     common_cols['platform_type'],
     common_cols['tissue_label'],
     publication_score_col,
+    {
+        field: 'dataset__dataset_phewas__publication__id',
+        headerName: 'PheWAS Publication(s)',
+        minWidth: 180,
+        // flex: 0.8,
+        renderCell: (params) => {
+            const phewas_publications = params.row.phewas_publications;
+            if (phewas_publications && phewas_publications.length > 0) {
+                return phewas_publications.map((phewas_publication, index) => <span key={phewas_publication.id}>{index > 0 ? data_separator:''}{phewas_publication_link(phewas_publication)}</span>)
+            }
+            else {
+                return default_cell_value;
+            }
+        },
+        valueGetter: (value, row) => {
+            return row.publication.id;
+        }
+    },
     common_cols['scores_count'],
     columns_for_dataset['phewas_count'],
     {
         field: 'phewas',
         headerName: 'PheWAS',
         description: 'Filtered PheWAS ('+phewas_mention()+')',
-        minWidth: 75,
+        minWidth: 70,
         // flex: 0.5,
         align: 'right',
         renderCell: (params) => {
@@ -361,8 +388,6 @@ const dataset_common_end = [
     columns_for_dataset['phewas_count'],
     ancestry_cols['ancestry_training_computed'],
     ancestry_cols['ancestry_validation_computed'],
-    // ancestry_cols['ancestry_training'],
-    // ancestry_cols['ancestry_validation'],
     columns_for_dataset['plot_link'],
     columns_for_dataset['downloads_links']
 ]

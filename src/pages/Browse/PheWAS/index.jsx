@@ -16,7 +16,9 @@ import { molecular_trait_types } from '../../../components/Common';
 function PheWAS() {
     const [phenotypeCount, setPhenotypesCount] = useState()
     const [publications, setPublications] = useState({});
+    const [platforms, setPlatforms] = useState([]);
     const [IDInput, setIDInput] = useState('');
+    const [selectedPlatform, setSelectedPlatform] = useState('');
     const [phenotypeInput, setPhenotypeInput] = useState('');
     const [gwasInput, setGwasInput] = useState('');
     const [molecularTraitInput, setMolecularTraitInput] = useState('');
@@ -60,6 +62,19 @@ function PheWAS() {
         }
     }
 
+    const fetchPlatforms = async () => {
+        const platforms = await restApiCall('platform/all');
+        if (platforms.results) {
+            let platforms_data = {};
+            for (let i=0; i<platforms.results.length; i++) {
+                const platform_item = platforms.results[i];
+                const platform_type = platform_item.type;
+                platforms_data[platform_item.name] = platform_type;
+            }
+            setPlatforms(platforms_data);
+        }
+    }
+
     const get_url_endpoint = () => {
         let endpoint_suffix = url_suffix;
         let filters_list = []
@@ -72,6 +87,9 @@ function PheWAS() {
         }
         if (gwasInput && gwasInput.length > 0) {
             filters_list.push(`gwas:${gwasInput}`)
+        }
+        if (selectedPlatform && selectedPlatform.length > 0) {
+            filters_list.push(`platform:${selectedPlatform}`)
         }
         if (selectedPublication && selectedPublication.length > 0) {
             filters_list.push(`phewas_publication:${selectedPublication}`)
@@ -99,6 +117,10 @@ function PheWAS() {
         setIDInput(event.target.value.trim());
     }
 
+    const handlePlatformChange = async (event) => {
+        setSelectedPlatform(event.target.value);
+    }
+
     const handlePhenotypeInput = async (event) => {
         setPhenotypeInput(event.target.value.trim());
     }
@@ -118,11 +140,12 @@ function PheWAS() {
     useEffect(() => {
         fetchCount();
         fetchPheWASPublications();
+        fetchPlatforms();
     },[]);
 
     useEffect(() => {
         updateScorePheWASEndpoint();
-    },[selectedPublication, IDInput, phenotypeInput, gwasInput, molecularTraitInput, selectedMolecularTraitType]);
+    },[selectedPublication, selectedPlatform, IDInput, phenotypeInput, gwasInput, molecularTraitInput, selectedMolecularTraitType]);
 
     return (
         <div>
@@ -145,6 +168,8 @@ function PheWAS() {
                                             </div>
                                             {/* Publication */}
                                             {select_form('Publication',selectedPublication,publications,handlePublicationChange)}
+                                            {/* Platform */}
+                                            {select_form('Platform',selectedPlatform,platforms,handlePlatformChange)}
                                             {/* GWAS Catalog Study ID */}
                                             <div className='mt-2'>
                                                 <FormLabel id="gwas_label" className='op_form_label'>GWAS Catalog</FormLabel>
@@ -183,7 +208,7 @@ function PheWAS() {
                 }
             </div>
             <div className="mt-4">
-                <DataTableServer key={scorePheWASEndpoint} table_key={data_type+'s'} url_suffix={scorePheWASEndpoint} columns={phewas_cols} hidden_columns={['z-score']} nosearchbar='1'/>
+                <DataTableServer key={scorePheWASEndpoint} table_key={data_type+'s'} url_suffix={scorePheWASEndpoint} columns={phewas_cols} hidden_columns={['dataset_id','dataset__tissue__label','z-score']} nosearchbar='1'/>
             </div>
         </div>
     );

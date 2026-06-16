@@ -17,10 +17,10 @@ const omicspred_id_col = {...common_cols['omicspred_id'], field: 'score__id'}
 const publication_col = {...common_cols['publication'], field: 'dataset__publication__id'}
 const platform_type_col = {...common_cols['platform_type'], field: 'dataset__platform__platform_master__type'}
 const platform_name_col = {...common_cols['platform_name'], field: 'dataset__platform__name'}
+const platform_name_icon_col = {...common_cols['platform_name_icon'], field: 'dataset__platform__name', minWidth: 120}
+const tissue_label_col = {...common_cols['tissue_label'], field: 'dataset__tissue__label'}
 const ancestry_col = {...ancestry_cols['ancestries'], field: 'samples__ancestry_broad'};
 const publication_phewas_col = {...common_cols['publication'], headerName: 'PheWAS Publication'}
-// const phewas_count_col = {...common_cols['phewas_count'], sortable: false}
-// const phewas_count_col = {...common_cols['phewas_count'], field: 'phenotype_scores_count'}
 const phewas_phenotype_label_col = {...common_cols['phenotype_label'], field: 'phenotypes__label'}
 const phewas_phenotype_id_col = {...common_cols['phenotype_id'], field: 'phenotypes__id'}
 
@@ -215,25 +215,6 @@ const score_phewas_cols = {
             return value;
         }
     },
-    // 'sample_age': {
-    //     field: 'sample__sample_age',
-    //     headerName: 'Mean Age',
-    //     width: 120,
-    //     renderCell: (params) => {
-    //         const sample = params.row.sample;
-    //         if (sample.sample_age) {
-    //             let value = sample.sample_age;
-    //             if (sample.sample_age_sd) {
-    //                 value += ' ± '+sample.sample_age_sd;
-    //             }
-    //             return value;
-    //         }
-    //         return default_cell_value;
-    //     },
-    //     valueGetter: (value, row) => {
-    //         return row.sample.sample_age;
-    //     }
-    // },
     'sample_number': {
         field: 'samples__sample_number',
         headerName: 'Sample',
@@ -267,20 +248,6 @@ const score_phewas_cols = {
             return sample_numbers.reduce((a,b)=>a+b);
         }
     },
-    // 'sample_percent_male': {
-    //     field: 'sample__sample_percent_male',
-    //     headerName: '%Male',
-    //     width: 80,
-    //     renderCell: (params) => {
-    //         if (params.row.sample.sample_percent_male) {
-    //             return params.row.sample.sample_percent_male+'%';
-    //         }
-    //         return default_cell_value;
-    //     },
-    //     valueGetter: (value, row) => {
-    //         return row.sample.sample_percent_male;
-    //     }
-    // },
     'cohort': {
         field: 'samples__cohorts',
         headerName: 'Cohort',
@@ -303,9 +270,7 @@ const score_phewas_cols = {
             }
             return Object.keys(cohorts).join(', ');
         }
-    },
-    'platform_type': platform_type_col,
-    'platform_name': platform_name_col
+    }
 }
 
 
@@ -343,6 +308,9 @@ const phewas_cols_prefix = [
     score_phewas_cols['gene'],
     score_phewas_cols['protein'],
     score_phewas_cols['metabolite'],
+    platform_name_icon_col,
+    common_cols['dataset_id'],
+    tissue_label_col,
     phewas_phenotype_label_col,
     phewas_phenotype_id_col,
     score_phewas_cols['reported_trait'],
@@ -375,8 +343,8 @@ const phenotype_cols_prefix = [
     score_phewas_cols['gene'],
     score_phewas_cols['protein'],
     score_phewas_cols['metabolite'],
-    score_phewas_cols['platform_type'],
-    score_phewas_cols['platform_name'],
+    platform_type_col,
+    platform_name_col,
     score_phewas_cols['reported_trait'],
     score_phewas_cols['gwas_catalog'],
     publication_phewas_col,

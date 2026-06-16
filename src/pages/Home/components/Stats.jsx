@@ -115,7 +115,7 @@ const Stats = () => {
             <div>
                 {/* <h5 className='mb-4'>{project_name} data summary</h5> */}
                 <h5 className='mt-2 mb-4'>{project_name} genetic scores</h5>
-                <div className='op_stats2'>
+                <div className='op_stats2 mb-4'>
                     { scoresCount && scoresCount > 0 ? display_count_block_main('Genetic Scores',scoresCount,'/scores' ,'Scores') : ''}
                     <PlatformsDistribution scores_count={scoresCount} colours={type_colours} />
                 </div>
