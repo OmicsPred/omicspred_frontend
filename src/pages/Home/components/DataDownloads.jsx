@@ -1,4 +1,4 @@
-import { CodeSlash, Download } from "react-bootstrap-icons";
+import { CodeSlash, Download, FileText } from "react-bootstrap-icons";
 import Href from "../../../components/Href";
 
 const DataDownloads = () => {
@@ -10,7 +10,7 @@ const DataDownloads = () => {
                     {/* Downloads */}
                     <div className="card op_card_homepage">
                     <div className="card-body">
-                        <h4 className="card-title hl_bb mb-2 pb-2">Data files</h4>
+                        <h4 className="card-title hl_bb mb-2 pb-2"><FileText className="me-2"/>Data files</h4>
                         <p className="card-text">
                             Genetic scores and Phenotype data files are publicly accessible for download on Box<sup>TM</sup>.
                         </p>
@@ -21,7 +21,7 @@ const DataDownloads = () => {
                     {/* REST API */}
                     <div className="card op_card_homepage">
                     <div className="card-body">
-                        <h4 className="card-title hl_bb mb-2 pb-2">REST API</h4>
+                        <h4 className="card-title hl_bb mb-2 pb-2"><CodeSlash className="me-2"/>REST API</h4>
                         <p className="card-text">
                             Programmatic access to the {project_name} metadata is available via a REST API.
                         </p>

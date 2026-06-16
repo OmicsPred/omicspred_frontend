@@ -677,6 +677,6 @@ export const ancestry_label = (anc) => {
 
 
 export const display_ancestry = (ancestry) => {
-    const ancestry_label = get_ancestry_name(ancestry);
-    return <><span className={'me-2 align-middle anc_label anc_'+ancestry_label} title={ ancestry_label == 'MAO' &&  ancestry != 'Multi-ancestry' ? 'Multi-ancestry': ancestry} style={{lineHeight:"16px",marginBottom:"1px"}}></span><span className='align-middle'>{ancestry}</span></>
+    const ancestry_label_val = get_ancestry_name(ancestry);
+    return <><span className={'me-2 align-middle anc_label anc_'+ancestry_label_val} title={ ancestry_label_val == 'MAO' &&  ancestry != 'Multi-ancestry' ? 'Multi-ancestry': ancestry} style={{lineHeight:"16px",marginBottom:"1px"}}></span><span className='align-middle'>{ancestry}</span></>
 }

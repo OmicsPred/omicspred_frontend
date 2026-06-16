@@ -5,7 +5,7 @@ import Href from '../../Href';
 
 export const default_cell_value = process.env.DEFAULT_CELL_VALUE;
 
-const data_separator = ', ';
+export const data_separator = ', ';
 const display_threshold = 2;
 
 const variant_rate_label = 'Variant Match Rate'
@@ -126,11 +126,8 @@ export const omicspred_external_links = function(op_data) {
 
 export const omicspred_platform_omics_type = function(platform,type) {
     return (
-        <a className="align-middle" key={platform+'-'+type} href={"/platform/"+platform}><Stack size="0.9em" className={"align-middle me-2 color_"+type}/><span className='align-middle'>{platform}</span></a>
+        <a className="align-middle" key={platform+'-'+type} href={"/platform/"+platform}><Stack size="0.9em" className={"align-middle me-2 color_"+type}/><TooltipText title={type+' platform'} text={<span className='align-middle'>{platform}</span>} ttype='link'/></a>
     )
-    // return (
-    //     <a key={platform+'-'+type} href={"/platform/"+platform}><span className={"border_left_mark border_color_"+type}>{platform}</span></a>
-    // )
 }
 
 
@@ -270,6 +267,11 @@ export const common_cols = {
                 dataset_id = params.row.dataset_id;
                 dataset_name = params.row.dataset_name;
             }
+            // PheWAS endpoints
+            else if (params.row.score) {
+                dataset_id = params.row.score.dataset_id;
+                dataset_name = params.row.score.dataset_name
+            }
             // Performance endpoints
             else if (params.row.dataset) {
                 dataset_id = params.row.dataset.id;
@@ -350,7 +352,7 @@ export const common_cols = {
             if (!platform) {
                 platform = row.score.platform;
             }
-            return platform
+            return platform.name
         }
     },
     'platform_name_icon': {
@@ -367,9 +369,19 @@ export const common_cols = {
             )
         },
         renderCell: (params) => {
-            return omicspred_platform_omics_type(params.row.platform.name,params.row.platform.type)
+            let platform = params.row.platform;
+            if (!platform) {
+                platform = params.row.score.platform;
+            }
+            return omicspred_platform_omics_type(platform.name,platform.type)
         },
-        valueGetter: (value, row) => { return row.platform.name }
+        valueGetter: (value, row) => {
+            let platform = row.platform;
+            if (!platform) {
+                platform = row.score.platform;
+            }
+            return platform.name
+        }
     },
     'platform_version': {
         field: 'platform__version',
@@ -451,14 +463,19 @@ export const common_cols = {
         minWidth: 150,
         // flex: 1,
         renderCell: (params) => {
-            if (params.row.tissue) {
-                const tissue = params.row.tissue;
-                return omicspred_internal_link({'id': tissue.id, 'label': tissue.label},'tissue');
+            let tissue = params.row.tissue;
+            if (!tissue) {
+                tissue = params.row.score.tissue
             }
+            return omicspred_internal_link({'id': tissue.id, 'label': tissue.label},'tissue');
         },
         valueGetter: (value, row) => {
-            if (row.tissue) {
-                return row.tissue.label;
+            let tissue = row.tissue
+            if (!tissue) {
+                tissue = row.score.tissue;
+            }
+            if (tissue.label) {
+                return tissue.label
             }
             else {
                 return default_cell_value;
@@ -1076,6 +1093,7 @@ export const common_cols = {
     'scores_count':{
         field: 'scores_count',
         headerName: '#Scores',
+        description: 'Number of genetic scores',
         type: 'number',
         minWidth: 100,
         // flex: 0.5,

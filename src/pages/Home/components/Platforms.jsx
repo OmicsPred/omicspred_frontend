@@ -112,7 +112,7 @@ const Platforms = () => {
             {
                 Object.keys(categorizedPlatform).sort().map((key) => {
                     return(
-                        <div key={key+"_main"} className="mt-5">
+                        <div key={key+"_main"} className="mt-4">
                             <h2 className="py-2" key={key}><DashLg className={"color_"+key+" me-3"} size={50}/>{key}<DashLg className={"color_"+key+" ms-3"} size={50}/></h2>
                             <div className="card_containter flex-lg-row flex-md-row" key={key+"_sub"}>
                             {categorizedPlatform[key].map((platform_cat) =>

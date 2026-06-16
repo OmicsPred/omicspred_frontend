@@ -95,6 +95,7 @@ function OpRouters() {
                 <Route path="*" element={<Error404 />} />
 
                 {/* Redirections */}
+                <Route path="/Scores" element={<Redirect url='/scores'/>}/>
                 <Route path="/Scores/Olink/INTERVAL" element={<Redirect url='/platform/Olink'/>}/>
                 <Route path="/Scores/Somalogic/INTERVAL" element={<Redirect url='/platform/Somalogic'/>}/>
                 <Route path="/Scores/Nightingale/INTERVAL" element={<Redirect url='/platform/Nightingale'/>}/>

@@ -21,7 +21,8 @@ function Header() {
                     <img
                         className='pe-2'
                         src={'/images/'+project_name+'_logo_white.png'}
-                        height='30'
+                        height='40'
+                        // height='30'
                         alt=''
                         loading='lazy'
                     />{project_name}

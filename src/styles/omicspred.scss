@@ -512,7 +512,7 @@ sup {
 }
 
 .op_title {
-    color: $op_color_5;
+    color: $op_color_2;
 }
 
 .page_title {
@@ -637,6 +637,11 @@ sup {
 .card-header {
     @include op_dark_bg;
     color: $op_white !important;
+}
+.card-title {
+    svg, span {
+        vertical-align: middle;
+    }
 }
 
 .card-header-button {
@@ -1197,6 +1202,7 @@ button.MuiButton-root:hover {
 }
 a.navbar-brand {
     @include link_hover_color;
+    padding: 0px;
     &:hover {
         color: $op_white !important;
     }

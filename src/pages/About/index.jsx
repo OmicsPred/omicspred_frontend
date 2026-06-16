@@ -112,9 +112,12 @@ function About() {
 						<h5 className="mt-5 mb-3"><ChevronRight size="18" className='hl_color align-top me-1' style={{marginTop:"1px"}}/>How to calculate genetic scores on a new cohort ?</h5>
 						<div className="mt-4">
 							<h6 className="fw-bold"><ChevronDoubleRight size="14" className='hl_color align-top me-1' style={{marginTop:"2px"}}/>pgsc_calc</h6>
-							<p className="mb-4">
+							<p>
 								The {url_tooltip('pgs_catalog')} provides a tool called {url_tooltip('pgsc_calc')} to calculate genetic scores, with extended options.
 							</p>
+							<div>
+								<Note msg={<>{project_name} Genetics Scoring files are compatible with {url_tooltip('pgsc_calc')} from the version <Href href="https://github.com/PGScatalog/pgsc_calc/releases/tag/v2.3.0" text="2.3.0"/>.</>} />
+							</div>
 						</div>
 						<div className="mt-4">
 							<h6 className="fw-bold"><ChevronDoubleRight size="14" className='hl_color align-top me-1' style={{marginTop:"2px"}}/>PLINK2</h6>
