@@ -32,6 +32,14 @@ export default function ResultCard(props) {
     if (props.data.label) {
         props.data.name = props.data.label
     }
+    // Change 'score_name' to 'name' (score results)
+    if (props.data.score_name) {
+        props.data.name = props.data.score_name
+    }
+    // Change 'pathway_name' to 'name' (pathway results)
+    if (props.data.pathway_name) {
+        props.data.name = props.data.pathway_name
+    }
 
     const data = props.data;
     // Temporary updates - begin
