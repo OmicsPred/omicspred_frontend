@@ -92,6 +92,9 @@ const score_cols = {
         renderHeader: () => {
             return r2_col_header_label();
         },
+        renderCell: (params) => {
+            return metric_renderCell(params.row.performance_metrics,'R2',params.row.evaluation_type);
+        },
         valueGetter: (value, row) => {
             return metric_valueGetter(row.performance_metrics,'R2',row.evaluation_type);
         }
@@ -100,6 +103,9 @@ const score_cols = {
         field: 'rho',
         headerName: 'Rho',
         width: 90,
+        renderCell: (params) => {
+            return metric_renderCell(params.row.performance_metrics,'Rho',params.row.evaluation_type);
+        },
         valueGetter: (value, row) => {
             return metric_valueGetter(row.performance_metrics,'Rho',row.evaluation_type);
         }
@@ -115,17 +121,17 @@ const score_cols = {
             return metric_valueGetter(row.performance_metrics,match_rate_col,row.evaluation_type);
         }
     },
-    'missing_rate': {
-        field: 'missing_rate',
-        headerName: 'Missing Rate',
-        width: 105,
-        renderCell: (params) => {
-            return metric_renderCell(params.row.performance_metrics,'Missing Rate',params.row.evaluation_type);
-        },
-        valueGetter: (value, row) => {
-            return metric_valueGetter(row.performance_metrics,'Missing Rate',row.evaluation_type);
-        }
-    }
+    // 'missing_rate': {
+    //     field: 'missing_rate',
+    //     headerName: 'Missing Rate',
+    //     width: 105,
+    //     renderCell: (params) => {
+    //         return metric_renderCell(params.row.performance_metrics,'Missing Rate',params.row.evaluation_type);
+    //     },
+    //     valueGetter: (value, row) => {
+    //         return metric_valueGetter(row.performance_metrics,'Missing Rate',row.evaluation_type);
+    //     }
+    // }
 }
 
 
@@ -140,13 +146,8 @@ export const performance_metrics_columns = [
     score_cols['r2'],
     score_cols['rho'],
     score_cols['variant_match_rate'],
-    score_cols['missing_rate']
+    // score_cols['missing_rate']
 ]
-
-// const r2_col = {...score_cols['r2'],  sortable: false}
-// const rho_col = {...score_cols['rho'],  sortable: false}
-// const variant_match_rate_col = {...score_cols['variant_match_rate'],  sortable: false}
-// const missing_rate_col = {...score_cols['missing_rate'],  sortable: false}
 
 export const performance_metrics_columns_large = [
     score_cols['cohort'],
@@ -158,7 +159,7 @@ export const performance_metrics_columns_large = [
     score_cols['r2'], // r2_col,
     score_cols['rho'], // rho_col,
     score_cols['variant_match_rate'], //variant_match_rate_col,
-    score_cols['missing_rate'], //missing_rate_col
+    // score_cols['missing_rate'], //missing_rate_col
 ]
 
 export const performance_metrics_columns_ext = score_col.concat(performance_metrics_columns);

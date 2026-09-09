@@ -24,7 +24,7 @@ export const metabolomics_columns = {
         // common_cols['dataset_id'],,
         common_cols['variants_number'],
         ancestry_training_cols,
-        ancestry_validation_cols,
+        ancestry_validation_cols
     ],
     'Nightingale': [
         common_cols['omicspred_id'],
@@ -39,7 +39,7 @@ export const metabolomics_columns = {
         // common_cols['dataset_id'],
         common_cols['variants_number'],
         ancestry_training_cols,
-        ancestry_validation_cols,
+        ancestry_validation_cols
     ]
 };
 

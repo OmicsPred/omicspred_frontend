@@ -28,7 +28,7 @@ function Datasets() {
             <div className="mt_minus_1">
                 Browse all the Datasets available in {process.env.PROJECT_NAME}.
                 <div className='d-flex mt-2'>
-                    <Note compact="1" msg={"In "+process.env.PROJECT_NAME+", a dataset is a set of genetic scores, within a same study, that have a common platform and tissue. In most cases, the genetic scores share the same ancestry."}/>
+                    <Note compact="1" msg={"In "+process.env.PROJECT_NAME+", a dataset is a set of genetic scores, within a same study, that have a common platform and tissue. In most cases, the genetic scores share the same ancestries."}/>
                 </div>
                 {/* <div>In {process.env.PROJECT_NAME}, a dataset is a set of genetic scores, within a same study, that have a common platform and tissue. In most cases, the genetic scores have the same ancestry.</div> */}
             </div>

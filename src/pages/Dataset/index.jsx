@@ -11,12 +11,9 @@ import DataTableServer from '../../components/table/DataTableServer';
 import DataTable from '../../components/table/DataTable';
 import { op_title, op_subtitle_no_asso, get_cohorts_cols_list, get_cohorts_col_groups_list, Header2Cards, internal_publication_link, internal_platform_link, internal_tissue_link, no_entry_found, element_icon, display_cohort } from '../../components/Common';
 import { consoleDev, scoresBadge, phewasBadge, loading_data, add_s_when_plural, ToggleDiv, ToggleID } from '../../components/Generic';
-// import AncestryLegend from '../../components/ancestry/AncestryLegend';
 import Href from '../../components/Href';
 import { DownloadList, get_download_list } from '../../components/Downloads';
 import { Table } from 'react-bootstrap-icons';
-// import Href from '../../components/Href';
-// import { ExpandableDownloadButton, get_download_list } from '../../../components/Downloads';
 
 
 function Dataset() {
@@ -37,6 +34,8 @@ function Dataset() {
 
     const training_suffix = '__training';
 
+    const skip_training_cohorts = ['MCPS'];
+
     const phewas_endpoint_url = 'score/phewas/search?opd_id='+opd_id;
     const phewas_column_keys = ['score__id','phenotypes_LIST__id','samples_LIST__sample_number','data_values__adjusted_p-value','data_values__effect_size'];
 
@@ -44,7 +43,6 @@ function Dataset() {
     const fetchDatasetData = async () => {
         consoleDev(element+'/'+opd_id)
         const dataset_data = await restApiCall(element+'/'+opd_id);
-        // consoleDev(dataset_data);
         if (dataset_data && Object.keys(dataset_data).length) {
             setDatasetData(dataset_data);
             prepareTable(dataset_data);
@@ -230,8 +228,8 @@ function Dataset() {
                 }
             }
         }
+        // Create list
         const cohort_data = Object.values(training_cohorts_detailed).concat(Object.values(validation_cohorts_detailed))
-        console.log(cohort_data)
         setCohortData(cohort_data)
         setCohortsValidationList(validation_cohorts);
         setCohortsList(cohorts)
@@ -246,7 +244,7 @@ function Dataset() {
                     if (cohort_cols[cohort][metric]) {
                         // Use a different display for the training cohorts
                         // And redefine the column object to adapt the "training" status
-                        if (cohorts_training.includes(cohort)) {
+                        if (cohorts_training.includes(cohort) && !skip_training_cohorts.includes(cohort)) {
                             let training_header_class = 'training_col'
                             if (cohort_cols[cohort][metric].headerClassName == 'col_border_left') {
                                 training_header_class = ['training_col','col_border_left']
@@ -263,8 +261,6 @@ function Dataset() {
                 }
             }
         }
-        console.log("> Columns")
-        console.log(columns)
         setScoreTableColumns(columns)
     }
 
@@ -299,24 +295,32 @@ function Dataset() {
 
         let cohorts = [];
         // Training cohorts
-
         for (let i=0; i<dataset['samples_training'].length;i++) {
             const sample = dataset['samples_training'][i];
-            const sample_cohorts = update_sample_cohorts(sample);
-            cohorts = get_cohorts_col_groups_list(sample_cohorts,cohorts);
+            const sample_cohorts_t = update_sample_cohorts(sample);
+            cohorts = get_cohorts_col_groups_list(sample_cohorts_t,cohorts);
         }
         // Fetch the training cohorts
         let cohorts_training = [];
+        let found_mcps = false
         for (let i=0; i< cohorts.length; i++) {
             const cohort = cohorts[i];
-            cohorts_training.push(cohort);
+            if (!skip_training_cohorts.includes(cohort.name_short)) {
+                found_mcps = true
+            }
+            else {
+                cohorts_training.push(cohort);
+            }
+        }
+        if (found_mcps) {
+            cohorts = []
         }
 
         // Validation cohorts
         for (let i=0; i<dataset['samples_validation'].length;i++) {
             const sample = dataset['samples_validation'][i];
-            const sample_cohorts = update_sample_cohorts(sample);
-            cohorts = get_cohorts_col_groups_list(sample_cohorts,cohorts);
+            const sample_cohorts_v = update_sample_cohorts(sample);
+            cohorts = get_cohorts_col_groups_list(sample_cohorts_v,cohorts);
         }
 
         // Fetch column group details
@@ -324,7 +328,7 @@ function Dataset() {
             const cohort = cohorts[i];
             if (common_column_groups[cohort]) {
                 // Redefine the column group object to adapt the "training" status of the child columns
-                if (cohorts_training.includes(cohort)) {
+                if (cohorts_training.includes(cohort) && !skip_training_cohorts.includes(cohort)) { // Skip training data for MCPS (no values)
                     const training_group_id = common_column_groups[cohort].groupId+' (training)';
                     let training_field_children = []
                     for (let j=0; j<common_column_groups[cohort].children.length; j++) {

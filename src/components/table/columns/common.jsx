@@ -1326,6 +1326,34 @@ export const cohort_cols = {
             }
         }
     },
+    'AoU': {
+        'R2' : {
+            field: 'AoU_R2',
+            headerClassName: 'col_border_left',
+            renderHeader: () => {
+                return r2_col_header_label();
+            },
+            valueGetter: (value, row) => {
+                return cohort_valueGetter(row,'AoU','R2');
+            }
+        },
+        'Rho': {
+            field: 'AoU_Rho',
+            renderHeader: () => {
+                return rho_col_header_label();
+            },
+            valueGetter: (value, row) => {
+                return cohort_valueGetter(row,'AoU','Rho');
+            }
+        },
+        variant_rate_label: {
+            field: 'AoU_Match Rate',
+            headerName: variant_rate_label,
+            valueGetter: (value, row) => {
+                return cohort_valueGetter(row,'AoU',variant_rate_label);
+            }
+        }
+    },
     'INTERVAL': {
         'R2' : {
             field: 'INTERVAL_R2',
@@ -1733,6 +1761,38 @@ export const cohort_cols = {
             }
         }
     },
+    'MCPS': {
+        'R2': {
+            field: 'MCPS_R2',
+            headerClassName: 'col_border_left',
+            // minWidth: 100,
+            // flex: 0.5,
+            renderHeader: () => {
+                return r2_col_header_label();
+            },
+            valueGetter: (value, row) => {
+                return cohort_valueGetter(row,'MCPS','R2');
+            }
+        },
+        'Rho': {
+            field: 'MCPS_Rho',
+            renderHeader: () => {
+                return rho_col_header_label();
+            },
+            // minWidth: 100,
+            // flex: 0.5,
+            valueGetter: (value, row) => {
+                return cohort_valueGetter(row,'MCPS','Rho');
+            }
+        },
+        variant_rate_label: {
+            field: 'MCPS_Match Rate',
+            headerName: variant_rate_label,
+            valueGetter: (value, row) => {
+                return cohort_valueGetter(row,'MCPS',variant_rate_label);
+            }
+        }
+    },
     'NSPHS': {
         'R2': {
             field: 'NSPHS_R2',
@@ -1954,6 +2014,11 @@ export const common_column_groups = {
         children: [{ field: 'pathway_group' }, { field: 'pathway_subgroup' }],
         headerClassName: ['col_border_left','col_border_right']
     },
+    'AoU': {
+        groupId: 'AoU',
+        children: [{ field: 'AoU_R2' }, { field: 'AoU_Rho' }],
+        headerClassName: 'col_border_left'
+    },
     'INTERVAL': {
         groupId: 'INTERVAL',
         children: [{ field: 'INTERVAL_R2' }, { field: 'INTERVAL_Rho' }],
@@ -2046,11 +2111,15 @@ export const common_column_groups = {
         children: [{ field: 'UKB_withheld_SAS_R2' }, { field: 'UKB_withheld_SAS_Rho' }],
         headerClassName: 'col_border_left'
     },
+    'MCPS': {
+        groupId: 'MCPS',
+        children: [{ field: 'MCPS_R2' }, { field: 'MCPS_Rho' }]
+    },
     'MESA': {
         groupId: 'MESA',
         children: [{ field: 'MESA_R2' },],
         headerClassName: ['training_col','col_border_left']
-    },
+    }
     // 'MESA-AFA': {
     //     groupId: 'MESA AFA',
     //     children: [{ field: 'MESA_AFR_R2' },],
