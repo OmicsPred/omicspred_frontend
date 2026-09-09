@@ -5,6 +5,8 @@ import DocumentHead from './DocumentHead';
 import Href from "./Href";
 
 
+const max_cohort_additional = 25
+
 export const molecular_trait_types = ['Gene','Protein','Metabolite']
 
 export const stages_list = {
@@ -484,7 +486,9 @@ export const get_cohorts_cols_list = (sample_cohorts, cohorts_list) => {
         const cohort_data = sample_cohorts[j];
         let cohort = cohort_data['name_short'];
         if (cohort_data['additional']) {
-            cohort += ' '+cohort_data['additional'].toLowerCase()
+            if (cohort_data['additional'].length <= max_cohort_additional) {
+                cohort += ' '+cohort_data['additional'].toLowerCase()
+            }
         }
         cohort = cohort.replaceAll(' ','_');
         const cohort_obj = sample_cohorts[j];
@@ -514,22 +518,24 @@ export const get_cohorts_col_groups_list = (sample_cohorts, cohorts_list) => {
     for (let j=0; j<sample_cohorts.length; j++) {
         const cohort_data = sample_cohorts[j];
         let cohort = sample_cohorts[j]['name_short'];
-        if (cohort_data['additional']) {
+        if (cohort_data['additional'] && cohort_data['additional'].length <= max_cohort_additional) {
             cohort += ' '+cohort_data['additional'].toLowerCase()
         }
         cohort = cohort.replaceAll(' ','_');
         if (common_column_groups[cohort] && !cohorts_list.includes(cohort)) {
             cohorts_list.push(cohort);
         }
-        else {;
+        else {
             const cohort_col_group_labels = Object.keys(common_column_groups);
             for (let k=0; k < cohort_col_group_labels.length; k++) {
                 const cohort_col_grp_label = cohort_col_group_labels[k];
-                if (cohort_col_grp_label.toLowerCase() == cohort.toLowerCase()) {
-                    cohorts_list.push(cohort_col_grp_label);
-                }
-                else if (cohort_col_grp_label.startsWith(cohort) && !cohorts_list.includes(cohort_col_grp_label)) {
-                    cohorts_list.push(cohort_col_grp_label);
+                if (!cohorts_list.includes(cohort_col_grp_label)) {
+                    if (cohort_col_grp_label.toLowerCase() == cohort.toLowerCase()) {
+                        cohorts_list.push(cohort_col_grp_label);
+                    }
+                    else if (cohort_col_grp_label.startsWith(cohort) && !cohorts_list.includes(cohort_col_grp_label)) {
+                        cohorts_list.push(cohort_col_grp_label);
+                    }
                 }
             }
         }

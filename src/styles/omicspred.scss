@@ -1545,7 +1545,7 @@ fieldset {
         background-color: $op_light_grey;
         padding: 1rem 1rem 0.5rem;
         margin-right: 3rem;
-        min-width: 275px;
+        min-width: 280px;
         fieldset {
             label {
                 margin-right: 0px !important;
@@ -1569,7 +1569,7 @@ fieldset {
             display: flex;
             flex-direction: column;
             fieldset {
-                min-width: 200px !important;
+                min-width: 215px !important;
             }
         }
         .search_result_types {
