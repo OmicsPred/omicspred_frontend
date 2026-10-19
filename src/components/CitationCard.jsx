@@ -7,7 +7,7 @@ const CitationCard = () => {
     <div className="citation_card">
       <div className="card" style={{padding:"0px",textAlign:"center"}}>
         <div className="card-body">
-          <h4 className="card-title"><u>OmicsPred as a centralised resource for genetic prediction of multi-omic traits</u></h4>
+          <h4 className="card-title"><u>OmicsPred as a centralized resource for genetic prediction of multi-omic traits</u></h4>
           <p className="card-text">Foguet C, Gil L, Xu Y, Salazar-Magaña S, Ritchie SC, Persyn E, Im HK, Inouye M, Lambert SA.</p>
         </div>
         <div className="card-footer">

@@ -8,7 +8,7 @@ import DataTableServer from '../../components/table/DataTableServer';
 
 import { phenotype_cols } from '../../components/table/columns/phenotype';
 import restApiCall from '../../components/RestAPI';
-import { phewasBadge, loading_data, add_s_when_plural } from '../../components/Generic';
+import { phewasBadge, loading_data, add_s_when_plural, ToggleDiv } from '../../components/Generic';
 import { op_title, op_subtitle_no_asso, HeaderCard, no_entry_found } from '../../components/Common';
 import { display_source } from '../MolecularTrait/components/links';
 
@@ -31,7 +31,7 @@ function Phenotype() {
     //     common_cols['scores_count']
     // ]
 
-    const column_keys = ['score__id','data_values__FDR'];
+    const column_keys = ['score__id','data_values__effect_size'];
 
     const fetchSummaryData = async () => {
         const data = await restApiCall('phenotype/'+phenotype_id);
@@ -66,12 +66,18 @@ function Phenotype() {
     // ---------
 
     const display_reported_traits = (reported_traits) => {
-        if (reported_traits.length != 0) {
-            if (reported_traits.length > 1) {
+        const count_traits = reported_traits.length;
+        if (count_traits != 0) {
+            if (count_traits > 1) {
                 return (
-                    <ul className='mb-0'>
-                        {reported_traits.map((reported_trait) => <li key={reported_trait.id}>{reported_trait.label} ({reported_trait.source} {reported_trait.id})</li>)}
-                    </ul>
+                    <div>
+                        <ToggleDiv
+                            title={<>{count_traits} traits</>}
+                            content={
+                            <ul className='mb-0'>
+                                {reported_traits.map((reported_trait) => <li key={reported_trait.id}>{reported_trait.label} ({reported_trait.source} {reported_trait.id})</li>)}
+                            </ul>}/>
+                    </div>
                 )
             }
             else {

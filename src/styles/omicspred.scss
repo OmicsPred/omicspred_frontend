@@ -933,7 +933,7 @@ ul.expanded {
 
 /* MUI overwriting */
 .MuiDataGrid-toolbar {
-    background-color: $op_color_3;
+    background-color: $op_color_3 !important;
     padding: 4px !important;
     min-height: 42px !important; // 52px
     button {

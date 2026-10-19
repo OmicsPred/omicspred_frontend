@@ -88,6 +88,7 @@ function Dataset() {
                 <tr><td>Tissue </td><td>{internal_tissue_link(datasetData.tissue, 1)}</td></tr>
                 <tr><td>Method</td><td>{datasetData.method_name}</td></tr>
                 <tr><td>Training window</td><td>{datasetData.training_window}</td></tr>
+                { datasetData.study_url ? <tr><td>External link to study</td><td><Href text={datasetData.study_url} href={datasetData.study_url}/></td></tr> : ''}
                 { cohortsList ? <tr><td>Cohort{add_s_when_plural(Object.keys(cohortsList).length)}</td><td>{cohorts_list(cohortsTrainingList,'Training')}{cohorts_list(cohortsValidationList,'Validation')}</td></tr>: ''}
                 <tr><td>Number of scores</td><td>{scoresBadge(datasetData.scores_count)}<span className='ps-3'><Href href="#linked_scores" text="See linked Scores" icon={<Table/>}/></span></td></tr>
                 <tr><td>Number of linked PheWAS</td><td>{phewasBadge(datasetData.phewas_count)}{datasetData.phewas_count != 0 ? <span className='ps-3'><Href href="#linked_phewas_data" text="See linked PheWAS" icon={<Table/>}/></span>:''}</td></tr>
@@ -115,7 +116,7 @@ function Dataset() {
 
 
     const get_url_endpoint = (dataset) => {
-        let endpoint_suffix = dataset.platform.name+"?dataset="+opd_id;
+        let endpoint_suffix = dataset.platform.name+"?dataset="+opd_id+"&website_view=1";
         const type = dataset.platform.type;
         switch(type) {
             case 'Metabolomics':
