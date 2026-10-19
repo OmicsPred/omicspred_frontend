@@ -109,6 +109,7 @@ function Documentation() {
                 {'name': 'Platform', 'desc': 'Associated Platform.'},
                 {'name': 'Omics Type', 'desc': 'Data type detected by the platform (e.g. gene, protein, metabolite).'},
                 {'name': 'Training Window', 'desc': 'Type of training window used for the variants (Genome-wide, Cis-only, ...)' },
+                {'name': 'Study URL', 'desc': 'Link to the study page. When possible, it should be specific to the dataset.'},
                 {'name': 'Genetic Score Development Method', 'desc': 'The name or description of the method or computational algorithm used to develop the Genetic Scores of this dataset.'},
                 {'name': 'Genetic Score Count', 'desc': 'Number of Genetic Scores associated with the dataset'},
                 {'name': 'PheWAS Count', 'desc': 'Number of PheWAS associated with the Genetic Scores of the dataset'},

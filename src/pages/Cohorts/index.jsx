@@ -2,33 +2,33 @@ import { PageTitleSimple, TableOfContent } from '../../components/Common';
 import Container from "./components/Container";
 import Href from "../../components/Href"
 
-// import p1 from "/src/assets/cohorts/INTERVAL.png";
-// import p2 from "/src/assets/cohorts/FENLAND.png";
-// import p3 from "/src/assets/cohorts/ORCADES.png";
-// import p4 from "/src/assets/cohorts/UKB.png";
-// import p5 from "/src/assets/cohorts/VIKING.png";
-// import p6 from "/src/assets/cohorts/GTEXV8.png";
 
 const project_name = process.env.PROJECT_NAME
 
 
 const cohorts_list = [
   {
-    // "src": p6,
     "title": "Adult GTEx V8 Study",
     "labels": ["GTExV8"],
     "href": "https://www.science.org/doi/10.1126/science.aaz1776",
     "desc": <>The Genotype-Tissue Expression (GTEx) project characterizes genetic effects on the transcriptome across human tissues and links these regulatory mechanisms to trait and disease associations. The data of the GTEx version 8 is composed of 15,201 RNA-sequencing samples from 49 tissues of 838 postmortem donors. The characterization of the genetic associations for gene expression and splicing in cis and trans shows that regulatory associations are found for almost all genes. It also describes the underlying molecular mechanisms and their contribution to allelic heterogeneity and pleiotropy of complex traits. The large diversity of tissues provides insights into the tissue specificity of genetic effects and shows that cell type composition is a key factor in understanding gene regulatory mechanisms in human tissues.</>
   },
   {
-    // "src": p2,
+    "title": "All of Us Research Program",
+    "labels": ["AoU"],
+    "href": "https://www.nih.gov/allofus",
+    "desc": <>
+      This Research Program, launched in 2018, is an NIH longitudinal cohort study aimed at advancing precision medicine and improving human health by partnering with more than one million US participants.
+      It includes electronic health records (EHRs), biospecimens, participant surveys (including social determinants of health), genomics, physical measurements, and mobile/wearable tech.
+    </>
+  },
+  {
     "title": "Fenland Study",
     "labels": ["FENLAND"],
     "href": "https://www.mrc-epid.cam.ac.uk/research/studies/fenland/",
     "desc": <>A population-based cohort of about 12,000 participants of Caucasian-ancestry born between 1950 and 1975 who underwent detailed phenotyping at the baseline visit from 2005 to 2015. Participants were recruited from general practice surgeries in the Cambridgeshire region in the UK. The study aims to investigate the interaction between environmental and genetic factors in determining obesity, type 2 diabetes, and related metabolic disorders. These conditions are a considerable public health concern, but their causes and factors that predict who will be affected by them are not completely understood.</>
   },
    {
-    // "src": p1,
     "title": "INTERVAL Study",
     "labels": ["INTERVAL"],
     "href": "https://www.intervalstudy.org.uk/",
@@ -39,6 +39,16 @@ const cohorts_list = [
     "labels": ["JHS"],
     "href": "https://www.jacksonheartstudy.org/",
     "desc": <>A community-based longitudinal cohort study begun in 2000 of 5,306 self-identified Black individuals, aged between 21 and 93 years, from the Jackson, Mississippi, metropolitan statistical area. Two follow-up clinical visits were conducted between 2005 and 2008 and between 2009 and 2012. The study aims to examine environmental and genetic factors associated with cardiovascular disease among African Americans. The JHS study was approved by Jackson State University, Tougaloo College, and the University of Mississippi Medical Center Institutional Review Boards, and all participants provided written informed consent.</>
+  },
+  {
+    "title": "Mexico City Prospective Study",
+    "labels": ["MCPS"],
+    "href": "	https://www.ctsu.ox.ac.uk/research/mexico-city-prospective-study",
+    "desc": <>
+      This is the largest blood-based prospective study of the health of a Latin-American population. The study offers an opportunity to investigate how social, lifestyle, physical, metabolic and genetic factors influence the major causes of death in Mexican adults in a large cohort that has already been followed for two decades.
+      <br/>
+      Between 1998 and 2004, over 150,000 middle-aged adults including 100,000 women from the Coyoacán and Iztapalapa districts of Mexico City were recruited.
+    </>
   },
   {
     "title": "Multi-Ethnic Cohort",
@@ -81,21 +91,18 @@ const cohorts_list = [
     "desc": <>A Swedish community-based cohort with randomly recruited participants from the parishes of Karesuando and Soppero, County of Norrbotten (median age, 50 years; N = 1,037). People in this area either lead a traditional, subsistence-based, lifestyle mainly based on reindeer herding, hunting and fishing, or a lifestyle similar to other western European countries. The study measures a broad spectrum of environmental (e.g. occupation, diet, physical activity and daylight exposure) and genetic (e.g. single-nucleotide polymorphisms) factors of relevance for health risk. A comprehensive set of health indicators, clinical measures (e.g. blood lipids, proteins) and diagnoses of cardiovascular, orthopedic and metabolic diseases has also been collected.</>
   },
   {
-    // "src": p3,
     "title": "Orkney Complex Disease Study",
     "labels": ["ORCADES"],
     "href": "https://www.ed.ac.uk/viking/about-us/what-we-do/our-studies",
     "desc": <>A family-based study that seeks to identify genetic factors influencing cardiovascular and other disease risk in the isolated archipelago of the Orkney Isles in northern Scotland <Href text="(McQuillan et al., 2008)" href="https://pubmed.ncbi.nlm.nih.gov/18760389/" />. Genetic diversity in this population is decreased compared to Mainland Scotland, consistent with the high levels of endogamy historically. 2,078 participants aged 16-100 years were recruited between 2005 and 2011, most having three or four grandparents from Orkney, the remainder with two Orcadian grandparents. Fasting blood samples were collected and many health-related phenotypes and environmental exposures were measured in each individual. Extensive proteomic, methylomic, metabolomic, glycomic and lipidomic data are also available.</>
   },
   {
-    // "src": p4,
     "title": "UK Biobank",
     "labels": ["UKB"],
     "href": "https://www.ukbiobank.ac.uk",
     "desc": <>A prospective cohort study with deep genetic and phenotypic data collected on approximately 500,000 individuals from across the United Kingdom, aged between 40 and 69 at recruitment. A rich variety of phenotypic and health-related information is available on each participant, including biological measurements, lifestyle indicators, biomarkers in blood and urine, and imaging of the body and brain. Follow-up information is provided by linking health and medical records. Genome-wide genotype data have been collected on all participants, providing many opportunities for the discovery of new genetic associations and the genetic bases of complex traits.</>
   },
   {
-    // "src": p5,
     "title": "VIKING Health Study",
     "labels": ["VIKING"],
     "href": "https://www.ed.ac.uk/viking/about-us/what-we-do/our-studies",
