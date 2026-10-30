@@ -7,7 +7,7 @@ import { common_column_groups } from '../../../components/table/columns/common';
 import DataTableServer from '../../../components/table/DataTableServer';
 import { fetch_count_data, browse_title } from '../components/Browse';
 import restApiCall from '../../../components/RestAPI';
-import { ToggleCard, sort_case_insensitive } from '../../../components/Generic';
+import { ToggleCard, consoleDev, sort_case_insensitive } from '../../../components/Generic';
 import { select_form, input_form, radio_form } from '../../../components/Form';
 import { molecular_trait_types } from '../../../components/Common';
 
@@ -29,7 +29,7 @@ function Scores() {
 
     const data_type = 'score';
 
-    const url_suffix = data_type+'/all';
+    const url_suffix = data_type+'/all?website=1';
     const [scoreEndpoint, setScoreEndpoint] = useState(url_suffix);
 
     const fetchCount = async () => {
@@ -110,9 +110,10 @@ function Scores() {
             filters_list.push(`tissue:${selectedTissue}`)
         }
         if (filters_list.length > 0) {
-            endpoint_suffix += '?table_filter='+filters_list.join(';')
+            endpoint_suffix += (!endpoint_suffix.includes('?')) ? '?' : '&';
+            endpoint_suffix += 'table_filter='+filters_list.join(';')
         }
-        console.log("NEW URL: "+endpoint_suffix);
+        consoleDev("NEW URL: "+endpoint_suffix);
         return endpoint_suffix;
     }
 
