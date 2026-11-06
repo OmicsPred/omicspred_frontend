@@ -639,7 +639,7 @@ export const ancestry_labels = () => {
         'SAS': 'South Asian',
         'ASN': 'Additional Asian Ancestries',
         'EUR': 'European',
-        'GME': 'Greater Middle Eastern',
+        // 'GME': 'Greater Middle Eastern',
         'AMR': 'Hispanic or Latin American',
         'OTH': 'Additional Diverse Ancestries',
         'NR' : 'Not Reported',
@@ -647,23 +647,23 @@ export const ancestry_labels = () => {
     }
 };
 
-
 export const ancestry_names = {
     // 'Multi-ancestry (including European)': 'MAE',
     // 'Multi-ancestry (excluding European)': 'MAO',
-    'African': 'AFR',
-    'African American': 'AFR',
-    'African American or Afro-Caribbean': 'AFR',
-    'East Asian': 'EAS',
-    'South Asian': 'SAS',
-    'Additional Asian Ancestries': 'ASN',
-    'European': 'EUR',
-    'Greater Middle Eastern': 'GME',
-    'Hispanic or Latin American': 'AMR',
     'Ad Mixed American': 'AMR', // Not sure
-    'Additional Diverse Ancestries': 'OTH',
-    'Not Reported': 'NR',
-    'Multi-ancestry': 'MAO'
+    'Additional Asian Ancestries': 'ASN',
+    'African': 'AFR',
+    'African American or Afro-Caribbean': 'AFR',
+    'African unspecified': 'AFR',
+    'Asian unspecified': 'ASN',
+    'East Asian': 'EAS',
+    'European': 'EUR',
+    // 'Greater Middle Eastern': 'GME',
+    'Hispanic or Latin American': 'AMR',
+    'South Asian': 'SAS',
+    'Multi-ancestry': 'MAO',
+    // 'Additional Diverse Ancestries': 'OTH',
+    'Not Reported': 'NR'
 };
 
 

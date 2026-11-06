@@ -77,13 +77,16 @@ function Platform() {
         endpoint_suffix = get_url_endpoint_prefix(type,endpoint_suffix);
 
         // Ancestry
-        if (selectedAncestry && selectedAncestry.length > 0) { //&& selectedAncestry != previousAncestrySelection) {
-            endpoint_suffix += '&anc='+selectedAncestry;
+        if (selectedAncestry && selectedAncestry.length > 0) {
+            filters_list.push(`anc:${selectedAncestry}`);
+			const default_stage = 'a';
+			if (selectedStage && selectedStage != default_stage) {
+				filters_list.push(`stage:${selectedStage}`);
+			}
+			else {
+                filters_list.push(`stage:${default_stage}`)
+            }
         }
-        if (selectedStage && selectedStage != 'a') { //&& selectedStage != previousStageSelection) {
-            endpoint_suffix += '&stage='+selectedStage;
-        }
-
         if (selectedTissue && selectedTissue.length > 0) {
             filters_list.push(`tissue:${selectedTissue}`)
         }
@@ -175,7 +178,7 @@ function Platform() {
     }
 
     const fetchDatasetData = async () => {
-        const dataset_data = await restApiCall('dataset/search?platform='+platform);
+        const dataset_data = await restApiCall('dataset/search?website=1&platform='+platform);
         const dataset_results = dataset_data['results']
         setDatasetData(dataset_results);
         const table_cols = get_table_columns(dataset_results);
