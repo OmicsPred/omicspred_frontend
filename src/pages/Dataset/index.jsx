@@ -116,7 +116,7 @@ function Dataset() {
 
 
     const get_url_endpoint = (dataset) => {
-        let endpoint_suffix = dataset.platform.name+"?dataset="+opd_id+"&website_view=1";
+        let endpoint_suffix = dataset.platform.name+"?dataset="+opd_id;
         const type = dataset.platform.type;
         switch(type) {
             case 'Metabolomics':

@@ -16,17 +16,16 @@ function Publication() {
 
 
     const fetchPublicationData = async () => {
-        consoleDev('publication/'+opp_id)
         const publication_data = await restApiCall('publication/'+opp_id);
         consoleDev(publication_data);
         setPublicationData(publication_data);
         const year = publication_data.date_publication ? publication_data.date_publication.split('-')[0] : undefined
         setPublicationTitle("Publication: "+publication_data.id+' ('+publication_data.firstauthor+' - '+year+')')
-        publication_data.datasets.sort((a, b) => a.id.localeCompare(b.id))
-        for (let i=0; i<publication_data.datasets.length;i++) {
-            publication_data.datasets[i]['publication'] = publication_data.id;
-        }
-        setDatasetsData(publication_data.datasets);
+    }
+
+    const fetchDatasetData = async () => {
+        const datasets_data = await restApiCall('dataset/search?website=1&opp_id='+opp_id);
+        setDatasetsData(datasets_data.results);
     }
 
     // Convert date into DD/MM/YYYY format
@@ -66,6 +65,7 @@ function Publication() {
 
     useEffect(() => {
         fetchPublicationData();
+        fetchDatasetData();
     },[])
 
     return (

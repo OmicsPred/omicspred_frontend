@@ -14,16 +14,16 @@ import { molecular_trait_types } from '../../../components/Common';
 
 function Scores() {
     const [scoresCount, setScoresCount] = useState();
+    const [publications, setPublications] = useState({});
     const [platforms, setPlatforms] = useState([]);
     const [omicsTypes, setOmicsTypes] = useState([]);
-    const [publications, setPublications] = useState({});
     const [tissues, setTissues] = useState({});
     const [tissuesLabels, setTissuesLabels] = useState([]);
     const [IDInput, setIDInput] = useState('');
     const [molecularTrait, setMolecularTrait] = useState('');
+    const [selectedPublication, setSelectedPublication] = useState('');
     const [selectedPlatform, setSelectedPlatform] = useState('');
     const [selectedOmicsType, setSelectedOmicsType] = useState('');
-    const [selectedPublication, setSelectedPublication] = useState('');
     const [selectedTissue, setSelectedTissue] = useState('')
     const [selectedMolecularTraitType, setSelectedMolecularTraitType] = useState('Gene');
 
@@ -36,6 +36,20 @@ function Scores() {
         const data_count = await fetch_count_data(data_type+'s');
         setScoresCount(data_count);
         updateScoreEndpoint();
+    }
+
+    const fetchPublications = async () => {
+        const publications = await restApiCall('publication/all');
+        if (publications.results) {
+            let publications_data = {};
+            for (let i=0; i<publications.results.length; i++) {
+                const publication = publications.results[i];
+                if (publication.publication_type != 'PheWAS') {
+                    publications_data[publication.id] = publication.id+' - '+publication.firstauthor;
+                }
+            }
+            setPublications(publications_data);
+        }
     }
 
     const fetchPlatforms = async () => {
@@ -55,21 +69,6 @@ function Scores() {
             setOmicsTypes(omics_types_list.sort());
         }
     }
-
-    const fetchPublications = async () => {
-        const publications = await restApiCall('publication/all');
-        if (publications.results) {
-            let publications_data = {};
-            for (let i=0; i<publications.results.length; i++) {
-                const publication = publications.results[i];
-                if (publication.publication_type != 'PheWAS') {
-                    publications_data[publication.id] = publication.id+' - '+publication.firstauthor;
-                }
-            }
-            setPublications(publications_data);
-        }
-    }
-
 
     const fetchTissues = async () => {
         const tissues = await restApiCall('tissue/all');

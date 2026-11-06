@@ -51,7 +51,7 @@ function Tissue() {
 	}
 
 	const fetchDatasetData = async () => {
-		const dataset_data = await restApiCall('dataset/search?tissue_id='+tissue);
+		const dataset_data = await restApiCall('dataset/search?website=1&tissue_id='+tissue);
 		// consoleDev(dataset_data['results']);
 		const dataset_results = dataset_data['results']
 		setDatasetData(dataset_results);
@@ -81,7 +81,9 @@ function Tissue() {
 			let publications_data = {};
 			for (let i=0; i<publications.results.length; i++) {
 				const publication = publications.results[i];
-				publications_data[publication.id] = publication.id+' - '+publication.firstauthor
+				if (publication.publication_type != 'PheWAS') {
+					publications_data[publication.id] = publication.id+' - '+publication.firstauthor;
+				}
 			}
 			setPublications(publications_data);
 		}
@@ -106,13 +108,16 @@ function Tissue() {
         let filters_list = []
 
         // Ancestry
-        if (selectedAncestry && selectedAncestry.length > 0) { //&& selectedAncestry != previousAncestrySelection) {
-            endpoint_suffix += '&anc='+selectedAncestry;
+		if (selectedAncestry && selectedAncestry.length > 0) {
+            filters_list.push(`anc:${selectedAncestry}`);
+			const default_stage = 'a';
+			if (selectedStage && selectedStage != default_stage) {
+				filters_list.push(`stage:${selectedStage}`);
+			}
+			else {
+                filters_list.push(`stage:${default_stage}`)
+            }
         }
-        if (selectedStage && selectedStage != 'a') { //&& selectedStage != previousStageSelection) {
-            endpoint_suffix += '&stage='+selectedStage;
-        }
-
         if (IDInput && IDInput.length > 0) {
             filters_list.push(`score_id:${IDInput}`)
         }

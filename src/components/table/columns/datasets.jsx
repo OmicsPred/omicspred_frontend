@@ -368,8 +368,8 @@ const dataset_common_end = [
     common_cols['training_window'],
     common_cols['scores_count'],
     columns_for_dataset['phewas_count'],
-    ancestry_cols['ancestry_training_computed'],
-    ancestry_cols['ancestry_validation_computed'],
+    ancestry_cols['ancestry_training'],
+    ancestry_cols['ancestry_validation'],
     columns_for_dataset['plot_link'],
     columns_for_dataset['downloads_links']
 ]
